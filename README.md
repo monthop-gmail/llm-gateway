@@ -1,5 +1,8 @@
 # LLM Gateway — LiteLLM + Open WebUI
 
+[![validate](https://github.com/monthop-gmail/llm-gateway/actions/workflows/validate.yml/badge.svg)](https://github.com/monthop-gmail/llm-gateway/actions/workflows/validate.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+
 Gateway กลางสำหรับ **ออก API token ให้ผู้ใช้/แอป** แล้วยิงไปหลังบ้านได้หลายเจ้า
 เริ่มจาก HuggingFace Inference แล้วขยายไป vLLM / Ollama / cloud providers ภายหลัง
 โดยที่ฝั่ง client **ไม่ต้องแก้อะไรเลย** — เห็นเป็น OpenAI-compatible API ตัวเดียว
