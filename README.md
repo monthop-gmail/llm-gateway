@@ -253,3 +253,7 @@ scripts/gen-key.sh              ออก virtual key
 CLIENTS.md                      วิธีต่อ AI agent / coding agent
 .env.example                    template — คัดลอกเป็น .env แล้วเติมค่า
 ```
+
+## License
+
+[MIT](LICENSE)
