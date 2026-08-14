@@ -8,8 +8,10 @@
 set -euo pipefail
 cd "$(dirname "$0")/.."
 
-# shellcheck disable=SC1091
-set -a; source .env; set +a
+set -a
+# shellcheck source=/dev/null
+source .env
+set +a
 
 HOST="http://localhost:${LITELLM_PORT:-4000}"
 ALIAS=""; BUDGET=""; MODELS=""; DURATION=""

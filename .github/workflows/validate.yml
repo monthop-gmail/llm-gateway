@@ -1,0 +1,28 @@
+name: validate
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  validate:
+    name: compose + Caddyfile + secrets
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: ติดตั้ง PyYAML
+        run: pip install --quiet pyyaml
+
+      # ทดสอบเส้นทางเดียวกับที่คนใช้จริง: ไม่มี .env → script สร้างจาก .env.example เอง
+      - name: ./scripts/validate.sh
+        run: ./scripts/validate.sh
+
+  shellcheck:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: sudo apt-get update && sudo apt-get install -y shellcheck
+      - run: shellcheck scripts/*.sh
