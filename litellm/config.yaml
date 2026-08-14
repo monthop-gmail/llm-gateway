@@ -1,0 +1,124 @@
+####################################################################
+# LiteLLM Proxy — model catalog
+#
+# ชื่อโมเดลที่ client เห็น = model_name
+# ปลายทางจริง = litellm_params.model  (รูปแบบ <provider>/<model>)
+#
+# HuggingFace: ใช้ HF_TOKEN ตัวเดียวยิงได้ทุก inference provider
+#   huggingface/<org>/<model>            -> HF auto-route ไป provider ที่ว่าง (แนะนำ ทนกว่า)
+#   huggingface/<provider>/<org>/<model> -> ล็อก provider (groq, novita, together, ...)
+#
+# เช็ครายชื่อโมเดล + provider ที่ live จริงตอนนี้:
+#   curl -s https://router.huggingface.co/v1/models \
+#     -H "Authorization: Bearer $HF_TOKEN" | python3 -m json.tool | less
+#
+# ตรวจแล้วเมื่อ 2026-08-14 — โมเดลบน HF ถูกปลด/เพิ่มเป็นระยะ ถ้าตัวไหนเริ่ม error
+# ให้ไปเช็คด้วยคำสั่งข้างบนแล้วแก้บรรทัดนั้น
+####################################################################
+
+model_list:
+  # ---------- เล็ก/เร็ว/ถูก ----------
+  - model_name: hf/llama-3.1-8b
+    litellm_params:
+      model: huggingface/meta-llama/Llama-3.1-8B-Instruct
+      api_key: os.environ/HF_TOKEN
+
+  - model_name: hf/qwen2.5-7b
+    litellm_params:
+      model: huggingface/Qwen/Qwen2.5-7B-Instruct
+      api_key: os.environ/HF_TOKEN
+
+  - model_name: hf/gemma-3-12b
+    litellm_params:
+      model: huggingface/google/gemma-3-12b-it
+      api_key: os.environ/HF_TOKEN
+
+  # gpt-oss — auto-route (groq ถูกปฏิเสธด้วย token ปัจจุบัน)
+  - model_name: hf/gpt-oss-20b
+    litellm_params:
+      model: huggingface/openai/gpt-oss-20b
+      api_key: os.environ/HF_TOKEN
+
+  # ---------- กลาง/ใหญ่ ----------
+  - model_name: hf/llama-3.3-70b
+    litellm_params:
+      model: huggingface/meta-llama/Llama-3.3-70B-Instruct
+      api_key: os.environ/HF_TOKEN
+
+  - model_name: hf/gpt-oss-120b
+    litellm_params:
+      model: huggingface/openai/gpt-oss-120b
+      api_key: os.environ/HF_TOKEN
+
+  - model_name: hf/qwen3-235b
+    litellm_params:
+      model: huggingface/Qwen/Qwen3-235B-A22B-Instruct-2507
+      api_key: os.environ/HF_TOKEN
+
+  - model_name: hf/glm-4.7
+    litellm_params:
+      model: huggingface/zai-org/GLM-4.7
+      api_key: os.environ/HF_TOKEN
+
+  - model_name: hf/kimi-k2.6
+    litellm_params:
+      model: huggingface/moonshotai/Kimi-K2.6
+      api_key: os.environ/HF_TOKEN
+
+  # ---------- reasoning ----------
+  - model_name: hf/deepseek-r1
+    litellm_params:
+      model: huggingface/novita/deepseek-ai/DeepSeek-R1
+      api_key: os.environ/HF_TOKEN
+
+  - model_name: hf/deepseek-v3.2
+    litellm_params:
+      model: huggingface/deepseek-ai/DeepSeek-V3.2
+      api_key: os.environ/HF_TOKEN
+
+  # ---------- เขียนโค้ด ----------
+  - model_name: hf/qwen3-coder-30b
+    litellm_params:
+      model: huggingface/Qwen/Qwen3-Coder-30B-A3B-Instruct
+      api_key: os.environ/HF_TOKEN
+
+  # ---------- เฟสถัดไป: self-hosted ----------
+  # vLLM (OpenAI-compatible server) — ตั้ง VLLM_API_BASE=http://<host>:8000/v1
+  # - model_name: local/vllm-qwen
+  #   litellm_params:
+  #     model: hosted_vllm/Qwen/Qwen2.5-7B-Instruct
+  #     api_base: os.environ/VLLM_API_BASE
+  #     api_key: "dummy"
+  #
+  # Ollama — ตั้ง OLLAMA_API_BASE=http://<host>:11434
+  # - model_name: local/ollama-llama3
+  #   litellm_params:
+  #     model: ollama_chat/llama3.1:8b
+  #     api_base: os.environ/OLLAMA_API_BASE
+
+  # ---------- เฟสถัดไป: cloud providers ----------
+  # - model_name: gpt-4o-mini
+  #   litellm_params:
+  #     model: openai/gpt-4o-mini
+  #     api_key: os.environ/OPENAI_API_KEY
+  #
+  # - model_name: claude-sonnet-5
+  #   litellm_params:
+  #     model: anthropic/claude-sonnet-5
+  #     api_key: os.environ/ANTHROPIC_API_KEY
+  #
+  # - model_name: gemini-2.5-flash
+  #   litellm_params:
+  #     model: gemini/gemini-2.5-flash
+  #     api_key: os.environ/GEMINI_API_KEY
+
+litellm_settings:
+  drop_params: true          # ตัด param ที่ provider ไม่รองรับทิ้ง แทนที่จะ error
+  num_retries: 2
+  request_timeout: 600
+  set_verbose: false
+
+general_settings:
+  master_key: os.environ/LITELLM_MASTER_KEY
+  database_url: os.environ/DATABASE_URL
+  store_model_in_db: true    # เพิ่ม/แก้โมเดลผ่าน UI ได้ โดยไม่ต้องแก้ไฟล์นี้

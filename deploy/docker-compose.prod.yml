@@ -1,0 +1,51 @@
+# Override สำหรับ production (มีโดเมน + HTTPS)
+#
+#   docker compose -f docker-compose.yml -f deploy/docker-compose.prod.yml up -d
+#
+# ต้องตั้ง CHAT_DOMAIN / API_DOMAIN / ACME_EMAIL ใน .env ก่อน
+#
+# ต่างจาก dev:
+#   - ไม่ map port ออก host เลย (!reset []) — เข้าได้ทาง Caddy ทางเดียว
+#   - เพิ่ม Caddy พร้อม HTTPS อัตโนมัติจาก Let's Encrypt
+#   - ตั้ง WEBUI_URL ให้ Open WebUI สร้างลิงก์เป็น https ถูกต้อง
+#
+# ถ้าเครื่องมี reverse proxy ของตัวเองอยู่แล้ว: ตัด service caddy ทิ้ง
+# แล้วเอา 2 block ใน deploy/Caddyfile ไปแปะใน proxy ตัวนั้น
+# พร้อมต่อ network llm-net เข้ากับ proxy นั้นด้วย
+
+services:
+  litellm:
+    ports: !reset []
+
+  openwebui:
+    ports: !reset []
+    environment:
+      WEBUI_URL: https://${CHAT_DOMAIN:?CHAT_DOMAIN is required}
+      # ปิดสมัครสมาชิกหลังสร้าง admin เสร็จแล้ว เปลี่ยนเป็น "False"
+      ENABLE_SIGNUP: "True"
+
+  caddy:
+    image: caddy:latest
+    container_name: llm-caddy
+    restart: unless-stopped
+    depends_on:
+      - litellm
+      - openwebui
+    environment:
+      CHAT_DOMAIN: ${CHAT_DOMAIN:?CHAT_DOMAIN is required}
+      API_DOMAIN: ${API_DOMAIN:?API_DOMAIN is required}
+      ACME_EMAIL: ${ACME_EMAIL:?ACME_EMAIL is required}
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    volumes:
+      - ./deploy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    networks:
+      - llm-net
+
+volumes:
+  caddy_data:
+  caddy_config:

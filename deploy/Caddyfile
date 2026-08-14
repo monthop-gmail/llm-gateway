@@ -1,0 +1,42 @@
+# Caddyfile สำหรับ production — โดเมนมาจาก .env ไม่ต้องแก้ไฟล์นี้
+#
+# ตั้งใน .env:
+#   CHAT_DOMAIN=llm.example.com        # หน้าแชท Open WebUI
+#   API_DOMAIN=llm-api.example.com     # LiteLLM API + /ui
+#   ACME_EMAIL=you@example.com         # แจ้งเตือน cert ใกล้หมดอายุ
+#
+# ใช้กับ deploy/docker-compose.prod.yml (มี Caddy ในตัว)
+# ถ้าเครื่องมี reverse proxy อยู่แล้ว ให้ก๊อป 2 block ล่างไปแปะในไฟล์ของมันแทน
+#
+# ก่อน up: ชี้ DNS A record ทั้งสองชื่อมาที่ IP เครื่องนี้ และเปิด port 80 + 443
+
+{
+	email {$ACME_EMAIL}
+}
+
+# ---------- หน้าแชท ----------
+{$CHAT_DOMAIN} {
+	encode zstd gzip
+	reverse_proxy llm-openwebui:8080
+}
+
+# ---------- API + admin UI ----------
+{$API_DOMAIN} {
+	encode zstd gzip
+
+	# หน้า admin ของ LiteLLM — จำกัด IP ไว้จะปลอดภัยกว่า
+	# ปลดคอมเมนต์แล้วใส่ IP ออฟฟิศ/บ้าน (ดูได้จาก curl ifconfig.me)
+	# @admin path /ui* /docs* /key/* /user/* /team/* /model/*
+	# handle @admin {
+	# 	@blocked not remote_ip 1.2.3.4 5.6.7.8
+	# 	respond @blocked "forbidden" 403
+	# 	reverse_proxy llm-litellm:4000
+	# }
+
+	reverse_proxy llm-litellm:4000 {
+		# agent บางตัวรันงานยาว (reasoning model / coding agent)
+		transport http {
+			read_timeout 600s
+		}
+	}
+}

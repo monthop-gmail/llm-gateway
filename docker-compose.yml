@@ -1,0 +1,90 @@
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: llm-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-litellm}
+      POSTGRES_USER: ${POSTGRES_USER:-litellm}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?POSTGRES_PASSWORD is required}
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-litellm} -d ${POSTGRES_DB:-litellm}"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    networks:
+      - llm-net
+
+  litellm:
+    image: ghcr.io/berriai/litellm:main-stable
+    container_name: llm-litellm
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    command: ["--config", "/app/config.yaml", "--port", "4000", "--num_workers", "1"]
+    environment:
+      DATABASE_URL: postgresql://${POSTGRES_USER:-litellm}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB:-litellm}
+      LITELLM_MASTER_KEY: ${LITELLM_MASTER_KEY:?LITELLM_MASTER_KEY is required}
+      LITELLM_SALT_KEY: ${LITELLM_SALT_KEY:?LITELLM_SALT_KEY is required}
+      STORE_MODEL_IN_DB: "True"
+      UI_USERNAME: ${LITELLM_UI_USERNAME:-admin}
+      UI_PASSWORD: ${LITELLM_UI_PASSWORD:?LITELLM_UI_PASSWORD is required}
+      # --- provider credentials (ใส่เท่าที่ใช้ ที่เหลือปล่อยว่างได้) ---
+      HF_TOKEN: ${HF_TOKEN:-}
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+      GEMINI_API_KEY: ${GEMINI_API_KEY:-}
+      GROQ_API_KEY: ${GROQ_API_KEY:-}
+      OPENROUTER_API_KEY: ${OPENROUTER_API_KEY:-}
+      # --- self-hosted backends (ใช้ตอนเพิ่ม vLLM / Ollama) ---
+      VLLM_API_BASE: ${VLLM_API_BASE:-}
+      OLLAMA_API_BASE: ${OLLAMA_API_BASE:-}
+    volumes:
+      - ./litellm/config.yaml:/app/config.yaml:ro
+    ports:
+      - "${LITELLM_PORT:-4000}:4000"
+    healthcheck:
+      test: ["CMD-SHELL", "python -c \"import urllib.request;urllib.request.urlopen('http://localhost:4000/health/liveliness')\""]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
+    mem_limit: 2g
+    networks:
+      - llm-net
+
+  openwebui:
+    image: ghcr.io/open-webui/open-webui:main
+    container_name: llm-openwebui
+    restart: unless-stopped
+    depends_on:
+      - litellm
+    environment:
+      # ชี้ Open WebUI ไปที่ LiteLLM ตัวเดียว — โมเดลทั้งหมดมาจากที่นี่
+      OPENAI_API_BASE_URL: http://litellm:4000/v1
+      OPENAI_API_KEY: ${OPENWEBUI_LITELLM_KEY:?OPENWEBUI_LITELLM_KEY is required}
+      # ปิด Ollama API ฝั่ง WebUI (ถ้าจะใช้ Ollama ให้ผ่าน LiteLLM แทน)
+      ENABLE_OLLAMA_API: "False"
+      WEBUI_SECRET_KEY: ${WEBUI_SECRET_KEY:?WEBUI_SECRET_KEY is required}
+      WEBUI_NAME: ${WEBUI_NAME:-LLM Gateway}
+      # คนแรกที่สมัคร = admin, คนถัดไปต้องรออนุมัติ
+      ENABLE_SIGNUP: "True"
+      DEFAULT_USER_ROLE: "pending"
+    volumes:
+      - openwebui_data:/app/backend/data
+    ports:
+      - "${OPENWEBUI_PORT:-3000}:8080"
+    mem_limit: 3g
+    networks:
+      - llm-net
+
+volumes:
+  db_data:
+  openwebui_data:
+
+networks:
+  llm-net:
+    name: llm-net
