@@ -138,6 +138,14 @@ else
 	ok ".env ไม่ถูก track"
 fi
 
+for pat in 'backups/x.sql.gz' 'backups/x.saltkey.txt' '.env.bak.1'; do
+	if git check-ignore -q "$pat"; then
+		ok "$pat ถูก ignore"
+	else
+		err "$pat ไม่ถูก ignore — ไฟล์ที่มี key อาจหลุดขึ้น git"
+	fi
+done
+
 if git grep -nE 'hf_[A-Za-z0-9]{30,}|sk-[a-f0-9]{40,}' -- . >/dev/null 2>&1; then
 	git grep -nE 'hf_[A-Za-z0-9]{30,}|sk-[a-f0-9]{40,}' -- . || true
 	err "เจอ token/key ที่ดูเหมือนของจริงในไฟล์ที่ commit"

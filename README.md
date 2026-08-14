@@ -222,13 +222,15 @@ docker run --rm -v <project>_db_data:/v -v $PWD:/b alpine tar czf /b/db_data.tgz
 
 Gateway อย่างเดียว (ไม่รันโมเดลเอง) — เบามาก:
 
-| service | RAM ที่ใช้จริง | limit ที่ตั้งไว้ |
-|---|---|---|
-| postgres | ~50MB | — |
-| litellm | ~1.2GB | 2GB |
-| open-webui | ~1GB | 3GB |
+| service | RAM ที่ใช้จริง | limit ที่ตั้งไว้ | ขนาด image |
+|---|---|---|---|
+| postgres | ~50MB | — | 294MB |
+| litellm | ~1.2GB | 2GB | 1.2GB |
+| open-webui | ~1GB | 3GB | **5.1GB** |
+| caddy (เฉพาะ prod) | ~20MB | — | 49MB |
 
-รวม ~2.3GB + disk ~4GB สำหรับ image ปรับ `mem_limit` ใน `docker-compose.yml` ได้ตามเครื่อง
+รวม RAM ~2.3GB และ **disk ~6.6GB** สำหรับ image (Open WebUI ตัวใหญ่สุด)
+ปรับ `mem_limit` ใน `docker-compose.yml` ได้ตามเครื่อง
 Open WebUI โหลด embedding model ในตัวสำหรับ RAG (~500MB) ถ้าไม่ใช้ปิดได้ที่
 Admin → Settings → Documents
 
@@ -252,10 +254,65 @@ docker-compose.yml              stack: postgres + litellm + open-webui
 deploy/docker-compose.prod.yml  override สำหรับ prod (โดเมน + HTTPS + ปิด port)
 deploy/Caddyfile                reverse proxy (โดเมนมาจาก .env)
 litellm/config.yaml             รายชื่อโมเดล + routing
-scripts/gen-key.sh              ออก virtual key
+scripts/gen-key.sh              ออก virtual key ให้ผู้ใช้/แอป
+scripts/rotate-hf-token.sh      เปลี่ยน HF token ใหม่ + ทดสอบทุกโมเดลให้
+scripts/backup.sh               สำรอง virtual key + spend log
+scripts/restore.sh              กู้คืนจาก backup
+scripts/validate.sh             ตรวจ config ทั้งหมด (CI เรียกตัวนี้)
 CLIENTS.md                      วิธีต่อ AI agent / coding agent
 .env.example                    template — คัดลอกเป็น .env แล้วเติมค่า
 ```
+
+### scripts/
+
+```bash
+# ออก virtual key
+./scripts/gen-key.sh --alias somchai --budget 5 --models hf/qwen2.5-7b
+
+# เปลี่ยน HF token (ตรวจสิทธิ์ก่อนเขียน .env แล้วยิงทดสอบทุกโมเดล)
+./scripts/rotate-hf-token.sh hf_xxxxxxxx
+
+# ตรวจ config ก่อน push — CI เรียกตัวเดียวกันนี้
+./scripts/validate.sh
+```
+
+## Backup
+
+virtual key ทั้งหมด, budget และ spend log อยู่ใน Postgres — ถ้า volume หาย
+ทุก client ที่ถือ key อยู่จะใช้ไม่ได้ทันที และต้องออก key ใหม่ให้ทุกคน
+
+```bash
+./scripts/backup.sh                    # เก็บลง ./backups/ (เก็บ 14 ชุดล่าสุด)
+./scripts/restore.sh backups/litellm-20260814-203015.sql.gz
+```
+
+ตั้ง cron ให้อัตโนมัติ:
+
+```bash
+0 3 * * * cd /path/to/llm-gateway && ./scripts/backup.sh >> /var/log/llm-backup.log 2>&1
+```
+
+> ⚠️ ไฟล์ backup **มี virtual key ของผู้ใช้ทุกคน** เก็บให้ปลอดภัยเท่ากับ `.env`
+> (`backups/` อยู่ใน `.gitignore` แล้ว)
+>
+> `backup.sh` เขียนไฟล์ `.saltkey.txt` คู่กับ dump เสมอ เพราะ `LITELLM_SALT_KEY`
+> คือกุญแจถอดรหัส key ที่เก็บใน DB — `restore.sh` จะเช็คให้ว่าตรงกันก่อนเขียนทับ
+> ถ้าไม่ตรงจะหยุดทันที ไม่ปล่อยให้ได้ DB ที่อ่านไม่ออก
+
+## เวอร์ชันของ image
+
+pin ไว้ที่เวอร์ชันที่ทดสอบผ่านจริง ไม่ใช้ `:latest` / `:main` เพื่อให้ทุกคนที่ clone
+ได้ของชุดเดียวกัน:
+
+| image | เวอร์ชัน |
+|---|---|
+| `ghcr.io/berriai/litellm` | v1.96.2 |
+| `ghcr.io/open-webui/open-webui` | v0.11.0 |
+| `postgres` | 16.14-alpine |
+| `caddy` (prod) | 2.9.1-alpine |
+
+อัปเกรด: แก้ tag ใน `docker-compose.yml` → `docker compose pull` → `docker compose up -d`
+→ `./scripts/backup.sh` ก่อนเสมอถ้าเป็น major version
 
 ## License
 

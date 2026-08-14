@@ -3,3 +3,9 @@
 !.env.example
 *.bak
 .claude/
+
+# database dump — มี virtual key ของผู้ใช้ทั้งหมด
+backups/
+*.sql
+*.sql.gz
+*.saltkey.txt

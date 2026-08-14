@@ -1,6 +1,7 @@
 services:
   db:
-    image: postgres:16-alpine
+    # pin ไว้ที่เวอร์ชันที่ทดสอบผ่าน — อัพด้วย docker compose pull หลังแก้ tag
+    image: postgres:16.14-alpine
     container_name: llm-db
     restart: unless-stopped
     environment:
@@ -18,7 +19,8 @@ services:
       - llm-net
 
   litellm:
-    image: ghcr.io/berriai/litellm:main-stable
+    # LiteLLM 1.96.2 — ดู release ใหม่ที่ https://github.com/BerriAI/litellm/releases
+    image: ghcr.io/berriai/litellm:v1.96.2
     container_name: llm-litellm
     restart: unless-stopped
     depends_on:
@@ -57,7 +59,8 @@ services:
       - llm-net
 
   openwebui:
-    image: ghcr.io/open-webui/open-webui:main
+    # Open WebUI 0.11.0 — ดู release ใหม่ที่ https://github.com/open-webui/open-webui/releases
+    image: ghcr.io/open-webui/open-webui:v0.11.0
     container_name: llm-openwebui
     restart: unless-stopped
     depends_on:
@@ -77,6 +80,12 @@ services:
       - openwebui_data:/app/backend/data
     ports:
       - "${OPENWEBUI_PORT:-3000}:8080"
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://localhost:8080/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 90s
     mem_limit: 3g
     networks:
       - llm-net

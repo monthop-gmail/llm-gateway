@@ -25,7 +25,7 @@ services:
       ENABLE_SIGNUP: "True"
 
   caddy:
-    image: caddy:latest
+    image: caddy:2.9.1-alpine
     container_name: llm-caddy
     restart: unless-stopped
     depends_on:
