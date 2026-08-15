@@ -126,6 +126,27 @@ client.chat.completions.create(model="hf/qwen2.5-7b", messages=[...])
 | `hf/deepseek-v3.2` | deepseek-ai/DeepSeek-V3.2 | |
 | `hf/qwen3-coder-30b` | Qwen/Qwen3-Coder-30B-A3B-Instruct | เขียนโค้ด |
 
+### OpenRouter (โมเดล `:free` — ทดสอบผ่านทั้งหมดเมื่อ 2026-08-15)
+
+ต้องมี `OPENROUTER_API_KEY` ใน `.env` — สมัครฟรีที่ https://openrouter.ai/keys
+ทั้ง 6 ตัวรองรับ tool calling (ทดสอบแล้ว)
+
+| model_name | context | หมายเหตุ |
+|---|---|---|
+| `or/nemotron-ultra-550b` | 1M | ใหญ่ที่สุด ตอบไทยดี |
+| `or/nemotron-lightning` | 1M | เร็ว แต่พ่น reasoning ปนมาใน content |
+| `or/nemotron-super-120b` | 262K | |
+| `or/gemma-4-31b` | 262K | ตอบไทยดี |
+| `or/gpt-oss-20b` | 131K | ต้องให้ max_tokens สูงพอ ไม่งั้นได้แต่ reasoning |
+| `or/north-mini-code` | 256K | เขียนโค้ด |
+
+เช็ครายชื่อ `:free` ปัจจุบัน (เปลี่ยนบ่อย):
+
+```bash
+curl -s https://openrouter.ai/api/v1/models | python3 -c \
+  'import sys,json;[print(m["id"],m.get("context_length")) for m in json.load(sys.stdin)["data"] if m["id"].endswith(":free")]'
+```
+
 โมเดลบน HF ถูกปลด/เพิ่มเป็นระยะ เช็คว่าตอนนี้มีอะไรใช้ได้:
 
 ```bash

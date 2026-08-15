@@ -101,12 +101,26 @@ model_list:
   #     api_key: os.environ/GROQ_API_KEY
 
   # ---------- Cerebras — โควต้าใหญ่สุด 1M token/วัน ----------
-  # ฟรี: 1M token ต่อวัน แต่ 5 RPM และ context จำกัด 8K
+  # ฟรี: 1M token ต่อวัน แต่ RPM ต่ำและ context จำกัด
   # เหมาะกับงาน batch ไม่เหมาะกับ agent ที่ยิงถี่
-  # สมัคร https://cloud.cerebras.ai
-  # - model_name: cerebras/gpt-oss-120b
+  # เช็คโมเดลที่ใช้ได้: curl -s https://api.cerebras.ai/v1/models -H "Authorization: Bearer $CEREBRAS_API_KEY"
+  #
+  # ⚠️ ทดสอบ 2026-08-15: key ใช้ได้ /v1/models ตอบปกติ แต่ chat completion คืน
+  #    HTTP 402 "Payment required to access this resource" — ต้องเปิด billing/
+  #    activate free tier ที่ https://cloud.cerebras.ai ก่อน ปลดคอมเมนต์แล้วใช้ได้เลย
+  # - model_name: cb/gpt-oss-120b
   #   litellm_params:
   #     model: cerebras/gpt-oss-120b
+  #     api_key: os.environ/CEREBRAS_API_KEY
+  #
+  # - model_name: cb/gemma-4-31b
+  #   litellm_params:
+  #     model: cerebras/gemma-4-31b
+  #     api_key: os.environ/CEREBRAS_API_KEY
+  #
+  # - model_name: cb/glm-4.7
+  #   litellm_params:
+  #     model: cerebras/zai-glm-4.7
   #     api_key: os.environ/CEREBRAS_API_KEY
 
   # ---------- Google Gemini (AI Studio) — context 1M ----------
@@ -129,13 +143,40 @@ model_list:
   #     model: mistral/codestral-latest
   #     api_key: os.environ/MISTRAL_API_KEY
 
-  # ---------- OpenRouter — โมเดลฟรีหลายสิบตัวด้วย key เดียว ----------
-  # โมเดลที่ลงท้าย :free ไม่คิดเงิน (จำกัด ~20 RPM ต่อโมเดล)
-  # สมัคร https://openrouter.ai
-  # - model_name: or/deepseek-r1
-  #   litellm_params:
-  #     model: openrouter/deepseek/deepseek-r1:free
-  #     api_key: os.environ/OPENROUTER_API_KEY
+  # ---------- OpenRouter — โมเดลฟรีด้วย key เดียว ----------
+  # โมเดลที่ลงท้าย :free ไม่คิดเงิน (จำกัด RPM ต่อโมเดล)
+  # เช็ครายชื่อ :free ปัจจุบัน:
+  #   curl -s https://openrouter.ai/api/v1/models | python3 -c \
+  #     'import sys,json;[print(m["id"],m.get("context_length")) for m in json.load(sys.stdin)["data"] if m["id"].endswith(":free")]'
+  - model_name: or/nemotron-ultra-550b
+    litellm_params:
+      model: openrouter/nvidia/nemotron-3-ultra-550b-a55b:free
+      api_key: os.environ/OPENROUTER_API_KEY
+
+  - model_name: or/nemotron-lightning
+    litellm_params:
+      model: openrouter/nvidia/nemotron-3.5-lightning:free
+      api_key: os.environ/OPENROUTER_API_KEY
+
+  - model_name: or/nemotron-super-120b
+    litellm_params:
+      model: openrouter/nvidia/nemotron-3-super-120b-a12b:free
+      api_key: os.environ/OPENROUTER_API_KEY
+
+  - model_name: or/gemma-4-31b
+    litellm_params:
+      model: openrouter/google/gemma-4-31b-it:free
+      api_key: os.environ/OPENROUTER_API_KEY
+
+  - model_name: or/gpt-oss-20b
+    litellm_params:
+      model: openrouter/openai/gpt-oss-20b:free
+      api_key: os.environ/OPENROUTER_API_KEY
+
+  - model_name: or/north-mini-code
+    litellm_params:
+      model: openrouter/cohere/north-mini-code:free
+      api_key: os.environ/OPENROUTER_API_KEY
 
   # ---------- GitHub Models — ใช้ GitHub token ที่มีอยู่แล้ว ----------
   # ฟรี: ~10-15 RPM, 50-150 req/วัน แล้วแต่ชั้นของโมเดล
