@@ -109,6 +109,21 @@ if python3 - <<-'PY'
 PY
 then ok "โมเดลครบถ้วน ไม่มีชื่อซ้ำ"; else err "config.yaml มีปัญหา"; fi
 
+# ------------------------------ provider key ต้องถูกส่งเข้า container จริง
+note "ตัวแปร provider ใน .env.example ต้องถูกส่งเข้า litellm"
+missing=0
+while read -r v; do
+	case "$v" in
+	CHAT_DOMAIN | API_DOMAIN | ACME_EMAIL | LITELLM_PORT | OPENWEBUI_PORT) continue ;;
+	POSTGRES_* | LITELLM_* | WEBUI_* | OPENWEBUI_*) continue ;;
+	esac
+	if ! grep -q "^      $v:" docker-compose.yml; then
+		err "$v อยู่ใน .env.example แต่ compose ไม่ได้ส่งเข้า container — key จะไม่ถึง litellm"
+		missing=1
+	fi
+done < <(grep -oE '^[A-Z_]+=' .env.example | tr -d '=')
+[ "$missing" -eq 0 ] && ok "ส่งครบทุกตัว"
+
 # ----------------------------------------------------------------- Caddyfile
 note "deploy/Caddyfile"
 if docker run --rm \

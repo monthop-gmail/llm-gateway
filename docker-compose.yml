@@ -35,12 +35,21 @@ services:
       UI_USERNAME: ${LITELLM_UI_USERNAME:-admin}
       UI_PASSWORD: ${LITELLM_UI_PASSWORD:?LITELLM_UI_PASSWORD is required}
       # --- provider credentials (ใส่เท่าที่ใช้ ที่เหลือปล่อยว่างได้) ---
+      # เจ้าที่มี free tier
       HF_TOKEN: ${HF_TOKEN:-}
-      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
-      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
       GEMINI_API_KEY: ${GEMINI_API_KEY:-}
       GROQ_API_KEY: ${GROQ_API_KEY:-}
+      CEREBRAS_API_KEY: ${CEREBRAS_API_KEY:-}
+      MISTRAL_API_KEY: ${MISTRAL_API_KEY:-}
       OPENROUTER_API_KEY: ${OPENROUTER_API_KEY:-}
+      GITHUB_API_KEY: ${GITHUB_API_KEY:-}
+      NVIDIA_NIM_API_KEY: ${NVIDIA_NIM_API_KEY:-}
+      SAMBANOVA_API_KEY: ${SAMBANOVA_API_KEY:-}
+      CLOUDFLARE_API_KEY: ${CLOUDFLARE_API_KEY:-}
+      CLOUDFLARE_ACCOUNT_ID: ${CLOUDFLARE_ACCOUNT_ID:-}
+      # เจ้าที่เสียเงินอย่างเดียว
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
       # --- self-hosted backends (ใช้ตอนเพิ่ม vLLM / Ollama) ---
       VLLM_API_BASE: ${VLLM_API_BASE:-}
       OLLAMA_API_BASE: ${OLLAMA_API_BASE:-}

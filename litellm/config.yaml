@@ -82,6 +82,83 @@ model_list:
       model: huggingface/Qwen/Qwen3-Coder-30B-A3B-Instruct
       api_key: os.environ/HF_TOKEN
 
+  ####################################################################
+  # เจ้าอื่นที่มี free tier — ปลดคอมเมนต์แล้วใส่ key ใน .env
+  # ตัวเลข rate limit ตรวจเมื่อ 2026-08-15 เปลี่ยนบ่อย เช็คหน้า official ก่อนพึ่งพา
+  ####################################################################
+
+  # ---------- Groq — เร็วที่สุด (LPU ~300+ tok/s) ----------
+  # ฟรี: 30 RPM / 14.4K req ต่อวัน / 500K token ต่อวัน (llama-3.1-8b-instant)
+  # สมัคร https://console.groq.com — ไม่ต้องใช้บัตร
+  # - model_name: groq/llama-3.3-70b
+  #   litellm_params:
+  #     model: groq/llama-3.3-70b-versatile
+  #     api_key: os.environ/GROQ_API_KEY
+  #
+  # - model_name: groq/gpt-oss-120b
+  #   litellm_params:
+  #     model: groq/openai/gpt-oss-120b
+  #     api_key: os.environ/GROQ_API_KEY
+
+  # ---------- Cerebras — โควต้าใหญ่สุด 1M token/วัน ----------
+  # ฟรี: 1M token ต่อวัน แต่ 5 RPM และ context จำกัด 8K
+  # เหมาะกับงาน batch ไม่เหมาะกับ agent ที่ยิงถี่
+  # สมัคร https://cloud.cerebras.ai
+  # - model_name: cerebras/gpt-oss-120b
+  #   litellm_params:
+  #     model: cerebras/gpt-oss-120b
+  #     api_key: os.environ/CEREBRAS_API_KEY
+
+  # ---------- Google Gemini (AI Studio) — context 1M ----------
+  # ฟรี: ดูโควต้าจริงของบัญชีที่ https://aistudio.google.com/rate-limit
+  # ⚠️ free tier ของ Google ใช้ข้อมูลไปเทรนโมเดล — อย่าส่งข้อมูลลูกค้า
+  # - model_name: gemini/flash
+  #   litellm_params:
+  #     model: gemini/gemini-2.5-flash
+  #     api_key: os.environ/GEMINI_API_KEY
+
+  # ---------- Mistral — 1B token/เดือน ----------
+  # ต้องยืนยันเบอร์โทร สมัคร https://console.mistral.ai
+  # - model_name: mistral/small
+  #   litellm_params:
+  #     model: mistral/mistral-small-latest
+  #     api_key: os.environ/MISTRAL_API_KEY
+  #
+  # - model_name: mistral/codestral
+  #   litellm_params:
+  #     model: mistral/codestral-latest
+  #     api_key: os.environ/MISTRAL_API_KEY
+
+  # ---------- OpenRouter — โมเดลฟรีหลายสิบตัวด้วย key เดียว ----------
+  # โมเดลที่ลงท้าย :free ไม่คิดเงิน (จำกัด ~20 RPM ต่อโมเดล)
+  # สมัคร https://openrouter.ai
+  # - model_name: or/deepseek-r1
+  #   litellm_params:
+  #     model: openrouter/deepseek/deepseek-r1:free
+  #     api_key: os.environ/OPENROUTER_API_KEY
+
+  # ---------- GitHub Models — ใช้ GitHub token ที่มีอยู่แล้ว ----------
+  # ฟรี: ~10-15 RPM, 50-150 req/วัน แล้วแต่ชั้นของโมเดล
+  # ใช้ PAT เดิมได้เลย https://github.com/marketplace/models
+  # - model_name: gh/gpt-4o-mini
+  #   litellm_params:
+  #     model: github/gpt-4o-mini
+  #     api_key: os.environ/GITHUB_API_KEY
+
+  # ---------- NVIDIA NIM ----------
+  # เครดิตฟรีตอนสมัคร https://build.nvidia.com
+  # - model_name: nim/llama-3.3-70b
+  #   litellm_params:
+  #     model: nvidia_nim/meta/llama-3.3-70b-instruct
+  #     api_key: os.environ/NVIDIA_NIM_API_KEY
+
+  # ---------- Cloudflare Workers AI ----------
+  # ฟรี 10,000 neurons/วัน ต้องมี CLOUDFLARE_ACCOUNT_ID ด้วย
+  # - model_name: cf/llama-3-8b
+  #   litellm_params:
+  #     model: cloudflare/@cf/meta/llama-3-8b-instruct
+  #     api_key: os.environ/CLOUDFLARE_API_KEY
+
   # ---------- เฟสถัดไป: self-hosted ----------
   # vLLM (OpenAI-compatible server) — ตั้ง VLLM_API_BASE=http://<host>:8000/v1
   # - model_name: local/vllm-qwen
