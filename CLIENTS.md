@@ -17,7 +17,7 @@
 ```
 Base URL : https://llm-api.example.com/v1     ← เปลี่ยนเป็น API_DOMAIN ของคุณ
 API Key  : sk-...                             ← ออกด้วย ./scripts/gen-key.sh
-Model    : hf/qwen3-coder-30b, hf/llama-3.3-70b, ... (ดู README)
+Model    : hf/qwen3-coder-next, hf/llama-3.3-70b, ... (ดู README)
 ```
 
 ตอนยังเป็น dev (ยังไม่มีโดเมน) ใช้ IP:port ตรงๆ ได้:
@@ -34,7 +34,7 @@ Base URL : http://<host>:4000/v1     (ในเครื่องเดียว
 ออก key แยกต่อเครื่องมือ จะได้ดู spend แยกกันและ revoke ทีละตัวได้:
 
 ```bash
-./scripts/gen-key.sh --alias cline    --models hf/qwen3-coder-30b,hf/deepseek-v3.2
+./scripts/gen-key.sh --alias cline    --models hf/qwen3-coder-next,hf/deepseek-v3.2
 ./scripts/gen-key.sh --alias n8n      --budget 2
 ./scripts/gen-key.sh --alias aider    --duration 90d
 ```
@@ -50,7 +50,7 @@ Settings → API Provider → **OpenAI Compatible**
 ```
 Base URL : https://llm-api.example.com/v1
 API Key  : sk-...
-Model ID : hf/qwen3-coder-30b
+Model ID : hf/qwen3-coder-next
 ```
 
 ติ๊ก **Enable streaming** ไว้ และเปิด **Function Calling / Tools** (ทดสอบแล้วรองรับ)
@@ -63,7 +63,7 @@ Model ID : hf/qwen3-coder-30b
 models:
   - name: qwen3-coder
     provider: openai
-    model: hf/qwen3-coder-30b
+    model: hf/qwen3-coder-next
     apiBase: https://llm-api.example.com/v1
     apiKey: sk-...
     roles: [chat, edit, apply]
@@ -80,7 +80,7 @@ models:
 ```bash
 export OPENAI_API_BASE=https://llm-api.example.com/v1
 export OPENAI_API_KEY=sk-...
-aider --model openai/hf/qwen3-coder-30b
+aider --model openai/hf/qwen3-coder-next
 ```
 
 หรือใส่ถาวรใน `~/.aider.conf.yml`:
@@ -88,7 +88,7 @@ aider --model openai/hf/qwen3-coder-30b
 ```yaml
 openai-api-base: https://llm-api.example.com/v1
 openai-api-key: sk-...
-model: openai/hf/qwen3-coder-30b
+model: openai/hf/qwen3-coder-next
 ```
 
 ### Claude Code
@@ -98,7 +98,7 @@ LiteLLM มี `/v1/messages` (รูปแบบ Anthropic) ให้ ชี้
 ```bash
 export ANTHROPIC_BASE_URL=https://llm-api.example.com
 export ANTHROPIC_AUTH_TOKEN=sk-...
-export ANTHROPIC_MODEL=hf/qwen3-coder-30b
+export ANTHROPIC_MODEL=hf/qwen3-coder-next
 export ANTHROPIC_SMALL_FAST_MODEL=hf/llama-3.1-8b
 claude
 ```
@@ -134,7 +134,7 @@ API endpoint `https://llm-api.example.com/v1`, key `sk-...`, model name ตา�
 from openai import OpenAI
 client = OpenAI(base_url="https://llm-api.example.com/v1", api_key="sk-...")
 r = client.chat.completions.create(
-    model="hf/qwen3-coder-30b",
+    model="hf/qwen3-coder-next",
     messages=[{"role": "user", "content": "เขียน fizzbuzz"}],
 )
 ```
@@ -156,8 +156,8 @@ CrewAI / LiteLLM-native ใช้ชื่อ `openai/hf/llama-3.3-70b` พร�
 
 | งาน | แนะนำ |
 |---|---|
-| coding agent (แก้โค้ดหลายไฟล์) | `hf/qwen3-coder-30b`, `hf/deepseek-v3.2` |
-| agent ที่เรียก tool เยอะ | `hf/llama-3.3-70b`, `hf/qwen3-235b` |
+| coding agent (แก้โค้ดหลายไฟล์) | `hf/qwen3-coder-next`, `hf/deepseek-v3.2` |
+| agent ที่เรียก tool เยอะ | `hf/llama-3.3-70b`, `hf/qwen3.5-397b` |
 | งานเบา/จัดหมวด/สรุป (ประหยัด) | `hf/llama-3.1-8b`, `hf/qwen2.5-7b` |
 | งานที่ต้องคิดเยอะ | `hf/deepseek-r1`, `hf/glm-4.7` — แต่ช้า ไม่เหมาะเป็น agent loop |
 | ต้องการความเร็วสูงสุด | `gq/llama-3.1-8b` (181ms), `gq/llama-3.3-70b` (688ms) |
@@ -173,7 +173,7 @@ CrewAI / LiteLLM-native ใช้ชื่อ `openai/hf/llama-3.3-70b` พร�
 - ถ้าเจอ rate limit จาก provider ให้เพิ่ม fallback ใน `litellm/config.yaml`:
   ```yaml
   litellm_settings:
-    fallbacks: [{"hf/qwen3-coder-30b": ["hf/deepseek-v3.2", "hf/qwen2.5-7b"]}]
+    fallbacks: [{"hf/qwen3-coder-next": ["hf/deepseek-v3.2", "hf/qwen2.5-7b"]}]
   ```
 - context window ของโมเดลต่างกันมาก (8k–128k) coding agent มักต้องการ 32k+
   ถ้าเจอ error เรื่องความยาว ให้ย้ายไปโมเดลใหญ่ขึ้น
