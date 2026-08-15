@@ -50,9 +50,9 @@ model_list:
       model: huggingface/openai/gpt-oss-120b
       api_key: os.environ/HF_TOKEN
 
-  - model_name: hf/qwen3-235b
+  - model_name: hf/qwen3.5-397b
     litellm_params:
-      model: huggingface/Qwen/Qwen3-235B-A22B-Instruct-2507
+      model: huggingface/Qwen/Qwen3.5-397B-A17B
       api_key: os.environ/HF_TOKEN
 
   - model_name: hf/glm-4.7
@@ -76,10 +76,23 @@ model_list:
       model: huggingface/deepseek-ai/DeepSeek-V3.2
       api_key: os.environ/HF_TOKEN
 
-  # ---------- เขียนโค้ด ----------
-  - model_name: hf/qwen3-coder-30b
+  # Qwen3.6-27B — รุ่นใหม่ล่าสุดที่ยังฟรีบน HF
+  # (Qwen3.8-27B ออกแล้วเมื่อ 2026-08-05 แต่ยังไม่มี provider ฟรี — ดูหมายเหตุท้ายไฟล์)
+  - model_name: hf/qwen3.6-27b
     litellm_params:
-      model: huggingface/Qwen/Qwen3-Coder-30B-A3B-Instruct
+      model: huggingface/Qwen/Qwen3.6-27B
+      api_key: os.environ/HF_TOKEN
+
+  # SEA-LION — โมเดล AI Singapore เน้นภาษาอาเซียนรวมไทย
+  - model_name: hf/sea-lion-32b
+    litellm_params:
+      model: huggingface/aisingapore/Qwen-SEA-LION-v4-32B-IT
+      api_key: os.environ/HF_TOKEN
+
+  # ---------- เขียนโค้ด ----------
+  - model_name: hf/qwen3-coder-next
+    litellm_params:
+      model: huggingface/Qwen/Qwen3-Coder-Next
       api_key: os.environ/HF_TOKEN
 
   ####################################################################
@@ -87,18 +100,28 @@ model_list:
   # ตัวเลข rate limit ตรวจเมื่อ 2026-08-15 เปลี่ยนบ่อย เช็คหน้า official ก่อนพึ่งพา
   ####################################################################
 
-  # ---------- Groq — เร็วที่สุด (LPU ~300+ tok/s) ----------
+  # ---------- Groq — เร็วที่สุด (LPU) ----------
   # ฟรี: 30 RPM / 14.4K req ต่อวัน / 500K token ต่อวัน (llama-3.1-8b-instant)
-  # สมัคร https://console.groq.com — ไม่ต้องใช้บัตร
-  # - model_name: groq/llama-3.3-70b
-  #   litellm_params:
-  #     model: groq/llama-3.3-70b-versatile
-  #     api_key: os.environ/GROQ_API_KEY
-  #
-  # - model_name: groq/gpt-oss-120b
-  #   litellm_params:
-  #     model: groq/openai/gpt-oss-120b
-  #     api_key: os.environ/GROQ_API_KEY
+  # เช็ครายชื่อ: curl -s https://api.groq.com/openai/v1/models -H "Authorization: Bearer $GROQ_API_KEY"
+  - model_name: gq/llama-3.3-70b
+    litellm_params:
+      model: groq/llama-3.3-70b-versatile
+      api_key: os.environ/GROQ_API_KEY
+
+  - model_name: gq/llama-3.1-8b
+    litellm_params:
+      model: groq/llama-3.1-8b-instant
+      api_key: os.environ/GROQ_API_KEY
+
+  - model_name: gq/gpt-oss-120b
+    litellm_params:
+      model: groq/openai/gpt-oss-120b
+      api_key: os.environ/GROQ_API_KEY
+
+  - model_name: gq/qwen3.6-27b
+    litellm_params:
+      model: groq/qwen/qwen3.6-27b
+      api_key: os.environ/GROQ_API_KEY
 
   # ---------- Cerebras — โควต้าใหญ่สุด 1M token/วัน ----------
   # ฟรี: 1M token ต่อวัน แต่ RPM ต่ำและ context จำกัด
@@ -132,16 +155,58 @@ model_list:
   #     api_key: os.environ/GEMINI_API_KEY
 
   # ---------- Mistral — 1B token/เดือน ----------
-  # ต้องยืนยันเบอร์โทร สมัคร https://console.mistral.ai
-  # - model_name: mistral/small
-  #   litellm_params:
-  #     model: mistral/mistral-small-latest
-  #     api_key: os.environ/MISTRAL_API_KEY
+  # เช็ครายชื่อ: curl -s https://api.mistral.ai/v1/models -H "Authorization: Bearer $MISTRAL_API_KEY"
+  - model_name: mi/small
+    litellm_params:
+      model: mistral/mistral-small-latest
+      api_key: os.environ/MISTRAL_API_KEY
+
+  - model_name: mi/medium
+    litellm_params:
+      model: mistral/mistral-medium-latest
+      api_key: os.environ/MISTRAL_API_KEY
+
+  - model_name: mi/large
+    litellm_params:
+      model: mistral/mistral-large-latest
+      api_key: os.environ/MISTRAL_API_KEY
+
+  - model_name: mi/codestral
+    litellm_params:
+      model: mistral/codestral-latest
+      api_key: os.environ/MISTRAL_API_KEY
+
+  # devstral — ออกแบบมาสำหรับ coding agent โดยเฉพาะ
+  - model_name: mi/devstral
+    litellm_params:
+      model: mistral/devstral-latest
+      api_key: os.environ/MISTRAL_API_KEY
+
+  - model_name: mi/ministral-8b
+    litellm_params:
+      model: mistral/ministral-8b-latest
+      api_key: os.environ/MISTRAL_API_KEY
+
+  # ---------- Cloudflare Workers AI — ฟรี 10,000 neurons/วัน ----------
+  # ต้องมี CLOUDFLARE_ACCOUNT_ID ใน .env ด้วย
+  # เช็ครายชื่อ: curl -s "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/models/search?per_page=100" \
+  #   -H "Authorization: Bearer $CLOUDFLARE_API_KEY"
   #
-  # - model_name: mistral/codestral
-  #   litellm_params:
-  #     model: mistral/codestral-latest
-  #     api_key: os.environ/MISTRAL_API_KEY
+  # SEA-LION — โมเดลของ AI Singapore เน้นภาษาเอเชียตะวันออกเฉียงใต้ (มีไทย)
+  - model_name: cf/sea-lion-27b
+    litellm_params:
+      model: cloudflare/@cf/aisingapore/gemma-sea-lion-v4-27b-it
+      api_key: os.environ/CLOUDFLARE_API_KEY
+
+  - model_name: cf/llama-3.3-70b
+    litellm_params:
+      model: cloudflare/@cf/meta/llama-3.3-70b-instruct-fp8-fast
+      api_key: os.environ/CLOUDFLARE_API_KEY
+
+  - model_name: cf/qwen2.5-coder-32b
+    litellm_params:
+      model: cloudflare/@cf/qwen/qwen2.5-coder-32b-instruct
+      api_key: os.environ/CLOUDFLARE_API_KEY
 
   # ---------- OpenRouter — โมเดลฟรีด้วย key เดียว ----------
   # โมเดลที่ลงท้าย :free ไม่คิดเงิน (จำกัด RPM ต่อโมเดล)
@@ -186,12 +251,60 @@ model_list:
   #     model: github/gpt-4o-mini
   #     api_key: os.environ/GITHUB_API_KEY
 
-  # ---------- NVIDIA NIM ----------
-  # เครดิตฟรีตอนสมัคร https://build.nvidia.com
-  # - model_name: nim/llama-3.3-70b
-  #   litellm_params:
-  #     model: nvidia_nim/meta/llama-3.3-70b-instruct
-  #     api_key: os.environ/NVIDIA_NIM_API_KEY
+  # ---------- NVIDIA NIM — 100+ โมเดล https://build.nvidia.com ----------
+  # เช็ครายชื่อ: curl -s https://integrate.api.nvidia.com/v1/models -H "Authorization: Bearer $NVIDIA_NIM_API_KEY"
+  - model_name: nim/minimax-m3
+    litellm_params:
+      model: nvidia_nim/minimaxai/minimax-m3
+      api_key: os.environ/NVIDIA_NIM_API_KEY
+
+  - model_name: nim/step-3.7-flash
+    litellm_params:
+      model: nvidia_nim/stepfun-ai/step-3.7-flash
+      api_key: os.environ/NVIDIA_NIM_API_KEY
+
+  - model_name: nim/nemotron-nano-30b
+    litellm_params:
+      model: nvidia_nim/nvidia/nemotron-3-nano-30b-a3b
+      api_key: os.environ/NVIDIA_NIM_API_KEY
+
+  - model_name: nim/gemma-4-31b
+    litellm_params:
+      model: nvidia_nim/google/gemma-4-31b-it
+      api_key: os.environ/NVIDIA_NIM_API_KEY
+
+  - model_name: nim/mistral-nemotron
+    litellm_params:
+      model: nvidia_nim/mistralai/mistral-nemotron
+      api_key: os.environ/NVIDIA_NIM_API_KEY
+
+  - model_name: nim/nemotron-super-49b
+    litellm_params:
+      model: nvidia_nim/nvidia/llama-3.3-nemotron-super-49b-v1.5
+      api_key: os.environ/NVIDIA_NIM_API_KEY
+
+  - model_name: nim/llama-3.3-70b
+    litellm_params:
+      model: nvidia_nim/meta/llama-3.3-70b-instruct
+      api_key: os.environ/NVIDIA_NIM_API_KEY
+
+  - model_name: nim/deepseek-v4-flash
+    litellm_params:
+      model: nvidia_nim/deepseek-ai/deepseek-v4-flash-0731
+      api_key: os.environ/NVIDIA_NIM_API_KEY
+
+  # ---------- Embeddings (เติมช่องว่างที่ gateway ยังไม่มี) ----------
+  # ตัวนี้บังคับต้องมี input_type — ตั้ง passage ไว้ (เหมาะกับ index เอกสาร)
+  - model_name: emb/nv-embedqa-e5
+    litellm_params:
+      model: nvidia_nim/nvidia/nv-embedqa-e5-v5
+      api_key: os.environ/NVIDIA_NIM_API_KEY
+      input_type: "passage"
+
+  - model_name: emb/nemotron-embed
+    litellm_params:
+      model: nvidia_nim/nvidia/nemotron-3-embed-1b
+      api_key: os.environ/NVIDIA_NIM_API_KEY
 
   # ---------- Cloudflare Workers AI ----------
   # ฟรี 10,000 neurons/วัน ต้องมี CLOUDFLARE_ACCOUNT_ID ด้วย

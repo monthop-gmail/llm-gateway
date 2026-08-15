@@ -109,7 +109,10 @@ client.chat.completions.create(model="hf/qwen2.5-7b", messages=[...])
 
 ## โมเดลที่ตั้งไว้ให้
 
-12 ตัว ทดสอบยิงจริงผ่านทั้งหมดเมื่อ 2026-08-14:
+รวม **43 โมเดล** จาก 5 provider — ทดสอบยิงจริงผ่านทั้งหมด (อัปเดต 2026-08-16)
+ทุกตัวใช้ `sk-...` ใบเดียวกัน สลับโมเดลได้โดยไม่ต้องแก้ฝั่ง client
+
+### HuggingFace (ต้องมี `HF_TOKEN`)
 
 | model_name | ปลายทาง | เหมาะกับ |
 |---|---|---|
@@ -119,12 +122,18 @@ client.chat.completions.create(model="hf/qwen2.5-7b", messages=[...])
 | `hf/gpt-oss-20b` | openai/gpt-oss-20b | |
 | `hf/llama-3.3-70b` | meta-llama/Llama-3.3-70B-Instruct | agent ที่เรียก tool |
 | `hf/gpt-oss-120b` | openai/gpt-oss-120b | |
-| `hf/qwen3-235b` | Qwen/Qwen3-235B-A22B-Instruct-2507 | งานยาก |
+| `hf/qwen3.5-397b` | Qwen/Qwen3.5-397B-A17B | งานยาก |
+| `hf/qwen3.6-27b` | Qwen/Qwen3.6-27B | Qwen รุ่นใหม่สุดที่ยังฟรี |
+| `hf/sea-lion-32b` | aisingapore/Qwen-SEA-LION-v4-32B-IT | เน้นภาษาอาเซียน/ไทย |
 | `hf/glm-4.7` | zai-org/GLM-4.7 | thinking model — ช้า |
 | `hf/kimi-k2.6` | moonshotai/Kimi-K2.6 | thinking model — ช้า |
 | `hf/deepseek-r1` | novita/deepseek-ai/DeepSeek-R1 | reasoning |
 | `hf/deepseek-v3.2` | deepseek-ai/DeepSeek-V3.2 | |
-| `hf/qwen3-coder-30b` | Qwen/Qwen3-Coder-30B-A3B-Instruct | เขียนโค้ด |
+| `hf/qwen3-coder-next` | Qwen/Qwen3-Coder-Next | เขียนโค้ด |
+
+> **Qwen3.8-27B** (ออก 2026-08-05) ตรวจแล้วเมื่อ 2026-08-16 — ยังไม่มี provider ฟรี
+> ไม่อยู่ใน HF router, ไม่มีบน Groq/Cloudflare/NVIDIA NIM
+> มีบน OpenRouter แต่คิดเงิน ($0.45/M prompt) ตอนนี้ใช้ `hf/qwen3.6-27b` แทนไปก่อน
 
 ### OpenRouter (โมเดล `:free` — ทดสอบผ่านทั้งหมดเมื่อ 2026-08-15)
 
@@ -146,6 +155,62 @@ client.chat.completions.create(model="hf/qwen2.5-7b", messages=[...])
 curl -s https://openrouter.ai/api/v1/models | python3 -c \
   'import sys,json;[print(m["id"],m.get("context_length")) for m in json.load(sys.stdin)["data"] if m["id"].endswith(":free")]'
 ```
+
+### Groq (`GROQ_API_KEY`) — เร็วที่สุด
+
+วัดจริงผ่าน gateway: `gq/llama-3.1-8b` ตอบใน **181ms**, 70B ใน 688ms
+
+| model_name | ปลายทาง |
+|---|---|
+| `gq/llama-3.3-70b` | llama-3.3-70b-versatile |
+| `gq/llama-3.1-8b` | llama-3.1-8b-instant |
+| `gq/gpt-oss-120b` | openai/gpt-oss-120b |
+| `gq/qwen3.6-27b` | qwen/qwen3.6-27b |
+
+### Mistral (`MISTRAL_API_KEY`) — 1B token/เดือน
+
+| model_name | เหมาะกับ |
+|---|---|
+| `mi/small` `mi/medium` `mi/large` | งานทั่วไป |
+| `mi/codestral` | เขียนโค้ด |
+| `mi/devstral` | coding agent โดยเฉพาะ |
+| `mi/ministral-8b` | เล็ก ประหยัด |
+
+### NVIDIA NIM (`NVIDIA_NIM_API_KEY`)
+
+| model_name | หมายเหตุ |
+|---|---|
+| `nim/deepseek-v4-flash` | tool calling ✅ |
+| `nim/gemma-4-31b` | tool calling ✅ |
+| `nim/mistral-nemotron` | tool calling ✅ |
+| `nim/step-3.7-flash` | tool calling ✅ |
+| `nim/minimax-m3` | chat ได้ แต่ **ใส่ tools แล้ว 404** |
+| `nim/llama-3.3-70b` | chat ได้ แต่ **ใส่ tools แล้วค้างจน timeout** |
+| `nim/nemotron-nano-30b` | พ่น reasoning ปนใน content |
+| `nim/nemotron-super-49b` | thinking model |
+
+> `/v1/models` ของ NIM โฆษณา 102 โมเดล แต่ส่วนใหญ่คืน 404 `Not found for account`
+> ต้องยิงจริงถึงจะรู้ว่าตัวไหนใช้ได้
+
+### Cloudflare Workers AI (`CLOUDFLARE_API_KEY` + `CLOUDFLARE_ACCOUNT_ID`)
+
+| model_name | ปลายทาง |
+|---|---|
+| `cf/sea-lion-27b` | @cf/aisingapore/gemma-sea-lion-v4-27b-it |
+| `cf/llama-3.3-70b` | @cf/meta/llama-3.3-70b-instruct-fp8-fast |
+| `cf/qwen2.5-coder-32b` | @cf/qwen/qwen2.5-coder-32b-instruct |
+
+> โมเดลใหญ่บางตัว (glm-5.2, deepseek-v4) **ไม่อยู่ใน Workers Free plan**
+> คืน error `code 5035` ต้องอัปเกรดแผน
+
+### Embeddings (NVIDIA NIM)
+
+ใช้กับ RAG ได้ ทดสอบกับข้อความภาษาไทยแล้ว
+
+| model_name | มิติ |
+|---|---|
+| `emb/nemotron-embed` | 2048 |
+| `emb/nv-embedqa-e5` | 1024 (ตั้ง `input_type: passage` ไว้ในconfig เพราะโมเดลบังคับ) |
 
 โมเดลบน HF ถูกปลด/เพิ่มเป็นระยะ เช็คว่าตอนนี้มีอะไรใช้ได้:
 
