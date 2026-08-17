@@ -240,13 +240,32 @@ curl -s https://router.huggingface.co/v1/models -H "Authorization: Bearer $HF_TO
     api_key: "dummy"
 ```
 
-**Ollama**:
+**Ollama (รันเอง)**:
 ```yaml
 - model_name: local/ollama-llama3
   litellm_params:
     model: ollama_chat/llama3.1:8b
     api_base: os.environ/OLLAMA_API_BASE  # http://<host>:11434
 ```
+
+**Ollama Cloud** — Ollama โฮสต์โมเดลใหญ่ให้ ไม่ต้องมี GPU และไม่กิน RAM เครื่องเรา
+เป็น OpenAI-compatible แท้ (`https://ollama.com/v1`) จึงใช้ prefix `openai/` + `api_base`
+สร้าง key ที่ https://ollama.com/settings/keys แล้วใส่ `OLLAMA_API_KEY` ใน `.env`
+
+```yaml
+- model_name: oc/glm-5.2
+  litellm_params:
+    model: openai/glm-5.2
+    api_base: https://ollama.com/v1
+    api_key: os.environ/OLLAMA_API_KEY
+```
+
+มี 19 โมเดล cloud รวมตัวที่หาฟรีที่อื่นไม่ได้ — `qwen3.5:397b`, `mistral-large-3:675b`,
+`deepseek-v4-pro`, `kimi-k3`, `glm-5.2` มีบล็อกคอมเมนต์ไว้ใน `litellm/config.yaml` แล้ว
+เช็ครายชื่อ: `curl -s https://ollama.com/v1/models`
+
+> ชั้นฟรีมีจริง ($0 "light usage") แต่ Ollama **ไม่ประกาศตัวเลขโควต้า** ดูการใช้งาน
+> จริงได้ที่หน้า settings ของบัญชี — Pro $20/เดือน ได้โควต้า 50 เท่า
 
 **Cloud** — ใส่ API key ที่ `.env` (มีตัวแปรรออยู่แล้ว) แล้วเปิดคอมเมนต์ใน config.yaml
 

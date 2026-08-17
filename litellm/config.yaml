@@ -313,6 +313,49 @@ model_list:
   #     model: cloudflare/@cf/meta/llama-3-8b-instruct
   #     api_key: os.environ/CLOUDFLARE_API_KEY
 
+  # ---------- Ollama Cloud — โมเดลใหญ่โดยไม่ต้องมี GPU ----------
+  # ต่างจาก Ollama ที่รันเอง: อันนี้ Ollama โฮสต์ให้ ไม่กิน RAM/GPU ของเรา
+  # เป็น OpenAI-compatible แท้ (https://ollama.com/v1) จึงใช้ prefix openai/ + api_base
+  # สร้าง key: https://ollama.com/settings/keys
+  # ฟรี: มีชั้น $0 "light usage" — Ollama ไม่ประกาศตัวเลขโควต้า ดูที่หน้า settings ของบัญชี
+  # เช็ครายชื่อ: curl -s https://ollama.com/v1/models
+  #
+  # - model_name: oc/glm-5.2
+  #   litellm_params:
+  #     model: openai/glm-5.2
+  #     api_base: https://ollama.com/v1
+  #     api_key: os.environ/OLLAMA_API_KEY
+  #
+  # - model_name: oc/qwen3.5-397b
+  #   litellm_params:
+  #     model: openai/qwen3.5:397b
+  #     api_base: https://ollama.com/v1
+  #     api_key: os.environ/OLLAMA_API_KEY
+  #
+  # - model_name: oc/mistral-large-3
+  #   litellm_params:
+  #     model: openai/mistral-large-3:675b
+  #     api_base: https://ollama.com/v1
+  #     api_key: os.environ/OLLAMA_API_KEY
+  #
+  # - model_name: oc/deepseek-v4-pro
+  #   litellm_params:
+  #     model: openai/deepseek-v4-pro:0813
+  #     api_base: https://ollama.com/v1
+  #     api_key: os.environ/OLLAMA_API_KEY
+  #
+  # - model_name: oc/kimi-k3
+  #   litellm_params:
+  #     model: openai/kimi-k3
+  #     api_base: https://ollama.com/v1
+  #     api_key: os.environ/OLLAMA_API_KEY
+  #
+  # - model_name: oc/gpt-oss-120b
+  #   litellm_params:
+  #     model: openai/gpt-oss:120b
+  #     api_base: https://ollama.com/v1
+  #     api_key: os.environ/OLLAMA_API_KEY
+
   # ---------- เฟสถัดไป: self-hosted ----------
   # vLLM (OpenAI-compatible server) — ตั้ง VLLM_API_BASE=http://<host>:8000/v1
   # - model_name: local/vllm-qwen
