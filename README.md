@@ -250,6 +250,46 @@ curl -s https://router.huggingface.co/v1/models -H "Authorization: Bearer $HF_TO
 > บาง provider (เช่น groq) อาจตอบ `Not allowed to POST ... for provider X`
 > แปลว่าบัญชี HF ยังไม่มีสิทธิ์/billing กับ provider นั้น ให้ใช้ auto-route แทน
 
+## โมเดลไหนเขียนโค้ดได้ดี — วัดจริง
+
+รันด้วย `scripts/bench-coding.py` โจทย์ 3 ข้อ ตรวจผลอัตโนมัติ (ทดสอบ 2026-08-17):
+คำนวณนิพจน์พร้อม edge case, LRU cache แบบมี TTL, แก้บั๊กจากโค้ดที่ให้มา
+โค้ดที่โมเดลเขียนถูกรันใน container แยก ไม่ได้รันบนเครื่องตรงๆ
+
+| model_name | คะแนน | เวลารวม | provider |
+|---|---|---|---|
+| `cf/qwen2.5-coder-32b` | **3/3** | 15.6s | Cloudflare |
+| `gq/gpt-oss-120b` | **3/3** | 26.2s | Groq |
+| `oc/gpt-oss-120b` | **3/3** | 42.0s | Ollama Cloud |
+| `or/nemotron-ultra-550b` | **3/3** | 51.9s | OpenRouter |
+| `or/north-mini-code` | **3/3** | 97.6s | OpenRouter |
+| `gq/llama-3.3-70b` | 2/3 | 2.1s | Groq |
+| `mi/codestral` | 2/3 | 4.9s | Mistral |
+| `mi/large` | 2/3 | 10.4s | Mistral |
+| `hf/qwen3-coder-next` | 2/3 | 10.8s | HuggingFace |
+| `mi/devstral` | 2/3 | 12.2s | Mistral |
+| `gq/qwen3.6-27b` | 0/3 | 41.2s | Groq |
+
+**เลือกยังไง**
+
+- **เขียนโค้ดทั่วไป / coding agent** → `cf/qwen2.5-coder-32b` ทำครบ 3 ข้อและเร็วสุดในกลุ่มที่ได้เต็ม
+- **งานยากที่ต้องแม่น** → `gq/gpt-oss-120b` ได้เต็มเหมือนกัน และ Groq เสถียรกว่าเรื่อง rate limit
+- **autocomplete / งานสั้นๆ ที่ต้องการความเร็ว** → `gq/llama-3.1-8b` (181ms) หรือ `mi/codestral` (4.9s)
+  ยอมแลกความแม่นบางส่วนกับความเร็ว
+- **หลีกเลี่ยง** → `gq/qwen3.6-27b` เป็น thinking model ที่พ่น `<think>` ลงใน content
+  แล้วใช้ token หมดก่อนเขียนโค้ดจบ ได้ 0/3
+
+> ที่น่าสังเกต: โมเดลที่ตั้งชื่อว่าสาย coding ไม่ได้ชนะเสมอ — `mi/devstral` กับ
+> `hf/qwen3-coder-next` ได้ 2/3 ขณะที่ `gq/gpt-oss-120b` ซึ่งเป็นโมเดลทั่วไปได้เต็ม
+> ข้อที่ตกกันมากคือโจทย์ parser (ลำดับความสำคัญ + วงเล็บ + เลขติดลบ)
+
+รันเองกับโมเดลอื่น:
+
+```bash
+set -a; source .env; set +a
+python3 scripts/bench-coding.py cf/qwen2.5-coder-32b gq/gpt-oss-120b mi/codestral
+```
+
 ## เพิ่ม backend
 
 แก้ `litellm/config.yaml` (มีตัวอย่างคอมเมนต์ไว้ครบ) แล้ว `docker compose restart litellm`
@@ -387,6 +427,7 @@ scripts/rotate-hf-token.sh      เปลี่ยน HF token ใหม่ + �
 scripts/backup.sh               สำรอง virtual key + spend log
 scripts/restore.sh              กู้คืนจาก backup
 scripts/validate.sh             ตรวจ config ทั้งหมด (CI เรียกตัวนี้)
+scripts/bench-coding.py         วัดความสามารถเขียนโค้ดของโมเดล
 CLIENTS.md                      วิธีต่อ AI agent / coding agent
 .env.example                    template — คัดลอกเป็น .env แล้วเติมค่า
 ```
@@ -402,6 +443,10 @@ CLIENTS.md                      วิธีต่อ AI agent / coding agent
 
 # ตรวจ config ก่อน push — CI เรียกตัวเดียวกันนี้
 ./scripts/validate.sh
+
+# วัดว่าโมเดลไหนเขียนโค้ดได้ดี (ต้อง up stack ก่อน)
+set -a; source .env; set +a
+python3 scripts/bench-coding.py cf/qwen2.5-coder-32b gq/gpt-oss-120b
 ```
 
 ## Backup

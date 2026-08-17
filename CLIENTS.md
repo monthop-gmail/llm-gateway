@@ -1,12 +1,12 @@
 # ต่อ AI agent / coding agent เข้ากับ gateway นี้
 
-ทดสอบจริงเมื่อ 2026-08-14 — สิ่งที่ gateway นี้รองรับ:
+ทดสอบจริง อัปเดต 2026-08-17 — สิ่งที่ gateway นี้รองรับ:
 
 | ความสามารถ | สถานะ | หมายเหตุ |
 |---|---|---|
 | OpenAI Chat Completions `/v1/chat/completions` | ✅ | endpoint หลัก |
 | Streaming (SSE) | ✅ | |
-| **Tool / function calling** | ✅ | ผ่านทั้ง 6 โมเดลที่ทดสอบ — หัวใจของ agent |
+| **Tool / function calling** | ✅ | ทดสอบผ่านทุก provider — หัวใจของ agent (ดูข้อยกเว้นใน README) |
 | Anthropic format `/v1/messages` | ✅ | ใช้กับ Claude Code ได้ |
 | `/v1/models` | ✅ | client ส่วนใหญ่ดึงรายชื่อโมเดลอัตโนมัติ |
 | Embeddings | ✅ | `emb/nemotron-embed` (2048 มิติ), `emb/nv-embedqa-e5` (1024) |
@@ -17,7 +17,7 @@
 ```
 Base URL : https://llm-api.example.com/v1     ← เปลี่ยนเป็น API_DOMAIN ของคุณ
 API Key  : sk-...                             ← ออกด้วย ./scripts/gen-key.sh
-Model    : hf/qwen3-coder-next, hf/llama-3.3-70b, ... (ดู README)
+Model    : cf/qwen2.5-coder-32b, gq/llama-3.3-70b, ... (ดู README)
 ```
 
 ตอนยังเป็น dev (ยังไม่มีโดเมน) ใช้ IP:port ตรงๆ ได้:
@@ -34,7 +34,7 @@ Base URL : http://<host>:4000/v1     (ในเครื่องเดียว
 ออก key แยกต่อเครื่องมือ จะได้ดู spend แยกกันและ revoke ทีละตัวได้:
 
 ```bash
-./scripts/gen-key.sh --alias cline    --models hf/qwen3-coder-next,hf/deepseek-v3.2
+./scripts/gen-key.sh --alias cline    --models cf/qwen2.5-coder-32b,gq/gpt-oss-120b
 ./scripts/gen-key.sh --alias n8n      --budget 2
 ./scripts/gen-key.sh --alias aider    --duration 90d
 ```
@@ -50,7 +50,7 @@ Settings → API Provider → **OpenAI Compatible**
 ```
 Base URL : https://llm-api.example.com/v1
 API Key  : sk-...
-Model ID : hf/qwen3-coder-next
+Model ID : cf/qwen2.5-coder-32b
 ```
 
 ติ๊ก **Enable streaming** ไว้ และเปิด **Function Calling / Tools** (ทดสอบแล้วรองรับ)
@@ -61,15 +61,15 @@ Model ID : hf/qwen3-coder-next
 
 ```yaml
 models:
-  - name: qwen3-coder
+  - name: qwen-coder
     provider: openai
-    model: hf/qwen3-coder-next
+    model: cf/qwen2.5-coder-32b
     apiBase: https://llm-api.example.com/v1
     apiKey: sk-...
     roles: [chat, edit, apply]
   - name: llama-fast
     provider: openai
-    model: hf/llama-3.1-8b
+    model: gq/llama-3.1-8b
     apiBase: https://llm-api.example.com/v1
     apiKey: sk-...
     roles: [autocomplete]
@@ -80,7 +80,7 @@ models:
 ```bash
 export OPENAI_API_BASE=https://llm-api.example.com/v1
 export OPENAI_API_KEY=sk-...
-aider --model openai/hf/qwen3-coder-next
+aider --model openai/cf/qwen2.5-coder-32b
 ```
 
 หรือใส่ถาวรใน `~/.aider.conf.yml`:
@@ -88,7 +88,7 @@ aider --model openai/hf/qwen3-coder-next
 ```yaml
 openai-api-base: https://llm-api.example.com/v1
 openai-api-key: sk-...
-model: openai/hf/qwen3-coder-next
+model: openai/cf/qwen2.5-coder-32b
 ```
 
 ### Claude Code
@@ -98,8 +98,8 @@ LiteLLM มี `/v1/messages` (รูปแบบ Anthropic) ให้ ชี้
 ```bash
 export ANTHROPIC_BASE_URL=https://llm-api.example.com
 export ANTHROPIC_AUTH_TOKEN=sk-...
-export ANTHROPIC_MODEL=hf/qwen3-coder-next
-export ANTHROPIC_SMALL_FAST_MODEL=hf/llama-3.1-8b
+export ANTHROPIC_MODEL=cf/qwen2.5-coder-32b
+export ANTHROPIC_SMALL_FAST_MODEL=gq/llama-3.1-8b
 claude
 ```
 
@@ -134,7 +134,7 @@ API endpoint `https://llm-api.example.com/v1`, key `sk-...`, model name ตา�
 from openai import OpenAI
 client = OpenAI(base_url="https://llm-api.example.com/v1", api_key="sk-...")
 r = client.chat.completions.create(
-    model="hf/qwen3-coder-next",
+    model="cf/qwen2.5-coder-32b",
     messages=[{"role": "user", "content": "เขียน fizzbuzz"}],
 )
 ```
@@ -156,14 +156,20 @@ CrewAI / LiteLLM-native ใช้ชื่อ `openai/hf/llama-3.3-70b` พร�
 
 | งาน | แนะนำ |
 |---|---|
-| coding agent (แก้โค้ดหลายไฟล์) | `hf/qwen3-coder-next`, `hf/deepseek-v3.2` |
-| agent ที่เรียก tool เยอะ | `hf/llama-3.3-70b`, `hf/qwen3.5-397b` |
-| งานเบา/จัดหมวด/สรุป (ประหยัด) | `hf/llama-3.1-8b`, `hf/qwen2.5-7b` |
-| งานที่ต้องคิดเยอะ | `hf/deepseek-r1`, `hf/glm-4.7` — แต่ช้า ไม่เหมาะเป็น agent loop |
+| **coding agent / เขียนโค้ด** | `cf/qwen2.5-coder-32b` (3/3, 15.6s) หรือ `gq/gpt-oss-120b` (3/3, 26.2s) |
+| **autocomplete ในบรรณาธิการ** | `gq/llama-3.1-8b` (181ms), `mi/codestral` (4.9s) |
+| agent ที่เรียก tool เยอะ | `gq/llama-3.3-70b`, `or/nemotron-ultra-550b` |
+| งานเบา/จัดหมวด/สรุป (ประหยัด) | `hf/llama-3.1-8b`, `gq/llama-3.1-8b` |
+| งานที่ต้องคิดเยอะ | `hf/deepseek-r1`, `hf/glm-4.7` — ช้า ไม่เหมาะเป็น agent loop |
 | ต้องการความเร็วสูงสุด | `gq/llama-3.1-8b` (181ms), `gq/llama-3.3-70b` (688ms) |
 | context ยาวมาก | `or/nemotron-ultra-550b` (1M), `or/nemotron-lightning` (1M) |
 | ภาษาไทยโดยเฉพาะ | `hf/sea-lion-32b`, `cf/sea-lion-27b` |
 | RAG / embeddings | `emb/nemotron-embed`, `emb/nv-embedqa-e5` |
+
+ตัวเลข coding มาจากการวัดจริงด้วย `scripts/bench-coding.py` — ดูตารางเต็มใน README
+
+> ⚠️ อย่าใช้ `gq/qwen3.6-27b` กับงานเขียนโค้ด — เป็น thinking model ที่พ่น `<think>`
+> ลงใน content แล้วใช้ token หมดก่อนเขียนโค้ดจบ ได้ 0/3 ในการทดสอบ
 
 ## ข้อควรระวัง
 
@@ -173,7 +179,9 @@ CrewAI / LiteLLM-native ใช้ชื่อ `openai/hf/llama-3.3-70b` พร�
 - ถ้าเจอ rate limit จาก provider ให้เพิ่ม fallback ใน `litellm/config.yaml`:
   ```yaml
   litellm_settings:
-    fallbacks: [{"hf/qwen3-coder-next": ["hf/deepseek-v3.2", "hf/qwen2.5-7b"]}]
+    fallbacks: [{"cf/qwen2.5-coder-32b": ["gq/gpt-oss-120b", "mi/codestral"]}]
   ```
-- context window ของโมเดลต่างกันมาก (8k–128k) coding agent มักต้องการ 32k+
-  ถ้าเจอ error เรื่องความยาว ให้ย้ายไปโมเดลใหญ่ขึ้น
+- context window ต่างกันมาก (8k ถึง 1M) coding agent มักต้องการ 32k+
+  ถ้าเจอ error เรื่องความยาว ย้ายไป `or/nemotron-ultra-550b` หรือ `or/nemotron-lightning` (1M)
+- **บัญชี HF ไม่ใช่ทางเดียวแล้ว** — ตอนนี้มี 6 provider ถ้าเจ้าไหนโควต้าหมด
+  สลับ model_name ได้เลยโดยไม่ต้องแก้ฝั่ง client
