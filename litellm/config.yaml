@@ -317,44 +317,56 @@ model_list:
   # ต่างจาก Ollama ที่รันเอง: อันนี้ Ollama โฮสต์ให้ ไม่กิน RAM/GPU ของเรา
   # เป็น OpenAI-compatible แท้ (https://ollama.com/v1) จึงใช้ prefix openai/ + api_base
   # สร้าง key: https://ollama.com/settings/keys
-  # ฟรี: มีชั้น $0 "light usage" — Ollama ไม่ประกาศตัวเลขโควต้า ดูที่หน้า settings ของบัญชี
+  # ฟรี: ใช้ได้ 7 จาก 19 โมเดล (ที่เหลือต้อง Pro $20/เดือน)
+  # Ollama ไม่ประกาศตัวเลขโควต้า ดูการใช้งานจริงที่หน้า settings ของบัญชี
   # เช็ครายชื่อ: curl -s https://ollama.com/v1/models
   #
-  # - model_name: oc/glm-5.2
-  #   litellm_params:
-  #     model: openai/glm-5.2
-  #     api_base: https://ollama.com/v1
-  #     api_key: os.environ/OLLAMA_API_KEY
-  #
-  # - model_name: oc/qwen3.5-397b
-  #   litellm_params:
-  #     model: openai/qwen3.5:397b
-  #     api_base: https://ollama.com/v1
-  #     api_key: os.environ/OLLAMA_API_KEY
-  #
-  # - model_name: oc/mistral-large-3
-  #   litellm_params:
-  #     model: openai/mistral-large-3:675b
-  #     api_base: https://ollama.com/v1
-  #     api_key: os.environ/OLLAMA_API_KEY
-  #
-  # - model_name: oc/deepseek-v4-pro
-  #   litellm_params:
-  #     model: openai/deepseek-v4-pro:0813
-  #     api_base: https://ollama.com/v1
-  #     api_key: os.environ/OLLAMA_API_KEY
-  #
-  # - model_name: oc/kimi-k3
-  #   litellm_params:
-  #     model: openai/kimi-k3
-  #     api_base: https://ollama.com/v1
-  #     api_key: os.environ/OLLAMA_API_KEY
-  #
-  # - model_name: oc/gpt-oss-120b
-  #   litellm_params:
-  #     model: openai/gpt-oss:120b
-  #     api_base: https://ollama.com/v1
-  #     api_key: os.environ/OLLAMA_API_KEY
+  - model_name: oc/nemotron-3-ultra
+    litellm_params:
+      model: openai/nemotron-3-ultra
+      api_base: https://ollama.com/v1
+      api_key: os.environ/OLLAMA_API_KEY
+
+  - model_name: oc/nemotron-3-super
+    litellm_params:
+      model: openai/nemotron-3-super
+      api_base: https://ollama.com/v1
+      api_key: os.environ/OLLAMA_API_KEY
+
+  - model_name: oc/nemotron-3-nano-30b
+    litellm_params:
+      model: openai/nemotron-3-nano:30b
+      api_base: https://ollama.com/v1
+      api_key: os.environ/OLLAMA_API_KEY
+
+  - model_name: oc/minimax-m3
+    litellm_params:
+      model: openai/minimax-m3
+      api_base: https://ollama.com/v1
+      api_key: os.environ/OLLAMA_API_KEY
+
+  - model_name: oc/gemma4-31b
+    litellm_params:
+      model: openai/gemma4:31b
+      api_base: https://ollama.com/v1
+      api_key: os.environ/OLLAMA_API_KEY
+
+  - model_name: oc/gpt-oss-120b
+    litellm_params:
+      model: openai/gpt-oss:120b
+      api_base: https://ollama.com/v1
+      api_key: os.environ/OLLAMA_API_KEY
+
+  - model_name: oc/gpt-oss-20b
+    litellm_params:
+      model: openai/gpt-oss:20b
+      api_base: https://ollama.com/v1
+      api_key: os.environ/OLLAMA_API_KEY
+
+  # ต้องมี Pro ($20/เดือน) ขึ้นไปถึงจะใช้ได้ — ทดสอบ 2026-08-17 บนชั้นฟรีคืน
+  # "this model requires a subscription": glm-5.1, glm-5.2, qwen3.5:397b,
+  # mistral-large-3:675b, deepseek-v4-flash, deepseek-v4-pro, kimi-k2.6,
+  # kimi-k2.7-code, kimi-k3 (ต้อง Pro + extra usage), minimax-m2.7
 
   # ---------- เฟสถัดไป: self-hosted ----------
   # vLLM (OpenAI-compatible server) — ตั้ง VLLM_API_BASE=http://<host>:8000/v1

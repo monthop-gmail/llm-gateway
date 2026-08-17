@@ -11,9 +11,9 @@ Gateway กลางสำหรับ **ออก API token ให้ผู้�
                         ┌──────────────┐
   Open WebUI (chat UI) ─┤              ├─► HuggingFace Inference Providers
                         │              │   (together / novita / sambanova / ...)
-  curl / SDK / n8n ────►│   LiteLLM    ├─► vLLM        (ถ้ามี GPU)
-  Cline / Aider / ...   │  :4000 /v1   ├─► Ollama
-  (sk-... virtual key)  │              ├─► OpenAI / Anthropic / Gemini / Groq
+  curl / SDK / n8n ────►│   LiteLLM    ├─► Groq / Mistral / Cloudflare / NVIDIA NIM
+  Cline / Aider / ...   │  :4000 /v1   ├─► OpenRouter / Ollama Cloud
+  (sk-... virtual key)  │              ├─► vLLM / Ollama ที่รันเอง (ถ้ามี GPU)
                         └──────┬───────┘
                                │
                           Postgres  (virtual keys, budget, spend log)
@@ -109,7 +109,7 @@ client.chat.completions.create(model="hf/qwen2.5-7b", messages=[...])
 
 ## โมเดลที่ตั้งไว้ให้
 
-รวม **43 โมเดล** จาก 5 provider — ทดสอบยิงจริงผ่านทั้งหมด (อัปเดต 2026-08-16)
+รวม **50 โมเดล** จาก 6 provider — ทดสอบยิงจริงผ่านทั้งหมด (อัปเดต 2026-08-17)
 ทุกตัวใช้ `sk-...` ใบเดียวกัน สลับโมเดลได้โดยไม่ต้องแก้ฝั่ง client
 
 ### HuggingFace (ต้องมี `HF_TOKEN`)
@@ -202,6 +202,29 @@ curl -s https://openrouter.ai/api/v1/models | python3 -c \
 
 > โมเดลใหญ่บางตัว (glm-5.2, deepseek-v4) **ไม่อยู่ใน Workers Free plan**
 > คืน error `code 5035` ต้องอัปเกรดแผน
+
+### Ollama Cloud (`OLLAMA_API_KEY`) — โมเดลใหญ่โดยไม่ต้องมี GPU
+
+Ollama โฮสต์ให้ ไม่กิน RAM/GPU เครื่องเรา สร้าง key ที่ https://ollama.com/settings/keys
+**ชั้นฟรีใช้ได้ 7 จาก 19 โมเดล** (ทดสอบ 2026-08-17) ทุกตัวรองรับ tool calling
+
+| model_name | เวลาตอบ | หมายเหตุ |
+|---|---|---|
+| `oc/gpt-oss-120b` | 1.5s | เร็วสุดในกลุ่ม |
+| `oc/minimax-m3` | 1.5s | |
+| `oc/nemotron-3-nano-30b` | 1.4s | |
+| `oc/gpt-oss-20b` | 2.7s | |
+| `oc/nemotron-3-ultra` | 3.7s | ใหญ่สุดที่ฟรี |
+| `oc/nemotron-3-super` | 7.0s | thinking model |
+| `oc/gemma4-31b` | 13.3s | ช้าสุด |
+
+**ต้องมี Pro ($20/เดือน) ขึ้นไป** — คืน `this model requires a subscription`:
+`glm-5.1` `glm-5.2` `qwen3.5:397b` `mistral-large-3:675b` `deepseek-v4-flash`
+`deepseek-v4-pro` `kimi-k2.6` `kimi-k2.7-code` `minimax-m2.7`
+ส่วน `kimi-k3` ต้อง Pro/Max/Team **บวก** extra usage
+
+> Ollama ไม่ประกาศตัวเลขโควต้าฟรีเลย ทดลองยิงรัว 15 ครั้งติดไม่โดน rate limit
+> แต่ไม่ได้แปลว่าไม่มีเพดาน — ดูการใช้งานจริงที่หน้า settings ของบัญชี
 
 ### Embeddings (NVIDIA NIM)
 
