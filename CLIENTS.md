@@ -1,6 +1,6 @@
 # ต่อ AI agent / coding agent เข้ากับ gateway นี้
 
-ทดสอบจริง อัปเดต 2026-08-17 — สิ่งที่ gateway นี้รองรับ:
+ทดสอบจริง อัปเดต 2026-08-18 — สิ่งที่ gateway นี้รองรับ:
 
 | ความสามารถ | สถานะ | หมายเหตุ |
 |---|---|---|
@@ -156,8 +156,9 @@ CrewAI / LiteLLM-native ใช้ชื่อ `openai/hf/llama-3.3-70b` พร�
 
 | งาน | แนะนำ |
 |---|---|
-| **coding agent / เขียนโค้ด** | `cf/qwen2.5-coder-32b` (3/3, 15.6s) หรือ `gq/gpt-oss-120b` (3/3, 26.2s) |
-| **autocomplete ในบรรณาธิการ** | `gq/llama-3.1-8b` (181ms), `mi/codestral` (4.9s) |
+| **เขียนโค้ด — เร็วสุด** | `cb/gemma-4-31b` (3/3 ใน 1.5s) — ระวัง TPM limit ของ Cerebras |
+| **coding agent ที่ยิงถี่** | `cf/qwen2.5-coder-32b` (3/3, 15.6s) โควต้าใจกว้างกว่า |
+| **autocomplete ในบรรณาธิการ** | `cb/gemma-4-31b` (359ms), `gq/llama-3.1-8b` (181ms) |
 | agent ที่เรียก tool เยอะ | `gq/llama-3.3-70b`, `or/nemotron-ultra-550b` |
 | งานเบา/จัดหมวด/สรุป (ประหยัด) | `hf/llama-3.1-8b`, `gq/llama-3.1-8b` |
 | งานที่ต้องคิดเยอะ | `hf/deepseek-r1`, `hf/glm-4.7` — ช้า ไม่เหมาะเป็น agent loop |
@@ -183,5 +184,5 @@ CrewAI / LiteLLM-native ใช้ชื่อ `openai/hf/llama-3.3-70b` พร�
   ```
 - context window ต่างกันมาก (8k ถึง 1M) coding agent มักต้องการ 32k+
   ถ้าเจอ error เรื่องความยาว ย้ายไป `or/nemotron-ultra-550b` หรือ `or/nemotron-lightning` (1M)
-- **บัญชี HF ไม่ใช่ทางเดียวแล้ว** — ตอนนี้มี 6 provider ถ้าเจ้าไหนโควต้าหมด
+- **บัญชี HF ไม่ใช่ทางเดียวแล้ว** — ตอนนี้มี 7 provider ถ้าเจ้าไหนโควต้าหมด
   สลับ model_name ได้เลยโดยไม่ต้องแก้ฝั่ง client

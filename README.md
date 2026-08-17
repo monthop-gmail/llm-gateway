@@ -109,7 +109,7 @@ client.chat.completions.create(model="hf/qwen2.5-7b", messages=[...])
 
 ## โมเดลที่ตั้งไว้ให้
 
-รวม **50 โมเดล** จาก 6 provider — ทดสอบยิงจริงผ่านทั้งหมด (อัปเดต 2026-08-17)
+รวม **53 โมเดล** จาก 7 provider — ทดสอบยิงจริงผ่านทั้งหมด (อัปเดต 2026-08-18)
 ทุกตัวใช้ `sk-...` ใบเดียวกัน สลับโมเดลได้โดยไม่ต้องแก้ฝั่ง client
 
 ### HuggingFace (ต้องมี `HF_TOKEN`)
@@ -166,6 +166,21 @@ curl -s https://openrouter.ai/api/v1/models | python3 -c \
 | `gq/llama-3.1-8b` | llama-3.1-8b-instant |
 | `gq/gpt-oss-120b` | openai/gpt-oss-120b |
 | `gq/qwen3.6-27b` | qwen/qwen3.6-27b |
+
+### Cerebras (`CEREBRAS_API_KEY`) — เร็วที่สุดในกลุ่มที่เขียนโค้ดได้เต็ม
+
+| model_name | เวลาตอบแชท | คะแนน coding | หมายเหตุ |
+|---|---|---|---|
+| `cb/gemma-4-31b` | **359ms** | **3/3 ใน 1.5s** | ดีที่สุดสำหรับ coding ในตอนนี้ |
+| `cb/gpt-oss-120b` | 2.5s | **3/3 ใน 3.1s** | |
+| `cb/glm-4.7` | 1.1s | 2/3 ใน 10.5s | thinking model |
+
+ทุกตัวรองรับ tool calling (ทดสอบแล้ว)
+
+> **ข้อจำกัดจริงคือ TPM ไม่ใช่ context** — บล็อกหลายที่เขียนว่า context จำกัด 8K
+> แต่ทดสอบแล้วส่ง prompt 33,775 tokens ผ่านปกติ ที่เจอคือ `token_quota_exceeded`
+> (HTTP 429 "Tokens per minute limit exceeded") เมื่อยิงงานใหญ่ติดกันหลายครั้ง
+> เหมาะกับงานที่ยิงเป็นระยะ ไม่เหมาะกับ agent loop ที่อ่านไฟล์ทั้งโปรเจกต์ซ้ำๆ
 
 ### Mistral (`MISTRAL_API_KEY`) — 1B token/เดือน
 
@@ -258,6 +273,8 @@ curl -s https://router.huggingface.co/v1/models -H "Authorization: Bearer $HF_TO
 
 | model_name | คะแนน | เวลารวม | provider |
 |---|---|---|---|
+| `cb/gemma-4-31b` | **3/3** | **1.5s** | Cerebras |
+| `cb/gpt-oss-120b` | **3/3** | 3.1s | Cerebras |
 | `cf/qwen2.5-coder-32b` | **3/3** | 15.6s | Cloudflare |
 | `gq/gpt-oss-120b` | **3/3** | 26.2s | Groq |
 | `oc/gpt-oss-120b` | **3/3** | 42.0s | Ollama Cloud |
@@ -268,12 +285,15 @@ curl -s https://router.huggingface.co/v1/models -H "Authorization: Bearer $HF_TO
 | `mi/large` | 2/3 | 10.4s | Mistral |
 | `hf/qwen3-coder-next` | 2/3 | 10.8s | HuggingFace |
 | `mi/devstral` | 2/3 | 12.2s | Mistral |
+| `cb/glm-4.7` | 2/3 | 10.5s | Cerebras |
 | `gq/qwen3.6-27b` | 0/3 | 41.2s | Groq |
 
 **เลือกยังไง**
 
-- **เขียนโค้ดทั่วไป / coding agent** → `cf/qwen2.5-coder-32b` ทำครบ 3 ข้อและเร็วสุดในกลุ่มที่ได้เต็ม
-- **งานยากที่ต้องแม่น** → `gq/gpt-oss-120b` ได้เต็มเหมือนกัน และ Groq เสถียรกว่าเรื่อง rate limit
+- **เขียนโค้ด — เร็วที่สุด** → `cb/gemma-4-31b` ทำครบ 3 ข้อใน 1.5s เร็วกว่าอันดับถัดไป 10 เท่า
+  แต่ระวัง TPM limit ของ Cerebras ถ้ายิงงานใหญ่ติดกัน
+- **coding agent ที่ยิงถี่ต่อเนื่อง** → `cf/qwen2.5-coder-32b` (3/3, 15.6s) ช้ากว่าแต่โควต้าใจกว้าง
+- **งานยากที่ต้องแม่น** → `gq/gpt-oss-120b` ได้เต็มเหมือนกัน และ Groq บอกโควต้าชัดเจน
 - **autocomplete / งานสั้นๆ ที่ต้องการความเร็ว** → `gq/llama-3.1-8b` (181ms) หรือ `mi/codestral` (4.9s)
   ยอมแลกความแม่นบางส่วนกับความเร็ว
 - **หลีกเลี่ยง** → `gq/qwen3.6-27b` เป็น thinking model ที่พ่น `<think>` ลงใน content

@@ -128,23 +128,22 @@ model_list:
   # เหมาะกับงาน batch ไม่เหมาะกับ agent ที่ยิงถี่
   # เช็คโมเดลที่ใช้ได้: curl -s https://api.cerebras.ai/v1/models -H "Authorization: Bearer $CEREBRAS_API_KEY"
   #
-  # ⚠️ ทดสอบ 2026-08-15: key ใช้ได้ /v1/models ตอบปกติ แต่ chat completion คืน
-  #    HTTP 402 "Payment required to access this resource" — ต้องเปิด billing/
-  #    activate free tier ที่ https://cloud.cerebras.ai ก่อน ปลดคอมเมนต์แล้วใช้ได้เลย
-  # - model_name: cb/gpt-oss-120b
-  #   litellm_params:
-  #     model: cerebras/gpt-oss-120b
-  #     api_key: os.environ/CEREBRAS_API_KEY
-  #
-  # - model_name: cb/gemma-4-31b
-  #   litellm_params:
-  #     model: cerebras/gemma-4-31b
-  #     api_key: os.environ/CEREBRAS_API_KEY
-  #
-  # - model_name: cb/glm-4.7
-  #   litellm_params:
-  #     model: cerebras/zai-glm-4.7
-  #     api_key: os.environ/CEREBRAS_API_KEY
+  # หมายเหตุ: ก่อนเติมเครดิต chat completion คืน HTTP 402 "Payment required"
+  # ทั้งที่ /v1/models ตอบปกติ — ถ้าเจออาการนี้ให้ไปเช็คหน้า billing
+  - model_name: cb/gpt-oss-120b
+    litellm_params:
+      model: cerebras/gpt-oss-120b
+      api_key: os.environ/CEREBRAS_API_KEY
+
+  - model_name: cb/gemma-4-31b
+    litellm_params:
+      model: cerebras/gemma-4-31b
+      api_key: os.environ/CEREBRAS_API_KEY
+
+  - model_name: cb/glm-4.7
+    litellm_params:
+      model: cerebras/zai-glm-4.7
+      api_key: os.environ/CEREBRAS_API_KEY
 
   # ---------- Google Gemini (AI Studio) — context 1M ----------
   # ฟรี: ดูโควต้าจริงของบัญชีที่ https://aistudio.google.com/rate-limit
