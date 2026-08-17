@@ -178,9 +178,16 @@ curl -s https://openrouter.ai/api/v1/models | python3 -c \
 ทุกตัวรองรับ tool calling (ทดสอบแล้ว)
 
 > **ข้อจำกัดจริงคือ TPM ไม่ใช่ context** — บล็อกหลายที่เขียนว่า context จำกัด 8K
-> แต่ทดสอบแล้วส่ง prompt 33,775 tokens ผ่านปกติ ที่เจอคือ `token_quota_exceeded`
-> (HTTP 429 "Tokens per minute limit exceeded") เมื่อยิงงานใหญ่ติดกันหลายครั้ง
-> เหมาะกับงานที่ยิงเป็นระยะ ไม่เหมาะกับ agent loop ที่อ่านไฟล์ทั้งโปรเจกต์ซ้ำๆ
+> แต่ทดสอบเองแล้วส่ง prompt **33,775 tokens ผ่านปกติ**
+>
+> ที่ชนคือ `token_quota_exceeded` (HTTP 429 "Tokens per minute limit exceeded")
+> และเป็น **โควต้าสะสม ไม่ใช่ต่อ request** — หลังรัน benchmark ไปหลายรอบ
+> prompt ขนาด ~25K ที่เคยผ่านก็เริ่มโดนปฏิเสธ ขณะที่ prompt เล็กยังใช้ได้ปกติ
+> รอสักครู่ให้ reset แล้วกลับมาได้เอง
+>
+> ผลเชิงปฏิบัติ: เหมาะกับงานที่ยิงเป็นระยะและ prompt ไม่ใหญ่มาก
+> **ไม่เหมาะกับ coding agent ที่อ่านไฟล์ทั้งโปรเจกต์เข้า context ซ้ำทุก turn**
+> ถ้าจะใช้กับ agent ให้ตั้ง fallback ไป `cf/qwen2.5-coder-32b` รองรับไว้
 
 ### Mistral (`MISTRAL_API_KEY`) — 1B token/เดือน
 
