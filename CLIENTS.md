@@ -6,7 +6,7 @@
 |---|---|---|
 | OpenAI Chat Completions `/v1/chat/completions` | ✅ | endpoint หลัก |
 | Streaming (SSE) | ✅ | |
-| **Tool / function calling** | ✅ | ทดสอบผ่านทุก provider — หัวใจของ agent (ดูข้อยกเว้นใน README) |
+| **Tool / function calling** | ✅ | ทดสอบทุก provider แล้ว — ส่วนใหญ่ผ่าน มีข้อยกเว้นรายตัวใน README |
 | Anthropic format `/v1/messages` | ✅ | ใช้กับ Claude Code ได้ |
 | `/v1/models` | ✅ | client ส่วนใหญ่ดึงรายชื่อโมเดลอัตโนมัติ |
 | Embeddings | ✅ | `emb/nemotron-embed` (2048 มิติ), `emb/nv-embedqa-e5` (1024) |
@@ -119,7 +119,7 @@ Zed: `~/.config/zed/settings.json` → `language_models.openai.api_url`
 ### n8n
 
 Credentials → **OpenAI** → Base URL `https://llm-api.example.com/v1`, API Key `sk-...`
-แล้วใน node "OpenAI Chat Model" พิมพ์ชื่อโมเดลเอง เช่น `hf/llama-3.3-70b`
+แล้วใน node "OpenAI Chat Model" พิมพ์ชื่อโมเดลเอง เช่น `gq/llama-3.3-70b`
 
 ถ้า n8n รันเป็น container บนเครื่องเดียวกัน ต่อ network `llm-net` แล้วใช้ `http://llm-litellm:4000/v1` จะเร็วกว่าและไม่ออกอินเทอร์เน็ต
 
@@ -144,11 +144,11 @@ from langchain_openai import ChatOpenAI
 llm = ChatOpenAI(
     base_url="https://llm-api.example.com/v1",
     api_key="sk-...",
-    model="hf/llama-3.3-70b",
+    model="gq/llama-3.3-70b",
 )
 ```
 
-CrewAI / LiteLLM-native ใช้ชื่อ `openai/hf/llama-3.3-70b` พร้อม `OPENAI_API_BASE`
+CrewAI / LiteLLM-native ใช้ชื่อ `openai/gq/llama-3.3-70b` พร้อม `OPENAI_API_BASE`
 
 ---
 
@@ -161,11 +161,11 @@ CrewAI / LiteLLM-native ใช้ชื่อ `openai/hf/llama-3.3-70b` พร�
 | **coding agent ที่ยิงถี่** | `cf/qwen2.5-coder-32b` (3/3, 15.6s) โควต้าใจกว้างกว่า |
 | **autocomplete ในบรรณาธิการ** | `cb/gemma-4-31b` (359ms), `gq/llama-3.1-8b` (181ms) |
 | agent ที่เรียก tool เยอะ | `gq/llama-3.3-70b`, `or/nemotron-ultra-550b` |
-| งานเบา/จัดหมวด/สรุป (ประหยัด) | `hf/llama-3.1-8b`, `gq/llama-3.1-8b` |
-| งานที่ต้องคิดเยอะ | `hf/deepseek-r1`, `hf/glm-4.7` — ช้า ไม่เหมาะเป็น agent loop |
+| งานเบา/จัดหมวด/สรุป (ประหยัด) | `gq/llama-3.1-8b`, `mi/ministral-8b` |
+| งานที่ต้องคิดเยอะ | `mi/magistral-medium`, `cb/gpt-oss-120b` — ช้ากว่าแต่แม่นกว่า |
 | ต้องการความเร็วสูงสุด | `gq/llama-3.1-8b` (181ms), `gq/llama-3.3-70b` (688ms) |
 | context ยาวมาก | `or/nemotron-ultra-550b` (1M), `or/nemotron-lightning` (1M) |
-| ภาษาไทยโดยเฉพาะ | `hf/sea-lion-32b`, `cf/sea-lion-27b` |
+| ภาษาไทยโดยเฉพาะ | `cf/sea-lion-27b`, `hf/sea-lion-gemma-27b` |
 | RAG / embeddings | `emb/nemotron-embed`, `emb/nv-embedqa-e5` |
 | อ่านรูปภาพ / OCR | `or/nemotron-vl-12b` |
 | ไม่อยากเลือกเอง / กันล่ม | `or/auto-free` — OpenRouter เลือกให้ (ผลไม่คงที่ ไม่เหมาะเป็นตัวหลัก) |
@@ -178,8 +178,8 @@ CrewAI / LiteLLM-native ใช้ชื่อ `openai/hf/llama-3.3-70b` พร�
 
 ## ข้อควรระวัง
 
-- **บัญชี HF เป็น free tier** เครดิต inference จำกัดต่อเดือน — coding agent กิน token มหาศาล
-  (อ่านไฟล์ทั้งโปรเจกต์เข้า context ทุกรอบ) ให้ออก key แบบมี `--budget` เสมอ
+- **coding agent กิน token มหาศาล** (อ่านไฟล์ทั้งโปรเจกต์เข้า context ทุกรอบ)
+  ให้ออก key แบบมี `--budget` เสมอ ไม่ว่าจะใช้ provider ไหน
 - ดู spend ได้ที่ https://llm-api.example.com/ui → **Usage** แยกตาม key ได้
 - ถ้าเจอ rate limit จาก provider ให้เพิ่ม fallback ใน `litellm/config.yaml`:
   ```yaml

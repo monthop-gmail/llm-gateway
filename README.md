@@ -11,8 +11,8 @@ Gateway กลางสำหรับ **ออก API token ให้ผู้�
                         ┌──────────────┐
   Open WebUI (chat UI) ─┤              ├─► HuggingFace Inference Providers
                         │              │   (together / novita / sambanova / ...)
-  curl / SDK / n8n ────►│   LiteLLM    ├─► Groq / Mistral / Cloudflare / NVIDIA NIM
-  Cline / Aider / ...   │  :4000 /v1   ├─► OpenRouter / Ollama Cloud
+  curl / SDK / n8n ────►│   LiteLLM    ├─► Groq / Cerebras / Mistral / Cloudflare
+  Cline / Aider / ...   │  :4000 /v1   ├─► NVIDIA NIM / OpenRouter / Ollama Cloud
   (sk-... virtual key)  │              ├─► vLLM / Ollama ที่รันเอง (ถ้ามี GPU)
                         └──────┬───────┘
                                │
@@ -23,11 +23,13 @@ Gateway กลางสำหรับ **ออก API token ให้ผู้�
 
 - **ออก token ได้เอง** — LiteLLM สร้าง virtual key (`sk-...`) ต่อคน/ต่อแอป กำหนด budget,
   โมเดลที่เข้าถึงได้, วันหมดอายุ และดู spend ย้อนหลังได้
-- **key จริงของ provider อยู่ที่ server เดียว** — ผู้ใช้ไม่เคยเห็น HF token
+- **key จริงของ provider อยู่ที่ server เดียว** — ผู้ใช้ไม่เคยเห็น key ของเจ้าไหนเลย
 - **เพิ่ม backend ทีหลังไม่กระทบ client** — แก้ `litellm/config.yaml` (หรือเพิ่มผ่าน UI)
   แล้ว key เดิมยิงโมเดลใหม่ได้เลย
-- **ทดสอบแล้วว่ารองรับ tool calling / streaming / Anthropic format** — ใช้กับ AI agent
-  และ coding agent ได้จริง ดู [CLIENTS.md](CLIENTS.md)
+- **ทดสอบแล้วว่ารองรับ tool calling / streaming / Anthropic format / vision / embeddings**
+  ใช้กับ AI agent และ coding agent ได้จริง ดู [CLIENTS.md](CLIENTS.md)
+- **provider เจ้าไหนล่มก็ยังใช้ได้** — ตั้ง `fallbacks` ไว้ทุกสาย ถ้าปลายทางหลักตาย
+  LiteLLM จะสลับไปเจ้าอื่นให้เองโดย client ไม่รู้ตัว
 
 ## ติดตั้ง (dev)
 
@@ -59,12 +61,31 @@ p.write_text(s); print('secrets generated')
 PY
 ```
 
-แล้วใส่ **HuggingFace token** — สร้างที่ https://huggingface.co/settings/tokens
-เลือกแบบ **Fine-grained** ติ๊ก permission **"Make calls to Inference Providers"**
-(ไม่ติ๊กจะได้ 401 ทุก request)
+แล้วใส่ **API key ของ provider อย่างน้อย 1 เจ้า** ลง `.env`
+
+แนะนำเริ่มที่ **Groq** — ฟรี ไม่ต้องใช้บัตร สมัครเสร็จใช้ได้ทันที และเร็วที่สุด
+(`gq/llama-3.1-8b` ตอบใน 181ms) สมัครที่ https://console.groq.com แล้วใส่ `GROQ_API_KEY=`
+
+| provider | ตัวแปร | สมัครที่ | หมายเหตุ |
+|---|---|---|---|
+| **Groq** | `GROQ_API_KEY` | console.groq.com | เริ่มที่นี่ — ฟรี ไม่ต้องใช้บัตร |
+| Cerebras | `CEREBRAS_API_KEY` | cloud.cerebras.ai | เร็วสุดสำหรับ coding |
+| Cloudflare | `CLOUDFLARE_API_KEY` + `CLOUDFLARE_ACCOUNT_ID` | dash.cloudflare.com | 10,000 neurons/วัน |
+| Mistral | `MISTRAL_API_KEY` | console.mistral.ai | 1B token/เดือน |
+| OpenRouter | `OPENROUTER_API_KEY` | openrouter.ai/keys | โมเดลฟรีหลายสิบตัว |
+| Ollama Cloud | `OLLAMA_API_KEY` | ollama.com/settings/keys | 7 โมเดลฟรี |
+| NVIDIA NIM | `NVIDIA_NIM_API_KEY` | build.nvidia.com | มี embeddings ด้วย |
+| HuggingFace | `HF_TOKEN` | huggingface.co/settings/tokens | ⚠️ ดูหมายเหตุด้านล่าง |
+
+> **HuggingFace ไม่ใช่ตัวเลือกแรกอีกแล้ว** — โปรเจกต์นี้เริ่มจาก HF แต่เครดิต
+> รายเดือนของบัญชีที่ใช้ทดสอบหมดตั้งแต่ 2026-08-23 (`"You have depleted your
+> monthly included credits"`) ถ้าจะใช้ `hf/*` ต้องเติมเครดิตเอง
+> หรือปล่อยไว้ก็ได้ — `fallbacks` ใน config จะพา `hf/*` ไป provider อื่นให้อยู่แล้ว
+>
+> ตอนสร้าง HF token เลือกแบบ **Fine-grained** ติ๊ก **"Make calls to Inference
+> Providers"** ไม่ติ๊กจะได้ 401 ทุก request
 
 ```bash
-# แก้บรรทัด HF_TOKEN= ใน .env แล้ว
 docker compose up -d
 ```
 
@@ -83,13 +104,13 @@ curl -s http://localhost:4000/v1/models -H "Authorization: Bearer $LITELLM_MASTE
 
 curl -s http://localhost:4000/v1/chat/completions \
   -H "Authorization: Bearer $LITELLM_MASTER_KEY" -H "Content-Type: application/json" \
-  -d '{"model":"hf/qwen2.5-7b","messages":[{"role":"user","content":"สวัสดี"}]}'
+  -d '{"model":"gq/llama-3.1-8b","messages":[{"role":"user","content":"สวัสดี"}]}'
 ```
 
 ## ออก token ให้ผู้ใช้
 
 ```bash
-./scripts/gen-key.sh --alias somchai --budget 5 --models hf/qwen2.5-7b,hf/llama-3.1-8b
+./scripts/gen-key.sh --alias somchai --budget 5 --models gq/llama-3.1-8b,cb/gemma-4-31b
 ./scripts/gen-key.sh --alias n8n-bot --duration 90d
 ./scripts/gen-key.sh --alias cline                # เต็มสิทธิ์ ไม่มี budget
 ```
@@ -101,7 +122,7 @@ curl -s http://localhost:4000/v1/chat/completions \
 ```python
 from openai import OpenAI
 client = OpenAI(base_url="http://<host>:4000/v1", api_key="sk-....")
-client.chat.completions.create(model="hf/qwen2.5-7b", messages=[...])
+client.chat.completions.create(model="gq/llama-3.1-8b", messages=[...])
 ```
 
 **แนะนำ:** เปลี่ยน `OPENWEBUI_LITELLM_KEY` ใน `.env` จาก master key เป็น virtual key
@@ -152,10 +173,10 @@ client.chat.completions.create(model="hf/qwen2.5-7b", messages=[...])
 > ต่างจากตอนตรวจเมื่อ 2026-08-16 ที่ยังไม่มี provider ฟรี
 > ส่วนบน HF router ยังมีแต่รุ่น 2.4T-A95B และ OpenRouter คิดเงิน ($0.40/M, context 1M)
 
-### OpenRouter (โมเดล `:free` — ทดสอบผ่านทั้งหมดเมื่อ 2026-08-15)
+### OpenRouter (โมเดลฟรี 13 ตัว — ทดสอบยิงจริงทุกตัว)
 
 ต้องมี `OPENROUTER_API_KEY` ใน `.env` — สมัครฟรีที่ https://openrouter.ai/keys
-ทุกตัวรองรับ tool calling (ทดสอบแล้ว)
+ทุกตัวในตารางรองรับ tool calling (ทดสอบแล้ว)
 
 | model_name | context | หมายเหตุ |
 |---|---|---|
@@ -190,10 +211,14 @@ client.chat.completions.create(model="hf/qwen2.5-7b", messages=[...])
 # (เช่น stealth/ox-alpha ที่ context 1M) ถ้ากรองด้วย :free จะพลาดไป 4 ตัว
 curl -s https://openrouter.ai/api/v1/models | python3 -c '
 import sys, json
+free = []
 for m in json.load(sys.stdin)["data"]:
     p = m.get("pricing") or {}
-    if str(p.get("prompt")) in ("0","0.0") and str(p.get("completion")) in ("0","0.0"):
-        print(f"{m["id"]:<52} ctx={(m.get("context_length") or 0):,}")
+    if str(p.get("prompt")) in ("0", "0.0") and str(p.get("completion")) in ("0", "0.0"):
+        free.append((m["id"], m.get("context_length") or 0))
+for i, c in sorted(free, key=lambda x: -x[1]):
+    print(i.ljust(50), "ctx=" + format(c, ","))
+print("รวม", len(free), "ตัว")
 '
 ```
 
@@ -540,7 +565,7 @@ CLIENTS.md                      วิธีต่อ AI agent / coding agent
 
 ```bash
 # ออก virtual key
-./scripts/gen-key.sh --alias somchai --budget 5 --models hf/qwen2.5-7b
+./scripts/gen-key.sh --alias somchai --budget 5 --models gq/llama-3.1-8b
 
 # เปลี่ยน HF token (ตรวจสิทธิ์ก่อนเขียน .env แล้วยิงทดสอบทุกโมเดล)
 ./scripts/rotate-hf-token.sh hf_xxxxxxxx
