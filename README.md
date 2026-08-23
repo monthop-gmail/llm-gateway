@@ -351,40 +351,54 @@ curl -s https://router.huggingface.co/v1/models -H "Authorization: Bearer $HF_TO
 
 ## โมเดลไหนเขียนโค้ดได้ดี — วัดจริง
 
-รันด้วย `scripts/bench-coding.py` โจทย์ 3 ข้อ ตรวจผลอัตโนมัติ (ทดสอบ 2026-08-17):
+รันด้วย `scripts/bench-coding.py` โจทย์ 3 ข้อ ตรวจผลอัตโนมัติ (อัปเดต 2026-08-23):
 คำนวณนิพจน์พร้อม edge case, LRU cache แบบมี TTL, แก้บั๊กจากโค้ดที่ให้มา
 โค้ดที่โมเดลเขียนถูกรันใน container แยก ไม่ได้รันบนเครื่องตรงๆ
 
-| model_name | คะแนน | เวลารวม | provider |
-|---|---|---|---|
-| `cb/gemma-4-31b` | **3/3** | **1.5s** | Cerebras |
-| `cb/gpt-oss-120b` | **3/3** | 3.1s | Cerebras |
-| `mi/magistral-medium` | **3/3** | 4.9s | Mistral |
-| `cf/qwen2.5-coder-32b` | **3/3** | 15.6s | Cloudflare |
-| `gq/gpt-oss-120b` | **3/3** | 26.2s | Groq |
-| `oc/gpt-oss-120b` | **3/3** | 42.0s | Ollama Cloud |
-| `or/nemotron-ultra-550b` | **3/3** | 51.9s | OpenRouter |
-| `or/north-mini-code` | **3/3** | 97.6s | OpenRouter |
-| `gq/llama-3.3-70b` | 2/3 | 2.1s | Groq |
-| `mi/codestral` | 2/3 | 4.9s | Mistral |
-| `mi/large` | 2/3 | 10.4s | Mistral |
-| `hf/qwen3-coder-next` | 2/3 | 10.8s | HuggingFace |
-| `mi/devstral` | 2/3 | 12.2s | Mistral |
-| `mi/mistral-code` | 2/3 | 8.7s | Mistral |
-| `or/nemotron-nano-30b` | **3/3** | 28.9s | OpenRouter |
-| `or/ox-alpha` | **3/3** | 52.9s | OpenRouter |
-| cb/glm-4.7 *(ถอดออกแล้ว — Cerebras archive)* | 2/3 | 10.5s | Cerebras |
-| `mi/devstral-medium` | 2/3 | 13.5s | Mistral |
-| `cf/llama-4-scout` | 2/3 | 21.5s | Cloudflare |
-| `or/dots-3-note` | 2/3 | 54.5s | OpenRouter |
-| `cf/qwen3-30b-a3b` | 2/3 | 56.3s | Cloudflare |
-| `mi/magistral-small` | 1/3 | 5.1s | Mistral |
-| `cf/nemotron-3-120b` | 1/3 | 24.0s | Cloudflare |
-| `gq/qwen3.6-27b` | 0/3 | 41.2s | Groq |
-| `or/auto-free` | 2/3 | 60.3s | OpenRouter (router — ผลไม่คงที่) |
-| `or/nemotron-vl-12b` | 1/3 | 94.2s | OpenRouter (เป็น vision ไม่ใช่สาย coding) |
-| `or/laguna-s-2.1` | 0/3 | 103.5s | OpenRouter |
-| `cf/qwen3.8-27b` | 0/3 | 120.8s | Cloudflare |
+**เรียงตามคะแนนก่อน แล้วเวลาจากน้อยไปมาก** — เวลาคือผลรวมของทั้ง 3 โจทย์
+
+### ✅ ทำครบทั้ง 3 ข้อ
+
+| model_name | คะแนน | เวลารวม | provider | หมายเหตุ |
+|---|---|---|---|---|
+| `cb/gemma-4-31b` | **3/3** | **1.5s** | Cerebras | เร็วที่สุด — แต่ระวัง TPM ของ Cerebras |
+| `cb/gpt-oss-120b` | **3/3** | 3.1s | Cerebras |  |
+| `mi/magistral-medium` | **3/3** | 4.9s | Mistral | สาย reasoning โควต้า 1B token/เดือน |
+| `cf/qwen2.5-coder-32b` | **3/3** | 15.6s | Cloudflare | โควต้าใจกว้าง เหมาะกับ agent ที่ยิงถี่ |
+| `gq/gpt-oss-120b` | **3/3** | 26.2s | Groq | โควต้าประกาศชัด 30 RPM |
+| `or/nemotron-nano-30b` | **3/3** | 28.9s | OpenRouter |  |
+| `oc/gpt-oss-120b` | **3/3** | 42.0s | Ollama Cloud |  |
+| `or/nemotron-ultra-550b` | **3/3** | 51.9s | OpenRouter | context 1M |
+| `or/ox-alpha` | **3/3** | 52.9s | OpenRouter | **context 1M** — ตัวเดียวที่ได้เต็มพร้อม context ยาว |
+| `or/north-mini-code` | **3/3** | 97.6s | OpenRouter |  |
+
+### ได้ 2 จาก 3
+
+| model_name | คะแนน | เวลารวม | provider | หมายเหตุ |
+|---|---|---|---|---|
+| `gq/llama-3.3-70b` | 2/3 | 2.1s | Groq |  |
+| `mi/codestral` | 2/3 | 4.9s | Mistral |  |
+| `mi/mistral-code` | 2/3 | 8.7s | Mistral |  |
+| `mi/large` | 2/3 | 10.4s | Mistral |  |
+| cb/glm-4.7 | 2/3 | 10.5s | Cerebras | _ถอดออกแล้ว — Cerebras archive_ |
+| `hf/qwen3-coder-next` | 2/3 | 10.8s | HuggingFace |  |
+| `mi/devstral` | 2/3 | 12.2s | Mistral |  |
+| `mi/devstral-medium` | 2/3 | 13.5s | Mistral |  |
+| `cf/llama-4-scout` | 2/3 | 21.5s | Cloudflare |  |
+| `or/dots-3-note` | 2/3 | 54.5s | OpenRouter | context 512K |
+| `cf/qwen3-30b-a3b` | 2/3 | 56.3s | Cloudflare |  |
+| `or/auto-free` | 2/3 | 60.3s | OpenRouter | router — คะแนนไม่คงที่ ดูหมายเหตุด้านล่าง |
+
+### ได้ 1 หรือ 0
+
+| model_name | คะแนน | เวลารวม | provider | หมายเหตุ |
+|---|---|---|---|---|
+| `mi/magistral-small` | 1/3 | 5.1s | Mistral |  |
+| `cf/nemotron-3-120b` | 1/3 | 24.0s | Cloudflare |  |
+| `or/nemotron-vl-12b` | 1/3 | 94.2s | OpenRouter | เป็น vision model จุดแข็งอยู่ที่อ่านรูป |
+| `gq/qwen3.6-27b` | 0/3 | 41.2s | Groq | พ่น `<think>` ใน content จน token หมด |
+| `or/laguna-s-2.1` | 0/3 | 103.5s | OpenRouter |  |
+| `cf/qwen3.8-27b` | 0/3 | 120.8s | Cloudflare | thinking model + Cloudflare timeout |
 
 **เลือกยังไง**
 
