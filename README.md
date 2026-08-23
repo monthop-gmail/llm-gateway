@@ -109,7 +109,7 @@ client.chat.completions.create(model="hf/qwen2.5-7b", messages=[...])
 
 ## โมเดลที่ตั้งไว้ให้
 
-รวม **72 โมเดล** จาก 7 provider — ทดสอบยิงจริงผ่านทั้งหมด (อัปเดต 2026-08-23)
+รวม **76 โมเดล** จาก 7 provider — ทดสอบยิงจริงผ่านทั้งหมด (อัปเดต 2026-08-23)
 ทุกตัวใช้ `sk-...` ใบเดียวกัน สลับโมเดลได้โดยไม่ต้องแก้ฝั่ง client
 
 > ### ⚠️ เครดิต HuggingFace หมดแล้ว (2026-08-23)
@@ -168,16 +168,36 @@ client.chat.completions.create(model="hf/qwen2.5-7b", messages=[...])
 | `or/dots-3-note` | 512K | **ใหม่** — context ใหญ่สุดในกลุ่ม :free |
 | `or/laguna-s-2.1` | 262K | **ใหม่** — สาย coding แต่ได้ 0/3 ใน benchmark |
 | `or/nemotron-nano-9b` | 128K | **ใหม่** — เล็ก เร็ว |
+| `or/ox-alpha` | **1M** | ฟรีแต่ไม่มี suffix `:free` |
+| `or/auto-free` | — | **router ของ OpenRouter** เลือกโมเดลฟรีที่ว่างให้เอง |
+| `or/nemotron-nano-30b` | 256K | |
+| `or/nemotron-vl-12b` | 128K | **โมเดล vision ตัวเดียวใน gateway** |
 
-> ตัวที่ลองแล้วใส่ไม่ได้: `z-ai/glm-5.2:free` และ `google/gemma-4-26b-a4b-it:free`
-> ขึ้น "Provider returned error" ส่วน `thinkingmachines/inkling:free` จำกัดเฉพาะ agentic harness
+> **`or/auto-free` ใช้เป็นตาข่ายรองสุดท้าย** — ตั้งไว้ท้ายสุดของ `fallbacks` ทุกสายแล้ว
+> ถ้า provider อื่นล่มหมด OpenRouter จะเลือกโมเดลฟรีที่ยังว่างให้เอง
+> (ทดสอบแล้ววิ่งไป `nemotron-3-ultra-550b`)
+>
+> ตัวที่ลองแล้วใส่ไม่ได้ (2026-08-23): `z-ai/glm-5.2:free`,
+> `google/gemma-4-26b-a4b-it:free`, `poolside/laguna-xs-2.1:free` และ
+> `nvidia/llama-nemotron-rerank-vl-1b-v2:free` ขึ้น "Provider returned error"
+> `thinkingmachines/inkling:free` จำกัดเฉพาะ agentic harness ส่วน
+> `nemotron-3-nano-omni-...-reasoning:free` แชทได้แต่ใส่ tools แล้วคืน ResourceExhausted
 
-เช็ครายชื่อ `:free` ปัจจุบัน (เปลี่ยนบ่อย):
+เช็ครายชื่อโมเดลฟรีปัจจุบัน (เปลี่ยนบ่อย):
 
 ```bash
-curl -s https://openrouter.ai/api/v1/models | python3 -c \
-  'import sys,json;[print(m["id"],m.get("context_length")) for m in json.load(sys.stdin)["data"] if m["id"].endswith(":free")]'
+# ⚠️ กรองด้วย "ราคา = 0" ไม่ใช่ suffix :free — บางตัวฟรีแต่ไม่มี suffix
+# (เช่น stealth/ox-alpha ที่ context 1M) ถ้ากรองด้วย :free จะพลาดไป 4 ตัว
+curl -s https://openrouter.ai/api/v1/models | python3 -c '
+import sys, json
+for m in json.load(sys.stdin)["data"]:
+    p = m.get("pricing") or {}
+    if str(p.get("prompt")) in ("0","0.0") and str(p.get("completion")) in ("0","0.0"):
+        print(f"{m["id"]:<52} ctx={(m.get("context_length") or 0):,}")
+'
 ```
+
+ดูหน้ารวมได้ที่ https://openrouter.ai/collections/free-models
 
 ### Groq (`GROQ_API_KEY`) — เร็วที่สุด
 

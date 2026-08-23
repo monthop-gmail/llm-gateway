@@ -349,8 +349,39 @@ model_list:
       model: openrouter/nvidia/nemotron-nano-9b-v2:free
       api_key: os.environ/OPENROUTER_API_KEY
 
-  # z-ai/glm-5.2:free และ google/gemma-4-26b-a4b-it:free ขึ้น "Provider returned error"
-  # ส่วน thinkingmachines/inkling:free จำกัดเฉพาะ agentic harness — ยังใส่ไม่ได้
+  # เพิ่ม 2026-08-23 (รอบสอง) — ตัวที่ตกสำรวจรอบแรกเพราะกรองด้วย suffix :free
+  # อย่างเดียว ทั้งที่ราคา prompt+completion = 0 เหมือนกัน
+  #
+  # ox-alpha — context 1M ไม่มี suffix :free
+  - model_name: or/ox-alpha
+    litellm_params:
+      model: openrouter/stealth/ox-alpha
+      api_key: os.environ/OPENROUTER_API_KEY
+
+  # router ของ OpenRouter เอง — เลือกโมเดลฟรีที่ว่างให้อัตโนมัติ
+  # ทดสอบแล้ววิ่งไป nemotron-3-ultra-550b ให้เอง เหมาะเป็น fallback ปลายทาง
+  - model_name: or/auto-free
+    litellm_params:
+      model: openrouter/openrouter/free
+      api_key: os.environ/OPENROUTER_API_KEY
+
+  - model_name: or/nemotron-nano-30b
+    litellm_params:
+      model: openrouter/nvidia/nemotron-3-nano-30b-a3b:free
+      api_key: os.environ/OPENROUTER_API_KEY
+
+  # โมเดล vision ตัวแรกของ gateway — ทดสอบแล้วอ่านรูปทรง สี และ OCR ได้ถูก
+  - model_name: or/nemotron-vl-12b
+    litellm_params:
+      model: openrouter/nvidia/nemotron-nano-12b-v2-vl:free
+      api_key: os.environ/OPENROUTER_API_KEY
+
+  # ตัวที่ทดสอบแล้วใช้ไม่ได้ (2026-08-23): poolside/laguna-xs-2.1:free,
+  # z-ai/glm-5.2:free, google/gemma-4-26b-a4b-it:free และ
+  # nvidia/llama-nemotron-rerank-vl-1b-v2:free ขึ้น "Provider returned error"
+  # thinkingmachines/inkling:free จำกัดเฉพาะ agentic harness
+  # nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free แชทได้แต่ใส่ tools แล้ว
+  #   คืน ResourceExhausted
 
   # ---------- GitHub Models — ใช้ GitHub token ที่มีอยู่แล้ว ----------
   # ฟรี: ~10-15 RPM, 50-150 req/วัน แล้วแต่ชั้นของโมเดล
@@ -519,27 +550,27 @@ litellm_settings:
   # ตั้ง fallback ไป provider อื่นไว้ ระบบจะยังทำงานต่อโดย client ไม่ต้องแก้อะไร
   # ---------------------------------------------------------------
   fallbacks:
-    - hf/llama-3.1-8b: [gq/llama-3.1-8b, cf/llama-4-scout]
-    - hf/llama-3.3-70b: [gq/llama-3.3-70b, cf/llama-3.3-70b]
-    - hf/gpt-oss-120b: [cb/gpt-oss-120b, gq/gpt-oss-120b, oc/gpt-oss-120b]
-    - hf/gpt-oss-20b: [oc/gpt-oss-20b, or/gpt-oss-20b]
-    - hf/qwen3-coder-next: [cf/qwen2.5-coder-32b, mi/mistral-code]
-    - hf/glm-5.2: [oc/nemotron-3-super, mi/magistral-medium]
-    - hf/kimi-k3: [oc/nemotron-3-ultra, mi/large]
-    - hf/deepseek-v4-pro: [mi/large, or/nemotron-ultra-550b]
-    - hf/sea-lion-32b: [cf/sea-lion-27b]
-    - hf/sea-lion-gemma-27b: [cf/sea-lion-27b]
-    - hf/gemma-4-26b: [cf/gemma-4-26b, cb/gemma-4-31b]
-    - hf/llama-4-scout: [cf/llama-4-scout]
-    - hf/qwen2.5-7b: [gq/llama-3.1-8b, mi/ministral-8b]
-    - cb/gemma-4-31b: [cf/qwen2.5-coder-32b, mi/magistral-medium]
-    - hf/qwen3.5-397b: [or/nemotron-ultra-550b, oc/nemotron-3-ultra]
-    - hf/glm-4.7: [oc/nemotron-3-super, mi/magistral-medium]
-    - hf/kimi-k2.6: [oc/nemotron-3-ultra, mi/large]
-    - hf/deepseek-r1: [mi/magistral-medium, or/nemotron-super-120b]
-    - hf/deepseek-v3.2: [mi/large, cf/nemotron-3-120b]
-    - hf/qwen3.6-27b: [gq/qwen3.6-27b, cf/qwen3-30b-a3b]
-    - hf/qwen3.6-35b: [cf/qwen3-30b-a3b, gq/qwen3.6-27b]
+    - hf/llama-3.1-8b: [gq/llama-3.1-8b, cf/llama-4-scout, or/auto-free]
+    - hf/llama-3.3-70b: [gq/llama-3.3-70b, cf/llama-3.3-70b, or/auto-free]
+    - hf/gpt-oss-120b: [cb/gpt-oss-120b, gq/gpt-oss-120b, oc/gpt-oss-120b, or/auto-free]
+    - hf/gpt-oss-20b: [oc/gpt-oss-20b, or/gpt-oss-20b, or/auto-free]
+    - hf/qwen3-coder-next: [cf/qwen2.5-coder-32b, mi/mistral-code, or/auto-free]
+    - hf/glm-5.2: [oc/nemotron-3-super, mi/magistral-medium, or/auto-free]
+    - hf/kimi-k3: [oc/nemotron-3-ultra, mi/large, or/auto-free]
+    - hf/deepseek-v4-pro: [mi/large, or/nemotron-ultra-550b, or/auto-free]
+    - hf/sea-lion-32b: [cf/sea-lion-27b, or/auto-free]
+    - hf/sea-lion-gemma-27b: [cf/sea-lion-27b, or/auto-free]
+    - hf/gemma-4-26b: [cf/gemma-4-26b, cb/gemma-4-31b, or/auto-free]
+    - hf/llama-4-scout: [cf/llama-4-scout, or/auto-free]
+    - hf/qwen2.5-7b: [gq/llama-3.1-8b, mi/ministral-8b, or/auto-free]
+    - cb/gemma-4-31b: [cf/qwen2.5-coder-32b, mi/magistral-medium, or/auto-free]
+    - hf/qwen3.5-397b: [or/nemotron-ultra-550b, oc/nemotron-3-ultra, or/auto-free]
+    - hf/glm-4.7: [oc/nemotron-3-super, mi/magistral-medium, or/auto-free]
+    - hf/kimi-k2.6: [oc/nemotron-3-ultra, mi/large, or/auto-free]
+    - hf/deepseek-r1: [mi/magistral-medium, or/nemotron-super-120b, or/auto-free]
+    - hf/deepseek-v3.2: [mi/large, cf/nemotron-3-120b, or/auto-free]
+    - hf/qwen3.6-27b: [gq/qwen3.6-27b, cf/qwen3-30b-a3b, or/auto-free]
+    - hf/qwen3.6-35b: [cf/qwen3-30b-a3b, gq/qwen3.6-27b, or/auto-free]
 
 general_settings:
   master_key: os.environ/LITELLM_MASTER_KEY

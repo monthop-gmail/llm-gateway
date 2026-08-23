@@ -10,7 +10,7 @@
 | Anthropic format `/v1/messages` | ✅ | ใช้กับ Claude Code ได้ |
 | `/v1/models` | ✅ | client ส่วนใหญ่ดึงรายชื่อโมเดลอัตโนมัติ |
 | Embeddings | ✅ | `emb/nemotron-embed` (2048 มิติ), `emb/nv-embedqa-e5` (1024) |
-| Vision (รูปภาพ) | ยังไม่ทดสอบ | ต้องเพิ่มโมเดล VL เช่น `Qwen/Qwen2.5-VL-72B-Instruct` |
+| Vision (รูปภาพ) | ✅ | `or/nemotron-vl-12b` — ทดสอบแล้วอ่านรูปทรง สี และ OCR ข้อความได้ถูก |
 
 **ค่าที่ต้องใช้ทุก client:**
 
@@ -167,6 +167,8 @@ CrewAI / LiteLLM-native ใช้ชื่อ `openai/hf/llama-3.3-70b` พร�
 | context ยาวมาก | `or/nemotron-ultra-550b` (1M), `or/nemotron-lightning` (1M) |
 | ภาษาไทยโดยเฉพาะ | `hf/sea-lion-32b`, `cf/sea-lion-27b` |
 | RAG / embeddings | `emb/nemotron-embed`, `emb/nv-embedqa-e5` |
+| อ่านรูปภาพ / OCR | `or/nemotron-vl-12b` |
+| ไม่อยากเลือกเอง / กันล่ม | `or/auto-free` — OpenRouter เลือกโมเดลฟรีที่ว่างให้ |
 
 ตัวเลข coding มาจากการวัดจริงด้วย `scripts/bench-coding.py` — ดูตารางเต็มใน README
 
