@@ -346,6 +346,8 @@ curl -s https://router.huggingface.co/v1/models -H "Authorization: Bearer $HF_TO
 | `hf/qwen3-coder-next` | 2/3 | 10.8s | HuggingFace |
 | `mi/devstral` | 2/3 | 12.2s | Mistral |
 | `mi/mistral-code` | 2/3 | 8.7s | Mistral |
+| `or/nemotron-nano-30b` | **3/3** | 28.9s | OpenRouter |
+| `or/ox-alpha` | **3/3** | 52.9s | OpenRouter |
 | cb/glm-4.7 *(ถอดออกแล้ว — Cerebras archive)* | 2/3 | 10.5s | Cerebras |
 | `mi/devstral-medium` | 2/3 | 13.5s | Mistral |
 | `cf/llama-4-scout` | 2/3 | 21.5s | Cloudflare |
@@ -354,6 +356,8 @@ curl -s https://router.huggingface.co/v1/models -H "Authorization: Bearer $HF_TO
 | `mi/magistral-small` | 1/3 | 5.1s | Mistral |
 | `cf/nemotron-3-120b` | 1/3 | 24.0s | Cloudflare |
 | `gq/qwen3.6-27b` | 0/3 | 41.2s | Groq |
+| `or/auto-free` | 2/3 | 60.3s | OpenRouter (router — ผลไม่คงที่) |
+| `or/nemotron-vl-12b` | 1/3 | 94.2s | OpenRouter (เป็น vision ไม่ใช่สาย coding) |
 | `or/laguna-s-2.1` | 0/3 | 103.5s | OpenRouter |
 | `cf/qwen3.8-27b` | 0/3 | 120.8s | Cloudflare |
 
@@ -372,6 +376,10 @@ curl -s https://router.huggingface.co/v1/models -H "Authorization: Bearer $HF_TO
 > `mi/mistral-code` และ `hf/qwen3-coder-next` ได้ 2/3 ขณะที่ `mi/magistral-medium`
 > (สาย reasoning) กับ `gq/gpt-oss-120b` (ทั่วไป) ได้เต็ม
 > ข้อที่ตกกันมากคือโจทย์ parser (ลำดับความสำคัญ + วงเล็บ + เลขติดลบ)
+
+> **`or/auto-free` วัดคะแนนไม่ได้แน่นอน** — เป็น router ที่เลือกโมเดลให้ทุกครั้ง
+> คะแนนจึงขึ้นกับว่ารอบนั้นวิ่งไปโมเดลไหน ใช้เป็น fallback ดี แต่อย่าใช้เป็นตัวหลัก
+> เวลาต้องการผลที่ทำซ้ำได้
 
 > **`cf/qwen3.8-27b` ได้ 0/3 — ไม่ใช่เพราะเขียนโค้ดไม่เป็น** ทดสอบแยกแล้วเขียนฟังก์ชัน
 > ง่ายๆ ได้ถูกต้อง แต่เป็น thinking model ที่ใช้ token หมดไปกับการคิด

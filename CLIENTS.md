@@ -168,7 +168,8 @@ CrewAI / LiteLLM-native ใช้ชื่อ `openai/hf/llama-3.3-70b` พร�
 | ภาษาไทยโดยเฉพาะ | `hf/sea-lion-32b`, `cf/sea-lion-27b` |
 | RAG / embeddings | `emb/nemotron-embed`, `emb/nv-embedqa-e5` |
 | อ่านรูปภาพ / OCR | `or/nemotron-vl-12b` |
-| ไม่อยากเลือกเอง / กันล่ม | `or/auto-free` — OpenRouter เลือกโมเดลฟรีที่ว่างให้ |
+| ไม่อยากเลือกเอง / กันล่ม | `or/auto-free` — OpenRouter เลือกให้ (ผลไม่คงที่ ไม่เหมาะเป็นตัวหลัก) |
+| coding บน OpenRouter | `or/nemotron-nano-30b` (3/3 ใน 28.9s), `or/ox-alpha` (3/3, ctx 1M) |
 
 ตัวเลข coding มาจากการวัดจริงด้วย `scripts/bench-coding.py` — ดูตารางเต็มใน README
 
