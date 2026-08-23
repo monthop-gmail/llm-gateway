@@ -89,6 +89,43 @@ model_list:
       model: huggingface/aisingapore/Qwen-SEA-LION-v4-32B-IT
       api_key: os.environ/HF_TOKEN
 
+  # ---------- รุ่นใหม่ (เพิ่ม 2026-08-23) ----------
+  - model_name: hf/glm-5.2
+    litellm_params:
+      model: huggingface/zai-org/GLM-5.2
+      api_key: os.environ/HF_TOKEN
+
+  - model_name: hf/kimi-k3
+    litellm_params:
+      model: huggingface/moonshotai/Kimi-K3
+      api_key: os.environ/HF_TOKEN
+
+  - model_name: hf/deepseek-v4-pro
+    litellm_params:
+      model: huggingface/deepseek-ai/DeepSeek-V4-Pro
+      api_key: os.environ/HF_TOKEN
+
+  - model_name: hf/llama-4-scout
+    litellm_params:
+      model: huggingface/meta-llama/Llama-4-Scout-17B-16E-Instruct
+      api_key: os.environ/HF_TOKEN
+
+  - model_name: hf/qwen3.6-35b
+    litellm_params:
+      model: huggingface/Qwen/Qwen3.6-35B-A3B
+      api_key: os.environ/HF_TOKEN
+
+  - model_name: hf/gemma-4-26b
+    litellm_params:
+      model: huggingface/google/gemma-4-26B-A4B-it
+      api_key: os.environ/HF_TOKEN
+
+  # SEA-LION รุ่น Gemma (คนละตัวกับ hf/sea-lion-32b ที่เป็นฐาน Qwen)
+  - model_name: hf/sea-lion-gemma-27b
+    litellm_params:
+      model: huggingface/aisingapore/Gemma-SEA-LION-v4-27B-IT
+      api_key: os.environ/HF_TOKEN
+
   # ---------- เขียนโค้ด ----------
   - model_name: hf/qwen3-coder-next
     litellm_params:
@@ -140,10 +177,8 @@ model_list:
       model: cerebras/gemma-4-31b
       api_key: os.environ/CEREBRAS_API_KEY
 
-  - model_name: cb/glm-4.7
-    litellm_params:
-      model: cerebras/zai-glm-4.7
-      api_key: os.environ/CEREBRAS_API_KEY
+  # zai-glm-4.7 ถูก Cerebras archive แล้ว (2026-08-23): "Model zai-glm-4.7 is
+  # archived and unavailable for the organization" — ตอนนี้เหลือ 2 โมเดล
 
   # ---------- Google Gemini (AI Studio) — context 1M ----------
   # ฟรี: ดูโควต้าจริงของบัญชีที่ https://aistudio.google.com/rate-limit
@@ -186,6 +221,32 @@ model_list:
       model: mistral/ministral-8b-latest
       api_key: os.environ/MISTRAL_API_KEY
 
+  # magistral — สาย reasoning ของ Mistral (เพิ่ม 2026-08-23)
+  - model_name: mi/magistral-medium
+    litellm_params:
+      model: mistral/magistral-medium-latest
+      api_key: os.environ/MISTRAL_API_KEY
+
+  - model_name: mi/magistral-small
+    litellm_params:
+      model: mistral/magistral-small-latest
+      api_key: os.environ/MISTRAL_API_KEY
+
+  - model_name: mi/mistral-code
+    litellm_params:
+      model: mistral/mistral-code-latest
+      api_key: os.environ/MISTRAL_API_KEY
+
+  - model_name: mi/ministral-14b
+    litellm_params:
+      model: mistral/ministral-14b-latest
+      api_key: os.environ/MISTRAL_API_KEY
+
+  - model_name: mi/devstral-medium
+    litellm_params:
+      model: mistral/devstral-medium-latest
+      api_key: os.environ/MISTRAL_API_KEY
+
   # ---------- Cloudflare Workers AI — ฟรี 10,000 neurons/วัน ----------
   # ต้องมี CLOUDFLARE_ACCOUNT_ID ใน .env ด้วย
   # เช็ครายชื่อ: curl -s "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/models/search?per_page=100" \
@@ -206,6 +267,36 @@ model_list:
     litellm_params:
       model: cloudflare/@cf/qwen/qwen2.5-coder-32b-instruct
       api_key: os.environ/CLOUDFLARE_API_KEY
+
+  # ---------- รุ่นใหม่บน Cloudflare (เพิ่ม 2026-08-23) ----------
+  # Qwen3.8-27B — ตัวที่เมื่อ 2026-08-16 ยังไม่มี provider ฟรี ตอนนี้มาอยู่ที่นี่แล้ว
+  - model_name: cf/qwen3.8-27b
+    litellm_params:
+      model: cloudflare/@cf/qwen/qwen3.8-27b
+      api_key: os.environ/CLOUDFLARE_API_KEY
+
+  - model_name: cf/llama-4-scout
+    litellm_params:
+      model: cloudflare/@cf/meta/llama-4-scout-17b-16e-instruct
+      api_key: os.environ/CLOUDFLARE_API_KEY
+
+  - model_name: cf/nemotron-3-120b
+    litellm_params:
+      model: cloudflare/@cf/nvidia/nemotron-3-120b-a12b
+      api_key: os.environ/CLOUDFLARE_API_KEY
+
+  - model_name: cf/gemma-4-26b
+    litellm_params:
+      model: cloudflare/@cf/google/gemma-4-26b-a4b-it
+      api_key: os.environ/CLOUDFLARE_API_KEY
+
+  - model_name: cf/qwen3-30b-a3b
+    litellm_params:
+      model: cloudflare/@cf/qwen/qwen3-30b-a3b-fp8
+      api_key: os.environ/CLOUDFLARE_API_KEY
+
+  # glm-5.2 กับ deepseek-v4-pro-0813 มีบน Cloudflare แต่ยังไม่อยู่ใน Workers Free plan
+  # (error code 5035) ต้องอัปเกรดแผนก่อน
 
   # ---------- OpenRouter — โมเดลฟรีด้วย key เดียว ----------
   # โมเดลที่ลงท้าย :free ไม่คิดเงิน (จำกัด RPM ต่อโมเดล)
@@ -241,6 +332,25 @@ model_list:
     litellm_params:
       model: openrouter/cohere/north-mini-code:free
       api_key: os.environ/OPENROUTER_API_KEY
+
+  # เพิ่ม 2026-08-23 — ทดสอบยิงผ่านแล้ว
+  - model_name: or/dots-3-note
+    litellm_params:
+      model: openrouter/dots-studio/dots-3-note-preview:free
+      api_key: os.environ/OPENROUTER_API_KEY
+
+  - model_name: or/laguna-s-2.1
+    litellm_params:
+      model: openrouter/poolside/laguna-s-2.1:free
+      api_key: os.environ/OPENROUTER_API_KEY
+
+  - model_name: or/nemotron-nano-9b
+    litellm_params:
+      model: openrouter/nvidia/nemotron-nano-9b-v2:free
+      api_key: os.environ/OPENROUTER_API_KEY
+
+  # z-ai/glm-5.2:free และ google/gemma-4-26b-a4b-it:free ขึ้น "Provider returned error"
+  # ส่วน thinkingmachines/inkling:free จำกัดเฉพาะ agentic harness — ยังใส่ไม่ได้
 
   # ---------- GitHub Models — ใช้ GitHub token ที่มีอยู่แล้ว ----------
   # ฟรี: ~10-15 RPM, 50-150 req/วัน แล้วแต่ชั้นของโมเดล
@@ -402,6 +512,34 @@ litellm_settings:
   num_retries: 2
   request_timeout: 600
   set_verbose: false
+
+  # ---------------------------------------------------------------
+  # fallback — 2026-08-23 เครดิต HF รายเดือนหมด ("You have depleted your
+  # monthly included credits") ทำให้ hf/* ใช้ไม่ได้ 20 จาก 21 ตัว
+  # ตั้ง fallback ไป provider อื่นไว้ ระบบจะยังทำงานต่อโดย client ไม่ต้องแก้อะไร
+  # ---------------------------------------------------------------
+  fallbacks:
+    - hf/llama-3.1-8b: [gq/llama-3.1-8b, cf/llama-4-scout]
+    - hf/llama-3.3-70b: [gq/llama-3.3-70b, cf/llama-3.3-70b]
+    - hf/gpt-oss-120b: [cb/gpt-oss-120b, gq/gpt-oss-120b, oc/gpt-oss-120b]
+    - hf/gpt-oss-20b: [oc/gpt-oss-20b, or/gpt-oss-20b]
+    - hf/qwen3-coder-next: [cf/qwen2.5-coder-32b, mi/mistral-code]
+    - hf/glm-5.2: [oc/nemotron-3-super, mi/magistral-medium]
+    - hf/kimi-k3: [oc/nemotron-3-ultra, mi/large]
+    - hf/deepseek-v4-pro: [mi/large, or/nemotron-ultra-550b]
+    - hf/sea-lion-32b: [cf/sea-lion-27b]
+    - hf/sea-lion-gemma-27b: [cf/sea-lion-27b]
+    - hf/gemma-4-26b: [cf/gemma-4-26b, cb/gemma-4-31b]
+    - hf/llama-4-scout: [cf/llama-4-scout]
+    - hf/qwen2.5-7b: [gq/llama-3.1-8b, mi/ministral-8b]
+    - cb/gemma-4-31b: [cf/qwen2.5-coder-32b, mi/magistral-medium]
+    - hf/qwen3.5-397b: [or/nemotron-ultra-550b, oc/nemotron-3-ultra]
+    - hf/glm-4.7: [oc/nemotron-3-super, mi/magistral-medium]
+    - hf/kimi-k2.6: [oc/nemotron-3-ultra, mi/large]
+    - hf/deepseek-r1: [mi/magistral-medium, or/nemotron-super-120b]
+    - hf/deepseek-v3.2: [mi/large, cf/nemotron-3-120b]
+    - hf/qwen3.6-27b: [gq/qwen3.6-27b, cf/qwen3-30b-a3b]
+    - hf/qwen3.6-35b: [cf/qwen3-30b-a3b, gq/qwen3.6-27b]
 
 general_settings:
   master_key: os.environ/LITELLM_MASTER_KEY

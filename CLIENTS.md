@@ -1,6 +1,6 @@
 # ต่อ AI agent / coding agent เข้ากับ gateway นี้
 
-ทดสอบจริง อัปเดต 2026-08-18 — สิ่งที่ gateway นี้รองรับ:
+ทดสอบจริง อัปเดต 2026-08-23 — สิ่งที่ gateway นี้รองรับ:
 
 | ความสามารถ | สถานะ | หมายเหตุ |
 |---|---|---|
@@ -157,6 +157,7 @@ CrewAI / LiteLLM-native ใช้ชื่อ `openai/hf/llama-3.3-70b` พร�
 | งาน | แนะนำ |
 |---|---|
 | **เขียนโค้ด — เร็วสุด** | `cb/gemma-4-31b` (3/3 ใน 1.5s) — ระวัง TPM limit ของ Cerebras |
+| **เขียนโค้ด — สมดุลสุด** | `mi/magistral-medium` (3/3 ใน 4.9s) โควต้า Mistral 1B token/เดือน |
 | **coding agent ที่ยิงถี่** | `cf/qwen2.5-coder-32b` (3/3, 15.6s) โควต้าใจกว้างกว่า |
 | **autocomplete ในบรรณาธิการ** | `cb/gemma-4-31b` (359ms), `gq/llama-3.1-8b` (181ms) |
 | agent ที่เรียก tool เยอะ | `gq/llama-3.3-70b`, `or/nemotron-ultra-550b` |
@@ -186,3 +187,7 @@ CrewAI / LiteLLM-native ใช้ชื่อ `openai/hf/llama-3.3-70b` พร�
   ถ้าเจอ error เรื่องความยาว ย้ายไป `or/nemotron-ultra-550b` หรือ `or/nemotron-lightning` (1M)
 - **บัญชี HF ไม่ใช่ทางเดียวแล้ว** — ตอนนี้มี 7 provider ถ้าเจ้าไหนโควต้าหมด
   สลับ model_name ได้เลยโดยไม่ต้องแก้ฝั่ง client
+- **เครดิต HF หมดแล้ว (2026-08-23)** แต่ `hf/*` ยังเรียกได้ปกติเพราะตั้ง `fallbacks`
+  ให้วิ่งไป provider อื่น — ทดสอบแล้วกู้ได้ 21/21 ฝั่ง client ไม่ต้องแก้อะไร
+- **อย่าใช้ `cf/qwen3.8-27b` กับงานเขียนโค้ดยาว** — thinking model ที่ token หมดก่อน
+  เขียนโค้ดจบ และ Cloudflare timeout เมื่อขอ max_tokens สูง (ได้ 0/3)

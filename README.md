@@ -109,8 +109,18 @@ client.chat.completions.create(model="hf/qwen2.5-7b", messages=[...])
 
 ## โมเดลที่ตั้งไว้ให้
 
-รวม **53 โมเดล** จาก 7 provider — ทดสอบยิงจริงผ่านทั้งหมด (อัปเดต 2026-08-18)
+รวม **72 โมเดล** จาก 7 provider — ทดสอบยิงจริงผ่านทั้งหมด (อัปเดต 2026-08-23)
 ทุกตัวใช้ `sk-...` ใบเดียวกัน สลับโมเดลได้โดยไม่ต้องแก้ฝั่ง client
+
+> ### ⚠️ เครดิต HuggingFace หมดแล้ว (2026-08-23)
+>
+> `"You have depleted your monthly included credits"` — ยิงตรงไป HF ได้แค่ **1 จาก 21 โมเดล**
+>
+> **แต่ `hf/*` ทุกตัวยังใช้งานได้ตามปกติ** เพราะตั้ง `fallbacks` ใน `litellm/config.yaml`
+> ให้วิ่งไป Groq / Cerebras / Cloudflare / Mistral / OpenRouter / Ollama Cloud แทน
+> ทดสอบแล้ว **กู้ได้ครบ 21/21** — ฝั่ง client ไม่ต้องแก้อะไรเลย
+>
+> ถ้าจะกลับไปใช้ HF จริงต้องเติมเครดิตที่ https://huggingface.co/settings/billing
 
 ### HuggingFace (ต้องมี `HF_TOKEN`)
 
@@ -130,15 +140,22 @@ client.chat.completions.create(model="hf/qwen2.5-7b", messages=[...])
 | `hf/deepseek-r1` | novita/deepseek-ai/DeepSeek-R1 | reasoning |
 | `hf/deepseek-v3.2` | deepseek-ai/DeepSeek-V3.2 | |
 | `hf/qwen3-coder-next` | Qwen/Qwen3-Coder-Next | เขียนโค้ด |
+| `hf/glm-5.2` | zai-org/GLM-5.2 | **ใหม่** — รุ่นถัดจาก GLM-4.7 |
+| `hf/kimi-k3` | moonshotai/Kimi-K3 | **ใหม่** — รุ่นถัดจาก K2.6 |
+| `hf/deepseek-v4-pro` | deepseek-ai/DeepSeek-V4-Pro | **ใหม่** — รุ่นถัดจาก V3.2 |
+| `hf/llama-4-scout` | meta-llama/Llama-4-Scout-17B-16E | **ใหม่** |
+| `hf/qwen3.6-35b` | Qwen/Qwen3.6-35B-A3B | **ใหม่** |
+| `hf/gemma-4-26b` | google/gemma-4-26B-A4B-it | **ใหม่** |
+| `hf/sea-lion-gemma-27b` | aisingapore/Gemma-SEA-LION-v4-27B-IT | **ใหม่** — SEA-LION ฐาน Gemma |
 
-> **Qwen3.8-27B** (ออก 2026-08-05) ตรวจแล้วเมื่อ 2026-08-16 — ยังไม่มี provider ฟรี
-> ไม่อยู่ใน HF router, ไม่มีบน Groq/Cloudflare/NVIDIA NIM
-> มีบน OpenRouter แต่คิดเงิน ($0.45/M prompt) ตอนนี้ใช้ `hf/qwen3.6-27b` แทนไปก่อน
+> **Qwen3.8-27B — อัปเดต 2026-08-23** ตอนนี้มีให้ใช้ฟรีแล้วที่ Cloudflare (`cf/qwen3.8-27b`)
+> ต่างจากตอนตรวจเมื่อ 2026-08-16 ที่ยังไม่มี provider ฟรี
+> ส่วนบน HF router ยังมีแต่รุ่น 2.4T-A95B และ OpenRouter คิดเงิน ($0.40/M, context 1M)
 
 ### OpenRouter (โมเดล `:free` — ทดสอบผ่านทั้งหมดเมื่อ 2026-08-15)
 
 ต้องมี `OPENROUTER_API_KEY` ใน `.env` — สมัครฟรีที่ https://openrouter.ai/keys
-ทั้ง 6 ตัวรองรับ tool calling (ทดสอบแล้ว)
+ทุกตัวรองรับ tool calling (ทดสอบแล้ว)
 
 | model_name | context | หมายเหตุ |
 |---|---|---|
@@ -148,6 +165,12 @@ client.chat.completions.create(model="hf/qwen2.5-7b", messages=[...])
 | `or/gemma-4-31b` | 262K | ตอบไทยดี |
 | `or/gpt-oss-20b` | 131K | ต้องให้ max_tokens สูงพอ ไม่งั้นได้แต่ reasoning |
 | `or/north-mini-code` | 256K | เขียนโค้ด |
+| `or/dots-3-note` | 512K | **ใหม่** — context ใหญ่สุดในกลุ่ม :free |
+| `or/laguna-s-2.1` | 262K | **ใหม่** — สาย coding แต่ได้ 0/3 ใน benchmark |
+| `or/nemotron-nano-9b` | 128K | **ใหม่** — เล็ก เร็ว |
+
+> ตัวที่ลองแล้วใส่ไม่ได้: `z-ai/glm-5.2:free` และ `google/gemma-4-26b-a4b-it:free`
+> ขึ้น "Provider returned error" ส่วน `thinkingmachines/inkling:free` จำกัดเฉพาะ agentic harness
 
 เช็ครายชื่อ `:free` ปัจจุบัน (เปลี่ยนบ่อย):
 
@@ -173,9 +196,11 @@ curl -s https://openrouter.ai/api/v1/models | python3 -c \
 |---|---|---|---|
 | `cb/gemma-4-31b` | **359ms** | **3/3 ใน 1.5s** | ดีที่สุดสำหรับ coding ในตอนนี้ |
 | `cb/gpt-oss-120b` | 2.5s | **3/3 ใน 3.1s** | |
-| `cb/glm-4.7` | 1.1s | 2/3 ใน 10.5s | thinking model |
 
 ทุกตัวรองรับ tool calling (ทดสอบแล้ว)
+
+> `cb/glm-4.7` ถูกถอดออกเมื่อ 2026-08-23 — Cerebras archive โมเดลนี้แล้ว
+> (`"Model zai-glm-4.7 is archived and unavailable for the organization"`)
 
 > **ข้อจำกัดจริงคือ TPM ไม่ใช่ context** — บล็อกหลายที่เขียนว่า context จำกัด 8K
 > แต่ทดสอบเองแล้วส่ง prompt **33,775 tokens ผ่านปกติ**
@@ -194,9 +219,11 @@ curl -s https://openrouter.ai/api/v1/models | python3 -c \
 | model_name | เหมาะกับ |
 |---|---|
 | `mi/small` `mi/medium` `mi/large` | งานทั่วไป |
-| `mi/codestral` | เขียนโค้ด |
-| `mi/devstral` | coding agent โดยเฉพาะ |
-| `mi/ministral-8b` | เล็ก ประหยัด |
+| `mi/magistral-medium` | **ใหม่** — สาย reasoning ได้ **3/3 ใน 4.9s** ใน benchmark |
+| `mi/magistral-small` | **ใหม่** — reasoning ตัวเล็ก (1/3) |
+| `mi/codestral` `mi/mistral-code` | เขียนโค้ด |
+| `mi/devstral` `mi/devstral-medium` | coding agent โดยเฉพาะ |
+| `mi/ministral-8b` `mi/ministral-14b` | เล็ก ประหยัด |
 
 ### NVIDIA NIM (`NVIDIA_NIM_API_KEY`)
 
@@ -221,6 +248,11 @@ curl -s https://openrouter.ai/api/v1/models | python3 -c \
 | `cf/sea-lion-27b` | @cf/aisingapore/gemma-sea-lion-v4-27b-it |
 | `cf/llama-3.3-70b` | @cf/meta/llama-3.3-70b-instruct-fp8-fast |
 | `cf/qwen2.5-coder-32b` | @cf/qwen/qwen2.5-coder-32b-instruct |
+| `cf/qwen3.8-27b` | @cf/qwen/qwen3.8-27b — **ใหม่** thinking model |
+| `cf/llama-4-scout` | @cf/meta/llama-4-scout-17b-16e-instruct — **ใหม่** |
+| `cf/nemotron-3-120b` | @cf/nvidia/nemotron-3-120b-a12b — **ใหม่** |
+| `cf/gemma-4-26b` | @cf/google/gemma-4-26b-a4b-it — **ใหม่** |
+| `cf/qwen3-30b-a3b` | @cf/qwen/qwen3-30b-a3b-fp8 — **ใหม่** (ไม่เรียก tool) |
 
 > โมเดลใหญ่บางตัว (glm-5.2, deepseek-v4) **ไม่อยู่ใน Workers Free plan**
 > คืน error `code 5035` ต้องอัปเกรดแผน
@@ -282,6 +314,7 @@ curl -s https://router.huggingface.co/v1/models -H "Authorization: Bearer $HF_TO
 |---|---|---|---|
 | `cb/gemma-4-31b` | **3/3** | **1.5s** | Cerebras |
 | `cb/gpt-oss-120b` | **3/3** | 3.1s | Cerebras |
+| `mi/magistral-medium` | **3/3** | 4.9s | Mistral |
 | `cf/qwen2.5-coder-32b` | **3/3** | 15.6s | Cloudflare |
 | `gq/gpt-oss-120b` | **3/3** | 26.2s | Groq |
 | `oc/gpt-oss-120b` | **3/3** | 42.0s | Ollama Cloud |
@@ -292,8 +325,17 @@ curl -s https://router.huggingface.co/v1/models -H "Authorization: Bearer $HF_TO
 | `mi/large` | 2/3 | 10.4s | Mistral |
 | `hf/qwen3-coder-next` | 2/3 | 10.8s | HuggingFace |
 | `mi/devstral` | 2/3 | 12.2s | Mistral |
-| `cb/glm-4.7` | 2/3 | 10.5s | Cerebras |
+| `mi/mistral-code` | 2/3 | 8.7s | Mistral |
+| cb/glm-4.7 *(ถอดออกแล้ว — Cerebras archive)* | 2/3 | 10.5s | Cerebras |
+| `mi/devstral-medium` | 2/3 | 13.5s | Mistral |
+| `cf/llama-4-scout` | 2/3 | 21.5s | Cloudflare |
+| `or/dots-3-note` | 2/3 | 54.5s | OpenRouter |
+| `cf/qwen3-30b-a3b` | 2/3 | 56.3s | Cloudflare |
+| `mi/magistral-small` | 1/3 | 5.1s | Mistral |
+| `cf/nemotron-3-120b` | 1/3 | 24.0s | Cloudflare |
 | `gq/qwen3.6-27b` | 0/3 | 41.2s | Groq |
+| `or/laguna-s-2.1` | 0/3 | 103.5s | OpenRouter |
+| `cf/qwen3.8-27b` | 0/3 | 120.8s | Cloudflare |
 
 **เลือกยังไง**
 
@@ -306,9 +348,16 @@ curl -s https://router.huggingface.co/v1/models -H "Authorization: Bearer $HF_TO
 - **หลีกเลี่ยง** → `gq/qwen3.6-27b` เป็น thinking model ที่พ่น `<think>` ลงใน content
   แล้วใช้ token หมดก่อนเขียนโค้ดจบ ได้ 0/3
 
-> ที่น่าสังเกต: โมเดลที่ตั้งชื่อว่าสาย coding ไม่ได้ชนะเสมอ — `mi/devstral` กับ
-> `hf/qwen3-coder-next` ได้ 2/3 ขณะที่ `gq/gpt-oss-120b` ซึ่งเป็นโมเดลทั่วไปได้เต็ม
+> ที่น่าสังเกต: โมเดลที่ตั้งชื่อว่าสาย coding ไม่ได้ชนะเสมอ — `mi/devstral`,
+> `mi/mistral-code` และ `hf/qwen3-coder-next` ได้ 2/3 ขณะที่ `mi/magistral-medium`
+> (สาย reasoning) กับ `gq/gpt-oss-120b` (ทั่วไป) ได้เต็ม
 > ข้อที่ตกกันมากคือโจทย์ parser (ลำดับความสำคัญ + วงเล็บ + เลขติดลบ)
+
+> **`cf/qwen3.8-27b` ได้ 0/3 — ไม่ใช่เพราะเขียนโค้ดไม่เป็น** ทดสอบแยกแล้วเขียนฟังก์ชัน
+> ง่ายๆ ได้ถูกต้อง แต่เป็น thinking model ที่ใช้ token หมดไปกับการคิด
+> (`finish_reason: length`, content ว่าง ที่ max_tokens 3000) และ Cloudflare
+> ยังตัด request ทิ้งด้วย `AiError: Request timeout` เมื่อขอ 8000 tokens
+> เหมาะกับงานถาม-ตอบสั้น ไม่เหมาะกับงานที่ต้องเขียนโค้ดยาว
 
 รันเองกับโมเดลอื่น:
 
