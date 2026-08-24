@@ -63,8 +63,9 @@ PY
 
 แล้วใส่ **API key ของ provider อย่างน้อย 1 เจ้า** ลง `.env`
 
-แนะนำเริ่มที่ **Groq** — ฟรี ไม่ต้องใช้บัตร สมัครเสร็จใช้ได้ทันที และเร็วที่สุด
-(`gq/llama-3.1-8b` ตอบใน 181ms) สมัครที่ https://console.groq.com แล้วใส่ `GROQ_API_KEY=`
+แนะนำเริ่มที่ **Groq** — ฟรี ไม่ต้องใช้บัตร สมัครเสร็จใช้ได้ทันที และเป็นเจ้าเดียว
+ที่มีโมเดลค้นเว็บได้ (`gq/compound-mini`) สมัครที่ https://console.groq.com
+แล้วใส่ `GROQ_API_KEY=`
 
 | provider | ตัวแปร | สมัครที่ | หมายเหตุ |
 |---|---|---|---|
@@ -104,13 +105,13 @@ curl -s http://localhost:4000/v1/models -H "Authorization: Bearer $LITELLM_MASTE
 
 curl -s http://localhost:4000/v1/chat/completions \
   -H "Authorization: Bearer $LITELLM_MASTER_KEY" -H "Content-Type: application/json" \
-  -d '{"model":"gq/llama-3.1-8b","messages":[{"role":"user","content":"สวัสดี"}]}'
+  -d '{"model":"gq/gpt-oss-120b","messages":[{"role":"user","content":"สวัสดี"}]}'
 ```
 
 ## ออก token ให้ผู้ใช้
 
 ```bash
-./scripts/gen-key.sh --alias somchai --budget 5 --models gq/llama-3.1-8b,cb/gemma-4-31b
+./scripts/gen-key.sh --alias somchai --budget 5 --models cb/gemma-4-31b,mi/ministral-8b
 ./scripts/gen-key.sh --alias n8n-bot --duration 90d
 ./scripts/gen-key.sh --alias cline                # เต็มสิทธิ์ ไม่มี budget
 ```
@@ -122,7 +123,7 @@ curl -s http://localhost:4000/v1/chat/completions \
 ```python
 from openai import OpenAI
 client = OpenAI(base_url="http://<host>:4000/v1", api_key="sk-....")
-client.chat.completions.create(model="gq/llama-3.1-8b", messages=[...])
+client.chat.completions.create(model="cb/gemma-4-31b", messages=[...])
 ```
 
 **แนะนำ:** เปลี่ยน `OPENWEBUI_LITELLM_KEY` ใน `.env` จาก master key เป็น virtual key
@@ -130,7 +131,7 @@ client.chat.completions.create(model="gq/llama-3.1-8b", messages=[...])
 
 ## โมเดลที่ตั้งไว้ให้
 
-รวม **76 โมเดล** จาก 7 provider — ทดสอบยิงจริงผ่านทั้งหมด (อัปเดต 2026-08-23)
+รวม **72 โมเดล** จาก 7 provider — ทดสอบยิงจริงผ่านทั้งหมด (อัปเดต 2026-08-23)
 ทุกตัวใช้ `sk-...` ใบเดียวกัน สลับโมเดลได้โดยไม่ต้องแก้ฝั่ง client
 
 > ### ⚠️ เครดิต HuggingFace หมดแล้ว (2026-08-23)
@@ -173,7 +174,7 @@ client.chat.completions.create(model="gq/llama-3.1-8b", messages=[...])
 > ต่างจากตอนตรวจเมื่อ 2026-08-16 ที่ยังไม่มี provider ฟรี
 > ส่วนบน HF router ยังมีแต่รุ่น 2.4T-A95B และ OpenRouter คิดเงิน ($0.40/M, context 1M)
 
-### OpenRouter (โมเดลฟรี 13 ตัว — ทดสอบยิงจริงทุกตัว)
+### OpenRouter (โมเดลฟรี 9 ตัว — ทดสอบยิงจริงทุกตัว)
 
 ต้องมี `OPENROUTER_API_KEY` ใน `.env` — สมัครฟรีที่ https://openrouter.ai/keys
 ทุกตัวในตารางรองรับ tool calling (ทดสอบแล้ว)
@@ -184,15 +185,16 @@ client.chat.completions.create(model="gq/llama-3.1-8b", messages=[...])
 | `or/nemotron-lightning` | 1M | เร็ว แต่พ่น reasoning ปนมาใน content |
 | `or/nemotron-super-120b` | 262K | |
 | `or/gemma-4-31b` | 262K | ตอบไทยดี |
-| `or/gpt-oss-20b` | 131K | ต้องให้ max_tokens สูงพอ ไม่งั้นได้แต่ reasoning |
 | `or/north-mini-code` | 256K | เขียนโค้ด |
 | `or/dots-3-note` | 512K | **ใหม่** — context ใหญ่สุดในกลุ่ม :free |
 | `or/laguna-s-2.1` | 262K | **ใหม่** — สาย coding แต่ได้ 0/3 ใน benchmark |
-| `or/nemotron-nano-9b` | 128K | **ใหม่** — เล็ก เร็ว |
 | `or/ox-alpha` | **1M** | ฟรีแต่ไม่มี suffix `:free` |
 | `or/auto-free` | — | **router ของ OpenRouter** เลือกโมเดลฟรีที่ว่างให้เอง |
-| `or/nemotron-nano-30b` | 256K | |
-| `or/nemotron-vl-12b` | 128K | **โมเดล vision ตัวเดียวใน gateway** |
+
+> ⚠️ **ถอดออก 4 ตัวเมื่อ 2026-08-23 (รอบเย็น)** — `or/gpt-oss-20b` และ
+> `or/nemotron-nano-30b` เปลี่ยนเป็นแบบเสียเงิน ส่วน `or/nemotron-nano-9b` และ
+> `or/nemotron-vl-12b` ขึ้น "No endpoints found"
+> **gateway จึงไม่มีโมเดล vision แล้ว** (ตัวที่เพิ่งเพิ่มเมื่อเช้าถูกถอด endpoint)
 
 > **`or/auto-free` ใช้เป็นตาข่ายรองสุดท้าย** — ตั้งไว้ท้ายสุดของ `fallbacks` ทุกสายแล้ว
 > ถ้า provider อื่นล่มหมด OpenRouter จะเลือกโมเดลฟรีที่ยังว่างให้เอง
@@ -224,16 +226,19 @@ print("รวม", len(free), "ตัว")
 
 ดูหน้ารวมได้ที่ https://openrouter.ai/collections/free-models
 
-### Groq (`GROQ_API_KEY`) — เร็วที่สุด
+### Groq (`GROQ_API_KEY`) — เร็วที่สุด + ตัวเดียวที่เข้าเว็บได้
 
-วัดจริงผ่าน gateway: `gq/llama-3.1-8b` ตอบใน **181ms**, 70B ใน 688ms
+| model_name | ปลายทาง | หมายเหตุ |
+|---|---|---|
+| `gq/compound` | groq/compound | **ค้นเว็บ + เปิด URL ได้** |
+| `gq/compound-mini` | groq/compound-mini | **ค้นเว็บ + เปิด URL ได้** เล็กกว่า เร็วกว่า |
+| `gq/gpt-oss-120b` | openai/gpt-oss-120b | 3/3 ใน benchmark coding |
+| `gq/qwen3.6-27b` | qwen/qwen3.6-27b | thinking model — ไม่เหมาะเขียนโค้ด |
 
-| model_name | ปลายทาง |
-|---|---|
-| `gq/llama-3.3-70b` | llama-3.3-70b-versatile |
-| `gq/llama-3.1-8b` | llama-3.1-8b-instant |
-| `gq/gpt-oss-120b` | openai/gpt-oss-120b |
-| `gq/qwen3.6-27b` | qwen/qwen3.6-27b |
+> ⚠️ **Groq ปลด Llama ออกจาก free tier แล้ว (2026-08-23)** — `llama-3.3-70b-versatile`
+> และ `llama-3.1-8b-instant` คืน `model_not_found` ถอดออกจาก config แล้ว
+> ตัวหลังเคยเป็นตัวที่เร็วที่สุดใน gateway (181ms) ตอนนี้ตัวเร็วสุดคือ
+> `cb/gemma-4-31b` (359ms)
 
 ### Cerebras (`CEREBRAS_API_KEY`) — เร็วที่สุดในกลุ่มที่เขียนโค้ดได้เต็ม
 
@@ -349,6 +354,32 @@ curl -s https://router.huggingface.co/v1/models -H "Authorization: Bearer $HF_TO
 > บาง provider (เช่น groq) อาจตอบ `Not allowed to POST ... for provider X`
 > แปลว่าบัญชี HF ยังไม่มีสิทธิ์/billing กับ provider นั้น ให้ใช้ auto-route แทน
 
+## โมเดลไหนเข้าเว็บได้ — ทดสอบแล้ว
+
+**คำตอบสั้น: มีแค่ `gq/compound` กับ `gq/compound-mini`**
+
+LLM ทั่วไปต่ออินเทอร์เน็ตไม่ได้ ที่จะค้นเว็บได้ต้องเป็น provider ที่แนบ tool
+ฝั่ง server มาให้ — ในบรรดา 7 provider ที่ต่อไว้ มีแค่ Groq compound เท่านั้น
+
+| ความสามารถ | สถานะ | หลักฐาน |
+|---|---|---|
+| websearch | ✅ | ตอบกลับพร้อม `executed_tools: ['search']` และ URL แหล่งที่มา |
+| webfetch (เปิด URL ที่ระบุ) | ✅ | `executed_tools: ['visit']` — สั่งเปิด example.com อ่านเนื้อหากลับมาตรง |
+
+```bash
+curl -s http://localhost:4000/v1/chat/completions \
+  -H "Authorization: Bearer $LITELLM_MASTER_KEY" -H "Content-Type: application/json" \
+  -d '{"model":"gq/compound-mini","messages":[{"role":"user","content":"ราคาทองไทยวันนี้"}]}'
+```
+
+> **ข้อจำกัด** — หน้าเว็บใหญ่เกินจะคืน `Request Entity Too Large`
+> (เปิด example.com ผ่าน แต่หน้า GitHub repo ไม่ผ่าน)
+
+**โมเดลอื่นทั้งหมดเข้าเว็บไม่ได้** ทดสอบตัวแทนทุก provider ด้วยคำถามที่ต้องรู้
+ข้อมูลหลัง training cutoff แล้ว — ทุกตัวตอบตรงๆ ว่าเข้าอินเทอร์เน็ตไม่ได้
+ไม่มีตัวไหนเดามั่ว ถ้าต้องการให้โมเดลอื่นเข้าเว็บ ต้องทำ tool ฝั่ง client เอง
+(ให้ agent เรียก search API แล้วป้อนผลกลับเข้า context) gateway ไม่ได้ทำให้อัตโนมัติ
+
 ## โมเดลไหนเขียนโค้ดได้ดี — วัดจริง
 
 รันด้วย `scripts/bench-coding.py` โจทย์ 3 ข้อ ตรวจผลอัตโนมัติ (อัปเดต 2026-08-23):
@@ -366,7 +397,7 @@ curl -s https://router.huggingface.co/v1/models -H "Authorization: Bearer $HF_TO
 | `mi/magistral-medium` | **3/3** | 4.9s | Mistral | สาย reasoning โควต้า 1B token/เดือน |
 | `cf/qwen2.5-coder-32b` | **3/3** | 15.6s | Cloudflare | โควต้าใจกว้าง เหมาะกับ agent ที่ยิงถี่ |
 | `gq/gpt-oss-120b` | **3/3** | 26.2s | Groq | โควต้าประกาศชัด 30 RPM |
-| `or/nemotron-nano-30b` | **3/3** | 28.9s | OpenRouter |  |
+| or/nemotron-nano-30b | **3/3** | 28.9s | OpenRouter | _ถอดออกแล้ว — เปลี่ยนเป็นเสียเงิน_ |
 | `oc/gpt-oss-120b` | **3/3** | 42.0s | Ollama Cloud |  |
 | `or/nemotron-ultra-550b` | **3/3** | 51.9s | OpenRouter | context 1M |
 | `or/ox-alpha` | **3/3** | 52.9s | OpenRouter | **context 1M** — ตัวเดียวที่ได้เต็มพร้อม context ยาว |
@@ -376,7 +407,7 @@ curl -s https://router.huggingface.co/v1/models -H "Authorization: Bearer $HF_TO
 
 | model_name | คะแนน | เวลารวม | provider | หมายเหตุ |
 |---|---|---|---|---|
-| `gq/llama-3.3-70b` | 2/3 | 2.1s | Groq |  |
+| gq/llama-3.3-70b | 2/3 | 2.1s | Groq | _Groq ปลดออกจาก free tier แล้ว_ |
 | `mi/codestral` | 2/3 | 4.9s | Mistral |  |
 | `mi/mistral-code` | 2/3 | 8.7s | Mistral |  |
 | `mi/large` | 2/3 | 10.4s | Mistral |  |
@@ -395,7 +426,7 @@ curl -s https://router.huggingface.co/v1/models -H "Authorization: Bearer $HF_TO
 |---|---|---|---|---|
 | `mi/magistral-small` | 1/3 | 5.1s | Mistral |  |
 | `cf/nemotron-3-120b` | 1/3 | 24.0s | Cloudflare |  |
-| `or/nemotron-vl-12b` | 1/3 | 94.2s | OpenRouter | เป็น vision model จุดแข็งอยู่ที่อ่านรูป |
+| or/nemotron-vl-12b | 1/3 | 94.2s | OpenRouter | _ถอดออกแล้ว — No endpoints found_ |
 | `gq/qwen3.6-27b` | 0/3 | 41.2s | Groq | พ่น `<think>` ใน content จน token หมด |
 | `or/laguna-s-2.1` | 0/3 | 103.5s | OpenRouter |  |
 | `cf/qwen3.8-27b` | 0/3 | 120.8s | Cloudflare | thinking model + Cloudflare timeout |
@@ -406,8 +437,9 @@ curl -s https://router.huggingface.co/v1/models -H "Authorization: Bearer $HF_TO
   แต่ระวัง TPM limit ของ Cerebras ถ้ายิงงานใหญ่ติดกัน
 - **coding agent ที่ยิงถี่ต่อเนื่อง** → `cf/qwen2.5-coder-32b` (3/3, 15.6s) ช้ากว่าแต่โควต้าใจกว้าง
 - **งานยากที่ต้องแม่น** → `gq/gpt-oss-120b` ได้เต็มเหมือนกัน และ Groq บอกโควต้าชัดเจน
-- **autocomplete / งานสั้นๆ ที่ต้องการความเร็ว** → `gq/llama-3.1-8b` (181ms) หรือ `mi/codestral` (4.9s)
-  ยอมแลกความแม่นบางส่วนกับความเร็ว
+- **autocomplete / งานสั้นๆ ที่ต้องการความเร็ว** → `cb/gemma-4-31b` (359ms) หรือ
+  `mi/magistral-small` (498ms) ยอมแลกความแม่นบางส่วนกับความเร็ว
+- **ต้องการข้อมูลสดจากเว็บ** → `gq/compound-mini` เป็นตัวเดียวที่ค้นเว็บได้
 - **หลีกเลี่ยง** → `gq/qwen3.6-27b` เป็น thinking model ที่พ่น `<think>` ลงใน content
   แล้วใช้ token หมดก่อนเขียนโค้ดจบ ได้ 0/3
 
@@ -570,6 +602,7 @@ scripts/rotate-hf-token.sh      เปลี่ยน HF token ใหม่ + �
 scripts/backup.sh               สำรอง virtual key + spend log
 scripts/restore.sh              กู้คืนจาก backup
 scripts/validate.sh             ตรวจ config ทั้งหมด (CI เรียกตัวนี้)
+scripts/health-check.py         ยิงทุกโมเดลหาว่าตัวไหนตาย แยกจากตัวที่แค่โควต้าหมด
 scripts/bench-coding.py         วัดความสามารถเขียนโค้ดของโมเดล
 CLIENTS.md                      วิธีต่อ AI agent / coding agent
 .env.example                    template — คัดลอกเป็น .env แล้วเติมค่า
@@ -579,7 +612,7 @@ CLIENTS.md                      วิธีต่อ AI agent / coding agent
 
 ```bash
 # ออก virtual key
-./scripts/gen-key.sh --alias somchai --budget 5 --models gq/llama-3.1-8b
+./scripts/gen-key.sh --alias somchai --budget 5 --models cb/gemma-4-31b
 
 # เปลี่ยน HF token (ตรวจสิทธิ์ก่อนเขียน .env แล้วยิงทดสอบทุกโมเดล)
 ./scripts/rotate-hf-token.sh hf_xxxxxxxx
@@ -589,7 +622,11 @@ CLIENTS.md                      วิธีต่อ AI agent / coding agent
 
 # วัดว่าโมเดลไหนเขียนโค้ดได้ดี (ต้อง up stack ก่อน)
 set -a; source .env; set +a
-python3 scripts/bench-coding.py cf/qwen2.5-coder-32b gq/gpt-oss-120b
+python3 scripts/bench-coding.py cb/gemma-4-31b gq/gpt-oss-120b
+
+# หาโมเดลที่ตายแล้วใน config — provider ปลดโมเดลบ่อยกว่าที่คิด
+python3 scripts/health-check.py            # ทุกตัว
+python3 scripts/health-check.py gq/ cb/    # เฉพาะ prefix
 ```
 
 ## Backup

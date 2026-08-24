@@ -1,5 +1,10 @@
 services:
   db:
+    logging:
+      driver: json-file
+      options:
+        max-size: "20m"
+        max-file: "3"
     # pin ไว้ที่เวอร์ชันที่ทดสอบผ่าน — อัพด้วย docker compose pull หลังแก้ tag
     image: postgres:16.14-alpine
     container_name: llm-db
@@ -19,6 +24,11 @@ services:
       - llm-net
 
   litellm:
+    logging:
+      driver: json-file
+      options:
+        max-size: "20m"
+        max-file: "3"
     # LiteLLM 1.96.2 — ดู release ใหม่ที่ https://github.com/BerriAI/litellm/releases
     image: ghcr.io/berriai/litellm:v1.96.2
     container_name: llm-litellm
@@ -69,6 +79,11 @@ services:
       - llm-net
 
   openwebui:
+    logging:
+      driver: json-file
+      options:
+        max-size: "20m"
+        max-file: "3"
     # Open WebUI 0.11.0 — ดู release ใหม่ที่ https://github.com/open-webui/open-webui/releases
     image: ghcr.io/open-webui/open-webui:v0.11.0
     container_name: llm-openwebui

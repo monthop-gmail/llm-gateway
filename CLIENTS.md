@@ -1,6 +1,6 @@
 # ต่อ AI agent / coding agent เข้ากับ gateway นี้
 
-ทดสอบจริง อัปเดต 2026-08-23 — สิ่งที่ gateway นี้รองรับ:
+ทดสอบจริง อัปเดต 2026-08-23 (รอบเย็น) — สิ่งที่ gateway นี้รองรับ:
 
 | ความสามารถ | สถานะ | หมายเหตุ |
 |---|---|---|
@@ -10,14 +10,15 @@
 | Anthropic format `/v1/messages` | ✅ | ใช้กับ Claude Code ได้ |
 | `/v1/models` | ✅ | client ส่วนใหญ่ดึงรายชื่อโมเดลอัตโนมัติ |
 | Embeddings | ✅ | `emb/nemotron-embed` (2048 มิติ), `emb/nv-embedqa-e5` (1024) |
-| Vision (รูปภาพ) | ✅ | `or/nemotron-vl-12b` — ทดสอบแล้วอ่านรูปทรง สี และ OCR ข้อความได้ถูก |
+| Vision (รูปภาพ) | ❌ | เคยมี `or/nemotron-vl-12b` แต่ OpenRouter ถอด endpoint (2026-08-23) |
+| **ค้นเว็บ / เปิด URL** | ✅ | `gq/compound`, `gq/compound-mini` เท่านั้น — ดู README |
 
 **ค่าที่ต้องใช้ทุก client:**
 
 ```
 Base URL : https://llm-api.example.com/v1     ← เปลี่ยนเป็น API_DOMAIN ของคุณ
 API Key  : sk-...                             ← ออกด้วย ./scripts/gen-key.sh
-Model    : cf/qwen2.5-coder-32b, gq/llama-3.3-70b, ... (ดู README)
+Model    : cb/gemma-4-31b, cf/qwen2.5-coder-32b, gq/compound-mini, ... (ดู README)
 ```
 
 ตอนยังเป็น dev (ยังไม่มีโดเมน) ใช้ IP:port ตรงๆ ได้:
@@ -67,9 +68,9 @@ models:
     apiBase: https://llm-api.example.com/v1
     apiKey: sk-...
     roles: [chat, edit, apply]
-  - name: llama-fast
+  - name: fast
     provider: openai
-    model: gq/llama-3.1-8b
+    model: cb/gemma-4-31b
     apiBase: https://llm-api.example.com/v1
     apiKey: sk-...
     roles: [autocomplete]
@@ -99,7 +100,7 @@ LiteLLM มี `/v1/messages` (รูปแบบ Anthropic) ให้ ชี้
 export ANTHROPIC_BASE_URL=https://llm-api.example.com
 export ANTHROPIC_AUTH_TOKEN=sk-...
 export ANTHROPIC_MODEL=cf/qwen2.5-coder-32b
-export ANTHROPIC_SMALL_FAST_MODEL=gq/llama-3.1-8b
+export ANTHROPIC_SMALL_FAST_MODEL=cb/gemma-4-31b
 claude
 ```
 
@@ -119,7 +120,7 @@ Zed: `~/.config/zed/settings.json` → `language_models.openai.api_url`
 ### n8n
 
 Credentials → **OpenAI** → Base URL `https://llm-api.example.com/v1`, API Key `sk-...`
-แล้วใน node "OpenAI Chat Model" พิมพ์ชื่อโมเดลเอง เช่น `gq/llama-3.3-70b`
+แล้วใน node "OpenAI Chat Model" พิมพ์ชื่อโมเดลเอง เช่น `gq/gpt-oss-120b`
 
 ถ้า n8n รันเป็น container บนเครื่องเดียวกัน ต่อ network `llm-net` แล้วใช้ `http://llm-litellm:4000/v1` จะเร็วกว่าและไม่ออกอินเทอร์เน็ต
 
@@ -144,11 +145,11 @@ from langchain_openai import ChatOpenAI
 llm = ChatOpenAI(
     base_url="https://llm-api.example.com/v1",
     api_key="sk-...",
-    model="gq/llama-3.3-70b",
+    model="gq/gpt-oss-120b",
 )
 ```
 
-CrewAI / LiteLLM-native ใช้ชื่อ `openai/gq/llama-3.3-70b` พร้อม `OPENAI_API_BASE`
+CrewAI / LiteLLM-native ใช้ชื่อ `openai/gq/gpt-oss-120b` พร้อม `OPENAI_API_BASE`
 
 ---
 
@@ -159,17 +160,17 @@ CrewAI / LiteLLM-native ใช้ชื่อ `openai/gq/llama-3.3-70b` พร�
 | **เขียนโค้ด — เร็วสุด** | `cb/gemma-4-31b` (3/3 ใน 1.5s) — ระวัง TPM limit ของ Cerebras |
 | **เขียนโค้ด — สมดุลสุด** | `mi/magistral-medium` (3/3 ใน 4.9s) โควต้า Mistral 1B token/เดือน |
 | **coding agent ที่ยิงถี่** | `cf/qwen2.5-coder-32b` (3/3, 15.6s) โควต้าใจกว้างกว่า |
-| **autocomplete ในบรรณาธิการ** | `cb/gemma-4-31b` (359ms), `gq/llama-3.1-8b` (181ms) |
-| agent ที่เรียก tool เยอะ | `gq/llama-3.3-70b`, `or/nemotron-ultra-550b` |
-| งานเบา/จัดหมวด/สรุป (ประหยัด) | `gq/llama-3.1-8b`, `mi/ministral-8b` |
+| **autocomplete ในบรรณาธิการ** | `cb/gemma-4-31b` (359ms), `mi/ministral-8b` |
+| agent ที่เรียก tool เยอะ | `gq/gpt-oss-120b`, `or/nemotron-ultra-550b` |
+| งานเบา/จัดหมวด/สรุป (ประหยัด) | `mi/ministral-8b`, `cb/gemma-4-31b` |
 | งานที่ต้องคิดเยอะ | `mi/magistral-medium`, `cb/gpt-oss-120b` — ช้ากว่าแต่แม่นกว่า |
-| ต้องการความเร็วสูงสุด | `gq/llama-3.1-8b` (181ms), `gq/llama-3.3-70b` (688ms) |
+| ต้องการความเร็วสูงสุด | `cb/gemma-4-31b` (359ms), `mi/magistral-small` (498ms) |
 | context ยาวมาก | `or/nemotron-ultra-550b` (1M), `or/nemotron-lightning` (1M) |
 | ภาษาไทยโดยเฉพาะ | `cf/sea-lion-27b`, `hf/sea-lion-gemma-27b` |
 | RAG / embeddings | `emb/nemotron-embed`, `emb/nv-embedqa-e5` |
-| อ่านรูปภาพ / OCR | `or/nemotron-vl-12b` |
+| ต้องการข้อมูลสดจากเว็บ | `gq/compound-mini` — ค้นเว็บและเปิด URL ได้ |
 | ไม่อยากเลือกเอง / กันล่ม | `or/auto-free` — OpenRouter เลือกให้ (ผลไม่คงที่ ไม่เหมาะเป็นตัวหลัก) |
-| coding บน OpenRouter | `or/nemotron-nano-30b` (3/3 ใน 28.9s), `or/ox-alpha` (3/3, ctx 1M) |
+| coding บน OpenRouter | `or/ox-alpha` (3/3, ctx 1M) |
 
 ตัวเลข coding มาจากการวัดจริงด้วย `scripts/bench-coding.py` — ดูตารางเต็มใน README
 
