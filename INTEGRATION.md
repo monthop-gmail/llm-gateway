@@ -100,8 +100,9 @@ prompt 14K tokens + tool loop 2 รอบ) ทดสอบเองได้เ�
 
 | โปรเจกต์ | เกณฑ์ | หมายเหตุ |
 |---|---|---|
-| **hermes** | tool_calls เป็น field จริง + รับ prompt 14K + สรุป turn 2 ได้ | กิน ~35-40K tokens/turn → ต้องเลือก provider ที่โควต้าใหญ่ ดู `pick-model.sh` แล้วกรอง `provider_quota` |
+| **hermes** | tool_calls เป็น field จริง + รับ prompt 14K + สรุป turn 2 ได้ + **อยู่กับภาษาที่ผู้ใช้ใช้ตอนวิ่ง tool loop** | กิน **26–60K tokens/turn** (พื้น 13K/call · call ถัดไปโตตามบทสนทนา) → กรอง `provider_quota` ด้วยช่วงนี้ ไม่ใช่ตัวเลขเดียว |
 | **opencode** | — | ยังไม่ได้บันทึกเกณฑ์ |
 
-> hermes บันทึกผลของตัวเองไว้ที่ `../test-hermes-line/docs/MODEL-PROBE.md`
+> hermes บันทึกผลของตัวเองไว้ที่
+> https://github.com/monthop-gmail/hermes-line-bot/blob/main/docs/MODEL-PROBE.md
 > ถ้าเกณฑ์เปลี่ยนหรือมีผลใหม่ ส่ง PR มาอัปเดต `model_info` ที่นี่ด้วย
