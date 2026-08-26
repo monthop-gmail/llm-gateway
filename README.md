@@ -27,8 +27,10 @@ Gateway กลางสำหรับ **ออก API token ให้ผู้�
 - **key จริงของ provider อยู่ที่ server เดียว** — ผู้ใช้ไม่เคยเห็น key ของเจ้าไหนเลย
 - **เพิ่ม backend ทีหลังไม่กระทบ client** — แก้ `litellm/config.yaml` (หรือเพิ่มผ่าน UI)
   แล้ว key เดิมยิงโมเดลใหม่ได้เลย
-- **ทดสอบแล้วว่ารองรับ tool calling / streaming / Anthropic format / vision / embeddings**
+- **ทดสอบแล้วว่ารองรับ tool calling / streaming / Anthropic format / embeddings**
   ใช้กับ AI agent และ coding agent ได้จริง ดู [CLIENTS.md](CLIENTS.md)
+- **มีหลายโปรเจกต์ใช้ร่วมกัน** — กติกาว่าใครทำอะไร ส่งผลทดสอบกลับยังไง
+  อยู่ที่ [INTEGRATION.md](INTEGRATION.md)
 - **provider เจ้าไหนล่มก็ยังใช้ได้** — ตั้ง `fallbacks` ไว้ทุกสาย ถ้าปลายทางหลักตาย
   LiteLLM จะสลับไปเจ้าอื่นให้เองโดย client ไม่รู้ตัว
 
@@ -175,6 +177,7 @@ curl -s http://localhost:4000/model/info -H "Authorization: Bearer $LITELLM_MAST
 
 field ที่ใส่ไว้: `description` `tags` `benchmark_coding` `benchmark_seconds`
 `latency_ms` `supports_function_calling` `provider_label` `provider_quota` `context_window`
+`verified_by` (ใครยืนยันผลนี้ เมื่อไหร่ — ดู [INTEGRATION.md](INTEGRATION.md))
 
 tag ที่ใช้ได้: `coding-best` `coding-ok` `coding-weak` `thai` `web-access` `fast`
 `no-api-key` `quality-top` `long-context` `no-tools` `embedding` `general`
@@ -836,9 +839,11 @@ scripts/backup.sh               สำรอง virtual key + spend log
 scripts/restore.sh              กู้คืนจาก backup
 scripts/validate.sh             ตรวจ config ทั้งหมด (CI เรียกตัวนี้)
 scripts/health-check.py         ยิงทุกโมเดลหาว่าตัวไหนตาย แยกจากตัวที่แค่โควต้าหมด
+scripts/verify-capabilities.py  ตรวจ tool calling ซ้ำเทียบกับ config
 scripts/pick-model.sh           ช่วยเลือกโมเดลตามงาน (อ่านจาก /model/info)
 scripts/bench-coding.py         วัดความสามารถเขียนโค้ดของโมเดล
 CLIENTS.md                      วิธีต่อ AI agent / coding agent
+INTEGRATION.md                  กติกาสำหรับโปรเจกต์อื่นที่มาใช้ gateway ร่วมกัน
 .env.example                    template — คัดลอกเป็น .env แล้วเติมค่า
 ```
 

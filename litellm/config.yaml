@@ -308,6 +308,7 @@ model_list:
       provider_label: "Groq"
       provider_quota: "~200K token/วัน ตอบเร็ว"
       tags: ["web-access", "no-tools"]
+      verified_by: "gateway 2026-08-26 (verify-capabilities)"
 
   - model_name: gq/compound-mini
     litellm_params:
@@ -320,6 +321,7 @@ model_list:
       provider_label: "Groq"
       provider_quota: "~200K token/วัน ตอบเร็ว"
       tags: ["web-access", "no-tools"]
+      verified_by: "gateway 2026-08-26 (verify-capabilities)"
 
   - model_name: gq/gpt-oss-120b
     litellm_params:
@@ -348,6 +350,7 @@ model_list:
       provider_label: "Groq"
       provider_quota: "~200K token/วัน ตอบเร็ว"
       tags: ["coding-weak"]
+      verified_by: "gateway 2026-08-26 (verify-capabilities)"
 
   # ---------- Cerebras — โควต้าใหญ่สุด 1M token/วัน ----------
   # ฟรี: 1M token ต่อวัน แต่ RPM ต่ำและ context จำกัด
@@ -385,6 +388,7 @@ model_list:
       provider_label: "Cerebras"
       provider_quota: "~1M token/วัน แต่เป็นโควต้าสะสมต่อนาที (TPM) ยิงงานใหญ่ติดกันจะชน"
       tags: ["coding-best", "fast"]
+      verified_by: "gateway 2026-08-23 (bench-coding 3/3)"
 
   # zai-glm-4.7 ถูก Cerebras archive แล้ว (2026-08-23): "Model zai-glm-4.7 is
   # archived and unavailable for the organization" — ตอนนี้เหลือ 2 โมเดล
@@ -714,6 +718,7 @@ model_list:
       provider_label: "Cloudflare Workers AI"
       provider_quota: "10,000 neurons/วัน"
       tags: ["coding-ok"]
+      verified_by: "gateway 2026-08-26 (ทดสอบซ้ำ tool calling)"
 
   # เพิ่ม 2026-08-26 — ทดสอบยิงผ่านแล้ว
   - model_name: cf/mistral-small-24b
@@ -756,6 +761,7 @@ model_list:
       provider_label: "Cloudflare Workers AI"
       provider_quota: "10,000 neurons/วัน"
       tags: ["no-tools"]
+      verified_by: "gateway 2026-08-26 (verify-capabilities)"
 
   - model_name: cf/granite-4-micro
     litellm_params:
@@ -788,6 +794,7 @@ model_list:
       provider_label: "Cloudflare Workers AI"
       provider_quota: "10,000 neurons/วัน"
       tags: ["general", "no-tools"]
+      verified_by: "gateway 2026-08-26 (verify-capabilities — vision ยังติด format)"
 
   # glm-5.2 กับ deepseek-v4-pro-0813 มีบน Cloudflare แต่ยังไม่อยู่ใน Workers Free plan
   # (error code 5035) ต้องอัปเกรดแผนก่อน
@@ -990,6 +997,7 @@ model_list:
       provider_label: "NVIDIA NIM"
       provider_quota: "40 RPM ไม่มีเพดานรายวัน แต่บาง endpoint ช้า/timeout"
       tags: ["general"]
+      verified_by: "hermes 2026-08-25 (tool calling + prompt 14K)"
 
   - model_name: nim/step-3.7-flash
     litellm_params:
@@ -1062,6 +1070,7 @@ model_list:
       provider_label: "NVIDIA NIM"
       provider_quota: "40 RPM ไม่มีเพดานรายวัน แต่บาง endpoint ช้า/timeout"
       tags: ["general"]
+      verified_by: "gateway 2026-08-26 (ทดสอบซ้ำ tool calling)"
 
   - model_name: nim/deepseek-v4-flash
     litellm_params:
@@ -1332,6 +1341,7 @@ model_list:
       provider_label: "OKMD Playground"
       provider_quota: "⚠️ ~40K token/วัน และแชร์กันทั้งตระกูล ได้ราว 1 turn/ตระกูล/วัน"
       tags: ["general", "no-tools"]
+      verified_by: "gateway 2026-08-26 (verify-capabilities)"
 
   # okmd/qwen3.5-9b อยู่ใน /v1/models แต่ยิงจริงคืน "No models provided" (400)
   # ฝั่ง OKMD ยังไม่ได้ต่อ backend ให้ — ไม่ใส่ไว้
@@ -1415,6 +1425,7 @@ model_list:
       provider_label: "OKMD Playground"
       provider_quota: "⚠️ ~40K token/วัน และแชร์กันทั้งตระกูล ได้ราว 1 turn/ตระกูล/วัน"
       tags: ["web-access", "no-tools"]
+      verified_by: "gateway 2026-08-26 (verify-capabilities)"
 
 
 
@@ -1567,6 +1578,7 @@ model_list:
       provider_label: "LLM7.io"
       provider_quota: "ไม่ต้องมี API key สำหรับโมเดลนี้"
       tags: ["no-api-key", "no-tools"]
+      verified_by: "gateway 2026-08-26 (verify-capabilities)"
 
   # ปลดคอมเมนต์เมื่อมี LLM7_API_KEY แล้ว (เปลี่ยน api_key เป็น os.environ/LLM7_API_KEY
   # ทั้งสองตัวข้างบนด้วย) — ตัวอย่างของที่จะได้เพิ่ม:
@@ -1736,6 +1748,7 @@ model_list:
       provider_label: "ThaiLLM"
       provider_quota: "จำกัดด้วย req/min"
       tags: ["thai", "no-tools"]
+      verified_by: "gateway 2026-08-26 (verify-capabilities)"
 
   # Pathumma (NECTEC) — thinking model
   - model_name: th/pathumma
@@ -1845,6 +1858,7 @@ model_list:
       provider_label: "Ollama Cloud"
       provider_quota: "ไม่ประกาศโควต้า (light usage)"
       tags: ["general"]
+      verified_by: "hermes 2026-08-25 (main model ที่เลือกใช้จริง)"
 
   - model_name: oc/gemma4-31b
     litellm_params:

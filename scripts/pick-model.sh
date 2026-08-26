@@ -79,6 +79,8 @@ def fmt(r, show_all=False):
         out.append("      " + d)
     if show_all and mi.get("provider_quota"):
         out.append("      โควต้า: " + mi["provider_quota"])
+    if show_all and mi.get("verified_by"):
+        out.append("      ยืนยันโดย: " + mi["verified_by"])
     return "\n".join(out)
 
 if not q:
