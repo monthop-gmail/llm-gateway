@@ -37,7 +37,6 @@ model_list:
       status_checked_at: "2026-08-26T10:26:30Z"
       status_detail: "litellm.APIError: HuggingfaceException - {'error':'You have depleted your monthly included credits. Purchase p"
       answered_by: "ministral-8b-latest"
-      latency_ms_14k: 1866
 
   - model_name: hf/qwen2.5-7b
     litellm_params:
@@ -58,7 +57,6 @@ model_list:
       status_checked_at: "2026-08-26T10:26:30Z"
       status_detail: "litellm.BadRequestError: HuggingfaceException - {'error':{'message':'The requested model 'Qwen/Qwen2.5-7B-Inst"
       answered_by: "ministral-8b-latest"
-      latency_ms_14k: 1869
 
   - model_name: hf/gemma-3-12b
     litellm_params:
@@ -79,7 +77,6 @@ model_list:
       status_checked_at: "2026-08-26T10:26:30Z"
       status_detail: "litellm.APIError: HuggingfaceException - {'error':'You have depleted your monthly included credits. Purchase p"
       answered_by: "cerebras/gemma-4-31b"
-      latency_ms_14k: 7046
 
   # gpt-oss — auto-route (groq ถูกปฏิเสธด้วย token ปัจจุบัน)
   - model_name: hf/gpt-oss-20b
@@ -142,7 +139,6 @@ model_list:
       status_checked_at: "2026-08-26T10:26:30Z"
       status_detail: "litellm.APIError: HuggingfaceException - {'error':'You have depleted your monthly included credits. Purchase p"
       answered_by: "cerebras/gpt-oss-120b"
-      latency_ms_14k: 1555
 
   - model_name: hf/qwen3.5-397b
     litellm_params:
@@ -181,7 +177,6 @@ model_list:
       status_checked_at: "2026-08-26T10:26:30Z"
       status_detail: "litellm.APIError: HuggingfaceException - {'error':'You have depleted your monthly included credits. Purchase p"
       answered_by: "magistral-medium-latest"
-      latency_ms_14k: 10646
 
   - model_name: hf/kimi-k2.6
     litellm_params:
@@ -202,7 +197,6 @@ model_list:
       status_checked_at: "2026-08-26T10:26:30Z"
       status_detail: "litellm.APIError: HuggingfaceException - {'error':'You have depleted your monthly included credits. Purchase p"
       answered_by: "mistral-large-latest"
-      latency_ms_14k: 14808
 
   # ---------- reasoning ----------
   - model_name: hf/deepseek-r1
@@ -242,7 +236,6 @@ model_list:
       status_checked_at: "2026-08-26T10:26:30Z"
       status_detail: "litellm.APIError: HuggingfaceException - {'error':'You have depleted your monthly included credits. Purchase p"
       answered_by: "mistral-large-latest"
-      latency_ms_14k: 122358
 
   # Qwen3.6-27B — รุ่นใหม่ล่าสุดที่ยังฟรีบน HF
   # (Qwen3.8-27B ออกแล้วเมื่อ 2026-08-05 แต่ยังไม่มี provider ฟรี — ดูหมายเหตุท้ายไฟล์)
@@ -304,7 +297,6 @@ model_list:
       status_checked_at: "2026-08-26T10:26:30Z"
       status_detail: "litellm.APIError: HuggingfaceException - {'error':'You have depleted your monthly included credits. Purchase p"
       answered_by: "magistral-medium-latest"
-      latency_ms_14k: 10320
 
   - model_name: hf/kimi-k3
     litellm_params:
@@ -345,7 +337,6 @@ model_list:
       status_checked_at: "2026-08-26T10:26:30Z"
       status_detail: "litellm.APIError: HuggingfaceException - {'error':'You have depleted your monthly included credits. Purchase p"
       answered_by: "mistral-large-latest"
-      latency_ms_14k: 115726
 
   - model_name: hf/llama-4-scout
     litellm_params:
@@ -405,7 +396,6 @@ model_list:
       status_checked_at: "2026-08-26T10:26:30Z"
       status_detail: "litellm.APIError: HuggingfaceException - {'error':'You have depleted your monthly included credits. Purchase p"
       answered_by: "cerebras/gemma-4-31b"
-      latency_ms_14k: 6455
 
   # SEA-LION รุ่น Gemma (คนละตัวกับ hf/sea-lion-32b ที่เป็นฐาน Qwen)
   - model_name: hf/sea-lion-gemma-27b
@@ -447,7 +437,6 @@ model_list:
       status_checked_at: "2026-08-26T10:26:30Z"
       status_detail: "litellm.APIError: HuggingfaceException - {'error':'You have depleted your monthly included credits. Purchase p"
       answered_by: "mistral-code-latest"
-      latency_ms_14k: 7777
 
   ####################################################################
   # เจ้าอื่นที่มี free tier — ปลดคอมเมนต์แล้วใส่ key ใน .env

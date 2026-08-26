@@ -25,6 +25,9 @@ prompt ใหญ่ ซึ่งเป็นสภาพปกติของ ag
 เพื่อไม่ยิงตัวที่รู้อยู่แล้วว่าจะพัง ให้เลือก prefix เอาถ้าจะรันซ้ำบ่อย
 อย่าตั้ง cron
 
+⚠️ ยิงด้วย disable_fallbacks: true เสมอ เพื่อให้ได้เวลาของโมเดลที่ขอจริง ๆ
+ไม่ใช่ของตัวสำรองที่ LiteLLM สลับให้เงียบ ๆ
+
 ⚠️ ค่าที่ได้ยังเป็น "call เดียว" อยู่ — turn จริงของ agent มีหลาย call ต่อกัน
 และ context โตขึ้นเรื่อย ๆ เลขนี้จึงเป็น "พื้น" ที่เปรียบเทียบข้ามโมเดลได้
 ไม่ใช่เวลาที่ผู้ใช้จะรอจริง
@@ -43,6 +46,7 @@ from pathlib import Path
 import yaml
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+from config_edit import set_fields  # noqa: E402
 from failure_hints import classify  # noqa: E402
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -100,6 +104,9 @@ def probe(model: str) -> tuple[str, int | None, str, int | None]:
     """คืน (model, ms ต่ำสุด, note, prompt_tokens ที่ provider นับ)"""
     body = {
         "model": model,
+        # ไม่งั้นพอโมเดลตัวจริงตาย LiteLLM สลับไปตัวสำรองเงียบ ๆ แล้วเราจับเวลา
+        # ของตัวสำรองใส่ชื่อโมเดลนี้ — ตอนนี้มี 18 ตัวที่อยู่ในสภาพนั้น (ดู answered_by)
+        "disable_fallbacks": True,
         "messages": [
             {"role": "system", "content": _filler(TARGET_TOKENS)},
             {"role": "user", "content": ASK},
@@ -155,33 +162,14 @@ def _candidates(prefixes: list[str]) -> list[str]:
 
 
 def _write_back(results: list[tuple[str, int | None, str, int | None]]) -> None:
-    lines = CFG.read_text().split("\n")
+    text = CFG.read_text()
     wrote = 0
     for model, ms, note, _ in results:
         if ms is None or note:
             continue
-        for i, line in enumerate(lines):
-            if line.strip() == f"- model_name: {model}":
-                for j in range(i, min(i + 40, len(lines))):
-                    if lines[j].strip() == "model_info:":
-                        ind = len(lines[j + 1]) - len(lines[j + 1].lstrip())
-                        k = j + 1
-                        while k < len(lines) and lines[k].strip() and (
-                            len(lines[k]) - len(lines[k].lstrip())
-                        ) >= ind:
-                            k += 1
-                        new = f"{' ' * ind}latency_ms_14k: {ms}"
-                        hit = next(
-                            (x for x in range(j + 1, k)
-                             if lines[x].strip().startswith("latency_ms_14k:")), None)
-                        if hit is not None:
-                            lines[hit] = new
-                        else:
-                            lines.insert(k, new)
-                        wrote += 1
-                        break
-                break
-    CFG.write_text("\n".join(lines))
+        text, ok = set_fields(text, model, {"latency_ms_14k": ms})
+        wrote += ok
+    CFG.write_text(text)
     print(f"\nเขียนกลับ {wrote} โมเดล → {CFG.relative_to(ROOT)}")
 
 
