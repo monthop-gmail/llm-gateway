@@ -139,6 +139,49 @@ client.chat.completions.create(model="cb/gemma-4-31b", messages=[...])
 **แนะนำ:** เปลี่ยน `OPENWEBUI_LITELLM_KEY` ใน `.env` จาก master key เป็น virtual key
 แล้ว `docker compose up -d openwebui` — จะได้แยก spend ของหน้าแชทออกจาก key อื่น
 
+## เลือกโมเดลยังไงเมื่อมีตั้ง 115 ตัว
+
+**ถามสคริปต์เอา** — ไม่ต้องไล่อ่านตารางทั้งหมด
+
+```bash
+set -a; source .env; set +a
+./scripts/pick-model.sh              # ดูหมวดทั้งหมด
+./scripts/pick-model.sh coding       # เขียนโค้ดได้ครบ 3/3
+./scripts/pick-model.sh thai         # ภาษาไทย
+./scripts/pick-model.sh web          # ค้นเว็บได้
+./scripts/pick-model.sh no-key       # ไม่ต้องมี API key
+./scripts/pick-model.sh fast         # ตอบเร็วกว่า 800ms
+./scripts/pick-model.sh quality      # frontier model
+./scripts/pick-model.sh sea-lion     # ค้นอิสระจากชื่อ/คำอธิบาย
+```
+
+ตัวอย่างผลลัพธ์:
+
+```
+เขียนโค้ดได้ครบ 3/3 ในการทดสอบ — 9 ตัว
+
+  cb/gemma-4-31b            (coding 3/3, 359ms)
+      เขียนโค้ดได้ครบทั้ง 3 ข้อในการทดสอบ ตอบเร็ว (359ms)
+      โควต้า: ~1M token/วัน แต่เป็นโควต้าสะสมต่อนาที (TPM) ยิงงานใหญ่ติดกันจะชน
+```
+
+**ฝั่งโปรแกรมเรียก API เอาได้** — ทุกโมเดลมี `model_info` แนบไว้ใน `/model/info`
+
+```bash
+curl -s http://localhost:4000/model/info -H "Authorization: Bearer $LITELLM_MASTER_KEY" \
+  | jq '.data[] | select(.model_info.tags[]? == "coding-best")
+        | {model_name, desc: .model_info.description, sec: .model_info.benchmark_seconds}'
+```
+
+field ที่ใส่ไว้: `description` `tags` `benchmark_coding` `benchmark_seconds`
+`latency_ms` `supports_function_calling` `provider_label` `provider_quota` `context_window`
+
+tag ที่ใช้ได้: `coding-best` `coding-ok` `coding-weak` `thai` `web-access` `fast`
+`no-api-key` `quality-top` `long-context` `no-tools` `embedding` `general`
+
+> ⚠️ **`/v1/models` ไม่มีข้อมูลพวกนี้** — เป็นสเปคของ OpenAI ที่คืนแค่ `id`
+> client อย่าง Open WebUI / Cline / Aider จะเห็นแค่ชื่อ ต้องเรียก `/model/info` แยก
+
 ## โมเดลที่ตั้งไว้ให้
 
 รวม **114 โมเดล** จาก 11 provider — ทดสอบยิงจริงผ่านทั้งหมด (อัปเดต 2026-08-26)
@@ -793,6 +836,7 @@ scripts/backup.sh               สำรอง virtual key + spend log
 scripts/restore.sh              กู้คืนจาก backup
 scripts/validate.sh             ตรวจ config ทั้งหมด (CI เรียกตัวนี้)
 scripts/health-check.py         ยิงทุกโมเดลหาว่าตัวไหนตาย แยกจากตัวที่แค่โควต้าหมด
+scripts/pick-model.sh           ช่วยเลือกโมเดลตามงาน (อ่านจาก /model/info)
 scripts/bench-coding.py         วัดความสามารถเขียนโค้ดของโมเดล
 CLIENTS.md                      วิธีต่อ AI agent / coding agent
 .env.example                    template — คัดลอกเป็น .env แล้วเติมค่า
@@ -817,6 +861,9 @@ python3 scripts/bench-coding.py cb/gemma-4-31b gq/gpt-oss-120b
 # หาโมเดลที่ตายแล้วใน config — provider ปลดโมเดลบ่อยกว่าที่คิด
 python3 scripts/health-check.py            # ทุกตัว
 python3 scripts/health-check.py gq/ cb/    # เฉพาะ prefix
+
+# เลือกโมเดลตามงาน
+./scripts/pick-model.sh coding
 ```
 
 ## Backup

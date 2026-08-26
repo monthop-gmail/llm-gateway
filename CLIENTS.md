@@ -176,6 +176,10 @@ CrewAI / LiteLLM-native ใช้ชื่อ `openai/gq/gpt-oss-120b` พร้
 
 ตัวเลข coding มาจากการวัดจริงด้วย `scripts/bench-coding.py` — ดูตารางเต็มใน README
 
+**ไม่อยากไล่อ่านตาราง?** ใช้ `./scripts/pick-model.sh coding` (หรือ `thai`, `web`,
+`fast`, `no-key`, `quality`) ให้มันบอกพร้อมเหตุผลและโควต้า
+ฝั่งโปรแกรมดึงจาก `/model/info` ได้ — ทุกโมเดลมี `tags` + `description` แนบไว้
+
 > ⚠️ อย่าใช้ `gq/qwen3.6-27b` กับงานเขียนโค้ด — เป็น thinking model ที่พ่น `<think>`
 > ลงใน content แล้วใช้ token หมดก่อนเขียนโค้ดจบ ได้ 0/3 ในการทดสอบ
 
