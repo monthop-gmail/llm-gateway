@@ -369,10 +369,11 @@ model_list:
       benchmark_coding: "3/3"
       benchmark_seconds: 3.1
       latency_ms: 2531
-      description: "เขียนโค้ดได้ครบทั้ง 3 ข้อในการทดสอบ"
+      description: "เขียนโค้ดได้ครบ 3 ข้อและเร็วที่สุดในกลุ่ม — แต่ TPM สะสมทำให้ agent ที่ยิง 13K tokens ทุก call ชนเพดานเร็ว ไม่เหมาะเป็น main ของ agent loop"
       provider_label: "Cerebras"
       provider_quota: "~1M token/วัน แต่เป็นโควต้าสะสมต่อนาที (TPM) ยิงงานใหญ่ติดกันจะชน"
       tags: ["coding-best"]
+      verified_by: "hermes-line-bot 2026-08-26 (tool loop + prompt 14K · ชน TPM ถ้าใช้เป็น main)"
 
   - model_name: cb/gemma-4-31b
     litellm_params:
@@ -436,10 +437,11 @@ model_list:
       supports_function_calling: true
       benchmark_coding: "2/3"
       benchmark_seconds: 10.4
-      description: "โมเดลจาก Mistral"
+      description: "โมเดลจาก Mistral — ผ่านเกณฑ์ hermes: tool loop 2 รอบ + prompt 14K + อยู่กับภาษาไทย 3/3"
       provider_label: "Mistral"
       provider_quota: "1B token/เดือน — โควต้าใจกว้างที่สุด"
       tags: ["coding-ok"]
+      verified_by: "hermes-line-bot 2026-08-26 (tool loop + prompt 14K + ภาษาไทย)"
 
   - model_name: mi/codestral
     litellm_params:
@@ -904,10 +906,11 @@ model_list:
       benchmark_coding: "3/3"
       benchmark_seconds: 52.9
       context_window: 1000000
-      description: "ได้ 3/3 พร้อม context 1M — ตัวเดียวในกลุ่มที่ได้เต็มแล้วยังรับ context ยาวได้"
+      description: "ได้ 3/3 พร้อม context 1M — ผ่านเกณฑ์ hermes ครบ แต่ช้าสุดในกลุ่ม (~19s ต่อ turn) ไม่เหมาะกับแชทที่ต้องตอบไว"
       provider_label: "OpenRouter"
       provider_quota: "50–1,000 req/วัน แล้วแต่ยอดเติมเงิน"
       tags: ["coding-best", "long-context"]
+      verified_by: "hermes-line-bot 2026-08-26 (tool loop + prompt 14K + ภาษาไทย · ช้า ~19s/turn)"
 
   # router ของ OpenRouter เอง — เลือกโมเดลฟรีที่ว่างให้อัตโนมัติ
   # ทดสอบแล้ววิ่งไป nemotron-3-ultra-550b ให้เอง เหมาะเป็น fallback ปลายทาง
@@ -1812,10 +1815,11 @@ model_list:
       mode: "chat"
       supports_function_calling: true
       latency_ms: 3665
-      description: "โมเดลจาก Ollama Cloud"
+      description: "โมเดลจาก Ollama Cloud — ผ่านเกณฑ์ hermes ครบ แต่ call แรกช้ามาก (~105s ตอน cold) ตัวใหญ่สุดที่ Ollama Cloud ให้ฟรี"
       provider_label: "Ollama Cloud"
       provider_quota: "ไม่ประกาศโควต้า (light usage)"
       tags: ["general"]
+      verified_by: "hermes-line-bot 2026-08-26 (tool loop + prompt 14K · call แรก ~105s)"
 
   - model_name: oc/nemotron-3-super
     litellm_params:
@@ -1885,10 +1889,11 @@ model_list:
       benchmark_coding: "3/3"
       benchmark_seconds: 42.0
       latency_ms: 1484
-      description: "เขียนโค้ดได้ครบทั้ง 3 ข้อในการทดสอบ"
+      description: "เร็ว (1.6s) ผ่าน tool calling + prompt 14K — แต่หลุดไปตอบภาษาอื่นเมื่อรันใน agent loop จริง (ตอบจีน 2 ใน 3 ครั้งทั้งที่ผู้ใช้พิมพ์ไทย) ไม่ควรเป็น main ของบอทภาษาไทย"
       provider_label: "Ollama Cloud"
       provider_quota: "ไม่ประกาศโควต้า (light usage)"
       tags: ["coding-best"]
+      verified_by: "hermes-line-bot 2026-08-26 (language drift ใน tool loop — ยิง API ตรงไม่เห็น)"
 
   - model_name: oc/gpt-oss-20b
     litellm_params:
