@@ -303,11 +303,11 @@ model_list:
       api_key: os.environ/GROQ_API_KEY
     model_info:
       mode: "chat"
-      supports_function_calling: true
-      description: "ค้นเว็บ + เปิด URL ได้ (executed_tools: search/visit) หน้าใหญ่เกินจะ error"
+      supports_function_calling: false
+      description: "ค้นเว็บ + เปิด URL ได้ (executed_tools: search/visit) หน้าใหญ่เกินจะ error — รับ tool จาก client ไม่ได้ (Groq: tool calling is not supported with this model)"
       provider_label: "Groq"
       provider_quota: "~200K token/วัน ตอบเร็ว"
-      tags: ["web-access"]
+      tags: ["web-access", "no-tools"]
 
   - model_name: gq/compound-mini
     litellm_params:
@@ -315,11 +315,11 @@ model_list:
       api_key: os.environ/GROQ_API_KEY
     model_info:
       mode: "chat"
-      supports_function_calling: true
-      description: "ค้นเว็บ + เปิด URL ได้ เล็กกว่า compound เร็วกว่า"
+      supports_function_calling: false
+      description: "ค้นเว็บ + เปิด URL ได้ เล็กกว่า compound เร็วกว่า — รับ tool จาก client ไม่ได้ (Groq: tool calling is not supported with this model)"
       provider_label: "Groq"
       provider_quota: "~200K token/วัน ตอบเร็ว"
-      tags: ["web-access"]
+      tags: ["web-access", "no-tools"]
 
   - model_name: gq/gpt-oss-120b
     litellm_params:
@@ -341,7 +341,7 @@ model_list:
       api_key: os.environ/GROQ_API_KEY
     model_info:
       mode: "chat"
-      supports_function_calling: true
+      supports_function_calling: false
       benchmark_coding: "0/3"
       benchmark_seconds: 41.2
       description: "thinking model ที่พ่น <think> ลงใน content จน token หมด — อย่าใช้เขียนโค้ด"
@@ -783,11 +783,11 @@ model_list:
       api_key: os.environ/CLOUDFLARE_API_KEY
     model_info:
       mode: "chat"
-      supports_function_calling: true
-      description: "โมเดลจาก Cloudflare Workers AI"
+      supports_function_calling: false
+      description: "ไม่เรียก tool — และ vision ยังติด AiError: Unable to add image (format ที่ Cloudflare รับยังไม่ตรง)"
       provider_label: "Cloudflare Workers AI"
       provider_quota: "10,000 neurons/วัน"
-      tags: ["general"]
+      tags: ["general", "no-tools"]
 
   # glm-5.2 กับ deepseek-v4-pro-0813 มีบน Cloudflare แต่ยังไม่อยู่ใน Workers Free plan
   # (error code 5035) ต้องอัปเกรดแผนก่อน
@@ -1327,11 +1327,11 @@ model_list:
       api_key: os.environ/OKMD_API_KEY
     model_info:
       mode: "chat"
-      supports_function_calling: true
-      description: "โมเดลจาก OKMD Playground"
+      supports_function_calling: false
+      description: "โมเดลจาก OKMD Playground — ไม่เรียก tool"
       provider_label: "OKMD Playground"
       provider_quota: "⚠️ ~40K token/วัน และแชร์กันทั้งตระกูล ได้ราว 1 turn/ตระกูล/วัน"
-      tags: ["general"]
+      tags: ["general", "no-tools"]
 
   # okmd/qwen3.5-9b อยู่ใน /v1/models แต่ยิงจริงคืน "No models provided" (400)
   # ฝั่ง OKMD ยังไม่ได้ต่อ backend ให้ — ไม่ใส่ไว้
@@ -1410,11 +1410,11 @@ model_list:
       api_key: os.environ/OKMD_API_KEY
     model_info:
       mode: "chat"
-      supports_function_calling: true
-      description: "Perplexity Sonar — ค้นเว็บได้ ตอบพร้อม citation"
+      supports_function_calling: false
+      description: "Perplexity Sonar — ค้นเว็บได้ ตอบพร้อม citation — รับ tool จาก client ไม่ได้ (No endpoints found that support tool use) — แต่ค้นเว็บเองได้"
       provider_label: "OKMD Playground"
       provider_quota: "⚠️ ~40K token/วัน และแชร์กันทั้งตระกูล ได้ราว 1 turn/ตระกูล/วัน"
-      tags: ["web-access"]
+      tags: ["web-access", "no-tools"]
 
 
 
@@ -1562,11 +1562,11 @@ model_list:
       api_key: ""
     model_info:
       mode: "chat"
-      supports_function_calling: true
-      description: "โมเดลจาก LLM7.io"
+      supports_function_calling: false
+      description: "โมเดลจาก LLM7.io — ไม่เรียก tool"
       provider_label: "LLM7.io"
       provider_quota: "ไม่ต้องมี API key สำหรับโมเดลนี้"
-      tags: ["no-api-key"]
+      tags: ["no-api-key", "no-tools"]
 
   # ปลดคอมเมนต์เมื่อมี LLM7_API_KEY แล้ว (เปลี่ยน api_key เป็น os.environ/LLM7_API_KEY
   # ทั้งสองตัวข้างบนด้วย) — ตัวอย่างของที่จะได้เพิ่ม:
@@ -1731,11 +1731,11 @@ model_list:
       extra_headers: {"User-Agent": "curl/8.5.0"}
     model_info:
       mode: "chat"
-      supports_function_calling: true
-      description: "โมเดลไทย (OpenThaiGPT) — thinking model"
+      supports_function_calling: false
+      description: "โมเดลไทย (OpenThaiGPT) — thinking model — ไม่เรียก tool ตอบเป็นข้อความแทน (thinking model)"
       provider_label: "ThaiLLM"
       provider_quota: "จำกัดด้วย req/min"
-      tags: ["thai"]
+      tags: ["thai", "no-tools"]
 
   # Pathumma (NECTEC) — thinking model
   - model_name: th/pathumma
