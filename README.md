@@ -196,6 +196,7 @@ tag ที่ใช้ได้: `coding-best` `coding-ok` `coding-weak` `thai` 
 | [INTEGRATION.md](INTEGRATION.md) | ฟิลด์ใน `model_info` เชื่อได้แค่ไหน + กติกาสำหรับโปรเจกต์ที่มาใช้ |
 | [CLIENTS.md](CLIENTS.md) | ต่อ Cline / Aider / n8n / LangChain เข้ากับ gateway |
 | [CONTRIBUTING.md](CONTRIBUTING.md) | ส่ง PR / ขอโมเดลใหม่ / กติกาการวัดค่า |
+| [CHANGELOG.md](CHANGELOG.md) | อะไรเปลี่ยนบ้างในแต่ละเวอร์ชัน |
 
 ไม่อยากอ่านเอง ใช้ `./scripts/pick-model.sh` ให้มันเลือกให้
 
