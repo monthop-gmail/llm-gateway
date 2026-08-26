@@ -60,8 +60,12 @@ GROUPS = {
 }
 
 # หมวดที่ไม่ได้ดูจาก tag แต่ดูจากผลวัดจริง
+#
+# กัน answered_by ด้วย ไม่งั้นตัวที่ตัวสำรองตอบแทนจะยกเลขของตัวสำรองมาโชว์
+# และเพราะหมวดนี้เรียงจาก vmp มากไปน้อย มันจะไปนั่งอยู่หัวตารางพอดี
 def _big_prompt(r):
-    return (info(r).get("verified_max_prompt") or 0) >= 30_000
+    return ((info(r).get("verified_max_prompt") or 0) >= 30_000
+            and not info(r).get("answered_by"))
 
 # เกณฑ์ "เอาไปทำ agent ได้" ตามที่ hermes ขอมาใน issue #3 ข้อ 5
 #
@@ -77,7 +81,10 @@ def _agent_ready(r):
             and mi.get("status") in (None, "ok")
             and (mi.get("verified_max_prompt") or 0) >= AGENT_FLOOR
             # rpm-only = จำกัดต่อนาที agent ยิงถี่จะชนก่อนใคร
-            and mi.get("quota_window") != "rpm-only")
+            and mi.get("quota_window") != "rpm-only"
+            # answered_by = ชื่อนี้ไม่ได้ตอบเอง ตัวสำรองตอบแทน — ตัวเลขที่
+            # วัดผ่านชื่อนี้จึงเป็นของตัวสำรอง ไม่ใช่ของโมเดลที่ขอ
+            and not mi.get("answered_by"))
 
 def info(r):
     return r.get("model_info") or {}
