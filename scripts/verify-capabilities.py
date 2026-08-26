@@ -4,7 +4,8 @@
     set -a; source .env; set +a
     python3 scripts/verify-capabilities.py            # ตรวจทุกตัว
     python3 scripts/verify-capabilities.py gq/ cb/    # เฉพาะ prefix
-    python3 scripts/verify-capabilities.py --fix      # แก้ config ให้ตรงเลย
+    python3 scripts/verify-capabilities.py --write    # แก้ config ให้ตรงเลย
+                                                      # (--fix เป็นชื่อเดิม ยังใช้ได้)
 
 ทำไมต้องมี: ข้อมูล "ใช้ tool ไม่ได้" มีอายุสั้นกว่าที่คิด — provider แก้ของ
 ตัวเองแล้วเราไม่รู้ เจอมาแล้วเมื่อ 2026-08-26 ว่า nim/llama-3.3-70b และ
@@ -113,8 +114,10 @@ def main() -> int:
         print("ต้องตั้ง LITELLM_MASTER_KEY — ลอง: set -a; source .env; set +a", file=sys.stderr)
         return 1
 
-    args = [a for a in sys.argv[1:] if a != "--fix"]
-    do_fix = "--fix" in sys.argv
+    # --write คือชื่อมาตรฐานของ repo นี้ (health-check, probe-context, probe-latency
+    # ใช้ชื่อนี้หมด) เก็บ --fix ไว้เป็นชื่อเดิมเพราะมีคนพิมพ์ไว้ในสคริปต์ของตัวเองแล้ว
+    args = [a for a in sys.argv[1:] if not a.startswith("--")]
+    do_fix = "--write" in sys.argv or "--fix" in sys.argv
 
     cfg = yaml.safe_load(CFG.read_text())
     entries = {
@@ -165,7 +168,7 @@ def main() -> int:
         print(f"  {model:<26} config บอก {recorded} แต่จริง {actual}   ({arrow})")
 
     if not do_fix:
-        print("\nรันซ้ำด้วย --fix เพื่อแก้ litellm/config.yaml ให้ตรง")
+        print("\nรันซ้ำด้วย --write เพื่อแก้ litellm/config.yaml ให้ตรง")
         return 1
 
     # ใช้ตัวเขียนตัวเดียวกับสคริปต์อื่น — ของเดิมเป็น regex ที่ (?:.*?\n)*? วิ่งข้าม
