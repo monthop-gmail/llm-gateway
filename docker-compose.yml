@@ -77,6 +77,11 @@ services:
     mem_limit: 2g
     networks:
       - llm-net
+      # llm-clients = เน็ตเวิร์กสำหรับ "client ที่มาขอใช้โมเดล" เท่านั้น
+      # แยกจาก llm-net ซึ่งมี db + openwebui อยู่ด้วย  client อย่าง hermes-line
+      # จะได้เห็นแค่ container นี้ ไม่เห็น llm-db
+      # (llm-net ยังคงไว้เพราะ openwebui + nst-opencode ต่ออยู่)
+      - llm-clients
 
   openwebui:
     logging:
@@ -122,3 +127,7 @@ volumes:
 networks:
   llm-net:
     name: llm-net
+  # สร้างไว้ล่วงหน้าแล้ว (docker network create llm-clients) — ประกาศเป็น external
+  # เพื่อให้ stack ฝั่ง client ที่ประกาศ external เหมือนกันมาต่อได้โดยไม่ผูกลำดับ up
+  llm-clients:
+    external: true

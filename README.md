@@ -131,7 +131,7 @@ client.chat.completions.create(model="cb/gemma-4-31b", messages=[...])
 
 ## โมเดลที่ตั้งไว้ให้
 
-รวม **72 โมเดล** จาก 7 provider — ทดสอบยิงจริงผ่านทั้งหมด (อัปเดต 2026-08-23)
+รวม **79 โมเดล** จาก 7 provider — ทดสอบยิงจริงผ่านทั้งหมด (อัปเดต 2026-08-26)
 ทุกตัวใช้ `sk-...` ใบเดียวกัน สลับโมเดลได้โดยไม่ต้องแก้ฝั่ง client
 
 > ### ⚠️ เครดิต HuggingFace หมดแล้ว (2026-08-23)
@@ -174,7 +174,7 @@ client.chat.completions.create(model="cb/gemma-4-31b", messages=[...])
 > ต่างจากตอนตรวจเมื่อ 2026-08-16 ที่ยังไม่มี provider ฟรี
 > ส่วนบน HF router ยังมีแต่รุ่น 2.4T-A95B และ OpenRouter คิดเงิน ($0.40/M, context 1M)
 
-### OpenRouter (โมเดลฟรี 9 ตัว — ทดสอบยิงจริงทุกตัว)
+### OpenRouter (โมเดลฟรี 10 ตัว — ทดสอบยิงจริงทุกตัว)
 
 ต้องมี `OPENROUTER_API_KEY` ใน `.env` — สมัครฟรีที่ https://openrouter.ai/keys
 ทุกตัวในตารางรองรับ tool calling (ทดสอบแล้ว)
@@ -184,13 +184,16 @@ client.chat.completions.create(model="cb/gemma-4-31b", messages=[...])
 | `or/nemotron-ultra-550b` | 1M | ใหญ่ที่สุด ตอบไทยดี |
 | `or/nemotron-lightning` | 1M | เร็ว แต่พ่น reasoning ปนมาใน content |
 | `or/nemotron-super-120b` | 262K | |
-| `or/gemma-4-31b` | 262K | ตอบไทยดี |
 | `or/north-mini-code` | 256K | เขียนโค้ด |
 | `or/dots-3-note` | 512K | **ใหม่** — context ใหญ่สุดในกลุ่ม :free |
 | `or/laguna-s-2.1` | 262K | **ใหม่** — สาย coding แต่ได้ 0/3 ใน benchmark |
 | `or/ox-alpha` | **1M** | ฟรีแต่ไม่มี suffix `:free` |
+| `or/minimax-m2.7` | 196K | **ใหม่ 08-26** |
+| `or/nemotron-omni-30b` | 256K | **ใหม่ 08-26** — เมื่อ 08-23 ยังใช้ tool ไม่ได้ ตอนนี้ผ่านแล้ว |
 | `or/auto-free` | — | **router ของ OpenRouter** เลือกโมเดลฟรีที่ว่างให้เอง |
 
+> ⚠️ **ถอด `or/gemma-4-31b` เมื่อ 2026-08-26** — ขึ้น "Provider returned error" ต่อเนื่อง
+>
 > ⚠️ **ถอดออก 4 ตัวเมื่อ 2026-08-23 (รอบเย็น)** — `or/gpt-oss-20b` และ
 > `or/nemotron-nano-30b` เปลี่ยนเป็นแบบเสียเงิน ส่วน `or/nemotron-nano-9b` และ
 > `or/nemotron-vl-12b` ขึ้น "No endpoints found"
@@ -271,7 +274,9 @@ print("รวม", len(free), "ตัว")
 | `mi/small` `mi/medium` `mi/large` | งานทั่วไป |
 | `mi/magistral-medium` | **ใหม่** — สาย reasoning ได้ **3/3 ใน 4.9s** ใน benchmark |
 | `mi/magistral-small` | **ใหม่** — reasoning ตัวเล็ก (1/3) |
-| `mi/codestral` `mi/mistral-code` | เขียนโค้ด |
+| `mi/codestral` `mi/mistral-code` `mi/mistral-code-agent` | เขียนโค้ด |
+| `mi/mistral-code-fim` | **ใหม่ 08-26** — fill-in-the-middle เหมาะกับ autocomplete |
+| `mi/ministral-3b` | **ใหม่ 08-26** — เล็กสุด เร็วสุด 373ms |
 | `mi/devstral` `mi/devstral-medium` | coding agent โดยเฉพาะ |
 | `mi/ministral-8b` `mi/ministral-14b` | เล็ก ประหยัด |
 
@@ -302,7 +307,16 @@ print("รวม", len(free), "ตัว")
 | `cf/llama-4-scout` | @cf/meta/llama-4-scout-17b-16e-instruct — **ใหม่** |
 | `cf/nemotron-3-120b` | @cf/nvidia/nemotron-3-120b-a12b — **ใหม่** |
 | `cf/gemma-4-26b` | @cf/google/gemma-4-26b-a4b-it — **ใหม่** |
-| `cf/qwen3-30b-a3b` | @cf/qwen/qwen3-30b-a3b-fp8 — **ใหม่** (ไม่เรียก tool) |
+| `cf/qwen3-30b-a3b` | @cf/qwen/qwen3-30b-a3b-fp8 (ไม่เรียก tool) |
+| `cf/mistral-small-24b` | @cf/mistralai/mistral-small-3.1-24b-instruct — **ใหม่ 08-26** |
+| `cf/qwq-32b` | @cf/qwen/qwq-32b — **ใหม่ 08-26** thinking model |
+| `cf/deepseek-r1-32b` | @cf/deepseek-ai/deepseek-r1-distill-qwen-32b — **ใหม่ 08-26** (ไม่เรียก tool) |
+| `cf/granite-4-micro` | @cf/ibm-granite/granite-4.0-h-micro — **ใหม่ 08-26** เล็ก เร็ว 676ms |
+
+> **Cloudflare มี vision แล้ว แต่ต้องกดยอมรับก่อน** — `@cf/meta/llama-3.2-11b-vision-instruct`
+> คืน `"Model Agreement: Prior to using this model, you must agree..."`
+> ไปกดที่ dash.cloudflare.com แล้วปลดคอมเมนต์ `cf/llama-3.2-vision` ใน config
+> จะได้ vision กลับมา (ตอนนี้ gateway ไม่มี vision)
 
 > โมเดลใหญ่บางตัว (glm-5.2, deepseek-v4) **ไม่อยู่ใน Workers Free plan**
 > คืน error `code 5035` ต้องอัปเกรดแผน
@@ -337,7 +351,10 @@ Ollama โฮสต์ให้ ไม่กิน RAM/GPU เครื่อง
 | model_name | มิติ |
 |---|---|
 | `emb/nemotron-embed` | 2048 |
-| `emb/nv-embedqa-e5` | 1024 (ตั้ง `input_type: passage` ไว้ในconfig เพราะโมเดลบังคับ) |
+
+> ⚠️ **NVIDIA ปลด embedding เกือบหมดเมื่อ 2026-08-26** — `nv-embedqa-e5-v5` (คืน 410 Gone),
+> `nv-embed-v1`, `llama-nemotron-embed-1b-v2` และ `baai/bge-m3` ขึ้น
+> `"has reached its end of life"` เหลือ `nemotron-3-embed-1b` ตัวเดียวที่ยังใช้ได้
 
 โมเดลบน HF ถูกปลด/เพิ่มเป็นระยะ เช็คว่าตอนนี้มีอะไรใช้ได้:
 
@@ -410,6 +427,9 @@ curl -s http://localhost:4000/v1/chat/completions \
 | gq/llama-3.3-70b | 2/3 | 2.1s | Groq | _Groq ปลดออกจาก free tier แล้ว_ |
 | `mi/codestral` | 2/3 | 4.9s | Mistral |  |
 | `mi/mistral-code` | 2/3 | 8.7s | Mistral |  |
+| `mi/mistral-code-agent` | 2/3 | 15.7s | Mistral | **ใหม่ 08-26** |
+| `cf/mistral-small-24b` | 2/3 | 23.9s | Cloudflare | **ใหม่ 08-26** |
+| `or/minimax-m2.7` | 2/3 | 76.7s | OpenRouter | **ใหม่ 08-26** |
 | `mi/large` | 2/3 | 10.4s | Mistral |  |
 | cb/glm-4.7 | 2/3 | 10.5s | Cerebras | _ถอดออกแล้ว — Cerebras archive_ |
 | `hf/qwen3-coder-next` | 2/3 | 10.8s | HuggingFace |  |
@@ -424,6 +444,7 @@ curl -s http://localhost:4000/v1/chat/completions \
 
 | model_name | คะแนน | เวลารวม | provider | หมายเหตุ |
 |---|---|---|---|---|
+| `mi/ministral-3b` | 1/3 | 4.3s | Mistral | **ใหม่ 08-26** เล็กสุด |
 | `mi/magistral-small` | 1/3 | 5.1s | Mistral |  |
 | `cf/nemotron-3-120b` | 1/3 | 24.0s | Cloudflare |  |
 | or/nemotron-vl-12b | 1/3 | 94.2s | OpenRouter | _ถอดออกแล้ว — No endpoints found_ |
