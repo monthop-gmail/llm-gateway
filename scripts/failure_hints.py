@@ -24,6 +24,11 @@ DEAD_HINTS = (
     "unavailable for free", "archived", "requires a subscription",
     "not available on the workers free", "model_not_supported",
     "is not supported by any provider",
+    # NVIDIA NIM ปลดโมเดลด้วย 410 Gone พร้อมวันหมดอายุ เจอสด 2026-08-26:
+    # "has reached its end of life on 2026-08-26T09:00:00Z and is no longer available"
+    "end of life", "no longer available",
+    # NIM 404 เมื่อ function ถูกลบออกจากบัญชี
+    "specified function in account",
 )
 # ชนเพดาน context จริง — ยิงใหม่ก็เท่าเดิม
 LIMIT_HINTS = (

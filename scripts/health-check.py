@@ -16,7 +16,8 @@
 
 แยกสาเหตุที่ล้มเหลวออกเป็น 2 กลุ่ม เพราะวิธีแก้ต่างกันสิ้นเชิง:
 
-  ตายถาวร  — โมเดลถูกปลด/เปลี่ยนเป็นเสียเงิน ต้องแก้ litellm/config.yaml
+  ตายถาวร  — โมเดลถูกปลด/เปลี่ยนเป็นเสียเงิน ตัวที่ยังมี fallback รับอยู่ให้เก็บไว้
+             เป็น alias ได้ ตัวที่ไม่มีอะไรรับต้องแก้ litellm/config.yaml
   โควต้าหมด — ยิงเยอะเกินโควต้าวัน/เดือน รอ reset แล้วกลับมาเอง
 
 ตัวอย่างที่เคยเจอจริง: Groq ปลด llama-3.1-8b-instant ออกจาก free tier
@@ -152,7 +153,7 @@ def main() -> int:
         if not rows:
             continue
         note = {
-            "ตายถาวร": "  ← ต้องแก้ litellm/config.yaml",
+            "ตายถาวร": "  ← ดูข้างล่างว่าต้องแก้ config หรือเก็บเป็น alias ได้",
             "โควต้าหมด": "  ← รอ reset แล้วกลับมาเอง",
             "timeout": "  ← provider ช้าหรือล่ม ลองใหม่ทีหลัง",
         }.get(group, "")
@@ -163,8 +164,23 @@ def main() -> int:
     if "--write" in sys.argv:
         _write_back(results)
 
-    # ให้ CI/สคริปต์อื่นเช็คได้ว่ามีของตายไหม
-    return 1 if any(r[1] == "ตายถาวร" for r in results) else 0
+    # exit 1 = "มีของตายที่ไม่มีอะไรรองรับ" ไม่ใช่แค่ "มีของตาย"
+    #
+    # โมเดลที่ตายแล้วยังอยู่ใน config โดยตั้งใจ (ดู INTEGRATION.md) ถ้าให้ exit 1
+    # ทุกครั้งที่เจอของตาย สัญญาณจะแดงค้างถาวรแล้วไม่มีใครสนใจอีก พอมีตัวใหม่
+    # ตายจริงก็จะไม่มีใครเห็น จึงแดงเฉพาะตอนที่ชื่อนั้นชี้ไปไม่ถึงอะไรเลย
+    orphan = [r for r in results if r[1] == "ตายถาวร" and not r[3]]
+    if orphan:
+        print(f"\n❌ {len(orphan)} ตัวตายแล้วและไม่มีตัวสำรองรับ — ยิงแล้วพังทันที")
+        for model, _, _, _ in orphan:
+            print(f"  {model}")
+        print("  แก้ litellm/config.yaml: เพิ่ม fallback ให้ หรือเอาออกจากลิสต์")
+        return 1
+
+    dead_ok = [r for r in results if r[1] == "ตายถาวร"]
+    if dead_ok:
+        print(f"\n{len(dead_ok)} ตัวตายแล้วแต่ตัวสำรองยังรับอยู่ — เก็บไว้เป็น alias ได้")
+    return 0
 
 
 # แปลงผลตรวจเป็นค่า status ที่ consumer ใช้กรองได้
