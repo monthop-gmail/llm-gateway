@@ -157,7 +157,7 @@ CrewAI / LiteLLM-native ใช้ชื่อ `openai/gq/gpt-oss-120b` พร้
 
 | งาน | แนะนำ |
 |---|---|
-| **งานที่ต้องการคุณภาพสูงสุด** | `okmd/claude-sonnet-5`, `okmd/gpt-5.4` — frontier model ผ่าน OKMD |
+| **งานที่ต้องการคุณภาพสูงสุด** | `okmd/claude-sonnet-5`, `okmd/gpt-5.4` — ⚠️ โควต้าแค่ ~40K token/วัน แชร์ทั้งตระกูล ใช้เป็นครั้งคราว |
 | **เขียนโค้ด — เร็วสุด** | `cb/gemma-4-31b` (3/3 ใน 1.5s) — ระวัง TPM limit ของ Cerebras |
 | **เขียนโค้ด — สมดุลสุด** | `mi/magistral-medium` (3/3 ใน 4.9s) โควต้า Mistral 1B token/เดือน |
 | **coding agent ที่ยิงถี่** | `cf/qwen2.5-coder-32b` (3/3, 15.6s) โควต้าใจกว้างกว่า |
@@ -182,6 +182,9 @@ CrewAI / LiteLLM-native ใช้ชื่อ `openai/gq/gpt-oss-120b` พร้
 
 - **coding agent กิน token มหาศาล** (อ่านไฟล์ทั้งโปรเจกต์เข้า context ทุกรอบ)
   ให้ออก key แบบมี `--budget` เสมอ ไม่ว่าจะใช้ provider ไหน
+- **เลือก provider ตามโควต้า ไม่ใช่แค่คุณภาพ** — ดูตารางโควต้าใน README
+  งานหนักใช้ Cerebras (1M token/วัน) หรือ Mistral (1B/เดือน)
+  ส่วน OKMD มีแค่ ~40K/วันแชร์ทั้งตระกูล พอได้ราว 1 turn ต่อวันเท่านั้น
 - ดู spend ได้ที่ https://llm-api.example.com/ui → **Usage** แยกตาม key ได้
 - ถ้าเจอ rate limit จาก provider ให้เพิ่ม fallback ใน `litellm/config.yaml`:
   ```yaml

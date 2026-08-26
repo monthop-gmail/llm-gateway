@@ -77,9 +77,12 @@ PY
 | OpenRouter | `OPENROUTER_API_KEY` | openrouter.ai/keys | โมเดลฟรีหลายสิบตัว |
 | Ollama Cloud | `OLLAMA_API_KEY` | ollama.com/settings/keys | 7 โมเดลฟรี |
 | NVIDIA NIM | `NVIDIA_NIM_API_KEY` | build.nvidia.com | มี embeddings ด้วย |
-| **OKMD (ไทย)** | `OKMD_API_KEY` | playground.okmd.or.th | ⭐ key เดียวได้ Claude Sonnet 5 / GPT-5.4 / Grok 4.3 |
+| **OKMD (ไทย)** | `OKMD_API_KEY` | playground.okmd.or.th | Claude Sonnet 5 / GPT-5.4 / Grok 4.3 — แต่โควต้าแค่ ~40K token/วัน |
 | ThaiLLM (ไทย) | `THAILLM_API_KEY` | thaillm.or.th | โมเดลภาษาไทยที่พัฒนาในไทย |
 | HuggingFace | `HF_TOKEN` | huggingface.co/settings/tokens | ⚠️ ดูหมายเหตุด้านล่าง |
+| Typhoon (ไทย) | `TYPHOON_API_KEY` | playground.opentyphoon.ai | ยังไม่เปิด — config รอไว้แล้ว |
+| SEA-LION | `SEALION_API_KEY` | sea-lion.ai | ยังไม่เปิด — config รอไว้แล้ว |
+| Chinda (ไทย) | `IAPP_API_KEY` | iapp.co.th | ยังไม่เปิด — config รอไว้แล้ว |
 
 > **HuggingFace ไม่ใช่ตัวเลือกแรกอีกแล้ว** — โปรเจกต์นี้เริ่มจาก HF แต่เครดิต
 > รายเดือนของบัญชีที่ใช้ทดสอบหมดตั้งแต่ 2026-08-23 (`"You have depleted your
@@ -136,6 +139,32 @@ client.chat.completions.create(model="cb/gemma-4-31b", messages=[...])
 
 รวม **105 โมเดล** จาก 9 provider — ทดสอบยิงจริงผ่านทั้งหมด (อัปเดต 2026-08-26)
 ทุกตัวใช้ `sk-...` ใบเดียวกัน สลับโมเดลได้โดยไม่ต้องแก้ฝั่ง client
+
+### โควต้าฟรีของแต่ละเจ้า — ดูก่อนเลือกโมเดล
+
+ตัวเลขจากการวัดจริงที่บันทึกไว้ใน `test-hermes-free-model` บวกกับที่ provider ประกาศ
+(ตรวจ 2026-08-26 — เปลี่ยนบ่อย ดูหน้า official ก่อนพึ่งพา)
+
+| provider | โควต้าฟรี | เหมาะกับ |
+|---|---|---|
+| **Cerebras** | **~1,000,000 token/วัน** | งานหนัก แต่ระวัง TPM สะสม |
+| Gemini (ยังไม่เปิด) | ~250,000 token/วัน | context ใหญ่ |
+| Groq | ~200,000 token/วัน (ลดลงในปี 2026) | ยิงถี่ ตอบเร็ว |
+| Mistral | 1B token/**เดือน** | งานทั่วไป โควต้าใจกว้าง |
+| Cloudflare | 10,000 neurons/วัน | ทดลอง งานเบา |
+| OpenRouter | 50–1,000 **req**/วัน แล้วแต่ยอดเติมเงิน | สลับโมเดลบ่อย |
+| **OKMD** | **~40,000 token/วัน แชร์ทั้งตระกูล** | คุณภาพสูงเป็นครั้งคราว |
+| ThaiLLM / Typhoon | จำกัดด้วย req/min (~50) | งานภาษาไทย |
+| SEA-LION (ยังไม่เปิด) | 10 req/min | งานภาษาอาเซียน |
+| Ollama Cloud | ไม่ประกาศ ("light usage") | ทั่วไป |
+| HuggingFace | เครดิตรายเดือน — **หมดแล้ว** | — |
+
+> **จุดที่คนพลาดบ่อยที่สุดคือ OKMD** — โควต้า ~40K token/วันนั้น **แชร์กันทั้งตระกูล**
+> `okmd/claude-sonnet-5` กับ `okmd/claude-sonnet-4.6` กินก้อนเดียวกัน เช่นเดียวกับ
+> ตระกูล gemini และ deepseek วัดจริงแล้วได้ราว **1 turn ต่อตระกูลต่อวัน**
+> สำหรับงานที่ใช้ tool หนัก — ใช้เป็นตัวหลักของ coding agent ไม่ได้
+>
+> ถ้าต้องการโควต้าเยอะให้ไป **Cerebras** (1M/วัน) หรือ **Mistral** (1B/เดือน) แทน
 
 > ### ⚠️ เครดิต HuggingFace หมดแล้ว (2026-08-23)
 >
@@ -352,6 +381,9 @@ Ollama โฮสต์ให้ ไม่กิน RAM/GPU เครื่อง
 `https://gen.ai.kku.ac.th/okmd/api/v1` — สร้าง key ที่ playground.okmd.or.th → API Platform
 **key เดียวได้ 22 โมเดล** และเป็นที่เดียวใน gateway ที่มีโมเดลระดับ frontier
 
+> ⚠️ **โควต้า ~40,000 token/วัน และแชร์กันทั้งตระกูล** — ดูตารางโควต้าด้านบน
+> เหมาะกับงานที่ต้องการคุณภาพสูงเป็นครั้งคราว ไม่เหมาะเป็นตัวหลักของ agent
+
 | model_name | หมายเหตุ |
 |---|---|
 | `okmd/claude-sonnet-5` `okmd/claude-sonnet-4.6` | **Claude** — ไม่มีที่อื่นใน gateway |
@@ -387,6 +419,18 @@ Ollama โฮสต์ให้ ไม่กิน RAM/GPU เครื่อง
 > config ตั้ง `{"User-Agent": "curl/8.5.0"}` ไว้ให้แล้วทั้ง 4 ตัว
 >
 > ทุกตัวใช้ model id ว่า `/model` จึงเขียนเป็น `openai//model` (สอง slash ไม่ใช่พิมพ์ผิด)
+
+**ยังมีอีก 3 เจ้าที่เตรียม config ไว้แล้วแต่ยังไม่มี key** — ปลดคอมเมนต์ใน
+`litellm/config.yaml` ได้ทันทีที่สมัคร:
+
+| | endpoint | โควต้าฟรี |
+|---|---|---|
+| Typhoon ตรง (SCB 10X) | `api.opentyphoon.ai/v1` | ~50 req/min แต่ context แค่ 8K |
+| SEA-LION ตรง (AI Singapore) | `api.sea-lion.ai/v1` | 10 req/min |
+| Chinda Thai LLM 4B (iApp) | `api.iapp.co.th/v3/llm/chinda-thaillm-4b` | ดูหน้าโปรฯ |
+
+ต่างจากที่มีอยู่ตรงที่ยิงตรงเข้าเจ้าของโมเดล ไม่ผ่าน HF/Cloudflare/thaillm.or.th
+จึงไม่ติดโควต้าของตัวกลาง
 
 ### Embeddings (NVIDIA NIM)
 

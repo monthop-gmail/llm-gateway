@@ -60,6 +60,9 @@ services:
       OLLAMA_API_KEY: ${OLLAMA_API_KEY:-}
       OKMD_API_KEY: ${OKMD_API_KEY:-}
       THAILLM_API_KEY: ${THAILLM_API_KEY:-}
+      TYPHOON_API_KEY: ${TYPHOON_API_KEY:-}
+      SEALION_API_KEY: ${SEALION_API_KEY:-}
+      IAPP_API_KEY: ${IAPP_API_KEY:-}
       # เจ้าที่เสียเงินอย่างเดียว
       OPENAI_API_KEY: ${OPENAI_API_KEY:-}
       ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}

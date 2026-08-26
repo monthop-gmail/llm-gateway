@@ -514,6 +514,13 @@ model_list:
   #
   # ⭐ ที่นี่มีโมเดลระดับ frontier ที่ไม่มีใน provider ฟรีเจ้าอื่น:
   #    Claude Sonnet 5, GPT-5.4, Gemini 3.7, Grok 4.3
+  #
+  # ⚠️ แต่โควต้าน้อยมาก — ~40,000 token/วัน และ **แชร์กันทั้งตระกูล**
+  #    (claude-sonnet-5 กับ claude-sonnet-4.6 กินก้อนเดียวกัน เช่นเดียวกับ
+  #     ตระกูล gemini และ deepseek) วัดจริงแล้วได้ราว 1 turn ต่อตระกูลต่อวัน
+  #     สำหรับงานที่ใช้ tool หนัก
+  #    ที่มา: /opt/docker-test/test-hermes-free-model/config/models.json
+  #    => เหมาะกับงานที่ต้องการคุณภาพสูงเป็นครั้งคราว ไม่เหมาะเป็นตัวหลักของ agent
   # เช็ครายชื่อ: curl -s https://gen.ai.kku.ac.th/okmd/api/v1/models \
   #   -H "Authorization: Bearer $OKMD_API_KEY"
   ####################################################################
@@ -661,6 +668,40 @@ model_list:
       api_base: https://gen.ai.kku.ac.th/okmd/api/v1
       api_key: os.environ/OKMD_API_KEY
 
+
+  # ---------- Typhoon ตรงจาก SCB 10X (ยังไม่มี key) ----------
+  # ต่างจาก th/typhoon ที่ต่อผ่าน thaillm.or.th — อันนี้ยิงตรงเข้า opentyphoon.ai
+  # สมัครฟรีที่ https://playground.opentyphoon.ai/ แล้วใส่ TYPHOON_API_KEY ใน .env
+  # ฟรี ~50 req/min แต่ context แค่ 8K
+  # /v1/models เปิดสาธารณะ (ตรวจ 2026-08-26 มี typhoon-v2.5-30b-a3b-instruct)
+  # แต่ chat ต้องมี key
+  #
+  # - model_name: ty/typhoon-v2.5-30b
+  #   litellm_params:
+  #     model: openai/typhoon-v2.5-30b-a3b-instruct
+  #     api_base: https://api.opentyphoon.ai/v1
+  #     api_key: os.environ/TYPHOON_API_KEY
+
+  # ---------- SEA-LION ตรงจาก AI Singapore (ยังไม่มี key) ----------
+  # ต่างจาก hf/sea-lion-* และ cf/sea-lion-27b ที่ต่อผ่าน HF/Cloudflare
+  # สมัคร trial key ที่ https://sea-lion.ai แล้วใส่ SEALION_API_KEY
+  # ฟรี 10 req/min
+  #
+  # - model_name: sl/sea-lion-v4
+  #   litellm_params:
+  #     model: openai/aisingapore/Gemma-SEA-LION-v4-27B-IT
+  #     api_base: https://api.sea-lion.ai/v1
+  #     api_key: os.environ/SEALION_API_KEY
+
+  # ---------- Chinda Thai LLM (iApp) — โมเดลไทยจากเอกชนไทย (ยังไม่มี key) ----------
+  # ฐาน Qwen3-4B สมัครที่ https://iapp.co.th แล้วใส่ IAPP_API_KEY
+  # path ที่ถูกคือ .../chinda-thaillm-4b/... (ตรวจแล้วคืน 401 ไม่ใช่ 404)
+  #
+  # - model_name: th/chinda-4b
+  #   litellm_params:
+  #     model: openai/chinda-thaillm-4b
+  #     api_base: https://api.iapp.co.th/v3/llm/chinda-thaillm-4b
+  #     api_key: os.environ/IAPP_API_KEY
 
   # ---------- ThaiLLM — โมเดลภาษาไทยที่พัฒนาในไทย ----------
   # https://thaillm.or.th — แต่ละเจ้ามี endpoint แยกกัน แต่ใช้ key เดียวกัน
