@@ -129,6 +129,26 @@ prompt สั้น ๆ ของ `verify-capabilities.py` ไม่มีบร
 | `scripts/bench-coding.py` | วัดความสามารถเขียนโค้ด | มีโมเดลใหม่เข้ามา |
 | `scripts/gen-key.sh` | ออก virtual key ต่อโปรเจกต์ | ตอนเริ่มต่อ gateway |
 
+### ⏱️ latency ของ call เดี่ยว ≠ latency ต่อ turn
+
+`latency_ms` ใน metadata คือ call เดี่ยวด้วย prompt สั้น — ต่างจากเวลาจริงใน
+agent loop มาก เพราะ agent ยิงหลาย call ต่อ turn และ prompt ใหญ่กว่ามาก
+วัดจริงเมื่อ 2026-08-26:
+
+| model | `latency_ms` | เวลาจริงต่อ turn ใน hermes |
+|---|---|---|
+| `mi/ministral-14b` | 512 ms | **18s** |
+| `mi/devstral-medium` | 595 ms | **51s** |
+| `mi/magistral-medium` | 1,282 ms | **146–227s** |
+| `mi/large` | — | **90–180s** |
+
+ต่างกัน 35–180 เท่า และเรียงลำดับไม่ตรงกันด้วย — `mi/magistral-medium` มี
+`latency_ms` ดีกว่า `mi/large` แต่ช้ากว่าในสภาพจริง เพราะเป็น reasoning model
+ที่ยิ่ง prompt ใหญ่ยิ่งคิดนาน
+
+**ถ้าโปรเจกต์มีเพดานเวลา (เช่น reply token ของ LINE ~60s) ต้องวัดต่อ turn เอง**
+`latency_ms` ใช้เรียงลำดับคร่าว ๆ ได้ แต่ตัดสินใจไม่ได้
+
 ## ออก key แยกต่อโปรเจกต์
 
 อย่าใช้ master key ร่วมกัน — ออก virtual key แยกจะได้ดู spend แยกและ revoke
@@ -143,7 +163,7 @@ prompt สั้น ๆ ของ `verify-capabilities.py` ไม่มีบร
 
 | โปรเจกต์ | เกณฑ์ | หมายเหตุ |
 |---|---|---|
-| **hermes** | tool_calls เป็น field จริง + รับ prompt 14K + สรุป turn 2 ได้ + **อยู่กับภาษาที่ผู้ใช้ใช้ตอนวิ่ง tool loop** | กิน **26–60K tokens/turn** (พื้น 13K/call · call ถัดไปโตตามบทสนทนา) → กรอง `provider_quota` ด้วยช่วงนี้ ไม่ใช่ตัวเลขเดียว |
+| **hermes** | tool_calls เป็น field จริง + รับ prompt 14K + สรุป turn 2 ได้ + **อยู่กับภาษาที่ผู้ใช้ใช้ตอนวิ่ง tool loop** + **ตอบทันภายใน ~60s** (reply token ของ LINE) | กิน **26–60K tokens/turn** (พื้น 13K/call · call ถัดไปโตตามบทสนทนา) → กรอง `provider_quota` ด้วยช่วงนี้ ไม่ใช่ตัวเลขเดียว |
 | **opencode** | — | ยังไม่ได้บันทึกเกณฑ์ |
 
 > hermes บันทึกผลของตัวเองไว้ที่
