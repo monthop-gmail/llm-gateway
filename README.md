@@ -195,6 +195,7 @@ tag ที่ใช้ได้: `coding-best` `coding-ok` `coding-weak` `thai` 
 | [docs/benchmarks.md](docs/benchmarks.md) | ผลวัดจริง — โมเดลไหนเข้าเว็บได้ ตัวไหนเขียนโค้ดได้ดี |
 | [INTEGRATION.md](INTEGRATION.md) | ฟิลด์ใน `model_info` เชื่อได้แค่ไหน + กติกาสำหรับโปรเจกต์ที่มาใช้ |
 | [CLIENTS.md](CLIENTS.md) | ต่อ Cline / Aider / n8n / LangChain เข้ากับ gateway |
+| [CONTRIBUTING.md](CONTRIBUTING.md) | ส่ง PR / ขอโมเดลใหม่ / กติกาการวัดค่า |
 
 ไม่อยากอ่านเอง ใช้ `./scripts/pick-model.sh` ให้มันเลือกให้
 
