@@ -13,6 +13,7 @@ tmp_env=0
 note() { printf '\n\033[1m==> %s\033[0m\n' "$1"; }
 ok()   { printf '    \033[32mOK\033[0m %s\n' "$1"; }
 err()  { printf '    \033[31mFAIL\033[0m %s\n' "$1"; fail=1; }
+warn() { printf '    \033[33m--\033[0m %s\n' "$1"; }
 
 cleanup() { [ "$tmp_env" -eq 1 ] && rm -f .env; return 0; }
 trap cleanup EXIT
@@ -143,6 +144,39 @@ if [ "$formatted" != "$(cat deploy/Caddyfile)" ]; then
 	err "ยังไม่ได้จัดรูปแบบ — แก้ด้วย: docker run --rm -v \$PWD/deploy:/w caddy:latest caddy fmt --overwrite /w/Caddyfile"
 else
 	ok "จัดรูปแบบแล้ว"
+fi
+
+# --------------------------------------------------------------- ชื่อฟิลด์
+note "ตรวจว่าฟิลด์ที่เราตั้งเองไม่ชนกับของ LiteLLM"
+if ! docker compose ps --status running litellm >/dev/null 2>&1; then
+	warn "ข้าม — litellm ไม่ได้รัน"
+elif out=$(docker compose exec -T litellm python -c "
+import sys, yaml, litellm
+keys = set()
+for v in litellm.model_cost.values():
+    if isinstance(v, dict):
+        keys.update(v)
+from litellm.proxy._types import ModelInfo
+keys.update(ModelInfo.model_json_schema().get('properties', {}))
+ours = set(sys.stdin.read().split())
+# ฟิลด์ที่เราตั้งใจใช้ของ LiteLLM เอง ไม่นับว่าชน
+expected = {'mode', 'supports_function_calling', 'max_input_tokens', 'max_tokens', 'id',
+            'base_model', 'input_cost_per_token', 'output_cost_per_token'}
+clash = sorted((ours & keys) - expected)
+print(' '.join(clash))
+sys.exit(1 if clash else 0)
+" <<< "$(python3 -c "
+import yaml
+c = yaml.safe_load(open('litellm/config.yaml'))
+k = set()
+for m in c['model_list']:
+    k.update(m.get('model_info') or {})
+print(' '.join(sorted(k)))
+")" 2>/dev/null); then
+	ok "ไม่มีชื่อฟิลด์ชนกับ LiteLLM"
+else
+	echo "    ชนกัน: $out"
+	err "LiteLLM จะเขียนทับค่าของเราตอน merge เข้า /model/info — ต้องเปลี่ยนชื่อ"
 fi
 
 # ------------------------------------------------------------------ fallback

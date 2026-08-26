@@ -1409,7 +1409,7 @@ model_list:
       tags: ["general"]
       verified_by: "hermes 2026-08-25 (tool calling + prompt 14K)"
       status: "rate_limited"
-      status_checked_at: "2026-08-26T11:20:24Z"
+      status_checked_at: "2026-08-26T11:35:21Z"
       status_detail: "litellm.RateLimitError: RateLimitError: Nvidia_nimException - Error code: 429 - {'status': 429, 'title': 'Too "
 
   - model_name: nim/step-3.7-flash
@@ -1425,8 +1425,9 @@ model_list:
       quota_pool: "nvidia-nim"
       quota_window: "rpm-only"
       tags: ["general"]
-      status: "ok"
-      status_checked_at: "2026-08-26T11:20:24Z"
+      status: "unknown"
+      status_checked_at: "2026-08-26T11:35:21Z"
+      status_detail: "timed out"
 
   - model_name: nim/nemotron-nano-30b
     litellm_params:
@@ -1445,7 +1446,7 @@ model_list:
       max_prompt_detail: "ผ่านทุกขั้นถึง 127,957 (ไม่ได้ลองมากกว่านี้)"
       latency_ms_14k: 1145
       status: "ok"
-      status_checked_at: "2026-08-26T11:20:24Z"
+      status_checked_at: "2026-08-26T11:35:21Z"
 
   - model_name: nim/gemma-4-31b
     litellm_params:
@@ -1461,7 +1462,7 @@ model_list:
       quota_window: "rpm-only"
       tags: ["general"]
       status: "unknown"
-      status_checked_at: "2026-08-26T11:20:24Z"
+      status_checked_at: "2026-08-26T11:35:21Z"
       status_detail: "timed out"
 
   - model_name: nim/mistral-nemotron
@@ -1478,7 +1479,7 @@ model_list:
       quota_window: "rpm-only"
       tags: ["general"]
       status: "unknown"
-      status_checked_at: "2026-08-26T11:20:24Z"
+      status_checked_at: "2026-08-26T11:35:21Z"
       status_detail: "timed out"
 
   - model_name: nim/nemotron-super-49b
@@ -1497,8 +1498,9 @@ model_list:
       verified_max_prompt: 127960
       max_prompt_detail: "ผ่านทุกขั้นถึง 127,960 (ไม่ได้ลองมากกว่านี้)"
       status: "dead"
-      status_checked_at: "2026-08-26T11:20:24Z"
+      status_checked_at: "2026-08-26T11:35:21Z"
       status_detail: "litellm.APIError: APIError: Nvidia_nimException - Error code: 410 - {'type': 'about:blank', 'title': 'Gone', '"
+      answered_by: "nemotron-3.5-lightning-free"
 
   - model_name: nim/llama-3.3-70b
     litellm_params:
@@ -1517,8 +1519,9 @@ model_list:
       max_prompt_detail: "timeout ที่ ~32,000 — timed out"
       verified_by: "gateway 2026-08-26 (ทดสอบซ้ำ tool calling)"
       status: "dead"
-      status_checked_at: "2026-08-26T11:20:24Z"
+      status_checked_at: "2026-08-26T11:35:21Z"
       status_detail: "litellm.APIError: APIError: Nvidia_nimException - Error code: 410 - {'type': 'about:blank', 'title': 'Gone', '"
+      answered_by: "openai/gpt-oss-120b"
 
   - model_name: nim/deepseek-v4-flash
     litellm_params:
@@ -1534,8 +1537,9 @@ model_list:
       quota_window: "rpm-only"
       tags: ["general"]
       status: "dead"
-      status_checked_at: "2026-08-26T11:20:24Z"
+      status_checked_at: "2026-08-26T11:35:21Z"
       status_detail: "litellm.NotFoundError: NotFoundError: Nvidia_nimException - Error code: 404 - {'status': 404, 'title': 'Not Fo"
+      answered_by: "ministral-14b-latest"
 
   # ---------- Embeddings (เติมช่องว่างที่ gateway ยังไม่มี) ----------
   # ⚠️ 2026-08-26: NVIDIA ปลด embedding หลายตัวพร้อมกัน ("has reached its end of life")
@@ -2694,6 +2698,12 @@ litellm_settings:
     - hf/qwen3.6-27b: [gq/qwen3.6-27b, cf/qwen3-30b-a3b, or/auto-free]
     - hf/qwen3.6-35b: [cf/qwen3-30b-a3b, gq/qwen3.6-27b, or/auto-free]
     - hf/gemma-3-12b: [cf/gemma-4-26b, cb/gemma-4-31b, or/auto-free]
+
+    # NVIDIA ปลด 3 ตัวนี้เมื่อ 2026-08-26 (410 Gone / 404) เก็บชื่อไว้เป็น alias
+    # เพื่อไม่ให้ปลายทางที่ hardcode ไว้พัง — ทุก hop คนละ quota_pool
+    - nim/nemotron-super-49b: [zen/nemotron-lightning, cb/gpt-oss-120b, mi/magistral-medium]
+    - nim/llama-3.3-70b: [gq/gpt-oss-120b, mi/large, zen/hy3]
+    - nim/deepseek-v4-flash: [mi/ministral-14b, cb/gemma-4-31b, zen/laguna-s-2.1]
 
 general_settings:
   master_key: os.environ/LITELLM_MASTER_KEY
