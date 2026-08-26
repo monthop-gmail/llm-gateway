@@ -706,14 +706,14 @@ model_list:
       api_key: os.environ/CLOUDFLARE_API_KEY
     model_info:
       mode: "chat"
-      supports_function_calling: false
+      supports_function_calling: true
       benchmark_coding: "2/3"
       benchmark_seconds: 56.3
       latency_ms: 1163
-      description: "โมเดลจาก Cloudflare Workers AI"
+      description: "โมเดลจาก Cloudflare Workers AI — ทดสอบซ้ำ 2026-08-26 เรียก tool ได้แล้ว (เดิมไม่เรียก)"
       provider_label: "Cloudflare Workers AI"
       provider_quota: "10,000 neurons/วัน"
-      tags: ["coding-ok", "no-tools"]
+      tags: ["coding-ok"]
 
   # เพิ่ม 2026-08-26 — ทดสอบยิงผ่านแล้ว
   - model_name: cf/mistral-small-24b
@@ -985,11 +985,11 @@ model_list:
       api_key: os.environ/NVIDIA_NIM_API_KEY
     model_info:
       mode: "chat"
-      supports_function_calling: false
-      description: "โมเดลจาก NVIDIA NIM"
+      supports_function_calling: true
+      description: "โมเดลจาก NVIDIA NIM — โปรเจกต์ hermes ยิงจริง 2026-08-25 ผ่านทั้ง tool calling และ prompt 14K"
       provider_label: "NVIDIA NIM"
       provider_quota: "40 RPM ไม่มีเพดานรายวัน แต่บาง endpoint ช้า/timeout"
-      tags: ["no-tools"]
+      tags: ["general"]
 
   - model_name: nim/step-3.7-flash
     litellm_params:
@@ -1057,11 +1057,11 @@ model_list:
       api_key: os.environ/NVIDIA_NIM_API_KEY
     model_info:
       mode: "chat"
-      supports_function_calling: false
-      description: "โมเดลจาก NVIDIA NIM"
+      supports_function_calling: true
+      description: "โมเดลจาก NVIDIA NIM — ทดสอบซ้ำ 2026-08-26 เรียก tool ได้แล้ว (เดิมเคย timeout)"
       provider_label: "NVIDIA NIM"
       provider_quota: "40 RPM ไม่มีเพดานรายวัน แต่บาง endpoint ช้า/timeout"
-      tags: ["no-tools"]
+      tags: ["general"]
 
   - model_name: nim/deepseek-v4-flash
     litellm_params:

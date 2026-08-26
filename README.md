@@ -369,8 +369,8 @@ print("รวม", len(free), "ตัว")
 | `nim/gemma-4-31b` | tool calling ✅ |
 | `nim/mistral-nemotron` | tool calling ✅ |
 | `nim/step-3.7-flash` | tool calling ✅ |
-| `nim/minimax-m3` | chat ได้ แต่ **ใส่ tools แล้ว 404** |
-| `nim/llama-3.3-70b` | chat ได้ แต่ **ใส่ tools แล้วค้างจน timeout** |
+| `nim/minimax-m3` | tool calling ✅ (ยืนยันโดยโปรเจกต์ hermes 2026-08-25 — ข้อมูลเดิมที่ว่า 404 ตกยุคแล้ว) |
+| `nim/llama-3.3-70b` | tool calling ✅ (ทดสอบซ้ำ 2026-08-26 — ข้อมูลเดิมที่ว่า timeout ตกยุคแล้ว) |
 | `nim/nemotron-nano-30b` | พ่น reasoning ปนใน content |
 | `nim/nemotron-super-49b` | thinking model |
 
@@ -388,7 +388,7 @@ print("รวม", len(free), "ตัว")
 | `cf/llama-4-scout` | @cf/meta/llama-4-scout-17b-16e-instruct — **ใหม่** |
 | `cf/nemotron-3-120b` | @cf/nvidia/nemotron-3-120b-a12b — **ใหม่** |
 | `cf/gemma-4-26b` | @cf/google/gemma-4-26b-a4b-it — **ใหม่** |
-| `cf/qwen3-30b-a3b` | @cf/qwen/qwen3-30b-a3b-fp8 (ไม่เรียก tool) |
+| `cf/qwen3-30b-a3b` | @cf/qwen/qwen3-30b-a3b-fp8 — tool calling ✅ (ทดสอบซ้ำ 2026-08-26) |
 | `cf/mistral-small-24b` | @cf/mistralai/mistral-small-3.1-24b-instruct — **ใหม่ 08-26** |
 | `cf/qwq-32b` | @cf/qwen/qwq-32b — **ใหม่ 08-26** thinking model |
 | `cf/deepseek-r1-32b` | @cf/deepseek-ai/deepseek-r1-distill-qwen-32b — **ใหม่ 08-26** (ไม่เรียก tool) |
