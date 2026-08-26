@@ -149,6 +149,18 @@ agent loop มาก เพราะ agent ยิงหลาย call ต่อ 
 **ถ้าโปรเจกต์มีเพดานเวลา (เช่น reply token ของ LINE ~60s) ต้องวัดต่อ turn เอง**
 `latency_ms` ใช้เรียงลำดับคร่าว ๆ ได้ แต่ตัดสินใจไม่ได้
 
+**มี `latency_ms_14k` ให้แล้ว** — วัดด้วย prompt ~13,900 tokens ซึ่งเป็นขนาดที่
+agent ใช้จริง (`scripts/probe-latency-14k.py`) ใช้เปรียบเทียบข้ามโมเดลได้ตรงกว่ามาก
+
+```bash
+jq '.data[] | select(.model_info.latency_ms_14k < 2000) | .model_name'
+```
+
+> ⚠️ **ยังเป็น call เดียวอยู่** — turn จริงของ agent มีหลาย call ต่อกันและ context
+> โตขึ้นเรื่อย ๆ เลขนี้จึงเป็น "พื้นสำหรับเปรียบเทียบ" ไม่ใช่เวลาที่ผู้ใช้จะรอจริง
+> ตัวอย่าง: `mi/magistral-medium` วัดได้ ~2s ที่ 14K แต่ hermes จับเวลา turn จริง
+> ได้ 146–227s เพราะเป็น reasoning model ที่ยิ่ง context โตยิ่งคิดนาน
+
 ## ออก key แยกต่อโปรเจกต์
 
 อย่าใช้ master key ร่วมกัน — ออก virtual key แยกจะได้ดู spend แยกและ revoke

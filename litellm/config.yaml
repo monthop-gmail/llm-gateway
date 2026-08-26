@@ -35,6 +35,7 @@ model_list:
       max_prompt_detail: "ผ่านทุกขั้นถึง 127,972 (ไม่ได้ลองมากกว่านี้)"
       status: "ok"
       status_checked_at: "2026-08-26T07:48:59Z"
+      latency_ms_14k: 1866
 
   - model_name: hf/qwen2.5-7b
     litellm_params:
@@ -53,6 +54,7 @@ model_list:
       max_prompt_detail: "ผ่านทุกขั้นถึง 127,972 (ไม่ได้ลองมากกว่านี้)"
       status: "ok"
       status_checked_at: "2026-08-26T07:48:59Z"
+      latency_ms_14k: 1869
 
   - model_name: hf/gemma-3-12b
     litellm_params:
@@ -71,6 +73,7 @@ model_list:
       max_prompt_detail: "ผ่านทุกขั้นถึง 127,968 (ไม่ได้ลองมากกว่านี้)"
       status: "ok"
       status_checked_at: "2026-08-26T07:48:59Z"
+      latency_ms_14k: 7046
 
   # gpt-oss — auto-route (groq ถูกปฏิเสธด้วย token ปัจจุบัน)
   - model_name: hf/gpt-oss-20b
@@ -179,6 +182,7 @@ model_list:
       max_prompt_detail: "error 402 ที่ ~128,000 — litellm.APIError: HuggingfaceException - {'error':'You have depleted your monthl"
       status: "ok"
       status_checked_at: "2026-08-26T07:48:59Z"
+      latency_ms_14k: 14808
 
   # ---------- reasoning ----------
   - model_name: hf/deepseek-r1
@@ -214,6 +218,7 @@ model_list:
       max_prompt_detail: "ผ่านทุกขั้นถึง 127,972 (ไม่ได้ลองมากกว่านี้)"
       status: "ok"
       status_checked_at: "2026-08-26T07:48:59Z"
+      latency_ms_14k: 122358
 
   # Qwen3.6-27B — รุ่นใหม่ล่าสุดที่ยังฟรีบน HF
   # (Qwen3.8-27B ออกแล้วเมื่อ 2026-08-05 แต่ยังไม่มี provider ฟรี — ดูหมายเหตุท้ายไฟล์)
@@ -270,6 +275,7 @@ model_list:
       max_prompt_detail: "error 402 ที่ ~64,000 — litellm.APIError: HuggingfaceException - {'error':'You have depleted your monthl"
       status: "ok"
       status_checked_at: "2026-08-26T07:48:59Z"
+      latency_ms_14k: 10320
 
   - model_name: hf/kimi-k3
     litellm_params:
@@ -307,6 +313,7 @@ model_list:
       max_prompt_detail: "timeout ที่ ~128,000 — timed out"
       status: "ok"
       status_checked_at: "2026-08-26T07:48:59Z"
+      latency_ms_14k: 115726
 
   - model_name: hf/llama-4-scout
     litellm_params:
@@ -361,6 +368,7 @@ model_list:
       max_prompt_detail: "ผ่านทุกขั้นถึง 127,968 (ไม่ได้ลองมากกว่านี้)"
       status: "ok"
       status_checked_at: "2026-08-26T07:48:59Z"
+      latency_ms_14k: 6455
 
   # SEA-LION รุ่น Gemma (คนละตัวกับ hf/sea-lion-32b ที่เป็นฐาน Qwen)
   - model_name: hf/sea-lion-gemma-27b
@@ -399,6 +407,7 @@ model_list:
       max_prompt_detail: "ผ่านทุกขั้นถึง 127,972 (ไม่ได้ลองมากกว่านี้)"
       status: "ok"
       status_checked_at: "2026-08-26T07:48:59Z"
+      latency_ms_14k: 7777
 
   ####################################################################
   # เจ้าอื่นที่มี free tier — ปลดคอมเมนต์แล้วใส่ key ใน .env
@@ -632,6 +641,7 @@ model_list:
       max_prompt_detail: "ผ่านทุกขั้นถึง 127,972 (ไม่ได้ลองมากกว่านี้)"
       status: "ok"
       status_checked_at: "2026-08-26T07:48:59Z"
+      latency_ms_14k: 470
 
   # devstral — ออกแบบมาสำหรับ coding agent โดยเฉพาะ
   - model_name: mi/devstral
@@ -653,6 +663,7 @@ model_list:
       max_prompt_detail: "ผ่านทุกขั้นถึง 127,972 (ไม่ได้ลองมากกว่านี้)"
       status: "ok"
       status_checked_at: "2026-08-26T07:48:59Z"
+      latency_ms_14k: 2213
 
   - model_name: mi/ministral-8b
     litellm_params:
@@ -671,6 +682,7 @@ model_list:
       max_prompt_detail: "ผ่านทุกขั้นถึง 127,972 (ไม่ได้ลองมากกว่านี้)"
       status: "ok"
       status_checked_at: "2026-08-26T07:48:59Z"
+      latency_ms_14k: 769
 
   # magistral — สาย reasoning ของ Mistral (เพิ่ม 2026-08-23)
   - model_name: mi/magistral-medium
@@ -736,6 +748,7 @@ model_list:
       max_prompt_detail: "ผ่านทุกขั้นถึง 127,972 (ไม่ได้ลองมากกว่านี้)"
       status: "ok"
       status_checked_at: "2026-08-26T07:48:59Z"
+      latency_ms_14k: 648
 
   - model_name: mi/ministral-14b
     litellm_params:
@@ -756,6 +769,7 @@ model_list:
       status: "ok"
       status_checked_at: "2026-08-26T07:48:59Z"
       verified_by: "hermes-line-bot 2026-08-26 (tool loop + prompt 14K + ภาษาไทย 3/3 · 18s/turn)"
+      latency_ms_14k: 977
 
   - model_name: mi/devstral-medium
     litellm_params:
@@ -778,6 +792,7 @@ model_list:
       status: "ok"
       status_checked_at: "2026-08-26T07:48:59Z"
       verified_by: "hermes-line-bot 2026-08-26 (tool loop + prompt 14K + ภาษาไทย 3/3 · 51s/turn)"
+      latency_ms_14k: 835
 
   # เพิ่ม 2026-08-26 — สาย coding ของ Mistral
   - model_name: mi/mistral-code-agent
@@ -800,6 +815,7 @@ model_list:
       max_prompt_detail: "ผ่านทุกขั้นถึง 127,972 (ไม่ได้ลองมากกว่านี้)"
       status: "ok"
       status_checked_at: "2026-08-26T07:48:59Z"
+      latency_ms_14k: 615
 
   # FIM = fill-in-the-middle เหมาะกับ autocomplete ในบรรณาธิการ
   - model_name: mi/mistral-code-fim
@@ -819,6 +835,7 @@ model_list:
       max_prompt_detail: "ผ่านทุกขั้นถึง 127,972 (ไม่ได้ลองมากกว่านี้)"
       status: "ok"
       status_checked_at: "2026-08-26T07:48:59Z"
+      latency_ms_14k: 632
 
   - model_name: mi/ministral-3b
     litellm_params:
@@ -840,6 +857,7 @@ model_list:
       max_prompt_detail: "ผ่านทุกขั้นถึง 127,972 (ไม่ได้ลองมากกว่านี้)"
       status: "ok"
       status_checked_at: "2026-08-26T07:48:59Z"
+      latency_ms_14k: 729
 
   # ---------- Cloudflare Workers AI — ฟรี 10,000 neurons/วัน ----------
   # ต้องมี CLOUDFLARE_ACCOUNT_ID ใน .env ด้วย
@@ -1375,6 +1393,7 @@ model_list:
       max_prompt_detail: "ผ่านทุกขั้นถึง 127,957 (ไม่ได้ลองมากกว่านี้)"
       status: "ok"
       status_checked_at: "2026-08-26T07:48:59Z"
+      latency_ms_14k: 1145
 
   - model_name: nim/gemma-4-31b
     litellm_params:
@@ -2006,6 +2025,7 @@ model_list:
       max_prompt_detail: "ผ่านทุกขั้นถึง 127,957 (ไม่ได้ลองมากกว่านี้)"
       status: "ok"
       status_checked_at: "2026-08-26T07:48:59Z"
+      latency_ms_14k: 58789
 
   - model_name: zen/mimo-v2.5
     litellm_params:
@@ -2044,6 +2064,7 @@ model_list:
       max_prompt_detail: "ผ่านทุกขั้นถึง 127,914 (ไม่ได้ลองมากกว่านี้)"
       status: "ok"
       status_checked_at: "2026-08-26T07:48:59Z"
+      latency_ms_14k: 1473
 
   - model_name: zen/x-preview-f
     litellm_params:
@@ -2063,6 +2084,7 @@ model_list:
       max_prompt_detail: "error 503 ที่ ~64,000 — litellm.ServiceUnavailableError: ServiceUnavailableError: OpenAIException - Erro"
       status: "ok"
       status_checked_at: "2026-08-26T07:48:59Z"
+      latency_ms_14k: 5238
 
   # thinking model
   - model_name: zen/hy3
@@ -2083,6 +2105,7 @@ model_list:
       max_prompt_detail: "ผ่านทุกขั้นถึง 127,968 (ไม่ได้ลองมากกว่านี้)"
       status: "ok"
       status_checked_at: "2026-08-26T07:48:59Z"
+      latency_ms_14k: 4768
 
   # ที่ลองแล้วยังใช้ไม่ได้ (2026-08-26):
   #   deepseek-v4-flash-free -> "Upstream request failed"
@@ -2114,6 +2137,7 @@ model_list:
       max_prompt_detail: "ผ่านทุกขั้นถึง 127,983 (ไม่ได้ลองมากกว่านี้)"
       status: "ok"
       status_checked_at: "2026-08-26T07:48:59Z"
+      latency_ms_14k: 361
 
   - model_name: l7/codestral
     litellm_params:
@@ -2134,6 +2158,7 @@ model_list:
       status: "ok"
       status_checked_at: "2026-08-26T07:48:59Z"
       verified_by: "gateway 2026-08-26 (verify-capabilities)"
+      latency_ms_14k: 554
 
   # ปลดคอมเมนต์เมื่อมี LLM7_API_KEY แล้ว (เปลี่ยน api_key เป็น os.environ/LLM7_API_KEY
   # ทั้งสองตัวข้างบนด้วย) — ตัวอย่างของที่จะได้เพิ่ม:
