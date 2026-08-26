@@ -142,7 +142,11 @@ def _candidates(prefixes: list[str]) -> list[str]:
             if mi.get("status") not in (None, "ok"):
                 continue
             vmp = mi.get("verified_max_prompt")
-            if not isinstance(vmp, int) or vmp < TARGET_TOKENS:
+            # เผื่อ 5% เพราะ verified_max_prompt เป็นค่า "อย่างน้อยเท่านี้"
+            # ตัวที่ผ่านขั้น 14K แล้วไปพังที่ขั้น 32K จะได้เลข ~13,6xx-13,9xx เสมอ
+            # (นั่นคือ prompt_tokens จริงของขั้น 14K) ถ้าตัดที่ 14,000 ตรง ๆ
+            # จะตกหล่น 16 ตัวรวม cb/* ที่เป็น tier เร็วที่สุด
+            if not isinstance(vmp, int) or vmp < TARGET_TOKENS * 0.95:
                 continue
             if str(mi.get("max_prompt_detail", "")).startswith("โควต้า"):
                 continue      # เลขวัดไม่จบ เชื่อไม่ได้ (ดู probe-context.py)

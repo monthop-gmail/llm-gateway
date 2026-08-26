@@ -130,6 +130,7 @@ model_list:
       max_prompt_detail: "timeout ที่ ~32,000 — timed out"
       status: "ok"
       status_checked_at: "2026-08-26T07:48:59Z"
+      latency_ms_14k: 1555
 
   - model_name: hf/qwen3.5-397b
     litellm_params:
@@ -164,6 +165,7 @@ model_list:
       max_prompt_detail: "error 402 ที่ ~32,000 — litellm.APIError: HuggingfaceException - {'error':'You have depleted your monthl"
       status: "ok"
       status_checked_at: "2026-08-26T07:48:59Z"
+      latency_ms_14k: 10646
 
   - model_name: hf/kimi-k2.6
     litellm_params:
@@ -530,6 +532,7 @@ model_list:
       status: "ok"
       status_checked_at: "2026-08-26T07:48:59Z"
       verified_by: "hermes-line-bot 2026-08-26 (tool loop + prompt 14K · ชน TPM ถ้าใช้เป็น main)"
+      latency_ms_14k: 767
 
   - model_name: cb/gemma-4-31b
     litellm_params:
@@ -552,6 +555,7 @@ model_list:
       status: "ok"
       status_checked_at: "2026-08-26T07:48:59Z"
       verified_by: "gateway 2026-08-23 (bench-coding 3/3)"
+      latency_ms_14k: 947
 
   # zai-glm-4.7 ถูก Cerebras archive แล้ว (2026-08-23): "Model zai-glm-4.7 is
   # archived and unavailable for the organization" — ตอนนี้เหลือ 2 โมเดล
@@ -2335,6 +2339,7 @@ model_list:
       status: "ok"
       status_checked_at: "2026-08-26T07:48:59Z"
       verified_by: "gateway 2026-08-26 (verify-capabilities)"
+      latency_ms_14k: 832
 
   # Pathumma (NECTEC) — thinking model
   - model_name: th/pathumma
@@ -2356,6 +2361,7 @@ model_list:
       max_prompt_detail: "ชนเพดาน ที่ ~32,000 — litellm.ContextWindowExceededError: litellm.BadRequestError: ContextWindowExceed"
       status: "ok"
       status_checked_at: "2026-08-26T07:48:59Z"
+      latency_ms_14k: 1388
 
   # Typhoon-S (SCB10X) — ตอบตรงไม่มี think
   - model_name: th/typhoon
@@ -2377,6 +2383,7 @@ model_list:
       max_prompt_detail: "ชนเพดาน ที่ ~32,000 — litellm.ContextWindowExceededError: litellm.BadRequestError: ContextWindowExceed"
       status: "ok"
       status_checked_at: "2026-08-26T07:48:59Z"
+      latency_ms_14k: 197
 
   # THaLLE (KBTG) — thinking model
   - model_name: th/thalle
@@ -2398,6 +2405,7 @@ model_list:
       max_prompt_detail: "ชนเพดาน ที่ ~32,000 — litellm.ContextWindowExceededError: litellm.BadRequestError: ContextWindowExceed"
       status: "ok"
       status_checked_at: "2026-08-26T07:48:59Z"
+      latency_ms_14k: 919
 
   # ---------- Ollama Cloud — โมเดลใหญ่โดยไม่ต้องมี GPU ----------
   # ต่างจาก Ollama ที่รันเอง: อันนี้ Ollama โฮสต์ให้ ไม่กิน RAM/GPU ของเรา
