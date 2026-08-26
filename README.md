@@ -13,7 +13,8 @@ Gateway กลางสำหรับ **ออก API token ให้ผู้�
                         │              │   (together / novita / sambanova / ...)
   curl / SDK / n8n ────►│   LiteLLM    ├─► Groq / Cerebras / Mistral / Cloudflare
   Cline / Aider / ...   │  :4000 /v1   ├─► NVIDIA NIM / OpenRouter / Ollama Cloud
-  (sk-... virtual key)  │              ├─► vLLM / Ollama ที่รันเอง (ถ้ามี GPU)
+  (sk-... virtual key)  │              ├─► OKMD / ThaiLLM (ไทย 🇹🇭)
+                        │              ├─► vLLM / Ollama ที่รันเอง (ถ้ามี GPU)
                         └──────┬───────┘
                                │
                           Postgres  (virtual keys, budget, spend log)
@@ -76,6 +77,8 @@ PY
 | OpenRouter | `OPENROUTER_API_KEY` | openrouter.ai/keys | โมเดลฟรีหลายสิบตัว |
 | Ollama Cloud | `OLLAMA_API_KEY` | ollama.com/settings/keys | 7 โมเดลฟรี |
 | NVIDIA NIM | `NVIDIA_NIM_API_KEY` | build.nvidia.com | มี embeddings ด้วย |
+| **OKMD (ไทย)** | `OKMD_API_KEY` | playground.okmd.or.th | ⭐ key เดียวได้ Claude Sonnet 5 / GPT-5.4 / Grok 4.3 |
+| ThaiLLM (ไทย) | `THAILLM_API_KEY` | thaillm.or.th | โมเดลภาษาไทยที่พัฒนาในไทย |
 | HuggingFace | `HF_TOKEN` | huggingface.co/settings/tokens | ⚠️ ดูหมายเหตุด้านล่าง |
 
 > **HuggingFace ไม่ใช่ตัวเลือกแรกอีกแล้ว** — โปรเจกต์นี้เริ่มจาก HF แต่เครดิต
@@ -131,7 +134,7 @@ client.chat.completions.create(model="cb/gemma-4-31b", messages=[...])
 
 ## โมเดลที่ตั้งไว้ให้
 
-รวม **79 โมเดล** จาก 7 provider — ทดสอบยิงจริงผ่านทั้งหมด (อัปเดต 2026-08-26)
+รวม **105 โมเดล** จาก 9 provider — ทดสอบยิงจริงผ่านทั้งหมด (อัปเดต 2026-08-26)
 ทุกตัวใช้ `sk-...` ใบเดียวกัน สลับโมเดลได้โดยไม่ต้องแก้ฝั่ง client
 
 > ### ⚠️ เครดิต HuggingFace หมดแล้ว (2026-08-23)
@@ -344,6 +347,47 @@ Ollama โฮสต์ให้ ไม่กิน RAM/GPU เครื่อง
 > Ollama ไม่ประกาศตัวเลขโควต้าฟรีเลย ทดลองยิงรัว 15 ครั้งติดไม่โดน rate limit
 > แต่ไม่ได้แปลว่าไม่มีเพดาน — ดูการใช้งานจริงที่หน้า settings ของบัญชี
 
+### OKMD AI Playground (`OKMD_API_KEY`) — ไทย 🇹🇭
+
+`https://gen.ai.kku.ac.th/okmd/api/v1` — สร้าง key ที่ playground.okmd.or.th → API Platform
+**key เดียวได้ 22 โมเดล** และเป็นที่เดียวใน gateway ที่มีโมเดลระดับ frontier
+
+| model_name | หมายเหตุ |
+|---|---|
+| `okmd/claude-sonnet-5` `okmd/claude-sonnet-4.6` | **Claude** — ไม่มีที่อื่นใน gateway |
+| `okmd/gpt-5.4` `okmd/gpt-5.4-mini` `okmd/gpt-5.4-nano` | **GPT-5.4** — ไม่มีที่อื่น |
+| `okmd/grok-4.3` | **Grok** — ไม่มีที่อื่น |
+| `okmd/gemini-3.7-flash` `okmd/gemini-3.5-flash` `okmd/gemini-3.1-pro` | Gemini รุ่นใหม่ |
+| `okmd/gemini-3.1-flash-lite` `okmd/gemini-2.5-flash-lite` | Gemini ตัวเล็ก |
+| `okmd/sonar-pro` | **Perplexity Sonar — ค้นเว็บได้** ตอบพร้อม citation |
+| `okmd/deepseek-v4-pro` `okmd/deepseek-v4-flash` | DeepSeek V4 |
+| `okmd/qwen3.7-max` `okmd/qwen3.7-plus` `okmd/qwen3.6-flash` | Qwen รุ่นใหม่กว่าที่อื่นใน gateway |
+| `okmd/llama-4-maverick` `okmd/llama-4-scout` | Llama 4 |
+| `okmd/mistral-medium-3.1` | |
+| `okmd/nova-pro` `okmd/nova-2-lite` | Amazon Nova |
+
+ทดสอบ tool calling แล้วผ่านทั้ง Claude Sonnet 5, GPT-5.4, Gemini 3.7, Grok 4.3
+
+> `qwen3.5-9b` อยู่ใน `/v1/models` แต่ยิงจริงคืน `"No models provided"` — ยังไม่ได้ใส่
+
+### ThaiLLM (`THAILLM_API_KEY`) — โมเดลไทย 🇹🇭
+
+`https://thaillm.or.th` — 4 เจ้าคนละ endpoint แต่ใช้ key เดียวกัน
+
+| model_name | เจ้าของ | หมายเหตุ |
+|---|---|---|
+| `th/typhoon` | SCB10X | ตอบตรง ไม่มี `<think>` — ใช้ง่ายสุดในกลุ่ม |
+| `th/openthaigpt` | OpenThaiGPT | thinking model พ่น `<think>` ใน content |
+| `th/pathumma` | NECTEC | thinking model |
+| `th/thalle` | KBTG | thinking model |
+
+> ⚠️ **ต้องตั้ง `extra_headers` User-Agent** — `thaillm.or.th` อยู่หลัง Cloudflare
+> ที่บล็อก User-Agent ของ Python คืน `"error code: 1010"` / `"Your request was blocked"`
+> ยิงด้วย `curl` จาก host ผ่าน แต่ผ่าน LiteLLM ไม่ผ่านถ้าไม่ตั้ง header
+> config ตั้ง `{"User-Agent": "curl/8.5.0"}` ไว้ให้แล้วทั้ง 4 ตัว
+>
+> ทุกตัวใช้ model id ว่า `/model` จึงเขียนเป็น `openai//model` (สอง slash ไม่ใช่พิมพ์ผิด)
+
 ### Embeddings (NVIDIA NIM)
 
 ใช้กับ RAG ได้ ทดสอบกับข้อความภาษาไทยแล้ว
@@ -373,15 +417,16 @@ curl -s https://router.huggingface.co/v1/models -H "Authorization: Bearer $HF_TO
 
 ## โมเดลไหนเข้าเว็บได้ — ทดสอบแล้ว
 
-**คำตอบสั้น: มีแค่ `gq/compound` กับ `gq/compound-mini`**
+**คำตอบสั้น: `gq/compound`, `gq/compound-mini` และ `okmd/sonar-pro`**
 
 LLM ทั่วไปต่ออินเทอร์เน็ตไม่ได้ ที่จะค้นเว็บได้ต้องเป็น provider ที่แนบ tool
-ฝั่ง server มาให้ — ในบรรดา 7 provider ที่ต่อไว้ มีแค่ Groq compound เท่านั้น
+ฝั่ง server มาให้ — ในบรรดา 9 provider ที่ต่อไว้ มี Groq compound กับ OKMD sonar
 
 | ความสามารถ | สถานะ | หลักฐาน |
 |---|---|---|
-| websearch | ✅ | ตอบกลับพร้อม `executed_tools: ['search']` และ URL แหล่งที่มา |
+| websearch | ✅ | Groq compound ตอบพร้อม `executed_tools: ['search']` + URL |
 | webfetch (เปิด URL ที่ระบุ) | ✅ | `executed_tools: ['visit']` — สั่งเปิด example.com อ่านเนื้อหากลับมาตรง |
+| websearch (อีกทาง) | ✅ | `okmd/sonar-pro` (Perplexity) ตอบพร้อม citation `[1][6]` — ทดสอบถามราคาทองวันนี้ได้ค่าจริง |
 
 ```bash
 curl -s http://localhost:4000/v1/chat/completions \

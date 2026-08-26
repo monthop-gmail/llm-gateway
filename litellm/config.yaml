@@ -506,6 +506,203 @@ model_list:
   #     model: cloudflare/@cf/meta/llama-3-8b-instruct
   #     api_key: os.environ/CLOUDFLARE_API_KEY
 
+
+  ####################################################################
+  # ---------- OKMD AI Playground (ไทย) — key เดียวได้ 24 โมเดล ----------
+  # https://gen.ai.kku.ac.th/okmd/api/v1 — สร้าง key ที่ playground.okmd.or.th
+  # เป็น OpenAI-compatible จึงใช้ prefix openai/ + api_base
+  #
+  # ⭐ ที่นี่มีโมเดลระดับ frontier ที่ไม่มีใน provider ฟรีเจ้าอื่น:
+  #    Claude Sonnet 5, GPT-5.4, Gemini 3.7, Grok 4.3
+  # เช็ครายชื่อ: curl -s https://gen.ai.kku.ac.th/okmd/api/v1/models \
+  #   -H "Authorization: Bearer $OKMD_API_KEY"
+  ####################################################################
+
+  # Claude Sonnet 5
+  - model_name: okmd/claude-sonnet-5
+    litellm_params:
+      model: openai/claude-sonnet-5
+      api_base: https://gen.ai.kku.ac.th/okmd/api/v1
+      api_key: os.environ/OKMD_API_KEY
+
+  # Claude Sonnet 4.6
+  - model_name: okmd/claude-sonnet-4.6
+    litellm_params:
+      model: openai/claude-sonnet-4.6
+      api_base: https://gen.ai.kku.ac.th/okmd/api/v1
+      api_key: os.environ/OKMD_API_KEY
+
+  # GPT-5.4
+  - model_name: okmd/gpt-5.4
+    litellm_params:
+      model: openai/gpt-5.4
+      api_base: https://gen.ai.kku.ac.th/okmd/api/v1
+      api_key: os.environ/OKMD_API_KEY
+
+  - model_name: okmd/gpt-5.4-mini
+    litellm_params:
+      model: openai/gpt-5.4-mini
+      api_base: https://gen.ai.kku.ac.th/okmd/api/v1
+      api_key: os.environ/OKMD_API_KEY
+
+  - model_name: okmd/gpt-5.4-nano
+    litellm_params:
+      model: openai/gpt-5.4-nano
+      api_base: https://gen.ai.kku.ac.th/okmd/api/v1
+      api_key: os.environ/OKMD_API_KEY
+
+  # Gemini รุ่นใหม่สุดที่นี่
+  - model_name: okmd/gemini-3.7-flash
+    litellm_params:
+      model: openai/gemini-3.7-flash
+      api_base: https://gen.ai.kku.ac.th/okmd/api/v1
+      api_key: os.environ/OKMD_API_KEY
+
+  - model_name: okmd/gemini-3.5-flash
+    litellm_params:
+      model: openai/gemini-3.5-flash
+      api_base: https://gen.ai.kku.ac.th/okmd/api/v1
+      api_key: os.environ/OKMD_API_KEY
+
+  - model_name: okmd/gemini-3.1-pro
+    litellm_params:
+      model: openai/gemini-3.1-pro-preview
+      api_base: https://gen.ai.kku.ac.th/okmd/api/v1
+      api_key: os.environ/OKMD_API_KEY
+
+  - model_name: okmd/gemini-3.1-flash-lite
+    litellm_params:
+      model: openai/gemini-3.1-flash-lite
+      api_base: https://gen.ai.kku.ac.th/okmd/api/v1
+      api_key: os.environ/OKMD_API_KEY
+
+  - model_name: okmd/gemini-2.5-flash-lite
+    litellm_params:
+      model: openai/gemini-2.5-flash-lite
+      api_base: https://gen.ai.kku.ac.th/okmd/api/v1
+      api_key: os.environ/OKMD_API_KEY
+
+  # Grok — ไม่มีที่อื่นใน gateway
+  - model_name: okmd/grok-4.3
+    litellm_params:
+      model: openai/grok-4.3
+      api_base: https://gen.ai.kku.ac.th/okmd/api/v1
+      api_key: os.environ/OKMD_API_KEY
+
+  - model_name: okmd/deepseek-v4-pro
+    litellm_params:
+      model: openai/deepseek-v4-pro
+      api_base: https://gen.ai.kku.ac.th/okmd/api/v1
+      api_key: os.environ/OKMD_API_KEY
+
+  - model_name: okmd/deepseek-v4-flash
+    litellm_params:
+      model: openai/deepseek-v4-flash
+      api_base: https://gen.ai.kku.ac.th/okmd/api/v1
+      api_key: os.environ/OKMD_API_KEY
+
+  # Qwen รุ่นใหม่กว่าที่อื่นใน gateway
+  - model_name: okmd/qwen3.7-max
+    litellm_params:
+      model: openai/qwen3.7-max
+      api_base: https://gen.ai.kku.ac.th/okmd/api/v1
+      api_key: os.environ/OKMD_API_KEY
+
+  - model_name: okmd/qwen3.7-plus
+    litellm_params:
+      model: openai/qwen3.7-plus
+      api_base: https://gen.ai.kku.ac.th/okmd/api/v1
+      api_key: os.environ/OKMD_API_KEY
+
+  - model_name: okmd/qwen3.6-flash
+    litellm_params:
+      model: openai/qwen3.6-flash
+      api_base: https://gen.ai.kku.ac.th/okmd/api/v1
+      api_key: os.environ/OKMD_API_KEY
+
+  # okmd/qwen3.5-9b อยู่ใน /v1/models แต่ยิงจริงคืน "No models provided" (400)
+  # ฝั่ง OKMD ยังไม่ได้ต่อ backend ให้ — ไม่ใส่ไว้
+
+  - model_name: okmd/llama-4-maverick
+    litellm_params:
+      model: openai/llama-4-maverick
+      api_base: https://gen.ai.kku.ac.th/okmd/api/v1
+      api_key: os.environ/OKMD_API_KEY
+
+  - model_name: okmd/llama-4-scout
+    litellm_params:
+      model: openai/llama-4-scout
+      api_base: https://gen.ai.kku.ac.th/okmd/api/v1
+      api_key: os.environ/OKMD_API_KEY
+
+  - model_name: okmd/mistral-medium-3.1
+    litellm_params:
+      model: openai/mistral-medium-3.1
+      api_base: https://gen.ai.kku.ac.th/okmd/api/v1
+      api_key: os.environ/OKMD_API_KEY
+
+  # Amazon Nova
+  - model_name: okmd/nova-pro
+    litellm_params:
+      model: openai/nova-pro-v1
+      api_base: https://gen.ai.kku.ac.th/okmd/api/v1
+      api_key: os.environ/OKMD_API_KEY
+
+  - model_name: okmd/nova-2-lite
+    litellm_params:
+      model: openai/nova-2-lite-v1
+      api_base: https://gen.ai.kku.ac.th/okmd/api/v1
+      api_key: os.environ/OKMD_API_KEY
+
+  # Perplexity Sonar — น่าจะค้นเว็บได้ ยังไม่ทดสอบ
+  - model_name: okmd/sonar-pro
+    litellm_params:
+      model: openai/sonar-pro
+      api_base: https://gen.ai.kku.ac.th/okmd/api/v1
+      api_key: os.environ/OKMD_API_KEY
+
+
+  # ---------- ThaiLLM — โมเดลภาษาไทยที่พัฒนาในไทย ----------
+  # https://thaillm.or.th — แต่ละเจ้ามี endpoint แยกกัน แต่ใช้ key เดียวกัน
+  # ทุกตัวใช้ model id ว่า "/model" (vLLM ตั้ง served-model-name แบบนั้น)
+  # จึงเขียนเป็น openai//model — สอง slash ไม่ใช่พิมพ์ผิด
+  #
+  # ⚠️ ต้องมี extra_headers User-Agent ด้วย — thaillm.or.th อยู่หลัง Cloudflare
+  # ที่บล็อก User-Agent ของ Python (คืน "error code: 1010" / "Your request was
+  # blocked") ยิงด้วย curl จาก host ผ่าน แต่ผ่าน LiteLLM ไม่ผ่านถ้าไม่ตั้ง header
+
+  # OpenThaiGPT — thinking model พ่น <think> ใน content
+  - model_name: th/openthaigpt
+    litellm_params:
+      model: openai//model
+      api_base: http://thaillm.or.th/api/openthaigpt/v1
+      api_key: os.environ/THAILLM_API_KEY
+      extra_headers: {"User-Agent": "curl/8.5.0"}
+
+  # Pathumma (NECTEC) — thinking model
+  - model_name: th/pathumma
+    litellm_params:
+      model: openai//model
+      api_base: http://thaillm.or.th/api/pathumma/v1
+      api_key: os.environ/THAILLM_API_KEY
+      extra_headers: {"User-Agent": "curl/8.5.0"}
+
+  # Typhoon-S (SCB10X) — ตอบตรงไม่มี think
+  - model_name: th/typhoon
+    litellm_params:
+      model: openai//model
+      api_base: http://thaillm.or.th/api/typhoon/v1
+      api_key: os.environ/THAILLM_API_KEY
+      extra_headers: {"User-Agent": "curl/8.5.0"}
+
+  # THaLLE (KBTG) — thinking model
+  - model_name: th/thalle
+    litellm_params:
+      model: openai//model
+      api_base: http://thaillm.or.th/api/kbtg/v1
+      api_key: os.environ/THAILLM_API_KEY
+      extra_headers: {"User-Agent": "curl/8.5.0"}
+
   # ---------- Ollama Cloud — โมเดลใหญ่โดยไม่ต้องมี GPU ----------
   # ต่างจาก Ollama ที่รันเอง: อันนี้ Ollama โฮสต์ให้ ไม่กิน RAM/GPU ของเรา
   # เป็น OpenAI-compatible แท้ (https://ollama.com/v1) จึงใช้ prefix openai/ + api_base
