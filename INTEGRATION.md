@@ -196,6 +196,7 @@ jq '.data[] | select(.model_info.latency_ms_14k < 2000) | .model_name'
 | `quota_pool` | `ollama-cloud`, `okmd-gemini` | ตัวที่ pool เดียวกัน **ตายพร้อมกัน** |
 | `quota_window` | `daily` / `weekly` / `monthly` | รู้ว่าต้องรอนานแค่ไหน |
 | `verified_max_prompt` | `13883` | token ที่ยิงผ่านแล้วจริง — เป็นค่า **อย่างน้อย** ไม่ใช่เพดาน |
+| `answered_by` | `mistral-large-latest` | โมเดลที่ตอบให้จริง เมื่อตัวที่ขอใช้ไม่ได้แล้ว |
 | `max_prompt_detail` | `timeout ที่ ~32,000 — timed out` | พังยังไงตอนเกินเพดาน |
 
 ### `quota_pool` สำคัญกว่าที่คิด — fallback ที่ไร้ผล
@@ -221,6 +222,99 @@ jq '.data[] | select(.model_info.latency_ms_14k < 2000) | .model_name'
 - `ชนเพดาน` — เจอเพดานจริง ยิงใหม่ก็เท่าเดิม
 - `โควต้า` — ยังไม่รู้เพดาน ต้องมาวัดใหม่ตอนโควต้าคืน **อย่าเอาเลขนี้ไปใช้**
 - `timeout` — provider แขวน (เคสของ Cerebras)
+
+### หมวด `agent` ใน pick-model.sh (issue #3 ข้อ 5)
+
+```bash
+./scripts/pick-model.sh agent      # 44 ตัว ณ 2026-08-26
+```
+
+รวมเงื่อนไขทั้ง 4 ที่ hermes ขอไว้เข้าด้วยกัน:
+
+```
+supports_function_calling == true      ← ทดสอบจริง ไม่ใช่ตามสเปก
+status == "ok"
+verified_max_prompt >= 13,300
+quota_window != "rpm-only"             ← agent ยิงถี่ จะชนเพดานต่อนาทีก่อนใคร
+```
+
+**ทำไม 13,300 ไม่ใช่ 14,000 ตามที่ขอ** — `verified_max_prompt` เป็นค่า
+"อย่างน้อยเท่านี้" ไม่ใช่เพดาน โมเดลที่ผ่านขั้น 14K แล้วไปพังที่ขั้น 32K จะได้เลข
+~13,6xx–13,9xx เสมอ เพราะนั่นคือ `prompt_tokens` จริงของขั้น 14K
+ถ้าตัดที่ 14,000 ตรง ๆ จะตกหล่น 16 ตัว รวมทั้ง `cb/*` ที่เป็น tier เร็วที่สุด
+
+ฝั่งที่เขียนโค้ดกรองเองก็ใช้เลขนี้ด้วย:
+
+```bash
+jq --argjson floor 13300 ".data[] | select(
+     .model_info.supports_function_calling == true
+     and (.model_info.status // \"ok\") == \"ok\"
+     and (.model_info.verified_max_prompt // 0) >= $floor
+     and .model_info.quota_window != \"rpm-only\") | .model_name"
+```
+
+ที่ตัดออก 71 ตัวแยกเป็น: รับ 14K ไม่ไหวหรือยังวัดไม่จบ 34 · โควต้าหมดตอนนี้ 11 ·
+`rpm-only` 11 · ใช้ tool ไม่ได้ 10 · สถานะไม่แน่ชัด 5
+
+**เกณฑ์ 4 ข้อนี้ยังไม่พอสำหรับตัดสินใจจริง** — `quota_window` บอกแค่ *หน่วยเวลา*
+ไม่ได้บอก *ขนาด* โควต้า `okmd/*` ที่มี ~40K token/วันแชร์ทั้งตระกูล (พอได้ราว
+1 turn/วัน) กับ Cerebras ที่มี ~1M token/วัน เขียนว่า `daily` เหมือนกันทั้งคู่
+แต่ตัวหนึ่งใช้ทำ agent ไม่ได้เลย
+
+ตอนนี้ 13 จาก 44 ตัวที่ผ่านเกณฑ์เป็น `okmd/*` — `pick-model.sh agent` จึงพิมพ์
+สรุปโควต้าแยกตาม `quota_pool` ต่อท้ายให้ดูประกอบเสมอ:
+
+```
+huggingface      15 ตัว   ⚠️ เครดิตรายเดือนหมดแล้ว — วิ่งผ่าน fallback ไป provider อื่น
+mistral          13 ตัว   1B token/เดือน — โควต้าใจกว้างที่สุด
+cerebras          2 ตัว   ~1M token/วัน แต่เป็นโควต้าสะสมต่อนาที (TPM)
+okmd-gpt          2 ตัว   ⚠️ ~40K token/วัน และแชร์กันทั้งตระกูล
+```
+
+ถ้าต้องการให้เครื่องกรองเรื่องขนาดโควต้าได้เอง ต้องมีฟิลด์ตัวเลขเพิ่ม
+(เช่น `quota_tokens_per_window`) — ยังไม่มี ใครอยากได้เปิด issue มาได้
+
+### `fallbacks` ทำให้ metadata ผิดคน — และวิธีที่เราแก้
+
+`litellm_settings.fallbacks` ทำงานเงียบ ๆ ที่ระดับ `/v1/chat/completions`
+ขอ A แล้ว A ตาย LiteLLM จะส่งไป B ให้โดยไม่บอก ซึ่งดีสำหรับ uptime แต่**พังสำหรับ
+การวัด** — สคริปต์ของเราวัด B แล้วบันทึกใส่ชื่อ A กระทบทุกฟิลด์ ไม่ใช่แค่ latency
+
+ตอนนี้ **18 โมเดลอยู่ในสภาพนี้** ทั้งหมดเป็น `hf/*` เพราะเครดิต HuggingFace หมด:
+
+```
+hf/deepseek-v3.2   → mistral-large-latest
+hf/llama-3.3-70b   → openai/gpt-oss-120b
+hf/gemma-4-26b     → cerebras/gemma-4-31b
+```
+
+ใครเลือก `hf/deepseek-v3.2` เพราะอยากได้ DeepSeek จะได้ Mistral โดยไม่รู้ตัว
+
+**วิธีแก้ — แยกเป็นสองคำถามที่ไม่เหมือนกัน:**
+
+| คำถาม | วัดยังไง | เก็บที่ |
+|---|---|---|
+| โมเดลตัวนี้เองยังมีชีวิตไหม | ส่ง `"disable_fallbacks": true` | `status` และฟิลด์วัดผลทุกตัว |
+| ปลายทางยิงชื่อนี้แล้วได้อะไร | ยิงปกติ อ่านฟิลด์ `model` ในคำตอบ | `answered_by` |
+
+ทดสอบวิธีปิด fallback รายคำขอแล้ว 3 แบบ — `"disable_fallbacks": true` และ
+`"fallbacks": []` ในตัว body ใช้ได้ ส่วน header `x-litellm-disable-fallbacks` **ไม่มีผล**
+
+ข้อดีคือไม่ต้องแตะ `fallbacks` ใน config และไม่ต้อง restart จึงไม่กระทบคนที่ใช้อยู่
+
+**ฝั่ง consumer:** ถ้าเห็น `answered_by` แปลว่าชื่อนั้นเป็น alias ไปหา provider อื่นแล้ว
+`quota_pool` ที่เขียนไว้จะไม่ตรงกับโควต้าที่กินจริงด้วย — ถ้าต้องการโมเดลนั้นจริง ๆ
+ให้เรียกชื่อตัวที่อยู่ใน `answered_by` ตรง ๆ จะได้รู้ตัวเมื่อมันตาย
+
+### ⚠️ `status` เป็นภาพ ณ วินาทีที่ตรวจ ไม่ใช่คุณสมบัติถาวร
+
+รอบล่าสุด (2026-08-26T10:26Z) ได้ ok 34 · โควต้าหมด 74 · ตายถาวร 1 · ไม่แน่ชัด 6
+ตัวเลข 74 **สูงผิดปกติเพราะเราเผาโควต้าเอง**จากการวัด `verified_max_prompt` และ
+`latency_ms_14k` ในวันเดียวกัน (Cloudflare หมดทั้ง 13 ตัว, OpenRouter, OKMD, Ollama)
+ส่วนใหญ่จะกลับมาเองเมื่อถึงรอบรีเซ็ต
+
+ให้ดู `status_checked_at` ประกอบเสมอ และอย่าใช้ `status` ตัดสินตอน runtime
+— ใช้ดูภาพรวมว่าตัวไหนน่าลองก่อน แล้วดัก error เอาตอนยิงจริง
 
 ### HTTP status code ของ provider โกหก — อย่าตัดสินจากตัวเลข
 

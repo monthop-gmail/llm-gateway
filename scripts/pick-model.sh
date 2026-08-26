@@ -10,6 +10,7 @@
 #   ./scripts/pick-model.sh quality         # คุณภาพสูงสุด
 #   ./scripts/pick-model.sh long            # context ยาว
 #   ./scripts/pick-model.sh embedding       # embeddings สำหรับ RAG
+#   ./scripts/pick-model.sh agent           # เอาไปทำ agent ได้ (tool + 14K + โควต้าไหว)
 #   ./scripts/pick-model.sh big-prompt      # รับ prompt 30K+ ได้จริง
 #   ./scripts/pick-model.sh all             # ทุกตัวพร้อมรายละเอียด
 #   ./scripts/pick-model.sh <คำค้น>          # ค้นจากชื่อหรือคำอธิบาย
@@ -62,6 +63,22 @@ GROUPS = {
 def _big_prompt(r):
     return (info(r).get("verified_max_prompt") or 0) >= 30_000
 
+# เกณฑ์ "เอาไปทำ agent ได้" ตามที่ hermes ขอมาใน issue #3 ข้อ 5
+#
+# ใช้ 13,300 ไม่ใช่ 14,000 ตามที่ขอ เพราะ verified_max_prompt เป็นค่า
+# "อย่างน้อยเท่านี้" ไม่ใช่เพดาน — ตัวที่ผ่านขั้น 14K แล้วไปพังที่ขั้น 32K
+# จะได้เลข ~13,6xx-13,9xx เสมอ (นั่นคือ prompt_tokens จริงของขั้น 14K)
+# ถ้าตัดที่ 14,000 ตรง ๆ จะตกหล่น 16 ตัวรวมทั้ง cb/* ที่เป็น tier เร็วสุด
+AGENT_FLOOR = 13_300
+
+def _agent_ready(r):
+    mi = info(r)
+    return (mi.get("supports_function_calling") is True
+            and mi.get("status") in (None, "ok")
+            and (mi.get("verified_max_prompt") or 0) >= AGENT_FLOOR
+            # rpm-only = จำกัดต่อนาที agent ยิงถี่จะชนก่อนใคร
+            and mi.get("quota_window") != "rpm-only")
+
 def info(r):
     return r.get("model_info") or {}
 
@@ -71,8 +88,10 @@ def fmt(r, show_all=False):
     bits = []
     if mi.get("benchmark_coding"):
         bits.append("coding " + mi["benchmark_coding"])
-    if mi.get("latency_ms"):
-        bits.append(str(mi["latency_ms"]) + "ms")
+    if mi.get("latency_ms_14k"):
+        bits.append(str(mi["latency_ms_14k"]) + "ms @14K")
+    elif mi.get("latency_ms"):
+        bits.append(str(mi["latency_ms"]) + "ms (prompt สั้น)")
     if mi.get("supports_function_calling") is False:
         bits.append("ไม่รองรับ tool")
     cap = mi.get("verified_max_prompt")
@@ -80,6 +99,9 @@ def fmt(r, show_all=False):
         # ≥ ไม่ใช่ ≤ — เลขนี้คือขนาดที่ยิงผ่านแล้ว เพดานจริงอยู่สูงกว่านี้
         # และบางตัวหยุดเพราะโควต้าหมดกลางคัน ไม่ใช่เพราะชนเพดาน
         bits.append(f"prompt ≥{cap//1000}K")
+    ans = mi.get("answered_by")
+    if ans:
+        bits.append("จริง ๆ ตอบโดย " + ans)
     st = mi.get("status")
     if st and st != "ok":
         bits.append({"rate_limited": "โควต้าหมดตอนนี้", "dead": "ตายแล้ว"}.get(st, st))
@@ -109,10 +131,35 @@ if not q:
     for k, (tags, desc) in GROUPS.items():
         n = sum(1 for r in rows if set(tags) & set(info(r).get("tags", [])))
         print(f"  {k:<11} {n:>3} ตัว   {desc}")
+    n = sum(1 for r in rows if _agent_ready(r))
+    print(f"  agent       {n:>3} ตัว   ใช้ tool ได้ + ยังไม่ตาย + รับ 14K + โควต้าไม่จำกัดต่อนาที")
     n = sum(1 for r in rows if _big_prompt(r))
     print(f"  big-prompt  {n:>3} ตัว   ยิง prompt 30K+ ผ่านจริง (ไม่ใช่แค่สเปก)")
     print(f"\n  all         {len(rows):>3} ตัว   ทุกตัวพร้อมรายละเอียด")
     print("\nใช้: ./scripts/pick-model.sh <หมวด>  หรือใส่คำค้นอะไรก็ได้")
+    sys.exit(0)
+
+if q == "agent":
+    hits = sorted((r for r in rows if _agent_ready(r)),
+                  key=lambda r: info(r).get("latency_ms_14k")
+                  or info(r).get("latency_ms") or 10 ** 9)
+    print(f"เอาไปทำ agent ได้ — {len(hits)} ตัว (เรียงตามเวลาตอบที่ prompt 14K)\n")
+    for r in hits:
+        print(fmt(r, show_all=True))
+        print()
+    # เกณฑ์ 4 ข้อบอกไม่ได้ว่าโควต้า "ใหญ่พอให้ agent ยิงทั้งวัน" ไหม
+    # เพราะ quota_window เป็นแค่หน่วยเวลา ไม่ใช่ขนาด — okmd ที่มี ~40K/วัน
+    # กับ cerebras ที่มี ~1M/วัน เขียนว่า daily เหมือนกัน จึงสรุปโควต้าให้ดูเอง
+    pools = {}
+    for r in hits:
+        m = info(r)
+        key = m.get("quota_pool") or "?"
+        pools.setdefault(key, [0, m.get("provider_quota") or ""])
+        pools[key][0] += 1
+    print("โควต้าของแต่ละก้อน — agent ยิงถี่ ให้ดูข้อนี้ก่อนตัดสินใจ:\n")
+    for key, (n, quota) in sorted(pools.items(), key=lambda kv: -kv[1][0]):
+        print(f"  {key:<16} {n:>2} ตัว   {quota[:78]}")
+    print("\n  ตัวที่อยู่ก้อนเดียวกันหมดโควต้าพร้อมกัน — เลือกตัวสำรองข้ามก้อนเสมอ")
     sys.exit(0)
 
 if q == "big-prompt":

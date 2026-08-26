@@ -10,5 +10,5 @@ backups/
 *.sql.gz
 *.saltkey.txt
 
-# ของที่ python สร้างตอน import failure_hints
+# ของที่ python สร้างตอน import failure_hints / config_edit
 __pycache__/
