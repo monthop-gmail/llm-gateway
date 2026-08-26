@@ -46,8 +46,8 @@ from pathlib import Path
 import yaml
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from config_edit import set_fields  # noqa: E402
-from failure_hints import classify  # noqa: E402
+from config_edit import set_fields
+from failure_hints import classify
 
 ROOT = Path(__file__).resolve().parent.parent
 CFG = ROOT / "litellm/config.yaml"
@@ -119,7 +119,7 @@ def probe(model: str) -> tuple[str, int | None, str, int | None]:
         t0 = time.monotonic()
         try:
             data = _post(body)
-        except Exception as exc:                      # noqa: BLE001
+        except Exception as exc:
             msg = _error_text(exc)
             kind = classify(msg)
             # โควต้าหมด = วัดไม่ได้ตอนนี้ ไม่ใช่คุณสมบัติของโมเดล — อย่าบันทึกเลข
@@ -130,7 +130,7 @@ def probe(model: str) -> tuple[str, int | None, str, int | None]:
         # ตอบว่างแต่ไม่ error เจอกับ reasoning model ที่ max_tokens หมดไปกับการคิด
         choice = (data.get("choices") or [{}])[0]
         if not (choice.get("message") or {}).get("content"):
-            return model, best, "content ว่าง (finish=%s)" % choice.get("finish_reason"), ptok
+            return model, best, f"content ว่าง (finish={choice.get('finish_reason')})", ptok
         if i + 1 < RUNS:
             time.sleep(1.0)                            # กันชน rate limit ระหว่างรอบ
     return model, best, "", ptok

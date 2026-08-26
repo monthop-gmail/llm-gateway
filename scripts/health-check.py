@@ -46,8 +46,8 @@ from pathlib import Path
 import yaml
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from config_edit import set_fields  # noqa: E402
-from failure_hints import classify  # noqa: E402
+from config_edit import set_fields
+from failure_hints import classify
 
 ROOT = Path(__file__).resolve().parent.parent
 BASE = os.environ.get("LITELLM_URL", "http://localhost:4000")
@@ -96,7 +96,7 @@ def check(model: str, allow_fallback: bool = False) -> tuple[str, str, str, str]
                 body["disable_fallbacks"] = True
             data = _post("/v1/chat/completions", body)
         return model, "OK", "", str(data.get("model") or "")
-    except Exception as exc:  # noqa: BLE001 — อยากได้ทุก error ไม่ใช่แค่ HTTP
+    except Exception as exc:
         msg = _error_text(exc)
         return model, classify(msg), msg[:110], ""
 
@@ -128,9 +128,11 @@ def main() -> int:
     if broken:
         print(f"\n\nตรวจซ้ำ {len(broken)} ตัวแบบเปิด fallback เพื่อดูว่าใครตอบแทน")
         with futures.ThreadPoolExecutor(max_workers=8) as pool:
+            # strict=True: สองลิสต์ต้องยาวเท่ากันเสมอ ถ้าไม่เท่าแปลว่ามีบั๊ก
+            # อยากให้ระเบิดดังกว่าจับคู่ผิดเงียบ ๆ แล้วเขียน answered_by ผิดตัว
             for idx, out in zip(broken, pool.map(
                     lambda m: check(m, allow_fallback=True),
-                    [results[i][0] for i in broken])):
+                    [results[i][0] for i in broken]), strict=True):
                 _, st, _, answered = out
                 print("." if st == "OK" else "X", end="", flush=True)
                 # ตอบด้วยชื่อเดิม = รอบแรกพังชั่วคราว (timeout/สะดุด) ไม่ใช่ถูกสลับตัว

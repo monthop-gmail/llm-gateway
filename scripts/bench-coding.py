@@ -10,7 +10,12 @@
 โค้ดที่โมเดลเขียนถูกรันใน container แยก (--network none, จำกัด RAM 256MB)
 ไม่ได้รันบนเครื่องโดยตรง ต้องมี image python:3.12-alpine
 """
-import json, os, re, subprocess, sys, time
+import json
+import os
+import re
+import subprocess
+import sys
+import time
 import urllib.request
 
 BASE = os.environ.get("LITELLM_URL", "http://localhost:4000") + "/v1/chat/completions"
@@ -117,7 +122,9 @@ def sandbox(code, test):
         p = subprocess.run(
             ["docker", "run", "--rm", "-i", "--network", "none", "--memory", "256m",
              "python:3.12-alpine", "python", "-c", script],
-            capture_output=True, text=True, timeout=90)
+            # check=False ตั้งใจ — โค้ดที่โมเดลเขียนแล้วรันไม่ผ่านคือผลการวัด
+            # ไม่ใช่ข้อผิดพลาดของสคริปต์ เราดูที่ stdout ว่ามี PASS ไหม
+            capture_output=True, text=True, timeout=90, check=False)
         return "PASS" in p.stdout
     except subprocess.TimeoutExpired:
         return False

@@ -37,8 +37,8 @@ from pathlib import Path
 import yaml
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from config_edit import set_fields  # noqa: E402
-from failure_hints import classify  # noqa: E402
+from config_edit import set_fields
+from failure_hints import classify
 
 ROOT = Path(__file__).resolve().parent.parent
 CFG = ROOT / "litellm/config.yaml"
@@ -131,7 +131,7 @@ def probe(model: str, ceiling: int | None) -> tuple[str, int, str, int]:
             else:
                 best = size  # provider ไม่ส่ง usage มา ใช้ค่าที่ตั้งใจยิงไปแทน
             rung = size
-        except Exception as exc:  # noqa: BLE001
+        except Exception as exc:
             msg = _error_text(exc)
             detail = f"{_why(exc, msg)} ที่ ~{size:,} — {msg[:80]}"
             break

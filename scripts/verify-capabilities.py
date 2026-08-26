@@ -33,6 +33,9 @@ from pathlib import Path
 
 import yaml
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from config_edit import set_fields
+
 ROOT = Path(__file__).resolve().parent.parent
 CFG = ROOT / "litellm/config.yaml"
 BASE = os.environ.get("LITELLM_URL", "http://localhost:4000")
@@ -88,7 +91,7 @@ def probe(model: str) -> tuple[str, str, str]:
         d = post(model)
         msg = d["choices"][0]["message"]
         return model, ("yes" if msg.get("tool_calls") else "no"), ""
-    except Exception as exc:  # noqa: BLE001 — อยากได้ทุก error ไม่ใช่แค่ HTTP
+    except Exception as exc:
         raw = ""
         if isinstance(exc, urllib.error.HTTPError):
             raw = exc.read().decode(errors="replace")
@@ -165,14 +168,12 @@ def main() -> int:
         print("\nรันซ้ำด้วย --fix เพื่อแก้ litellm/config.yaml ให้ตรง")
         return 1
 
+    # ใช้ตัวเขียนตัวเดียวกับสคริปต์อื่น — ของเดิมเป็น regex ที่ (?:.*?\n)*? วิ่งข้าม
+    # ขอบเขตของโมเดลได้ ถ้าโมเดลไหนไม่มีฟิลด์นี้จะไปแก้ของโมเดลถัดไปแทน
     text = CFG.read_text()
     for model, _, actual in mismatch:
-        pat = re.compile(
-            r"(- model_name: " + re.escape(model) + r"\n(?:.*?\n)*?      supports_function_calling: )(true|false)"
-        )
-        new = "true" if actual else "false"
-        text, n = pat.subn(lambda m: m.group(1) + new, text, count=1)
-        if not n:
+        text, ok = set_fields(text, model, {"supports_function_calling": actual})
+        if not ok:
             print(f"  แก้ไม่ได้: {model}", file=sys.stderr)
     CFG.write_text(text)
     print(f"\nแก้ config แล้ว {len(mismatch)} ตัว — restart litellm เพื่อให้มีผล")

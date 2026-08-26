@@ -31,8 +31,8 @@ def set_fields(text: str, model: str, fields: dict) -> tuple[str, bool]:
     ค่า None แปลว่า "ลบ key นี้ทิ้ง"
     """
     lines = text.split("\n")
-    start = next((i for i, l in enumerate(lines)
-                  if l.strip() == f"- model_name: {model}"), None)
+    start = next((i for i, line in enumerate(lines)
+                  if line.strip() == f"- model_name: {model}"), None)
     if start is None:
         return text, False
 
@@ -53,17 +53,17 @@ def set_fields(text: str, model: str, fields: dict) -> tuple[str, bool]:
     # ท้ายบล็อก = บรรทัดแรกที่ indent น้อยกว่า และไม่ใช่บรรทัดว่าง
     end = mi + 1
     while end < len(lines):
-        l = lines[end]
-        if not l.strip():
+        line = lines[end]
+        if not line.strip():
             break
-        if len(l) - len(l.lstrip()) < indent:
+        if len(line) - len(line.lstrip()) < indent:
             break
         end += 1
 
     body = lines[mi + 1:end]
     keys = set(fields)
-    body = [l for l in body
-            if (m := re.match(r"\s*([A-Za-z_][A-Za-z0-9_]*):", l)) is None
+    body = [line for line in body
+            if (m := re.match(r"\s*([A-Za-z_][A-Za-z0-9_]*):", line)) is None
             or m.group(1) not in keys]
     for k, v in fields.items():
         if v is not None:

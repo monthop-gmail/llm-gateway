@@ -26,3 +26,28 @@ jobs:
       - uses: actions/checkout@v5
       - run: sudo apt-get update && sudo apt-get install -y shellcheck
       - run: shellcheck scripts/*.sh
+
+  python:
+    name: pytest + ruff
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: ติดตั้งเครื่องมือ
+        run: pip install --quiet pyyaml pytest ruff
+
+      # ทุกไฟล์ต้อง parse ได้ก่อน — เคยเจอ SyntaxError จากอัญประกาศซ้อนกัน
+      # หลุดขึ้น repo มาแล้ว เพราะไม่มีอะไรรัน python เลยใน CI
+      - name: syntax
+        run: python -m py_compile scripts/*.py
+
+      - name: ruff
+        run: ruff check scripts/ tests/
+
+      # ตรรกะที่เคยทำ config พังเงียบ ๆ — set_fields กับ classify
+      - name: pytest
+        run: pytest tests/ -q
