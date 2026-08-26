@@ -171,6 +171,7 @@ CrewAI / LiteLLM-native ใช้ชื่อ `openai/gq/gpt-oss-120b` พร้
 | RAG / embeddings | `emb/nemotron-embed` |
 | ต้องการข้อมูลสดจากเว็บ | `gq/compound-mini` (ค้น+เปิด URL), `okmd/sonar-pro` (citation) |
 | ไม่อยากเลือกเอง / กันล่ม | `or/auto-free` — OpenRouter เลือกให้ (ผลไม่คงที่ ไม่เหมาะเป็นตัวหลัก) |
+| **ไม่มี key เลยสักเจ้า** | `zen/*` — OpenCode Zen ยิงได้ทันที แต่ rate limit เข้ม |
 | coding บน OpenRouter | `or/ox-alpha` (3/3, ctx 1M) |
 
 ตัวเลข coding มาจากการวัดจริงด้วย `scripts/bench-coding.py` — ดูตารางเต็มใน README

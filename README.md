@@ -70,7 +70,8 @@ PY
 
 | provider | ตัวแปร | สมัครที่ | หมายเหตุ |
 |---|---|---|---|
-| **Groq** | `GROQ_API_KEY` | console.groq.com | เริ่มที่นี่ — ฟรี ไม่ต้องใช้บัตร |
+| **OpenCode Zen** | — **ไม่ต้องมี key** | — | ⭐ ยิงได้ทันที ไม่ต้องสมัครอะไรเลย |
+| **Groq** | `GROQ_API_KEY` | console.groq.com | เริ่มที่นี่ถ้าต้องการโควต้าเยอะ — ฟรี ไม่ต้องใช้บัตร |
 | Cerebras | `CEREBRAS_API_KEY` | cloud.cerebras.ai | เร็วสุดสำหรับ coding |
 | Cloudflare | `CLOUDFLARE_API_KEY` + `CLOUDFLARE_ACCOUNT_ID` | dash.cloudflare.com | 10,000 neurons/วัน |
 | Mistral | `MISTRAL_API_KEY` | console.mistral.ai | 1B token/เดือน |
@@ -139,7 +140,7 @@ client.chat.completions.create(model="cb/gemma-4-31b", messages=[...])
 
 ## โมเดลที่ตั้งไว้ให้
 
-รวม **105 โมเดล** จาก 9 provider — ทดสอบยิงจริงผ่านทั้งหมด (อัปเดต 2026-08-26)
+รวม **112 โมเดล** จาก 10 provider — ทดสอบยิงจริงผ่านทั้งหมด (อัปเดต 2026-08-26)
 ทุกตัวใช้ `sk-...` ใบเดียวกัน สลับโมเดลได้โดยไม่ต้องแก้ฝั่ง client
 
 ### โควต้าฟรีของแต่ละเจ้า — ดูก่อนเลือกโมเดล
@@ -159,6 +160,7 @@ client.chat.completions.create(model="cb/gemma-4-31b", messages=[...])
 | ThaiLLM / Typhoon | จำกัดด้วย req/min (~50) | งานภาษาไทย |
 | SEA-LION (ยังไม่เปิด) | 10 req/min | งานภาษาอาเซียน |
 | Ollama Cloud | ไม่ประกาศ ("light usage") | ทั่วไป |
+| **OpenCode Zen** | **ไม่ต้องมี key** แต่ ~15 req ติดกันก็ตัน | ตัวสำรอง ใช้ประปราย |
 | HuggingFace | เครดิตรายเดือน — **หมดแล้ว** | — |
 
 > **จุดที่คนพลาดบ่อยที่สุดคือ OKMD** — โควต้า ~40K token/วันนั้น **แชร์กันทั้งตระกูล**
@@ -445,6 +447,39 @@ Ollama โฮสต์ให้ ไม่กิน RAM/GPU เครื่อง
 >
 > **KNPLabs มี 2 tier คนละ host คนละ key** — tier จ่ายเงินมีบันทึกว่าทดสอบเมื่อ
 > 2026-08-13 ผ่าน 11/12 latency กลาง 3.5 วิ
+
+### OpenCode Zen — ⭐ ไม่ต้องมี API key เลย
+
+`https://opencode.ai/zen/v1` — **เจ้าเดียวใน gateway ที่ยิงได้โดยไม่ต้องสมัครอะไร**
+ไม่ต้อง login ไม่ต้องเติมเครดิต ใช้ได้ทันทีที่ clone repo
+
+| model_name | ปลายทาง | หมายเหตุ |
+|---|---|---|
+| `zen/nemotron-3-ultra` | nemotron-3-ultra-free | โมเดลเดียวกับ `or/nemotron-ultra-550b` แต่ไม่กินโควต้า OpenRouter |
+| `zen/nemotron-lightning` | nemotron-3.5-lightning-free | พ่น thinking ปนใน content |
+| `zen/laguna-s-2.1` | laguna-s-2.1-free | สาย coding |
+| `zen/x-preview-f` | x-preview-f-free | |
+| `zen/hy3` | hy3-free | thinking model |
+| `zen/mimo-v2.5` | mimo-v2.5-free | |
+| `zen/big-pickle` | big-pickle | |
+
+> ### ⚠️ สองเรื่องที่ต้องรู้
+>
+> **1. ต้องตั้ง `api_key: ""` เท่านั้น ห้ามใส่ค่าหลอก**
+> ปลายทางตรวจ key จริง — ส่งค่ามั่วไปจะได้ `"Invalid API key"` แต่ถ้าไม่ส่ง
+> header เลยหรือส่ง `Bearer` ว่าง จะเข้าโหมดฟรีที่ไม่ต้อง auth
+> (เจอตอนใส่ `api_key: "no-key-needed"` แล้วพังทั้ง 7 ตัว)
+>
+> **2. rate limit เข้มมาก** — ยิงติดกันราว 15 ครั้งก็ขึ้น `"Rate limit exceeded"`
+> ทดสอบครั้งล่าสุดผ่าน 5/7 ตัว ที่พัง 2 ตัวเป็นเพราะ rate limit ไม่ใช่ config ผิด
+> **เหมาะกับใช้ประปรายหรือเป็นตัวสำรอง ไม่เหมาะกับ agent ที่ยิงถี่**
+
+`/v1/models` มี 64 โมเดล (claude-*, gpt-5*, grok-*) แต่ตัวที่ไม่ลงท้าย `-free`
+ตอบ `"Missing API key"` ทั้งหมด — ใช้ได้จริงเฉพาะที่อยู่ในตารางข้างบน
+(`deepseek-v4-flash-free` กับ `muse-spark-1.2-contributor-free` ลงท้าย `-free`
+แต่ยิงแล้วคืน upstream error / internal server error)
+
+เช็ครายชื่อปัจจุบัน: `curl -s https://opencode.ai/zen/v1/models`
 
 ### Embeddings (NVIDIA NIM)
 

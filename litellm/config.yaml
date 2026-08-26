@@ -669,6 +669,74 @@ model_list:
       api_key: os.environ/OKMD_API_KEY
 
 
+
+  ####################################################################
+  # ---------- OpenCode Zen — ⭐ ไม่ต้องมี API key เลย ----------
+  # https://opencode.ai/zen/v1 — OpenAI-compatible
+  #
+  # เจ้านี้พิเศษกว่าทุกเจ้าใน gateway: โมเดลที่ลงท้าย -free ยิงได้ทันที
+  # ไม่ต้องสมัคร ไม่ต้อง login ไม่ต้องเติมเครดิต (ทดสอบ 2026-08-26)
+  # ส่วนโมเดลอื่นในรายการ (claude-*, gpt-5*, grok-*) ต้องมี key -> "Missing API key"
+  #
+  # ⚠️ ต้องตั้ง api_key เป็นค่าว่าง ("") เท่านั้น — ห้ามใส่ค่าหลอก
+  #    ปลายทางตรวจ key จริง: ส่งค่ามั่วจะได้ "Invalid API key"
+  #    แต่ถ้าไม่ส่ง header หรือส่ง Bearer ว่าง จะเข้าโหมดฟรีที่ไม่ต้อง auth
+  #
+  # ⚠️ โหมดฟรีมี rate limit เข้มงวด — ยิงติดกันราว 15 ครั้งก็ขึ้น
+  #    "Rate limit exceeded" เหมาะกับใช้ประปราย ไม่เหมาะกับ agent ที่ยิงถี่
+  # เช็ครายชื่อ: curl -s https://opencode.ai/zen/v1/models
+  ####################################################################
+
+  - model_name: zen/big-pickle
+    litellm_params:
+      model: openai/big-pickle
+      api_base: https://opencode.ai/zen/v1
+      api_key: ""
+
+  # ตัวเดียวกับ or/nemotron-ultra-550b แต่ไม่ติดโควต้ารายวันของ OpenRouter
+  - model_name: zen/nemotron-3-ultra
+    litellm_params:
+      model: openai/nemotron-3-ultra-free
+      api_base: https://opencode.ai/zen/v1
+      api_key: ""
+
+  # พ่น thinking ปนใน content
+  - model_name: zen/nemotron-lightning
+    litellm_params:
+      model: openai/nemotron-3.5-lightning-free
+      api_base: https://opencode.ai/zen/v1
+      api_key: ""
+
+  - model_name: zen/mimo-v2.5
+    litellm_params:
+      model: openai/mimo-v2.5-free
+      api_base: https://opencode.ai/zen/v1
+      api_key: ""
+
+  # สาย coding
+  - model_name: zen/laguna-s-2.1
+    litellm_params:
+      model: openai/laguna-s-2.1-free
+      api_base: https://opencode.ai/zen/v1
+      api_key: ""
+
+  - model_name: zen/x-preview-f
+    litellm_params:
+      model: openai/x-preview-f-free
+      api_base: https://opencode.ai/zen/v1
+      api_key: ""
+
+  # thinking model
+  - model_name: zen/hy3
+    litellm_params:
+      model: openai/hy3-free
+      api_base: https://opencode.ai/zen/v1
+      api_key: ""
+
+  # ที่ลองแล้วยังใช้ไม่ได้ (2026-08-26):
+  #   deepseek-v4-flash-free -> "Upstream request failed"
+  #   muse-spark-1.2-contributor-free -> "Internal server error"
+
   ####################################################################
   # provider ไทย/อาเซียนที่เตรียมไว้แล้วแต่ยังไม่มี key
   # ปลดคอมเมนต์ได้ทันทีที่สมัคร — ชื่อโมเดลยืนยันแล้วจาก
