@@ -6,11 +6,11 @@
 |---|---|---|
 | OpenAI Chat Completions `/v1/chat/completions` | ✅ | endpoint หลัก |
 | Streaming (SSE) | ✅ | |
-| **Tool / function calling** | ✅ | ทดสอบทุก provider แล้ว — ส่วนใหญ่ผ่าน มีข้อยกเว้นรายตัวใน README |
+| **Tool / function calling** | ✅ | ทดสอบทุก provider แล้ว — ส่วนใหญ่ผ่าน มีข้อยกเว้นรายตัวใน [docs/providers.md](docs/providers.md) |
 | Anthropic format `/v1/messages` | ✅ | ใช้กับ Claude Code ได้ |
 | `/v1/models` | ✅ | client ส่วนใหญ่ดึงรายชื่อโมเดลอัตโนมัติ |
 | Embeddings | ✅ | `emb/nemotron-embed` (2048 มิติ) — NVIDIA ปลดตัวอื่นหมดแล้ว |
-| Vision (รูปภาพ) | ❌ | Cloudflare มี llama-3.2-11b-vision แต่ต้องกดยอมรับ Model Agreement ก่อน — ดู README |
+| Vision (รูปภาพ) | ❌ | Cloudflare มี llama-3.2-11b-vision แต่ต้องกดยอมรับ Model Agreement ก่อน — ดู [docs/providers.md](docs/providers.md) |
 | **ค้นเว็บ / เปิด URL** | ✅ | `gq/compound`, `gq/compound-mini` (มี webfetch ด้วย), `okmd/sonar-pro` |
 
 **ค่าที่ต้องใช้ทุก client:**
@@ -18,7 +18,7 @@
 ```
 Base URL : https://llm-api.example.com/v1     ← เปลี่ยนเป็น API_DOMAIN ของคุณ
 API Key  : sk-...                             ← ออกด้วย ./scripts/gen-key.sh
-Model    : cb/gemma-4-31b, cf/qwen2.5-coder-32b, gq/compound-mini, ... (ดู README)
+Model    : cb/gemma-4-31b, cf/qwen2.5-coder-32b, gq/compound-mini, ... (ดู [docs/providers.md](docs/providers.md))
 ```
 
 ตอนยังเป็น dev (ยังไม่มีโดเมน) ใช้ IP:port ตรงๆ ได้:
@@ -174,7 +174,7 @@ CrewAI / LiteLLM-native ใช้ชื่อ `openai/gq/gpt-oss-120b` พร้
 | **ไม่มี key เลยสักเจ้า** | `zen/*` — OpenCode Zen ยิงได้ทันที แต่ rate limit เข้ม |
 | coding บน OpenRouter | `or/ox-alpha` (3/3, ctx 1M) |
 
-ตัวเลข coding มาจากการวัดจริงด้วย `scripts/bench-coding.py` — ดูตารางเต็มใน README
+ตัวเลข coding มาจากการวัดจริงด้วย `scripts/bench-coding.py` — ดูตารางเต็มใน [docs/benchmarks.md](docs/benchmarks.md)
 
 **ไม่อยากไล่อ่านตาราง?** ใช้ `./scripts/pick-model.sh coding` (หรือ `thai`, `web`,
 `fast`, `no-key`, `quality`) ให้มันบอกพร้อมเหตุผลและโควต้า
@@ -187,7 +187,7 @@ CrewAI / LiteLLM-native ใช้ชื่อ `openai/gq/gpt-oss-120b` พร้
 
 - **coding agent กิน token มหาศาล** (อ่านไฟล์ทั้งโปรเจกต์เข้า context ทุกรอบ)
   ให้ออก key แบบมี `--budget` เสมอ ไม่ว่าจะใช้ provider ไหน
-- **เลือก provider ตามโควต้า ไม่ใช่แค่คุณภาพ** — ดูตารางโควต้าใน README
+- **เลือก provider ตามโควต้า ไม่ใช่แค่คุณภาพ** — ดูตารางโควต้าใน [docs/providers.md](docs/providers.md)
   งานหนักใช้ Cerebras (1M token/วัน) หรือ Mistral (1B/เดือน)
   ส่วน OKMD มีแค่ ~40K/วันแชร์ทั้งตระกูล พอได้ราว 1 turn ต่อวันเท่านั้น
 - ดู spend ได้ที่ https://llm-api.example.com/ui → **Usage** แยกตาม key ได้
