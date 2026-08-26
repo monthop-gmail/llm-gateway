@@ -37,6 +37,7 @@ model_list:
       status_checked_at: "2026-08-26T10:26:30Z"
       status_detail: "litellm.APIError: HuggingfaceException - {'error':'You have depleted your monthly included credits. Purchase p"
       answered_by: "ministral-8b-latest"
+      latency_ms_14k: 1866
 
   - model_name: hf/qwen2.5-7b
     litellm_params:
@@ -57,6 +58,7 @@ model_list:
       status_checked_at: "2026-08-26T10:26:30Z"
       status_detail: "litellm.BadRequestError: HuggingfaceException - {'error':{'message':'The requested model 'Qwen/Qwen2.5-7B-Inst"
       answered_by: "ministral-8b-latest"
+      latency_ms_14k: 1869
 
   - model_name: hf/gemma-3-12b
     litellm_params:
@@ -77,6 +79,7 @@ model_list:
       status_checked_at: "2026-08-26T10:26:30Z"
       status_detail: "litellm.APIError: HuggingfaceException - {'error':'You have depleted your monthly included credits. Purchase p"
       answered_by: "cerebras/gemma-4-31b"
+      latency_ms_14k: 7046
 
   # gpt-oss — auto-route (groq ถูกปฏิเสธด้วย token ปัจจุบัน)
   - model_name: hf/gpt-oss-20b
@@ -139,6 +142,7 @@ model_list:
       status_checked_at: "2026-08-26T10:26:30Z"
       status_detail: "litellm.APIError: HuggingfaceException - {'error':'You have depleted your monthly included credits. Purchase p"
       answered_by: "cerebras/gpt-oss-120b"
+      latency_ms_14k: 1555
 
   - model_name: hf/qwen3.5-397b
     litellm_params:
@@ -177,6 +181,7 @@ model_list:
       status_checked_at: "2026-08-26T10:26:30Z"
       status_detail: "litellm.APIError: HuggingfaceException - {'error':'You have depleted your monthly included credits. Purchase p"
       answered_by: "magistral-medium-latest"
+      latency_ms_14k: 10646
 
   - model_name: hf/kimi-k2.6
     litellm_params:
@@ -197,6 +202,7 @@ model_list:
       status_checked_at: "2026-08-26T10:26:30Z"
       status_detail: "litellm.APIError: HuggingfaceException - {'error':'You have depleted your monthly included credits. Purchase p"
       answered_by: "mistral-large-latest"
+      latency_ms_14k: 14808
 
   # ---------- reasoning ----------
   - model_name: hf/deepseek-r1
@@ -236,6 +242,7 @@ model_list:
       status_checked_at: "2026-08-26T10:26:30Z"
       status_detail: "litellm.APIError: HuggingfaceException - {'error':'You have depleted your monthly included credits. Purchase p"
       answered_by: "mistral-large-latest"
+      latency_ms_14k: 122358
 
   # Qwen3.6-27B — รุ่นใหม่ล่าสุดที่ยังฟรีบน HF
   # (Qwen3.8-27B ออกแล้วเมื่อ 2026-08-05 แต่ยังไม่มี provider ฟรี — ดูหมายเหตุท้ายไฟล์)
@@ -297,6 +304,7 @@ model_list:
       status_checked_at: "2026-08-26T10:26:30Z"
       status_detail: "litellm.APIError: HuggingfaceException - {'error':'You have depleted your monthly included credits. Purchase p"
       answered_by: "magistral-medium-latest"
+      latency_ms_14k: 10320
 
   - model_name: hf/kimi-k3
     litellm_params:
@@ -337,6 +345,7 @@ model_list:
       status_checked_at: "2026-08-26T10:26:30Z"
       status_detail: "litellm.APIError: HuggingfaceException - {'error':'You have depleted your monthly included credits. Purchase p"
       answered_by: "mistral-large-latest"
+      latency_ms_14k: 115726
 
   - model_name: hf/llama-4-scout
     litellm_params:
@@ -396,6 +405,7 @@ model_list:
       status_checked_at: "2026-08-26T10:26:30Z"
       status_detail: "litellm.APIError: HuggingfaceException - {'error':'You have depleted your monthly included credits. Purchase p"
       answered_by: "cerebras/gemma-4-31b"
+      latency_ms_14k: 6455
 
   # SEA-LION รุ่น Gemma (คนละตัวกับ hf/sea-lion-32b ที่เป็นฐาน Qwen)
   - model_name: hf/sea-lion-gemma-27b
@@ -437,6 +447,7 @@ model_list:
       status_checked_at: "2026-08-26T10:26:30Z"
       status_detail: "litellm.APIError: HuggingfaceException - {'error':'You have depleted your monthly included credits. Purchase p"
       answered_by: "mistral-code-latest"
+      latency_ms_14k: 7777
 
   ####################################################################
   # เจ้าอื่นที่มี free tier — ปลดคอมเมนต์แล้วใส่ key ใน .env
@@ -559,6 +570,7 @@ model_list:
       verified_by: "hermes-line-bot 2026-08-26 (tool loop + prompt 14K · ชน TPM ถ้าใช้เป็น main)"
       status: "ok"
       status_checked_at: "2026-08-26T10:26:30Z"
+      latency_ms_14k: 767
 
   - model_name: cb/gemma-4-31b
     litellm_params:
@@ -581,6 +593,7 @@ model_list:
       verified_by: "gateway 2026-08-23 (bench-coding 3/3)"
       status: "ok"
       status_checked_at: "2026-08-26T10:26:30Z"
+      latency_ms_14k: 947
 
   # zai-glm-4.7 ถูก Cerebras archive แล้ว (2026-08-23): "Model zai-glm-4.7 is
   # archived and unavailable for the organization" — ตอนนี้เหลือ 2 โมเดล
@@ -669,6 +682,7 @@ model_list:
       max_prompt_detail: "ผ่านทุกขั้นถึง 127,972 (ไม่ได้ลองมากกว่านี้)"
       status: "ok"
       status_checked_at: "2026-08-26T10:26:30Z"
+      latency_ms_14k: 470
 
   # devstral — ออกแบบมาสำหรับ coding agent โดยเฉพาะ
   - model_name: mi/devstral
@@ -690,6 +704,7 @@ model_list:
       max_prompt_detail: "ผ่านทุกขั้นถึง 127,972 (ไม่ได้ลองมากกว่านี้)"
       status: "ok"
       status_checked_at: "2026-08-26T10:26:30Z"
+      latency_ms_14k: 2213
 
   - model_name: mi/ministral-8b
     litellm_params:
@@ -708,6 +723,7 @@ model_list:
       max_prompt_detail: "ผ่านทุกขั้นถึง 127,972 (ไม่ได้ลองมากกว่านี้)"
       status: "ok"
       status_checked_at: "2026-08-26T10:26:30Z"
+      latency_ms_14k: 769
 
   # magistral — สาย reasoning ของ Mistral (เพิ่ม 2026-08-23)
   - model_name: mi/magistral-medium
@@ -773,6 +789,7 @@ model_list:
       max_prompt_detail: "ผ่านทุกขั้นถึง 127,972 (ไม่ได้ลองมากกว่านี้)"
       status: "ok"
       status_checked_at: "2026-08-26T10:26:30Z"
+      latency_ms_14k: 648
 
   - model_name: mi/ministral-14b
     litellm_params:
@@ -793,6 +810,7 @@ model_list:
       verified_by: "hermes-line-bot 2026-08-26 (tool loop + prompt 14K + ภาษาไทย 3/3 · 18s/turn)"
       status: "ok"
       status_checked_at: "2026-08-26T10:26:30Z"
+      latency_ms_14k: 977
 
   - model_name: mi/devstral-medium
     litellm_params:
@@ -815,6 +833,7 @@ model_list:
       verified_by: "hermes-line-bot 2026-08-26 (tool loop + prompt 14K + ภาษาไทย 3/3 · 51s/turn)"
       status: "ok"
       status_checked_at: "2026-08-26T10:26:30Z"
+      latency_ms_14k: 835
 
   # เพิ่ม 2026-08-26 — สาย coding ของ Mistral
   - model_name: mi/mistral-code-agent
@@ -837,6 +856,7 @@ model_list:
       max_prompt_detail: "ผ่านทุกขั้นถึง 127,972 (ไม่ได้ลองมากกว่านี้)"
       status: "ok"
       status_checked_at: "2026-08-26T10:26:30Z"
+      latency_ms_14k: 615
 
   # FIM = fill-in-the-middle เหมาะกับ autocomplete ในบรรณาธิการ
   - model_name: mi/mistral-code-fim
@@ -856,6 +876,7 @@ model_list:
       max_prompt_detail: "ผ่านทุกขั้นถึง 127,972 (ไม่ได้ลองมากกว่านี้)"
       status: "ok"
       status_checked_at: "2026-08-26T10:26:30Z"
+      latency_ms_14k: 632
 
   - model_name: mi/ministral-3b
     litellm_params:
@@ -877,6 +898,7 @@ model_list:
       max_prompt_detail: "ผ่านทุกขั้นถึง 127,972 (ไม่ได้ลองมากกว่านี้)"
       status: "ok"
       status_checked_at: "2026-08-26T10:26:30Z"
+      latency_ms_14k: 729
 
   # ---------- Cloudflare Workers AI — ฟรี 10,000 neurons/วัน ----------
   # ต้องมี CLOUDFLARE_ACCOUNT_ID ใน .env ด้วย
@@ -1433,6 +1455,7 @@ model_list:
       max_prompt_detail: "ผ่านทุกขั้นถึง 127,957 (ไม่ได้ลองมากกว่านี้)"
       status: "ok"
       status_checked_at: "2026-08-26T10:26:30Z"
+      latency_ms_14k: 1145
 
   - model_name: nim/gemma-4-31b
     litellm_params:
@@ -2088,6 +2111,7 @@ model_list:
       max_prompt_detail: "ผ่านทุกขั้นถึง 127,957 (ไม่ได้ลองมากกว่านี้)"
       status: "ok"
       status_checked_at: "2026-08-26T10:26:30Z"
+      latency_ms_14k: 58789
 
   - model_name: zen/mimo-v2.5
     litellm_params:
@@ -2126,6 +2150,7 @@ model_list:
       max_prompt_detail: "ผ่านทุกขั้นถึง 127,914 (ไม่ได้ลองมากกว่านี้)"
       status: "ok"
       status_checked_at: "2026-08-26T10:26:30Z"
+      latency_ms_14k: 1473
 
   - model_name: zen/x-preview-f
     litellm_params:
@@ -2145,6 +2170,7 @@ model_list:
       max_prompt_detail: "error 503 ที่ ~64,000 — litellm.ServiceUnavailableError: ServiceUnavailableError: OpenAIException - Erro"
       status: "ok"
       status_checked_at: "2026-08-26T10:26:30Z"
+      latency_ms_14k: 5238
 
   # thinking model
   - model_name: zen/hy3
@@ -2165,6 +2191,7 @@ model_list:
       max_prompt_detail: "ผ่านทุกขั้นถึง 127,968 (ไม่ได้ลองมากกว่านี้)"
       status: "ok"
       status_checked_at: "2026-08-26T10:26:30Z"
+      latency_ms_14k: 4768
 
   # ที่ลองแล้วยังใช้ไม่ได้ (2026-08-26):
   #   deepseek-v4-flash-free -> "Upstream request failed"
@@ -2196,6 +2223,7 @@ model_list:
       max_prompt_detail: "ผ่านทุกขั้นถึง 127,983 (ไม่ได้ลองมากกว่านี้)"
       status: "ok"
       status_checked_at: "2026-08-26T10:26:30Z"
+      latency_ms_14k: 361
 
   - model_name: l7/codestral
     litellm_params:
@@ -2216,6 +2244,7 @@ model_list:
       verified_by: "gateway 2026-08-26 (verify-capabilities)"
       status: "ok"
       status_checked_at: "2026-08-26T10:26:30Z"
+      latency_ms_14k: 554
 
   # ปลดคอมเมนต์เมื่อมี LLM7_API_KEY แล้ว (เปลี่ยน api_key เป็น os.environ/LLM7_API_KEY
   # ทั้งสองตัวข้างบนด้วย) — ตัวอย่างของที่จะได้เพิ่ม:
@@ -2392,6 +2421,7 @@ model_list:
       verified_by: "gateway 2026-08-26 (verify-capabilities)"
       status: "ok"
       status_checked_at: "2026-08-26T10:26:30Z"
+      latency_ms_14k: 832
 
   # Pathumma (NECTEC) — thinking model
   - model_name: th/pathumma
@@ -2413,6 +2443,7 @@ model_list:
       max_prompt_detail: "ชนเพดาน ที่ ~32,000 — litellm.ContextWindowExceededError: litellm.BadRequestError: ContextWindowExceed"
       status: "ok"
       status_checked_at: "2026-08-26T10:26:30Z"
+      latency_ms_14k: 1388
 
   # Typhoon-S (SCB10X) — ตอบตรงไม่มี think
   - model_name: th/typhoon
@@ -2434,6 +2465,7 @@ model_list:
       max_prompt_detail: "ชนเพดาน ที่ ~32,000 — litellm.ContextWindowExceededError: litellm.BadRequestError: ContextWindowExceed"
       status: "ok"
       status_checked_at: "2026-08-26T10:26:30Z"
+      latency_ms_14k: 197
 
   # THaLLE (KBTG) — thinking model
   - model_name: th/thalle
@@ -2455,6 +2487,7 @@ model_list:
       max_prompt_detail: "ชนเพดาน ที่ ~32,000 — litellm.ContextWindowExceededError: litellm.BadRequestError: ContextWindowExceed"
       status: "ok"
       status_checked_at: "2026-08-26T10:26:30Z"
+      latency_ms_14k: 919
 
   # ---------- Ollama Cloud — โมเดลใหญ่โดยไม่ต้องมี GPU ----------
   # ต่างจาก Ollama ที่รันเอง: อันนี้ Ollama โฮสต์ให้ ไม่กิน RAM/GPU ของเรา
