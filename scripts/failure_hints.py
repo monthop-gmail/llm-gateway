@@ -22,7 +22,8 @@ QUOTA_HINTS = (
 DEAD_HINTS = (
     "does not exist", "model_not_found", "not found for account", "no endpoints found",
     "unavailable for free", "archived", "requires a subscription",
-    "not available on the workers free",
+    "not available on the workers free", "model_not_supported",
+    "is not supported by any provider",
 )
 # ชนเพดาน context จริง — ยิงใหม่ก็เท่าเดิม
 LIMIT_HINTS = (

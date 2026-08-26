@@ -18,6 +18,8 @@
 จนหมดเกลี้ยงทั้ง 13 โมเดล ให้รันเฉพาะเวลาที่ต้องการจริง ๆ และเลือก prefix เอา
 อย่าตั้ง cron
 
+วัดด้วย `disable_fallbacks: true` เสมอ — ไม่งั้นได้เพดานของตัวสำรองมาแทน
+
 ที่สำคัญกว่าตัวเลขคือ "พังยังไง" — 429 แปลว่าโควต้าหมด รอแล้วยิงใหม่ได้
 ส่วน 400/500 แปลว่าชนเพดานจริง เก็บไว้ใน max_prompt_detail ทั้งคู่
 """
@@ -35,6 +37,7 @@ from pathlib import Path
 import yaml
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+from config_edit import set_fields  # noqa: E402
 from failure_hints import classify  # noqa: E402
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -111,6 +114,9 @@ def probe(model: str, ceiling: int | None) -> tuple[str, int, str, int]:
         try:
             r = _post("/v1/chat/completions", {
                 "model": model,
+                # ไม่งั้นพอโมเดลตัวจริงพัง LiteLLM จะสลับไปตัวสำรองเงียบ ๆ
+                # แล้วเราบันทึกเพดานของตัวสำรองใส่ชื่อโมเดลนี้
+                "disable_fallbacks": True,
                 "messages": [
                     {"role": "user", "content": _prompt(size, cpt)},
                     {"role": "user", "content": "ตอบสั้น ๆ ว่าข้อความข้างบนพูดถึงอะไร"},
@@ -186,20 +192,11 @@ def _write_back(results: list[tuple[str, int, str, int]]) -> None:
     for model, best, detail, _rung in results:
         if not best:
             continue  # ยังไม่รู้อะไรเลย อย่าเขียนเลขหลอก
-        safe = re.sub(r"\s+", " ", detail).replace('"', "'")[:120]
-        block = (
-            f'      verified_max_prompt: {best}\n'
-            f'      max_prompt_detail: "{safe}"\n'
-        )
-        pat = re.compile(
-            r"(- model_name: " + re.escape(model) + r"\n(?:.*?\n)*?)"
-            r"(?:      verified_max_prompt: \d+\n)?"
-            r"(?:      max_prompt_detail: \"[^\"]*\"\n)?"
-            r"(      tags: \[[^\]]*\]\n)"
-        )
-        new, n = pat.subn(lambda m: m.group(1) + m.group(2) + block, text, count=1)
-        if n:
-            text, written = new, written + 1
+        text, ok = set_fields(text, model, {
+            "verified_max_prompt": best,
+            "max_prompt_detail": detail[:120] if detail else None,
+        })
+        written += ok
     CFG.write_text(text)
     print(f"\nเขียน verified_max_prompt กลับเข้า config แล้ว {written} ตัว")
     print("⚠️  ต้อง restart litellm ถึงจะเห็นใน /model/info:")

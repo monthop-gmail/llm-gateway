@@ -33,8 +33,10 @@ model_list:
       tags: ["general"]
       verified_max_prompt: 127972
       max_prompt_detail: "ผ่านทุกขั้นถึง 127,972 (ไม่ได้ลองมากกว่านี้)"
-      status: "ok"
-      status_checked_at: "2026-08-26T07:48:59Z"
+      status: "rate_limited"
+      status_checked_at: "2026-08-26T10:26:30Z"
+      status_detail: "litellm.APIError: HuggingfaceException - {'error':'You have depleted your monthly included credits. Purchase p"
+      answered_by: "ministral-8b-latest"
 
   - model_name: hf/qwen2.5-7b
     litellm_params:
@@ -51,8 +53,10 @@ model_list:
       tags: ["general"]
       verified_max_prompt: 127972
       max_prompt_detail: "ผ่านทุกขั้นถึง 127,972 (ไม่ได้ลองมากกว่านี้)"
-      status: "ok"
-      status_checked_at: "2026-08-26T07:48:59Z"
+      status: "dead"
+      status_checked_at: "2026-08-26T10:26:30Z"
+      status_detail: "litellm.BadRequestError: HuggingfaceException - {'error':{'message':'The requested model 'Qwen/Qwen2.5-7B-Inst"
+      answered_by: "ministral-8b-latest"
 
   - model_name: hf/gemma-3-12b
     litellm_params:
@@ -69,8 +73,10 @@ model_list:
       tags: ["general"]
       verified_max_prompt: 127968
       max_prompt_detail: "ผ่านทุกขั้นถึง 127,968 (ไม่ได้ลองมากกว่านี้)"
-      status: "ok"
-      status_checked_at: "2026-08-26T07:48:59Z"
+      status: "rate_limited"
+      status_checked_at: "2026-08-26T10:26:30Z"
+      status_detail: "litellm.APIError: HuggingfaceException - {'error':'You have depleted your monthly included credits. Purchase p"
+      answered_by: "cerebras/gemma-4-31b"
 
   # gpt-oss — auto-route (groq ถูกปฏิเสธด้วย token ปัจจุบัน)
   - model_name: hf/gpt-oss-20b
@@ -88,8 +94,10 @@ model_list:
       tags: ["general"]
       verified_max_prompt: 2774
       max_prompt_detail: "error 402 ที่ ~14,000 — litellm.APIError: HuggingfaceException - {'error':'You have depleted your monthl"
-      status: "ok"
-      status_checked_at: "2026-08-26T07:48:59Z"
+      status: "rate_limited"
+      status_checked_at: "2026-08-26T10:26:30Z"
+      status_detail: "litellm.APIError: HuggingfaceException - {'error':'You have depleted your monthly included credits. Purchase p"
+      answered_by: "openai/gpt-oss-120b"
 
   # ---------- กลาง/ใหญ่ ----------
   - model_name: hf/llama-3.3-70b
@@ -107,8 +115,10 @@ model_list:
       tags: ["general"]
       verified_max_prompt: 13768
       max_prompt_detail: "error 402 ที่ ~32,000 — litellm.APIError: HuggingfaceException - {'error':'You have depleted your monthl"
-      status: "ok"
-      status_checked_at: "2026-08-26T07:48:59Z"
+      status: "rate_limited"
+      status_checked_at: "2026-08-26T10:26:30Z"
+      status_detail: "litellm.APIError: HuggingfaceException - {'error':'You have depleted your monthly included credits. Purchase p"
+      answered_by: "openai/gpt-oss-120b"
 
   - model_name: hf/gpt-oss-120b
     litellm_params:
@@ -125,8 +135,10 @@ model_list:
       tags: ["general"]
       verified_max_prompt: 13655
       max_prompt_detail: "timeout ที่ ~32,000 — timed out"
-      status: "ok"
-      status_checked_at: "2026-08-26T07:48:59Z"
+      status: "rate_limited"
+      status_checked_at: "2026-08-26T10:26:30Z"
+      status_detail: "litellm.APIError: HuggingfaceException - {'error':'You have depleted your monthly included credits. Purchase p"
+      answered_by: "cerebras/gpt-oss-120b"
 
   - model_name: hf/qwen3.5-397b
     litellm_params:
@@ -141,8 +153,10 @@ model_list:
       quota_pool: "huggingface"
       quota_window: "monthly"
       tags: ["general"]
-      status: "ok"
-      status_checked_at: "2026-08-26T07:48:59Z"
+      status: "rate_limited"
+      status_checked_at: "2026-08-26T10:26:30Z"
+      status_detail: "litellm.APIError: HuggingfaceException - {'error':'You have depleted your monthly included credits. Purchase p"
+      answered_by: "nemotron-3-ultra-free"
 
   - model_name: hf/glm-4.7
     litellm_params:
@@ -159,8 +173,10 @@ model_list:
       tags: ["general"]
       verified_max_prompt: 13850
       max_prompt_detail: "error 402 ที่ ~32,000 — litellm.APIError: HuggingfaceException - {'error':'You have depleted your monthl"
-      status: "ok"
-      status_checked_at: "2026-08-26T07:48:59Z"
+      status: "rate_limited"
+      status_checked_at: "2026-08-26T10:26:30Z"
+      status_detail: "litellm.APIError: HuggingfaceException - {'error':'You have depleted your monthly included credits. Purchase p"
+      answered_by: "magistral-medium-latest"
 
   - model_name: hf/kimi-k2.6
     litellm_params:
@@ -177,8 +193,10 @@ model_list:
       tags: ["general"]
       verified_max_prompt: 63978
       max_prompt_detail: "error 402 ที่ ~128,000 — litellm.APIError: HuggingfaceException - {'error':'You have depleted your monthl"
-      status: "ok"
-      status_checked_at: "2026-08-26T07:48:59Z"
+      status: "rate_limited"
+      status_checked_at: "2026-08-26T10:26:30Z"
+      status_detail: "litellm.APIError: HuggingfaceException - {'error':'You have depleted your monthly included credits. Purchase p"
+      answered_by: "mistral-large-latest"
 
   # ---------- reasoning ----------
   - model_name: hf/deepseek-r1
@@ -194,8 +212,10 @@ model_list:
       quota_pool: "huggingface"
       quota_window: "monthly"
       tags: ["general"]
-      status: "ok"
-      status_checked_at: "2026-08-26T07:48:59Z"
+      status: "rate_limited"
+      status_checked_at: "2026-08-26T10:26:30Z"
+      status_detail: "litellm.APIError: HuggingfaceException - {'error':'You have depleted your monthly included credits. Purchase p"
+      answered_by: "magistral-medium-latest"
 
   - model_name: hf/deepseek-v3.2
     litellm_params:
@@ -212,8 +232,10 @@ model_list:
       tags: ["general"]
       verified_max_prompt: 127972
       max_prompt_detail: "ผ่านทุกขั้นถึง 127,972 (ไม่ได้ลองมากกว่านี้)"
-      status: "ok"
-      status_checked_at: "2026-08-26T07:48:59Z"
+      status: "rate_limited"
+      status_checked_at: "2026-08-26T10:26:30Z"
+      status_detail: "litellm.APIError: HuggingfaceException - {'error':'You have depleted your monthly included credits. Purchase p"
+      answered_by: "mistral-large-latest"
 
   # Qwen3.6-27B — รุ่นใหม่ล่าสุดที่ยังฟรีบน HF
   # (Qwen3.8-27B ออกแล้วเมื่อ 2026-08-05 แต่ยังไม่มี provider ฟรี — ดูหมายเหตุท้ายไฟล์)
@@ -232,8 +254,10 @@ model_list:
       tags: ["general"]
       verified_max_prompt: 13891
       max_prompt_detail: "error 402 ที่ ~32,000 — litellm.APIError: HuggingfaceException - {'error':'You have depleted your monthl"
-      status: "ok"
-      status_checked_at: "2026-08-26T07:48:59Z"
+      status: "rate_limited"
+      status_checked_at: "2026-08-26T10:26:30Z"
+      status_detail: "litellm.APIError: HuggingfaceException - {'error':'You have depleted your monthly included credits. Purchase p"
+      answered_by: "qwen/qwen3.6-27b"
 
   # SEA-LION — โมเดล AI Singapore เน้นภาษาอาเซียนรวมไทย
   - model_name: hf/sea-lion-32b
@@ -249,8 +273,9 @@ model_list:
       quota_pool: "huggingface"
       quota_window: "monthly"
       tags: ["thai"]
-      status: "ok"
-      status_checked_at: "2026-08-26T07:48:59Z"
+      status: "rate_limited"
+      status_checked_at: "2026-08-26T10:26:30Z"
+      status_detail: "litellm.APIError: HuggingfaceException - {'error':'You have depleted your monthly included credits. Purchase p"
 
   # ---------- รุ่นใหม่ (เพิ่ม 2026-08-23) ----------
   - model_name: hf/glm-5.2
@@ -268,8 +293,10 @@ model_list:
       tags: ["quality-top", "general"]
       verified_max_prompt: 31951
       max_prompt_detail: "error 402 ที่ ~64,000 — litellm.APIError: HuggingfaceException - {'error':'You have depleted your monthl"
-      status: "ok"
-      status_checked_at: "2026-08-26T07:48:59Z"
+      status: "rate_limited"
+      status_checked_at: "2026-08-26T10:26:30Z"
+      status_detail: "litellm.APIError: HuggingfaceException - {'error':'You have depleted your monthly included credits. Purchase p"
+      answered_by: "magistral-medium-latest"
 
   - model_name: hf/kimi-k3
     litellm_params:
@@ -286,9 +313,10 @@ model_list:
       tags: ["quality-top", "general"]
       verified_max_prompt: 31964
       max_prompt_detail: "timeout ที่ ~64,000 — timed out"
-      status: "unknown"
-      status_checked_at: "2026-08-26T07:48:59Z"
-      status_detail: "timed out"
+      status: "rate_limited"
+      status_checked_at: "2026-08-26T10:26:30Z"
+      status_detail: "litellm.APIError: HuggingfaceException - {'error':'You have depleted your monthly included credits. Purchase p"
+      answered_by: "mistral-large-latest"
 
   - model_name: hf/deepseek-v4-pro
     litellm_params:
@@ -305,8 +333,10 @@ model_list:
       tags: ["quality-top", "general"]
       verified_max_prompt: 63978
       max_prompt_detail: "timeout ที่ ~128,000 — timed out"
-      status: "ok"
-      status_checked_at: "2026-08-26T07:48:59Z"
+      status: "rate_limited"
+      status_checked_at: "2026-08-26T10:26:30Z"
+      status_detail: "litellm.APIError: HuggingfaceException - {'error':'You have depleted your monthly included credits. Purchase p"
+      answered_by: "mistral-large-latest"
 
   - model_name: hf/llama-4-scout
     litellm_params:
@@ -323,8 +353,9 @@ model_list:
       tags: ["general"]
       verified_max_prompt: 63975
       max_prompt_detail: "error 402 ที่ ~128,000 — litellm.APIError: HuggingfaceException - {'error':'You have depleted your monthl"
-      status: "ok"
-      status_checked_at: "2026-08-26T07:48:59Z"
+      status: "rate_limited"
+      status_checked_at: "2026-08-26T10:26:30Z"
+      status_detail: "litellm.APIError: HuggingfaceException - {'error':'You have depleted your monthly included credits. Purchase p"
 
   - model_name: hf/qwen3.6-35b
     litellm_params:
@@ -341,8 +372,10 @@ model_list:
       tags: ["general"]
       verified_max_prompt: 13865
       max_prompt_detail: "error 402 ที่ ~32,000 — litellm.APIError: HuggingfaceException - {'error':'You have depleted your monthl"
-      status: "ok"
-      status_checked_at: "2026-08-26T07:48:59Z"
+      status: "rate_limited"
+      status_checked_at: "2026-08-26T10:26:30Z"
+      status_detail: "litellm.APIError: HuggingfaceException - {'error':'You have depleted your monthly included credits. Purchase p"
+      answered_by: "qwen/qwen3.6-27b"
 
   - model_name: hf/gemma-4-26b
     litellm_params:
@@ -359,8 +392,10 @@ model_list:
       tags: ["general"]
       verified_max_prompt: 127968
       max_prompt_detail: "ผ่านทุกขั้นถึง 127,968 (ไม่ได้ลองมากกว่านี้)"
-      status: "ok"
-      status_checked_at: "2026-08-26T07:48:59Z"
+      status: "rate_limited"
+      status_checked_at: "2026-08-26T10:26:30Z"
+      status_detail: "litellm.APIError: HuggingfaceException - {'error':'You have depleted your monthly included credits. Purchase p"
+      answered_by: "cerebras/gemma-4-31b"
 
   # SEA-LION รุ่น Gemma (คนละตัวกับ hf/sea-lion-32b ที่เป็นฐาน Qwen)
   - model_name: hf/sea-lion-gemma-27b
@@ -376,8 +411,9 @@ model_list:
       quota_pool: "huggingface"
       quota_window: "monthly"
       tags: ["thai"]
-      status: "ok"
-      status_checked_at: "2026-08-26T07:48:59Z"
+      status: "rate_limited"
+      status_checked_at: "2026-08-26T10:26:30Z"
+      status_detail: "litellm.APIError: HuggingfaceException - {'error':'You have depleted your monthly included credits. Purchase p"
 
   # ---------- เขียนโค้ด ----------
   - model_name: hf/qwen3-coder-next
@@ -397,8 +433,10 @@ model_list:
       tags: ["coding-ok"]
       verified_max_prompt: 127972
       max_prompt_detail: "ผ่านทุกขั้นถึง 127,972 (ไม่ได้ลองมากกว่านี้)"
-      status: "ok"
-      status_checked_at: "2026-08-26T07:48:59Z"
+      status: "rate_limited"
+      status_checked_at: "2026-08-26T10:26:30Z"
+      status_detail: "litellm.APIError: HuggingfaceException - {'error':'You have depleted your monthly included credits. Purchase p"
+      answered_by: "mistral-code-latest"
 
   ####################################################################
   # เจ้าอื่นที่มี free tier — ปลดคอมเมนต์แล้วใส่ key ใน .env
@@ -431,9 +469,9 @@ model_list:
       tags: ["web-access", "no-tools"]
       verified_max_prompt: 5635
       max_prompt_detail: "โควต้า ที่ ~14,000 — litellm.RateLimitError: RateLimitError: GroqException - {'error':{'message':'Rat"
-      status: "ok"
-      status_checked_at: "2026-08-26T07:48:59Z"
       verified_by: "gateway 2026-08-26 (verify-capabilities)"
+      status: "ok"
+      status_checked_at: "2026-08-26T10:26:30Z"
 
   - model_name: gq/compound-mini
     litellm_params:
@@ -448,9 +486,9 @@ model_list:
       quota_pool: "groq"
       quota_window: "daily"
       tags: ["web-access", "no-tools"]
-      status: "ok"
-      status_checked_at: "2026-08-26T07:48:59Z"
       verified_by: "gateway 2026-08-26 (verify-capabilities)"
+      status: "ok"
+      status_checked_at: "2026-08-26T10:26:30Z"
 
   - model_name: gq/gpt-oss-120b
     litellm_params:
@@ -470,7 +508,7 @@ model_list:
       verified_max_prompt: 2774
       max_prompt_detail: "โควต้า ที่ ~14,000 — litellm.RateLimitError: RateLimitError: GroqException - {'error':{'message':'Req"
       status: "ok"
-      status_checked_at: "2026-08-26T07:48:59Z"
+      status_checked_at: "2026-08-26T10:26:30Z"
 
   - model_name: gq/qwen3.6-27b
     litellm_params:
@@ -489,9 +527,9 @@ model_list:
       tags: ["coding-weak"]
       verified_max_prompt: 2712
       max_prompt_detail: "โควต้า ที่ ~14,000 — litellm.RateLimitError: RateLimitError: GroqException - {'error':{'message':'Req"
-      status: "ok"
-      status_checked_at: "2026-08-26T07:48:59Z"
       verified_by: "gateway 2026-08-26 (verify-capabilities)"
+      status: "ok"
+      status_checked_at: "2026-08-26T10:26:30Z"
 
   # ---------- Cerebras — โควต้าใหญ่สุด 1M token/วัน ----------
   # ฟรี: 1M token ต่อวัน แต่ RPM ต่ำและ context จำกัด
@@ -518,9 +556,9 @@ model_list:
       tags: ["coding-best"]
       verified_max_prompt: 13655
       max_prompt_detail: "timeout ที่ ~32,000 — timed out"
-      status: "ok"
-      status_checked_at: "2026-08-26T07:48:59Z"
       verified_by: "hermes-line-bot 2026-08-26 (tool loop + prompt 14K · ชน TPM ถ้าใช้เป็น main)"
+      status: "ok"
+      status_checked_at: "2026-08-26T10:26:30Z"
 
   - model_name: cb/gemma-4-31b
     litellm_params:
@@ -540,9 +578,9 @@ model_list:
       tags: ["coding-best", "fast"]
       verified_max_prompt: 13883
       max_prompt_detail: "timeout ที่ ~32,000 — timed out"
-      status: "ok"
-      status_checked_at: "2026-08-26T07:48:59Z"
       verified_by: "gateway 2026-08-23 (bench-coding 3/3)"
+      status: "ok"
+      status_checked_at: "2026-08-26T10:26:30Z"
 
   # zai-glm-4.7 ถูก Cerebras archive แล้ว (2026-08-23): "Model zai-glm-4.7 is
   # archived and unavailable for the organization" — ตอนนี้เหลือ 2 โมเดล
@@ -573,7 +611,7 @@ model_list:
       verified_max_prompt: 63962
       max_prompt_detail: "โควต้า ที่ ~128,000 — litellm.RateLimitError: RateLimitError: MistralException - {'object':'error','me"
       status: "ok"
-      status_checked_at: "2026-08-26T07:48:59Z"
+      status_checked_at: "2026-08-26T10:26:30Z"
 
   - model_name: mi/medium
     litellm_params:
@@ -591,7 +629,7 @@ model_list:
       verified_max_prompt: 31951
       max_prompt_detail: "โควต้า ที่ ~64,000 — litellm.RateLimitError: RateLimitError: MistralException - {'object':'error','me"
       status: "ok"
-      status_checked_at: "2026-08-26T07:48:59Z"
+      status_checked_at: "2026-08-26T10:26:30Z"
 
   - model_name: mi/large
     litellm_params:
@@ -608,10 +646,9 @@ model_list:
       quota_pool: "mistral"
       quota_window: "monthly"
       tags: ["coding-ok"]
-      status: "rate_limited"
-      status_checked_at: "2026-08-26T07:48:59Z"
-      status_detail: "litellm.RateLimitError: RateLimitError: MistralException - {'object':'error','message':'Rate limit exceeded','"
       verified_by: "hermes-line-bot 2026-08-26 (tool loop + prompt 14K + ภาษาไทย)"
+      status: "ok"
+      status_checked_at: "2026-08-26T10:26:30Z"
 
   - model_name: mi/codestral
     litellm_params:
@@ -631,7 +668,7 @@ model_list:
       verified_max_prompt: 127972
       max_prompt_detail: "ผ่านทุกขั้นถึง 127,972 (ไม่ได้ลองมากกว่านี้)"
       status: "ok"
-      status_checked_at: "2026-08-26T07:48:59Z"
+      status_checked_at: "2026-08-26T10:26:30Z"
 
   # devstral — ออกแบบมาสำหรับ coding agent โดยเฉพาะ
   - model_name: mi/devstral
@@ -652,7 +689,7 @@ model_list:
       verified_max_prompt: 127972
       max_prompt_detail: "ผ่านทุกขั้นถึง 127,972 (ไม่ได้ลองมากกว่านี้)"
       status: "ok"
-      status_checked_at: "2026-08-26T07:48:59Z"
+      status_checked_at: "2026-08-26T10:26:30Z"
 
   - model_name: mi/ministral-8b
     litellm_params:
@@ -670,7 +707,7 @@ model_list:
       verified_max_prompt: 127972
       max_prompt_detail: "ผ่านทุกขั้นถึง 127,972 (ไม่ได้ลองมากกว่านี้)"
       status: "ok"
-      status_checked_at: "2026-08-26T07:48:59Z"
+      status_checked_at: "2026-08-26T10:26:30Z"
 
   # magistral — สาย reasoning ของ Mistral (เพิ่ม 2026-08-23)
   - model_name: mi/magistral-medium
@@ -691,9 +728,9 @@ model_list:
       tags: ["coding-best"]
       verified_max_prompt: 13850
       max_prompt_detail: "โควต้า ที่ ~32,000 — litellm.RateLimitError: RateLimitError: MistralException - {'object':'error','me"
-      status: "ok"
-      status_checked_at: "2026-08-26T07:48:59Z"
       verified_by: "hermes-line-bot 2026-08-26 (ผ่านครบ แต่ 146-227s/turn ช้าเกินใช้กับแชท)"
+      status: "ok"
+      status_checked_at: "2026-08-26T10:26:30Z"
 
   - model_name: mi/magistral-small
     litellm_params:
@@ -714,7 +751,7 @@ model_list:
       verified_max_prompt: 63962
       max_prompt_detail: "โควต้า ที่ ~128,000 — litellm.RateLimitError: RateLimitError: MistralException - {'object':'error','me"
       status: "ok"
-      status_checked_at: "2026-08-26T07:48:59Z"
+      status_checked_at: "2026-08-26T10:26:30Z"
 
   - model_name: mi/mistral-code
     litellm_params:
@@ -735,7 +772,7 @@ model_list:
       verified_max_prompt: 127972
       max_prompt_detail: "ผ่านทุกขั้นถึง 127,972 (ไม่ได้ลองมากกว่านี้)"
       status: "ok"
-      status_checked_at: "2026-08-26T07:48:59Z"
+      status_checked_at: "2026-08-26T10:26:30Z"
 
   - model_name: mi/ministral-14b
     litellm_params:
@@ -753,9 +790,9 @@ model_list:
       tags: ["fast"]
       verified_max_prompt: 127972
       max_prompt_detail: "ผ่านทุกขั้นถึง 127,972 (ไม่ได้ลองมากกว่านี้)"
-      status: "ok"
-      status_checked_at: "2026-08-26T07:48:59Z"
       verified_by: "hermes-line-bot 2026-08-26 (tool loop + prompt 14K + ภาษาไทย 3/3 · 18s/turn)"
+      status: "ok"
+      status_checked_at: "2026-08-26T10:26:30Z"
 
   - model_name: mi/devstral-medium
     litellm_params:
@@ -775,9 +812,9 @@ model_list:
       tags: ["coding-ok", "fast"]
       verified_max_prompt: 127972
       max_prompt_detail: "ผ่านทุกขั้นถึง 127,972 (ไม่ได้ลองมากกว่านี้)"
-      status: "ok"
-      status_checked_at: "2026-08-26T07:48:59Z"
       verified_by: "hermes-line-bot 2026-08-26 (tool loop + prompt 14K + ภาษาไทย 3/3 · 51s/turn)"
+      status: "ok"
+      status_checked_at: "2026-08-26T10:26:30Z"
 
   # เพิ่ม 2026-08-26 — สาย coding ของ Mistral
   - model_name: mi/mistral-code-agent
@@ -799,7 +836,7 @@ model_list:
       verified_max_prompt: 127972
       max_prompt_detail: "ผ่านทุกขั้นถึง 127,972 (ไม่ได้ลองมากกว่านี้)"
       status: "ok"
-      status_checked_at: "2026-08-26T07:48:59Z"
+      status_checked_at: "2026-08-26T10:26:30Z"
 
   # FIM = fill-in-the-middle เหมาะกับ autocomplete ในบรรณาธิการ
   - model_name: mi/mistral-code-fim
@@ -818,7 +855,7 @@ model_list:
       verified_max_prompt: 127972
       max_prompt_detail: "ผ่านทุกขั้นถึง 127,972 (ไม่ได้ลองมากกว่านี้)"
       status: "ok"
-      status_checked_at: "2026-08-26T07:48:59Z"
+      status_checked_at: "2026-08-26T10:26:30Z"
 
   - model_name: mi/ministral-3b
     litellm_params:
@@ -839,7 +876,7 @@ model_list:
       verified_max_prompt: 127972
       max_prompt_detail: "ผ่านทุกขั้นถึง 127,972 (ไม่ได้ลองมากกว่านี้)"
       status: "ok"
-      status_checked_at: "2026-08-26T07:48:59Z"
+      status_checked_at: "2026-08-26T10:26:30Z"
 
   # ---------- Cloudflare Workers AI — ฟรี 10,000 neurons/วัน ----------
   # ต้องมี CLOUDFLARE_ACCOUNT_ID ใน .env ด้วย
@@ -860,8 +897,9 @@ model_list:
       quota_pool: "cloudflare"
       quota_window: "daily"
       tags: ["thai"]
-      status: "ok"
-      status_checked_at: "2026-08-26T07:48:59Z"
+      status: "rate_limited"
+      status_checked_at: "2026-08-26T10:26:30Z"
+      status_detail: "litellm.APIConnectionError: CloudflareException - {'errors':[{'message':'AiError: AiError: you have used up yo"
 
   - model_name: cf/llama-3.3-70b
     litellm_params:
@@ -876,8 +914,9 @@ model_list:
       quota_pool: "cloudflare"
       quota_window: "daily"
       tags: ["general"]
-      status: "ok"
-      status_checked_at: "2026-08-26T07:48:59Z"
+      status: "rate_limited"
+      status_checked_at: "2026-08-26T10:26:30Z"
+      status_detail: "litellm.APIConnectionError: CloudflareException - {'errors':[{'message':'AiError: AiError: you have used up yo"
 
   - model_name: cf/qwen2.5-coder-32b
     litellm_params:
@@ -894,8 +933,9 @@ model_list:
       quota_pool: "cloudflare"
       quota_window: "daily"
       tags: ["coding-best"]
-      status: "ok"
-      status_checked_at: "2026-08-26T07:48:59Z"
+      status: "rate_limited"
+      status_checked_at: "2026-08-26T10:26:30Z"
+      status_detail: "litellm.APIConnectionError: CloudflareException - {'errors':[{'message':'AiError: AiError: you have used up yo"
 
   # ---------- รุ่นใหม่บน Cloudflare (เพิ่ม 2026-08-23) ----------
   # Qwen3.8-27B — ตัวที่เมื่อ 2026-08-16 ยังไม่มี provider ฟรี ตอนนี้มาอยู่ที่นี่แล้ว
@@ -915,8 +955,9 @@ model_list:
       quota_pool: "cloudflare"
       quota_window: "daily"
       tags: ["coding-weak"]
-      status: "ok"
-      status_checked_at: "2026-08-26T07:48:59Z"
+      status: "rate_limited"
+      status_checked_at: "2026-08-26T10:26:30Z"
+      status_detail: "litellm.APIConnectionError: CloudflareException - {'errors':[{'message':'AiError: AiError: you have used up yo"
 
   - model_name: cf/llama-4-scout
     litellm_params:
@@ -934,9 +975,10 @@ model_list:
       quota_pool: "cloudflare"
       quota_window: "daily"
       tags: ["coding-ok", "fast"]
-      status: "ok"
-      status_checked_at: "2026-08-26T07:48:59Z"
       verified_by: "hermes-line-bot 2026-08-26 (language drift 1/3 ใน tool loop)"
+      status: "rate_limited"
+      status_checked_at: "2026-08-26T10:26:30Z"
+      status_detail: "litellm.APIConnectionError: CloudflareException - {'errors':[{'message':'AiError: AiError: you have used up yo"
 
   - model_name: cf/nemotron-3-120b
     litellm_params:
@@ -954,8 +996,9 @@ model_list:
       quota_pool: "cloudflare"
       quota_window: "daily"
       tags: ["coding-weak"]
-      status: "ok"
-      status_checked_at: "2026-08-26T07:48:59Z"
+      status: "rate_limited"
+      status_checked_at: "2026-08-26T10:26:30Z"
+      status_detail: "litellm.APIConnectionError: CloudflareException - {'errors':[{'message':'AiError: AiError: you have used up yo"
 
   - model_name: cf/gemma-4-26b
     litellm_params:
@@ -971,8 +1014,9 @@ model_list:
       quota_pool: "cloudflare"
       quota_window: "daily"
       tags: ["general"]
-      status: "ok"
-      status_checked_at: "2026-08-26T07:48:59Z"
+      status: "rate_limited"
+      status_checked_at: "2026-08-26T10:26:30Z"
+      status_detail: "litellm.APIConnectionError: CloudflareException - {'errors':[{'message':'AiError: AiError: you have used up yo"
 
   - model_name: cf/qwen3-30b-a3b
     litellm_params:
@@ -990,9 +1034,10 @@ model_list:
       quota_pool: "cloudflare"
       quota_window: "daily"
       tags: ["coding-ok"]
-      status: "ok"
-      status_checked_at: "2026-08-26T07:48:59Z"
       verified_by: "gateway 2026-08-26 (ทดสอบซ้ำ tool calling)"
+      status: "rate_limited"
+      status_checked_at: "2026-08-26T10:26:30Z"
+      status_detail: "litellm.APIConnectionError: CloudflareException - {'errors':[{'message':'AiError: AiError: you have used up yo"
 
   # เพิ่ม 2026-08-26 — ทดสอบยิงผ่านแล้ว
   - model_name: cf/mistral-small-24b
@@ -1011,8 +1056,9 @@ model_list:
       quota_pool: "cloudflare"
       quota_window: "daily"
       tags: ["coding-ok"]
-      status: "ok"
-      status_checked_at: "2026-08-26T07:48:59Z"
+      status: "rate_limited"
+      status_checked_at: "2026-08-26T10:26:30Z"
+      status_detail: "litellm.APIConnectionError: CloudflareException - {'errors':[{'message':'AiError: AiError: you have used up yo"
 
   - model_name: cf/qwq-32b
     litellm_params:
@@ -1028,8 +1074,9 @@ model_list:
       quota_pool: "cloudflare"
       quota_window: "daily"
       tags: ["general"]
-      status: "ok"
-      status_checked_at: "2026-08-26T07:48:59Z"
+      status: "rate_limited"
+      status_checked_at: "2026-08-26T10:26:30Z"
+      status_detail: "litellm.APIConnectionError: CloudflareException - {'errors':[{'message':'AiError: AiError: you have used up yo"
 
   - model_name: cf/deepseek-r1-32b
     litellm_params:
@@ -1045,9 +1092,10 @@ model_list:
       quota_pool: "cloudflare"
       quota_window: "daily"
       tags: ["no-tools"]
-      status: "ok"
-      status_checked_at: "2026-08-26T07:48:59Z"
       verified_by: "gateway 2026-08-26 (verify-capabilities)"
+      status: "rate_limited"
+      status_checked_at: "2026-08-26T10:26:30Z"
+      status_detail: "litellm.APIConnectionError: CloudflareException - {'errors':[{'message':'AiError: AiError: you have used up yo"
 
   - model_name: cf/granite-4-micro
     litellm_params:
@@ -1063,8 +1111,9 @@ model_list:
       quota_pool: "cloudflare"
       quota_window: "daily"
       tags: ["fast"]
-      status: "ok"
-      status_checked_at: "2026-08-26T07:48:59Z"
+      status: "rate_limited"
+      status_checked_at: "2026-08-26T10:26:30Z"
+      status_detail: "litellm.APIConnectionError: CloudflareException - {'errors':[{'message':'AiError: AiError: you have used up yo"
 
   # โมเดล vision ตัวเดียวของ gateway (เปิดใช้ 2026-08-26)
   #
@@ -1086,9 +1135,10 @@ model_list:
       quota_pool: "cloudflare"
       quota_window: "daily"
       tags: ["general", "no-tools"]
-      status: "ok"
-      status_checked_at: "2026-08-26T07:48:59Z"
       verified_by: "gateway 2026-08-26 (verify-capabilities — vision ยังติด format)"
+      status: "rate_limited"
+      status_checked_at: "2026-08-26T10:26:30Z"
+      status_detail: "litellm.APIConnectionError: CloudflareException - {'errors':[{'message':'AiError: AiError: you have used up yo"
 
   # glm-5.2 กับ deepseek-v4-pro-0813 มีบน Cloudflare แต่ยังไม่อยู่ใน Workers Free plan
   # (error code 5035) ต้องอัปเกรดแผนก่อน
@@ -1114,8 +1164,9 @@ model_list:
       quota_pool: "openrouter"
       quota_window: "daily"
       tags: ["coding-best", "long-context"]
-      status: "ok"
-      status_checked_at: "2026-08-26T07:48:59Z"
+      status: "rate_limited"
+      status_checked_at: "2026-08-26T10:26:30Z"
+      status_detail: "litellm.RateLimitError: RateLimitError: OpenrouterException - {'error':{'message':'Rate limit exceeded: free-m"
 
   - model_name: or/nemotron-lightning
     litellm_params:
@@ -1131,8 +1182,9 @@ model_list:
       quota_pool: "openrouter"
       quota_window: "daily"
       tags: ["long-context"]
-      status: "ok"
-      status_checked_at: "2026-08-26T07:48:59Z"
+      status: "rate_limited"
+      status_checked_at: "2026-08-26T10:26:30Z"
+      status_detail: "litellm.RateLimitError: RateLimitError: OpenrouterException - {'error':{'message':'Rate limit exceeded: free-m"
 
   - model_name: or/nemotron-super-120b
     litellm_params:
@@ -1147,8 +1199,9 @@ model_list:
       quota_pool: "openrouter"
       quota_window: "daily"
       tags: ["general"]
-      status: "ok"
-      status_checked_at: "2026-08-26T07:48:59Z"
+      status: "rate_limited"
+      status_checked_at: "2026-08-26T10:26:30Z"
+      status_detail: "litellm.RateLimitError: RateLimitError: OpenrouterException - {'error':{'message':'Rate limit exceeded: free-m"
 
 
   - model_name: or/north-mini-code
@@ -1166,8 +1219,9 @@ model_list:
       quota_pool: "openrouter"
       quota_window: "daily"
       tags: ["coding-best"]
-      status: "ok"
-      status_checked_at: "2026-08-26T07:48:59Z"
+      status: "rate_limited"
+      status_checked_at: "2026-08-26T10:26:30Z"
+      status_detail: "litellm.RateLimitError: RateLimitError: OpenrouterException - {'error':{'message':'Rate limit exceeded: free-m"
 
   # เพิ่ม 2026-08-23 — ทดสอบยิงผ่านแล้ว
   - model_name: or/dots-3-note
@@ -1186,8 +1240,9 @@ model_list:
       quota_pool: "openrouter"
       quota_window: "daily"
       tags: ["coding-ok", "long-context"]
-      status: "ok"
-      status_checked_at: "2026-08-26T07:48:59Z"
+      status: "rate_limited"
+      status_checked_at: "2026-08-26T10:26:30Z"
+      status_detail: "litellm.RateLimitError: RateLimitError: OpenrouterException - {'error':{'message':'Rate limit exceeded: free-m"
 
   - model_name: or/laguna-s-2.1
     litellm_params:
@@ -1204,8 +1259,9 @@ model_list:
       quota_pool: "openrouter"
       quota_window: "daily"
       tags: ["coding-weak"]
-      status: "ok"
-      status_checked_at: "2026-08-26T07:48:59Z"
+      status: "rate_limited"
+      status_checked_at: "2026-08-26T10:26:30Z"
+      status_detail: "litellm.RateLimitError: RateLimitError: OpenrouterException - {'error':{'message':'Rate limit exceeded: free-m"
 
 
   # เพิ่ม 2026-08-23 (รอบสอง) — ตัวที่ตกสำรวจรอบแรกเพราะกรองด้วย suffix :free
@@ -1230,9 +1286,9 @@ model_list:
       tags: ["coding-best", "long-context"]
       verified_max_prompt: 31833
       max_prompt_detail: "โควต้า ที่ ~64,000 — litellm.RateLimitError: RateLimitError: OpenrouterException - {'error':{'message"
-      status: "ok"
-      status_checked_at: "2026-08-26T07:48:59Z"
       verified_by: "hermes-line-bot 2026-08-26 (tool loop + prompt 14K + ภาษาไทย · ช้า ~19s/turn)"
+      status: "ok"
+      status_checked_at: "2026-08-26T10:26:30Z"
 
   # router ของ OpenRouter เอง — เลือกโมเดลฟรีที่ว่างให้อัตโนมัติ
   # ทดสอบแล้ววิ่งไป nemotron-3-ultra-550b ให้เอง เหมาะเป็น fallback ปลายทาง
@@ -1251,8 +1307,9 @@ model_list:
       quota_pool: "openrouter"
       quota_window: "daily"
       tags: ["coding-ok"]
-      status: "ok"
-      status_checked_at: "2026-08-26T07:48:59Z"
+      status: "rate_limited"
+      status_checked_at: "2026-08-26T10:26:30Z"
+      status_detail: "litellm.RateLimitError: RateLimitError: OpenrouterException - {'error':{'message':'Rate limit exceeded: free-m"
 
 
 
@@ -1273,8 +1330,9 @@ model_list:
       quota_pool: "openrouter"
       quota_window: "daily"
       tags: ["coding-ok"]
-      status: "ok"
-      status_checked_at: "2026-08-26T07:48:59Z"
+      status: "rate_limited"
+      status_checked_at: "2026-08-26T10:26:30Z"
+      status_detail: "litellm.RateLimitError: RateLimitError: OpenrouterException - {'error':{'message':'Rate limit exceeded: free-m"
 
   - model_name: or/nemotron-omni-30b
     litellm_params:
@@ -1290,8 +1348,9 @@ model_list:
       quota_pool: "openrouter"
       quota_window: "daily"
       tags: ["general"]
-      status: "ok"
-      status_checked_at: "2026-08-26T07:48:59Z"
+      status: "rate_limited"
+      status_checked_at: "2026-08-26T10:26:30Z"
+      status_detail: "litellm.RateLimitError: RateLimitError: OpenrouterException - {'error':{'message':'Rate limit exceeded: free-m"
 
   # ⚠️ 2026-08-26 ถอด or/gemma-4-31b — ขึ้น "Provider returned error" ต่อเนื่อง
   # ตัวที่ยังใช้ไม่ได้ (ลองซ้ำแล้ว): z-ai/glm-5.2:free, poolside/laguna-xs-2.1:free,
@@ -1336,10 +1395,10 @@ model_list:
       quota_pool: "nvidia-nim"
       quota_window: "rpm-only"
       tags: ["general"]
-      status: "rate_limited"
-      status_checked_at: "2026-08-26T07:48:59Z"
-      status_detail: "litellm.RateLimitError: RateLimitError: Nvidia_nimException - Error code: 429 - {'status': 429, 'title': 'Too "
       verified_by: "hermes 2026-08-25 (tool calling + prompt 14K)"
+      status: "rate_limited"
+      status_checked_at: "2026-08-26T10:26:30Z"
+      status_detail: "litellm.RateLimitError: RateLimitError: Nvidia_nimException - Error code: 429 - {'status': 429, 'title': 'Too "
 
   - model_name: nim/step-3.7-flash
     litellm_params:
@@ -1354,9 +1413,8 @@ model_list:
       quota_pool: "nvidia-nim"
       quota_window: "rpm-only"
       tags: ["general"]
-      status: "unknown"
-      status_checked_at: "2026-08-26T07:48:59Z"
-      status_detail: "timed out"
+      status: "ok"
+      status_checked_at: "2026-08-26T10:26:30Z"
 
   - model_name: nim/nemotron-nano-30b
     litellm_params:
@@ -1374,7 +1432,7 @@ model_list:
       verified_max_prompt: 127957
       max_prompt_detail: "ผ่านทุกขั้นถึง 127,957 (ไม่ได้ลองมากกว่านี้)"
       status: "ok"
-      status_checked_at: "2026-08-26T07:48:59Z"
+      status_checked_at: "2026-08-26T10:26:30Z"
 
   - model_name: nim/gemma-4-31b
     litellm_params:
@@ -1390,7 +1448,7 @@ model_list:
       quota_window: "rpm-only"
       tags: ["general"]
       status: "unknown"
-      status_checked_at: "2026-08-26T07:48:59Z"
+      status_checked_at: "2026-08-26T10:26:30Z"
       status_detail: "timed out"
 
   - model_name: nim/mistral-nemotron
@@ -1406,8 +1464,9 @@ model_list:
       quota_pool: "nvidia-nim"
       quota_window: "rpm-only"
       tags: ["general"]
-      status: "ok"
-      status_checked_at: "2026-08-26T07:48:59Z"
+      status: "unknown"
+      status_checked_at: "2026-08-26T10:26:30Z"
+      status_detail: "timed out"
 
   - model_name: nim/nemotron-super-49b
     litellm_params:
@@ -1424,8 +1483,9 @@ model_list:
       tags: ["general"]
       verified_max_prompt: 127960
       max_prompt_detail: "ผ่านทุกขั้นถึง 127,960 (ไม่ได้ลองมากกว่านี้)"
-      status: "ok"
-      status_checked_at: "2026-08-26T07:48:59Z"
+      status: "unknown"
+      status_checked_at: "2026-08-26T10:26:30Z"
+      status_detail: "litellm.APIError: APIError: Nvidia_nimException - Error code: 410 - {'type': 'about:blank', 'title': 'Gone', '"
 
   - model_name: nim/llama-3.3-70b
     litellm_params:
@@ -1442,9 +1502,10 @@ model_list:
       tags: ["general"]
       verified_max_prompt: 13768
       max_prompt_detail: "timeout ที่ ~32,000 — timed out"
-      status: "ok"
-      status_checked_at: "2026-08-26T07:48:59Z"
       verified_by: "gateway 2026-08-26 (ทดสอบซ้ำ tool calling)"
+      status: "unknown"
+      status_checked_at: "2026-08-26T10:26:30Z"
+      status_detail: "litellm.APIError: APIError: Nvidia_nimException - Error code: 410 - {'type': 'about:blank', 'title': 'Gone', '"
 
   - model_name: nim/deepseek-v4-flash
     litellm_params:
@@ -1460,7 +1521,7 @@ model_list:
       quota_window: "rpm-only"
       tags: ["general"]
       status: "unknown"
-      status_checked_at: "2026-08-26T07:48:59Z"
+      status_checked_at: "2026-08-26T10:26:30Z"
       status_detail: "litellm.NotFoundError: NotFoundError: Nvidia_nimException - Error code: 404 - {'status': 404, 'title': 'Not Fo"
 
   # ---------- Embeddings (เติมช่องว่างที่ gateway ยังไม่มี) ----------
@@ -1481,7 +1542,7 @@ model_list:
       quota_window: "rpm-only"
       tags: ["embedding"]
       status: "ok"
-      status_checked_at: "2026-08-26T07:48:59Z"
+      status_checked_at: "2026-08-26T10:26:30Z"
 
   # ---------- Cloudflare Workers AI ----------
   # ฟรี 10,000 neurons/วัน ต้องมี CLOUDFLARE_ACCOUNT_ID ด้วย
@@ -1526,8 +1587,9 @@ model_list:
       tags: ["quality-top", "general"]
       verified_max_prompt: 31945
       max_prompt_detail: "error 401 ที่ ~64,000 — litellm.AuthenticationError: AuthenticationError: OpenAIException - Error code: "
-      status: "ok"
-      status_checked_at: "2026-08-26T07:48:59Z"
+      status: "rate_limited"
+      status_checked_at: "2026-08-26T10:26:30Z"
+      status_detail: "litellm.AuthenticationError: AuthenticationError: OpenAIException - Error code: 401 - {'error': 'This model re"
 
   # Claude Sonnet 4.6
   - model_name: okmd/claude-sonnet-4.6
@@ -1544,8 +1606,9 @@ model_list:
       quota_pool: "okmd-claude"
       quota_window: "daily"
       tags: ["quality-top", "general"]
-      status: "ok"
-      status_checked_at: "2026-08-26T07:48:59Z"
+      status: "rate_limited"
+      status_checked_at: "2026-08-26T10:26:30Z"
+      status_detail: "litellm.AuthenticationError: AuthenticationError: OpenAIException - Error code: 401 - {'error': 'This model re"
 
   # GPT-5.4
   - model_name: okmd/gpt-5.4
@@ -1564,8 +1627,9 @@ model_list:
       tags: ["quality-top", "general"]
       verified_max_prompt: 31964
       max_prompt_detail: "error 401 ที่ ~64,000 — litellm.AuthenticationError: AuthenticationError: OpenAIException - Error code: "
-      status: "ok"
-      status_checked_at: "2026-08-26T07:48:59Z"
+      status: "rate_limited"
+      status_checked_at: "2026-08-26T10:26:30Z"
+      status_detail: "litellm.AuthenticationError: AuthenticationError: OpenAIException - Error code: 401 - {'error': 'This model re"
 
   - model_name: okmd/gpt-5.4-mini
     litellm_params:
@@ -1583,8 +1647,9 @@ model_list:
       tags: ["general"]
       verified_max_prompt: 31964
       max_prompt_detail: "error 401 ที่ ~64,000 — litellm.AuthenticationError: AuthenticationError: OpenAIException - Error code: "
-      status: "ok"
-      status_checked_at: "2026-08-26T07:48:59Z"
+      status: "rate_limited"
+      status_checked_at: "2026-08-26T10:26:30Z"
+      status_detail: "litellm.AuthenticationError: AuthenticationError: OpenAIException - Error code: 401 - {'error': 'This model re"
 
   - model_name: okmd/gpt-5.4-nano
     litellm_params:
@@ -1600,8 +1665,9 @@ model_list:
       quota_pool: "okmd-gpt"
       quota_window: "daily"
       tags: ["general"]
-      status: "ok"
-      status_checked_at: "2026-08-26T07:48:59Z"
+      status: "rate_limited"
+      status_checked_at: "2026-08-26T10:26:30Z"
+      status_detail: "litellm.AuthenticationError: AuthenticationError: OpenAIException - Error code: 401 - {'error': 'This model re"
 
   # Gemini รุ่นใหม่สุดที่นี่
   - model_name: okmd/gemini-3.7-flash
@@ -1621,8 +1687,9 @@ model_list:
       tags: ["quality-top", "long-context"]
       verified_max_prompt: 13953
       max_prompt_detail: "error 401 ที่ ~32,000 — litellm.AuthenticationError: AuthenticationError: OpenAIException - Error code: "
-      status: "ok"
-      status_checked_at: "2026-08-26T07:48:59Z"
+      status: "rate_limited"
+      status_checked_at: "2026-08-26T10:26:30Z"
+      status_detail: "litellm.AuthenticationError: AuthenticationError: OpenAIException - Error code: 401 - {'error': 'This model re"
 
   - model_name: okmd/gemini-3.5-flash
     litellm_params:
@@ -1641,8 +1708,9 @@ model_list:
       tags: ["long-context"]
       verified_max_prompt: 31984
       max_prompt_detail: "error 401 ที่ ~64,000 — litellm.AuthenticationError: AuthenticationError: OpenAIException - Error code: "
-      status: "ok"
-      status_checked_at: "2026-08-26T07:48:59Z"
+      status: "rate_limited"
+      status_checked_at: "2026-08-26T10:26:30Z"
+      status_detail: "litellm.AuthenticationError: AuthenticationError: OpenAIException - Error code: 401 - {'error': 'This model re"
 
   - model_name: okmd/gemini-3.1-pro
     litellm_params:
@@ -1658,8 +1726,9 @@ model_list:
       quota_pool: "okmd-gemini"
       quota_window: "daily"
       tags: ["general"]
-      status: "ok"
-      status_checked_at: "2026-08-26T07:48:59Z"
+      status: "rate_limited"
+      status_checked_at: "2026-08-26T10:26:30Z"
+      status_detail: "litellm.AuthenticationError: AuthenticationError: OpenAIException - Error code: 401 - {'error': 'This model re"
 
   - model_name: okmd/gemini-3.1-flash-lite
     litellm_params:
@@ -1675,8 +1744,9 @@ model_list:
       quota_pool: "okmd-gemini"
       quota_window: "daily"
       tags: ["general"]
-      status: "ok"
-      status_checked_at: "2026-08-26T07:48:59Z"
+      status: "rate_limited"
+      status_checked_at: "2026-08-26T10:26:30Z"
+      status_detail: "litellm.AuthenticationError: AuthenticationError: OpenAIException - Error code: 401 - {'error': 'This model re"
 
   - model_name: okmd/gemini-2.5-flash-lite
     litellm_params:
@@ -1692,8 +1762,9 @@ model_list:
       quota_pool: "okmd-gemini"
       quota_window: "daily"
       tags: ["general"]
-      status: "ok"
-      status_checked_at: "2026-08-26T07:48:59Z"
+      status: "rate_limited"
+      status_checked_at: "2026-08-26T10:26:30Z"
+      status_detail: "litellm.AuthenticationError: AuthenticationError: OpenAIException - Error code: 401 - {'error': 'This model re"
 
   # Grok — ไม่มีที่อื่นใน gateway
   - model_name: okmd/grok-4.3
@@ -1712,8 +1783,9 @@ model_list:
       tags: ["quality-top", "general"]
       verified_max_prompt: 31702
       max_prompt_detail: "error 401 ที่ ~64,000 — litellm.AuthenticationError: AuthenticationError: OpenAIException - Error code: "
-      status: "ok"
-      status_checked_at: "2026-08-26T07:48:59Z"
+      status: "rate_limited"
+      status_checked_at: "2026-08-26T10:26:30Z"
+      status_detail: "litellm.AuthenticationError: AuthenticationError: OpenAIException - Error code: 401 - {'error': 'This model re"
 
   - model_name: okmd/deepseek-v4-pro
     litellm_params:
@@ -1731,8 +1803,9 @@ model_list:
       tags: ["quality-top", "general"]
       verified_max_prompt: 127824
       max_prompt_detail: "ผ่านทุกขั้นถึง 127,824 (ไม่ได้ลองมากกว่านี้)"
-      status: "ok"
-      status_checked_at: "2026-08-26T07:48:59Z"
+      status: "rate_limited"
+      status_checked_at: "2026-08-26T10:26:30Z"
+      status_detail: "litellm.AuthenticationError: AuthenticationError: OpenAIException - Error code: 401 - {'error': 'This model re"
 
   - model_name: okmd/deepseek-v4-flash
     litellm_params:
@@ -1750,8 +1823,9 @@ model_list:
       tags: ["general"]
       verified_max_prompt: 64060
       max_prompt_detail: "error 401 ที่ ~128,000 — litellm.AuthenticationError: AuthenticationError: OpenAIException - Error code: "
-      status: "ok"
-      status_checked_at: "2026-08-26T07:48:59Z"
+      status: "rate_limited"
+      status_checked_at: "2026-08-26T10:26:30Z"
+      status_detail: "litellm.AuthenticationError: AuthenticationError: OpenAIException - Error code: 401 - {'error': 'This model re"
 
   # Qwen รุ่นใหม่กว่าที่อื่นใน gateway
   - model_name: okmd/qwen3.7-max
@@ -1770,8 +1844,9 @@ model_list:
       tags: ["general"]
       verified_max_prompt: 31975
       max_prompt_detail: "error 401 ที่ ~64,000 — litellm.AuthenticationError: AuthenticationError: OpenAIException - Error code: "
-      status: "ok"
-      status_checked_at: "2026-08-26T07:48:59Z"
+      status: "rate_limited"
+      status_checked_at: "2026-08-26T10:26:30Z"
+      status_detail: "litellm.AuthenticationError: AuthenticationError: OpenAIException - Error code: 401 - {'error': 'This model re"
 
   - model_name: okmd/qwen3.7-plus
     litellm_params:
@@ -1789,8 +1864,9 @@ model_list:
       tags: ["general"]
       verified_max_prompt: 2703
       max_prompt_detail: "error 401 ที่ ~14,000 — litellm.AuthenticationError: AuthenticationError: OpenAIException - Error code: "
-      status: "ok"
-      status_checked_at: "2026-08-26T07:48:59Z"
+      status: "rate_limited"
+      status_checked_at: "2026-08-26T10:26:30Z"
+      status_detail: "litellm.AuthenticationError: AuthenticationError: OpenAIException - Error code: 401 - {'error': 'This model re"
 
   - model_name: okmd/qwen3.6-flash
     litellm_params:
@@ -1806,9 +1882,10 @@ model_list:
       quota_pool: "okmd-qwen"
       quota_window: "daily"
       tags: ["general", "no-tools"]
-      status: "ok"
-      status_checked_at: "2026-08-26T07:48:59Z"
       verified_by: "gateway 2026-08-26 (verify-capabilities)"
+      status: "rate_limited"
+      status_checked_at: "2026-08-26T10:26:30Z"
+      status_detail: "litellm.AuthenticationError: AuthenticationError: OpenAIException - Error code: 401 - {'error': 'This model re"
 
   # okmd/qwen3.5-9b อยู่ใน /v1/models แต่ยิงจริงคืน "No models provided" (400)
   # ฝั่ง OKMD ยังไม่ได้ต่อ backend ให้ — ไม่ใส่ไว้
@@ -1829,8 +1906,9 @@ model_list:
       tags: ["general"]
       verified_max_prompt: 31963
       max_prompt_detail: "error 401 ที่ ~64,000 — litellm.AuthenticationError: AuthenticationError: OpenAIException - Error code: "
-      status: "ok"
-      status_checked_at: "2026-08-26T07:48:59Z"
+      status: "rate_limited"
+      status_checked_at: "2026-08-26T10:26:30Z"
+      status_detail: "litellm.AuthenticationError: AuthenticationError: OpenAIException - Error code: 401 - {'error': 'This model re"
 
   - model_name: okmd/llama-4-scout
     litellm_params:
@@ -1848,8 +1926,9 @@ model_list:
       tags: ["general"]
       verified_max_prompt: 13886
       max_prompt_detail: "error 401 ที่ ~32,000 — litellm.AuthenticationError: AuthenticationError: OpenAIException - Error code: "
-      status: "ok"
-      status_checked_at: "2026-08-26T07:48:59Z"
+      status: "rate_limited"
+      status_checked_at: "2026-08-26T10:26:30Z"
+      status_detail: "litellm.AuthenticationError: AuthenticationError: OpenAIException - Error code: 401 - {'error': 'This model re"
 
   - model_name: okmd/mistral-medium-3.1
     litellm_params:
@@ -1867,8 +1946,9 @@ model_list:
       tags: ["general"]
       verified_max_prompt: 31964
       max_prompt_detail: "error 401 ที่ ~64,000 — litellm.AuthenticationError: AuthenticationError: OpenAIException - Error code: "
-      status: "ok"
-      status_checked_at: "2026-08-26T07:48:59Z"
+      status: "rate_limited"
+      status_checked_at: "2026-08-26T10:26:30Z"
+      status_detail: "litellm.AuthenticationError: AuthenticationError: OpenAIException - Error code: 401 - {'error': 'This model re"
 
   # Amazon Nova
   - model_name: okmd/nova-pro
@@ -1887,8 +1967,9 @@ model_list:
       tags: ["general"]
       verified_max_prompt: 13885
       max_prompt_detail: "error 401 ที่ ~32,000 — litellm.AuthenticationError: AuthenticationError: OpenAIException - Error code: "
-      status: "ok"
-      status_checked_at: "2026-08-26T07:48:59Z"
+      status: "rate_limited"
+      status_checked_at: "2026-08-26T10:26:30Z"
+      status_detail: "litellm.AuthenticationError: AuthenticationError: OpenAIException - Error code: 401 - {'error': 'This model re"
 
   - model_name: okmd/nova-2-lite
     litellm_params:
@@ -1904,8 +1985,9 @@ model_list:
       quota_pool: "okmd-nova"
       quota_window: "daily"
       tags: ["general"]
-      status: "ok"
-      status_checked_at: "2026-08-26T07:48:59Z"
+      status: "rate_limited"
+      status_checked_at: "2026-08-26T10:26:30Z"
+      status_detail: "litellm.AuthenticationError: AuthenticationError: OpenAIException - Error code: 401 - {'error': 'This model re"
 
   # Perplexity Sonar — น่าจะค้นเว็บได้ ยังไม่ทดสอบ
   - model_name: okmd/sonar-pro
@@ -1924,10 +2006,10 @@ model_list:
       tags: ["web-access", "no-tools"]
       verified_max_prompt: 31977
       max_prompt_detail: "error 401 ที่ ~64,000 — litellm.AuthenticationError: AuthenticationError: OpenAIException - Error code: "
-      status: "unknown"
-      status_checked_at: "2026-08-26T07:48:59Z"
-      status_detail: "litellm.BadRequestError: OpenAIException - Provider returned error"
       verified_by: "gateway 2026-08-26 (verify-capabilities)"
+      status: "rate_limited"
+      status_checked_at: "2026-08-26T10:26:30Z"
+      status_detail: "litellm.AuthenticationError: AuthenticationError: OpenAIException - Error code: 401 - {'error': 'This model re"
 
 
 
@@ -1963,7 +2045,7 @@ model_list:
       quota_window: "rpm-only"
       tags: ["no-api-key"]
       status: "rate_limited"
-      status_checked_at: "2026-08-26T07:48:59Z"
+      status_checked_at: "2026-08-26T10:26:30Z"
       status_detail: "litellm.RateLimitError: RateLimitError: OpenAIException - Error from provider (Console): Rate limit exceeded. "
 
   # ตัวเดียวกับ or/nemotron-ultra-550b แต่ไม่ติดโควต้ารายวันของ OpenRouter
@@ -1984,7 +2066,7 @@ model_list:
       verified_max_prompt: 127957
       max_prompt_detail: "ผ่านทุกขั้นถึง 127,957 (ไม่ได้ลองมากกว่านี้)"
       status: "unknown"
-      status_checked_at: "2026-08-26T07:48:59Z"
+      status_checked_at: "2026-08-26T10:26:30Z"
       status_detail: "litellm.BadRequestError: OpenAIException - Error from provider (Console): Upstream request failed: [502] Upstr"
 
   # พ่น thinking ปนใน content
@@ -2005,7 +2087,7 @@ model_list:
       verified_max_prompt: 127957
       max_prompt_detail: "ผ่านทุกขั้นถึง 127,957 (ไม่ได้ลองมากกว่านี้)"
       status: "ok"
-      status_checked_at: "2026-08-26T07:48:59Z"
+      status_checked_at: "2026-08-26T10:26:30Z"
 
   - model_name: zen/mimo-v2.5
     litellm_params:
@@ -2022,7 +2104,7 @@ model_list:
       quota_window: "rpm-only"
       tags: ["no-api-key"]
       status: "rate_limited"
-      status_checked_at: "2026-08-26T07:48:59Z"
+      status_checked_at: "2026-08-26T10:26:30Z"
       status_detail: "litellm.RateLimitError: RateLimitError: OpenAIException - Error from provider (Console): Rate limit exceeded. "
 
   # สาย coding
@@ -2043,7 +2125,7 @@ model_list:
       verified_max_prompt: 127914
       max_prompt_detail: "ผ่านทุกขั้นถึง 127,914 (ไม่ได้ลองมากกว่านี้)"
       status: "ok"
-      status_checked_at: "2026-08-26T07:48:59Z"
+      status_checked_at: "2026-08-26T10:26:30Z"
 
   - model_name: zen/x-preview-f
     litellm_params:
@@ -2062,7 +2144,7 @@ model_list:
       verified_max_prompt: 31833
       max_prompt_detail: "error 503 ที่ ~64,000 — litellm.ServiceUnavailableError: ServiceUnavailableError: OpenAIException - Erro"
       status: "ok"
-      status_checked_at: "2026-08-26T07:48:59Z"
+      status_checked_at: "2026-08-26T10:26:30Z"
 
   # thinking model
   - model_name: zen/hy3
@@ -2082,7 +2164,7 @@ model_list:
       verified_max_prompt: 127968
       max_prompt_detail: "ผ่านทุกขั้นถึง 127,968 (ไม่ได้ลองมากกว่านี้)"
       status: "ok"
-      status_checked_at: "2026-08-26T07:48:59Z"
+      status_checked_at: "2026-08-26T10:26:30Z"
 
   # ที่ลองแล้วยังใช้ไม่ได้ (2026-08-26):
   #   deepseek-v4-flash-free -> "Upstream request failed"
@@ -2113,7 +2195,7 @@ model_list:
       verified_max_prompt: 127983
       max_prompt_detail: "ผ่านทุกขั้นถึง 127,983 (ไม่ได้ลองมากกว่านี้)"
       status: "ok"
-      status_checked_at: "2026-08-26T07:48:59Z"
+      status_checked_at: "2026-08-26T10:26:30Z"
 
   - model_name: l7/codestral
     litellm_params:
@@ -2131,9 +2213,9 @@ model_list:
       tags: ["no-api-key", "no-tools"]
       verified_max_prompt: 31990
       max_prompt_detail: "error 400 ที่ ~64,000 — litellm.BadRequestError: OpenAIException - Context window exceeded for this mode"
-      status: "ok"
-      status_checked_at: "2026-08-26T07:48:59Z"
       verified_by: "gateway 2026-08-26 (verify-capabilities)"
+      status: "ok"
+      status_checked_at: "2026-08-26T10:26:30Z"
 
   # ปลดคอมเมนต์เมื่อมี LLM7_API_KEY แล้ว (เปลี่ยน api_key เป็น os.environ/LLM7_API_KEY
   # ทั้งสองตัวข้างบนด้วย) — ตัวอย่างของที่จะได้เพิ่ม:
@@ -2307,9 +2389,9 @@ model_list:
       tags: ["thai", "no-tools"]
       verified_max_prompt: 13865
       max_prompt_detail: "ชนเพดาน ที่ ~32,000 — litellm.ContextWindowExceededError: litellm.BadRequestError: ContextWindowExceed"
-      status: "ok"
-      status_checked_at: "2026-08-26T07:48:59Z"
       verified_by: "gateway 2026-08-26 (verify-capabilities)"
+      status: "ok"
+      status_checked_at: "2026-08-26T10:26:30Z"
 
   # Pathumma (NECTEC) — thinking model
   - model_name: th/pathumma
@@ -2330,7 +2412,7 @@ model_list:
       verified_max_prompt: 13865
       max_prompt_detail: "ชนเพดาน ที่ ~32,000 — litellm.ContextWindowExceededError: litellm.BadRequestError: ContextWindowExceed"
       status: "ok"
-      status_checked_at: "2026-08-26T07:48:59Z"
+      status_checked_at: "2026-08-26T10:26:30Z"
 
   # Typhoon-S (SCB10X) — ตอบตรงไม่มี think
   - model_name: th/typhoon
@@ -2351,7 +2433,7 @@ model_list:
       verified_max_prompt: 13865
       max_prompt_detail: "ชนเพดาน ที่ ~32,000 — litellm.ContextWindowExceededError: litellm.BadRequestError: ContextWindowExceed"
       status: "ok"
-      status_checked_at: "2026-08-26T07:48:59Z"
+      status_checked_at: "2026-08-26T10:26:30Z"
 
   # THaLLE (KBTG) — thinking model
   - model_name: th/thalle
@@ -2372,7 +2454,7 @@ model_list:
       verified_max_prompt: 13865
       max_prompt_detail: "ชนเพดาน ที่ ~32,000 — litellm.ContextWindowExceededError: litellm.BadRequestError: ContextWindowExceed"
       status: "ok"
-      status_checked_at: "2026-08-26T07:48:59Z"
+      status_checked_at: "2026-08-26T10:26:30Z"
 
   # ---------- Ollama Cloud — โมเดลใหญ่โดยไม่ต้องมี GPU ----------
   # ต่างจาก Ollama ที่รันเอง: อันนี้ Ollama โฮสต์ให้ ไม่กิน RAM/GPU ของเรา
@@ -2397,13 +2479,10 @@ model_list:
       quota_pool: "ollama-cloud"
       quota_window: "weekly"
       tags: ["general"]
-      status: "rate_limited"
-      status_checked_at: "2026-08-26T07:48:59Z"
-      status_detail: "litellm.RateLimitError: RateLimitError: OpenAIException - you (monthop) have reached your weekly usage limit, "
-      status: "rate_limited"
-      status_checked_at: "2026-08-26T07:46:15Z"
-      status_detail: "litellm.RateLimitError: RateLimitError: OpenAIException - you (monthop) have reached your weekly usage limit, "
       verified_by: "hermes-line-bot 2026-08-26 (tool loop + prompt 14K · call แรก ~105s)"
+      status: "rate_limited"
+      status_checked_at: "2026-08-26T10:26:30Z"
+      status_detail: "litellm.RateLimitError: RateLimitError: OpenAIException - you (monthop) have reached your weekly usage limit, "
 
   - model_name: oc/nemotron-3-super
     litellm_params:
@@ -2421,10 +2500,7 @@ model_list:
       quota_window: "weekly"
       tags: ["general"]
       status: "rate_limited"
-      status_checked_at: "2026-08-26T07:48:59Z"
-      status_detail: "litellm.RateLimitError: RateLimitError: OpenAIException - you (monthop) have reached your weekly usage limit, "
-      status: "rate_limited"
-      status_checked_at: "2026-08-26T07:46:15Z"
+      status_checked_at: "2026-08-26T10:26:30Z"
       status_detail: "litellm.RateLimitError: RateLimitError: OpenAIException - you (monthop) have reached your weekly usage limit, "
 
   - model_name: oc/nemotron-3-nano-30b
@@ -2443,10 +2519,7 @@ model_list:
       quota_window: "weekly"
       tags: ["general"]
       status: "rate_limited"
-      status_checked_at: "2026-08-26T07:48:59Z"
-      status_detail: "litellm.RateLimitError: RateLimitError: OpenAIException - you (monthop) have reached your weekly usage limit, "
-      status: "rate_limited"
-      status_checked_at: "2026-08-26T07:46:15Z"
+      status_checked_at: "2026-08-26T10:26:30Z"
       status_detail: "litellm.RateLimitError: RateLimitError: OpenAIException - you (monthop) have reached your weekly usage limit, "
 
   - model_name: oc/minimax-m3
@@ -2464,13 +2537,10 @@ model_list:
       quota_pool: "ollama-cloud"
       quota_window: "weekly"
       tags: ["general"]
-      status: "rate_limited"
-      status_checked_at: "2026-08-26T07:48:59Z"
-      status_detail: "litellm.RateLimitError: RateLimitError: OpenAIException - you (monthop) have reached your weekly usage limit, "
-      status: "rate_limited"
-      status_checked_at: "2026-08-26T07:46:15Z"
-      status_detail: "litellm.RateLimitError: RateLimitError: OpenAIException - you (monthop) have reached your weekly usage limit, "
       verified_by: "hermes-line-bot 2026-08-26 (main เดิมของ hermes · โควตารายสัปดาห์หมด 08-26)"
+      status: "rate_limited"
+      status_checked_at: "2026-08-26T10:26:30Z"
+      status_detail: "litellm.RateLimitError: RateLimitError: OpenAIException - you (monthop) have reached your weekly usage limit, "
 
   - model_name: oc/gemma4-31b
     litellm_params:
@@ -2488,10 +2558,7 @@ model_list:
       quota_window: "weekly"
       tags: ["general"]
       status: "rate_limited"
-      status_checked_at: "2026-08-26T07:48:59Z"
-      status_detail: "litellm.RateLimitError: RateLimitError: OpenAIException - you (monthop) have reached your weekly usage limit, "
-      status: "rate_limited"
-      status_checked_at: "2026-08-26T07:46:15Z"
+      status_checked_at: "2026-08-26T10:26:30Z"
       status_detail: "litellm.RateLimitError: RateLimitError: OpenAIException - you (monthop) have reached your weekly usage limit, "
 
   - model_name: oc/gpt-oss-120b
@@ -2511,13 +2578,10 @@ model_list:
       quota_pool: "ollama-cloud"
       quota_window: "weekly"
       tags: ["coding-best"]
-      status: "rate_limited"
-      status_checked_at: "2026-08-26T07:48:59Z"
-      status_detail: "litellm.RateLimitError: RateLimitError: OpenAIException - you (monthop) have reached your weekly usage limit, "
-      status: "rate_limited"
-      status_checked_at: "2026-08-26T07:46:15Z"
-      status_detail: "litellm.RateLimitError: RateLimitError: OpenAIException - you (monthop) have reached your weekly usage limit, "
       verified_by: "hermes-line-bot 2026-08-26 (language drift ใน tool loop — ยิง API ตรงไม่เห็น)"
+      status: "rate_limited"
+      status_checked_at: "2026-08-26T10:26:30Z"
+      status_detail: "litellm.RateLimitError: RateLimitError: OpenAIException - you (monthop) have reached your weekly usage limit, "
 
   - model_name: oc/gpt-oss-20b
     litellm_params:
@@ -2535,10 +2599,7 @@ model_list:
       quota_window: "weekly"
       tags: ["general"]
       status: "rate_limited"
-      status_checked_at: "2026-08-26T07:48:59Z"
-      status_detail: "litellm.RateLimitError: RateLimitError: OpenAIException - you (monthop) have reached your weekly usage limit, "
-      status: "rate_limited"
-      status_checked_at: "2026-08-26T07:46:15Z"
+      status_checked_at: "2026-08-26T10:26:30Z"
       status_detail: "litellm.RateLimitError: RateLimitError: OpenAIException - you (monthop) have reached your weekly usage limit, "
 
   # ต้องมี Pro ($20/เดือน) ขึ้นไปถึงจะใช้ได้ — ทดสอบ 2026-08-17 บนชั้นฟรีคืน

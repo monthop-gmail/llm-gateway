@@ -99,6 +99,9 @@ def fmt(r, show_all=False):
         # ≥ ไม่ใช่ ≤ — เลขนี้คือขนาดที่ยิงผ่านแล้ว เพดานจริงอยู่สูงกว่านี้
         # และบางตัวหยุดเพราะโควต้าหมดกลางคัน ไม่ใช่เพราะชนเพดาน
         bits.append(f"prompt ≥{cap//1000}K")
+    ans = mi.get("answered_by")
+    if ans:
+        bits.append("จริง ๆ ตอบโดย " + ans)
     st = mi.get("status")
     if st and st != "ok":
         bits.append({"rate_limited": "โควต้าหมดตอนนี้", "dead": "ตายแล้ว"}.get(st, st))

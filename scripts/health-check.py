@@ -6,6 +6,14 @@
     python3 scripts/health-check.py gq/ cb/      # ตรวจเฉพาะ prefix ที่ระบุ
     python3 scripts/health-check.py --write      # เขียนผลกลับเข้า model_info
 
+วัดด้วย "disable_fallbacks": true เพื่อให้เห็นสุขภาพของโมเดลตัวนั้นจริง ๆ
+ไม่ใช่ของตัวสำรอง — ถ้าไม่ปิด LiteLLM จะเงียบ ๆ ส่งไป provider อื่นแล้วเรารายงาน
+ว่า "ok" ทั้งที่โมเดลนั้นตายไปแล้ว (เจอจริงกับ hf/* ทั้ง 21 ตัวที่เครดิตหมด
+แต่ยังขึ้นว่า ok เพราะ fallback ทำงาน)
+
+ตัวที่ตายแล้วจะถูกยิงซ้ำอีกครั้งแบบเปิด fallback เพื่อบันทึก answered_by
+= โมเดลที่ตอบให้จริงตอนนี้ ปลายทางจะได้รู้ว่าขอ A แล้วได้ B
+
 แยกสาเหตุที่ล้มเหลวออกเป็น 2 กลุ่ม เพราะวิธีแก้ต่างกันสิ้นเชิง:
 
   ตายถาวร  — โมเดลถูกปลด/เปลี่ยนเป็นเสียเงิน ต้องแก้ litellm/config.yaml
@@ -37,6 +45,7 @@ from pathlib import Path
 import yaml
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+from config_edit import set_fields  # noqa: E402
 from failure_hints import classify  # noqa: E402
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -69,21 +78,26 @@ def _error_text(exc: Exception) -> str:
     return raw.strip()
 
 
-def check(model: str) -> tuple[str, str, str]:
+def check(model: str, allow_fallback: bool = False) -> tuple[str, str, str, str]:
+    """คืน (model, ผลตรวจ, ข้อความ error, ชื่อโมเดลที่ตอบจริง)"""
     is_embedding = model.startswith("emb/")
     try:
         if is_embedding:
-            _post("/v1/embeddings", {"model": model, "input": ["hi"]})
+            data = _post("/v1/embeddings", {"model": model, "input": ["hi"]})
         else:
-            _post("/v1/chat/completions", {
+            body = {
                 "model": model,
                 "messages": [{"role": "user", "content": "hi"}],
                 "max_tokens": 10,
-            })
-        return model, "OK", ""
+            }
+            if not allow_fallback:
+                # ไม่งั้นวัดสุขภาพของตัวสำรอง ไม่ใช่ของโมเดลที่ขอ
+                body["disable_fallbacks"] = True
+            data = _post("/v1/chat/completions", body)
+        return model, "OK", "", str(data.get("model") or "")
     except Exception as exc:  # noqa: BLE001 — อยากได้ทุก error ไม่ใช่แค่ HTTP
         msg = _error_text(exc)
-        return model, classify(msg), msg[:110]
+        return model, classify(msg), msg[:110], ""
 
 
 def main() -> int:
@@ -101,15 +115,37 @@ def main() -> int:
             print(f"ไม่มีโมเดลที่ขึ้นต้นด้วย {wanted}", file=sys.stderr)
             return 1
 
-    print(f"ตรวจ {len(models)} โมเดลผ่าน {BASE}\n")
-    results: list[tuple[str, str, str]] = []
+    print(f"ตรวจ {len(models)} โมเดลผ่าน {BASE} (ปิด fallback เพื่อวัดตัวจริง)\n")
+    results: list[tuple[str, str, str, str]] = []
     with futures.ThreadPoolExecutor(max_workers=8) as pool:
-        for model, status, msg in pool.map(check, models):
+        for model, status, msg, _ in pool.map(check, models):
             print("." if status == "OK" else "X", end="", flush=True)
-            results.append((model, status, msg))
+            results.append((model, status, msg, ""))
+
+    # รอบสอง: ตัวที่ตัวเองใช้ไม่ได้ อาจยังตอบได้ผ่าน fallback — ปลายทางควรรู้ว่าได้ใครแทน
+    broken = [i for i, r in enumerate(results) if r[1] != "OK"]
+    if broken:
+        print(f"\n\nตรวจซ้ำ {len(broken)} ตัวแบบเปิด fallback เพื่อดูว่าใครตอบแทน")
+        with futures.ThreadPoolExecutor(max_workers=8) as pool:
+            for idx, out in zip(broken, pool.map(
+                    lambda m: check(m, allow_fallback=True),
+                    [results[i][0] for i in broken])):
+                _, st, _, answered = out
+                print("." if st == "OK" else "X", end="", flush=True)
+                # ตอบด้วยชื่อเดิม = รอบแรกพังชั่วคราว (timeout/สะดุด) ไม่ใช่ถูกสลับตัว
+                if st == "OK" and answered and answered != results[idx][0]:
+                    m, s_, d_, _ = results[idx]
+                    results[idx] = (m, s_, d_, answered)
 
     ok = [r for r in results if r[1] == "OK"]
     print(f"\n\nใช้ได้ {len(ok)} / ทั้งหมด {len(results)}")
+
+    aliased = [r for r in results if r[3]]
+    if aliased:
+        print(f"\n{len(aliased)} ตัวใช้ไม่ได้ด้วยตัวเอง แต่ fallback ตอบแทนอยู่"
+              "  ← ปลายทางขอ A ได้ B")
+        for model, _, _, answered in aliased:
+            print(f"  {model:<24} → {answered}")
 
     for group in ("ตายถาวร", "โควต้าหมด", "timeout", "อื่นๆ"):
         rows = [r for r in results if r[1] == group]
@@ -121,7 +157,7 @@ def main() -> int:
             "timeout": "  ← provider ช้าหรือล่ม ลองใหม่ทีหลัง",
         }.get(group, "")
         print(f"\n{group} ({len(rows)}){note}")
-        for model, _, msg in rows:
+        for model, _, msg, _ in rows:
             print(f"  {model:<24} {msg}")
 
     if "--write" in sys.argv:
@@ -142,7 +178,7 @@ _STATUS = {
 }
 
 
-def _write_back(results: list[tuple[str, str, str]]) -> None:
+def _write_back(results: list[tuple[str, str, str, str]]) -> None:
     """เขียน status กลับเข้า model_info ของ config.yaml"""
     from datetime import datetime, timezone
 
@@ -151,25 +187,14 @@ def _write_back(results: list[tuple[str, str, str]]) -> None:
     text = path.read_text()
     written = 0
 
-    for model, verdict, detail in results:
-        status = _STATUS.get(verdict, "unknown")
-        block = f'      status: "{status}"\n      status_checked_at: "{stamp}"\n'
-        if detail:
-            safe = re.sub(r"\s+", " ", detail).replace('"', "'")[:120]
-            block += f'      status_detail: "{safe}"\n'
-
-        # ลบของเดิมก่อน แล้วแทรกใหม่ต่อจาก tags
-        pat_old = re.compile(
-            r"(- model_name: " + re.escape(model) + r"\n(?:.*?\n)*?)"
-            r"(?:      status: \"[^\"]*\"\n)?"
-            r"(?:      status_checked_at: \"[^\"]*\"\n)?"
-            r"(?:      status_detail: \"[^\"]*\"\n)?"
-            r"(      tags: \[[^\]]*\]\n)"
-        )
-        new, n = pat_old.subn(lambda m: m.group(1) + m.group(2) + block, text, count=1)
-        if n:
-            text = new
-            written += 1
+    for model, verdict, detail, answered in results:
+        text, ok = set_fields(text, model, {
+            "status": _STATUS.get(verdict, "unknown"),
+            "status_checked_at": stamp,
+            "status_detail": detail[:120] if detail else None,
+            "answered_by": answered or None,
+        })
+        written += ok
 
     path.write_text(text)
     print(f"\nเขียน status กลับเข้า config แล้ว {written} ตัว (เวลา {stamp})")
