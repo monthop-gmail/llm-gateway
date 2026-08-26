@@ -145,6 +145,33 @@ else
 	ok "จัดรูปแบบแล้ว"
 fi
 
+# ------------------------------------------------------------------ fallback
+note "ตรวจว่าตัวสำรองไม่ได้กินโควต้าก้อนเดียวกับตัวหลัก"
+if out=$(python3 - <<'EOF'
+import sys, yaml
+c = yaml.safe_load(open("litellm/config.yaml"))
+pool = {m["model_name"]: (m.get("model_info") or {}).get("quota_pool")
+        for m in c["model_list"]}
+bad = []
+for entry in c.get("litellm_settings", {}).get("fallbacks", []):
+    for src, chain in entry.items():
+        seen = [pool.get(src)]
+        for t in chain:
+            if t not in pool:
+                bad.append(f"{src} -> {t} (ไม่มีโมเดลนี้ใน config)")
+            elif pool.get(t) in seen:
+                bad.append(f"{src} -> {t} (pool {pool.get(t)} ซ้ำกับตัวก่อนหน้า)")
+            seen.append(pool.get(t))
+print("\n".join(bad))
+sys.exit(1 if bad else 0)
+EOF
+); then
+	ok "ทุก fallback ข้าม quota_pool จริง"
+else
+	echo "$out"
+	err "มี fallback ที่ pool ซ้ำ — โควต้าหมดพร้อมกัน ตัวสำรองจะไม่ช่วยอะไร"
+fi
+
 # -------------------------------------------------------------------- secret
 note "ตรวจว่าไม่มี secret หลุดเข้า git"
 if git ls-files --error-unmatch .env >/dev/null 2>&1; then

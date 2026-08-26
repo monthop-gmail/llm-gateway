@@ -28,7 +28,13 @@ model_list:
       description: "โมเดลจาก HuggingFace"
       provider_label: "HuggingFace"
       provider_quota: "⚠️ เครดิตรายเดือนหมดแล้ว — วิ่งผ่าน fallback ไป provider อื่น"
+      quota_pool: "huggingface"
+      quota_window: "monthly"
       tags: ["general"]
+      verified_max_prompt: 127972
+      max_prompt_detail: "ผ่านทุกขั้นถึง 127,972 (ไม่ได้ลองมากกว่านี้)"
+      status: "ok"
+      status_checked_at: "2026-08-26T07:48:59Z"
 
   - model_name: hf/qwen2.5-7b
     litellm_params:
@@ -40,7 +46,13 @@ model_list:
       description: "โมเดลจาก HuggingFace"
       provider_label: "HuggingFace"
       provider_quota: "⚠️ เครดิตรายเดือนหมดแล้ว — วิ่งผ่าน fallback ไป provider อื่น"
+      quota_pool: "huggingface"
+      quota_window: "monthly"
       tags: ["general"]
+      verified_max_prompt: 127972
+      max_prompt_detail: "ผ่านทุกขั้นถึง 127,972 (ไม่ได้ลองมากกว่านี้)"
+      status: "ok"
+      status_checked_at: "2026-08-26T07:48:59Z"
 
   - model_name: hf/gemma-3-12b
     litellm_params:
@@ -52,7 +64,13 @@ model_list:
       description: "โมเดลจาก HuggingFace"
       provider_label: "HuggingFace"
       provider_quota: "⚠️ เครดิตรายเดือนหมดแล้ว — วิ่งผ่าน fallback ไป provider อื่น"
+      quota_pool: "huggingface"
+      quota_window: "monthly"
       tags: ["general"]
+      verified_max_prompt: 127968
+      max_prompt_detail: "ผ่านทุกขั้นถึง 127,968 (ไม่ได้ลองมากกว่านี้)"
+      status: "ok"
+      status_checked_at: "2026-08-26T07:48:59Z"
 
   # gpt-oss — auto-route (groq ถูกปฏิเสธด้วย token ปัจจุบัน)
   - model_name: hf/gpt-oss-20b
@@ -65,7 +83,13 @@ model_list:
       description: "โมเดลจาก HuggingFace"
       provider_label: "HuggingFace"
       provider_quota: "⚠️ เครดิตรายเดือนหมดแล้ว — วิ่งผ่าน fallback ไป provider อื่น"
+      quota_pool: "huggingface"
+      quota_window: "monthly"
       tags: ["general"]
+      verified_max_prompt: 2774
+      max_prompt_detail: "error 402 ที่ ~14,000 — litellm.APIError: HuggingfaceException - {'error':'You have depleted your monthl"
+      status: "ok"
+      status_checked_at: "2026-08-26T07:48:59Z"
 
   # ---------- กลาง/ใหญ่ ----------
   - model_name: hf/llama-3.3-70b
@@ -78,7 +102,13 @@ model_list:
       description: "โมเดลจาก HuggingFace"
       provider_label: "HuggingFace"
       provider_quota: "⚠️ เครดิตรายเดือนหมดแล้ว — วิ่งผ่าน fallback ไป provider อื่น"
+      quota_pool: "huggingface"
+      quota_window: "monthly"
       tags: ["general"]
+      verified_max_prompt: 13768
+      max_prompt_detail: "error 402 ที่ ~32,000 — litellm.APIError: HuggingfaceException - {'error':'You have depleted your monthl"
+      status: "ok"
+      status_checked_at: "2026-08-26T07:48:59Z"
 
   - model_name: hf/gpt-oss-120b
     litellm_params:
@@ -90,7 +120,13 @@ model_list:
       description: "โมเดลจาก HuggingFace"
       provider_label: "HuggingFace"
       provider_quota: "⚠️ เครดิตรายเดือนหมดแล้ว — วิ่งผ่าน fallback ไป provider อื่น"
+      quota_pool: "huggingface"
+      quota_window: "monthly"
       tags: ["general"]
+      verified_max_prompt: 13655
+      max_prompt_detail: "timeout ที่ ~32,000 — timed out"
+      status: "ok"
+      status_checked_at: "2026-08-26T07:48:59Z"
 
   - model_name: hf/qwen3.5-397b
     litellm_params:
@@ -102,7 +138,11 @@ model_list:
       description: "โมเดลจาก HuggingFace"
       provider_label: "HuggingFace"
       provider_quota: "⚠️ เครดิตรายเดือนหมดแล้ว — วิ่งผ่าน fallback ไป provider อื่น"
+      quota_pool: "huggingface"
+      quota_window: "monthly"
       tags: ["general"]
+      status: "ok"
+      status_checked_at: "2026-08-26T07:48:59Z"
 
   - model_name: hf/glm-4.7
     litellm_params:
@@ -114,7 +154,13 @@ model_list:
       description: "โมเดลจาก HuggingFace"
       provider_label: "HuggingFace"
       provider_quota: "⚠️ เครดิตรายเดือนหมดแล้ว — วิ่งผ่าน fallback ไป provider อื่น"
+      quota_pool: "huggingface"
+      quota_window: "monthly"
       tags: ["general"]
+      verified_max_prompt: 13850
+      max_prompt_detail: "error 402 ที่ ~32,000 — litellm.APIError: HuggingfaceException - {'error':'You have depleted your monthl"
+      status: "ok"
+      status_checked_at: "2026-08-26T07:48:59Z"
 
   - model_name: hf/kimi-k2.6
     litellm_params:
@@ -126,7 +172,13 @@ model_list:
       description: "โมเดลจาก HuggingFace"
       provider_label: "HuggingFace"
       provider_quota: "⚠️ เครดิตรายเดือนหมดแล้ว — วิ่งผ่าน fallback ไป provider อื่น"
+      quota_pool: "huggingface"
+      quota_window: "monthly"
       tags: ["general"]
+      verified_max_prompt: 63978
+      max_prompt_detail: "error 402 ที่ ~128,000 — litellm.APIError: HuggingfaceException - {'error':'You have depleted your monthl"
+      status: "ok"
+      status_checked_at: "2026-08-26T07:48:59Z"
 
   # ---------- reasoning ----------
   - model_name: hf/deepseek-r1
@@ -139,7 +191,11 @@ model_list:
       description: "โมเดลจาก HuggingFace"
       provider_label: "HuggingFace"
       provider_quota: "⚠️ เครดิตรายเดือนหมดแล้ว — วิ่งผ่าน fallback ไป provider อื่น"
+      quota_pool: "huggingface"
+      quota_window: "monthly"
       tags: ["general"]
+      status: "ok"
+      status_checked_at: "2026-08-26T07:48:59Z"
 
   - model_name: hf/deepseek-v3.2
     litellm_params:
@@ -151,7 +207,13 @@ model_list:
       description: "โมเดลจาก HuggingFace"
       provider_label: "HuggingFace"
       provider_quota: "⚠️ เครดิตรายเดือนหมดแล้ว — วิ่งผ่าน fallback ไป provider อื่น"
+      quota_pool: "huggingface"
+      quota_window: "monthly"
       tags: ["general"]
+      verified_max_prompt: 127972
+      max_prompt_detail: "ผ่านทุกขั้นถึง 127,972 (ไม่ได้ลองมากกว่านี้)"
+      status: "ok"
+      status_checked_at: "2026-08-26T07:48:59Z"
 
   # Qwen3.6-27B — รุ่นใหม่ล่าสุดที่ยังฟรีบน HF
   # (Qwen3.8-27B ออกแล้วเมื่อ 2026-08-05 แต่ยังไม่มี provider ฟรี — ดูหมายเหตุท้ายไฟล์)
@@ -165,7 +227,13 @@ model_list:
       description: "โมเดลจาก HuggingFace"
       provider_label: "HuggingFace"
       provider_quota: "⚠️ เครดิตรายเดือนหมดแล้ว — วิ่งผ่าน fallback ไป provider อื่น"
+      quota_pool: "huggingface"
+      quota_window: "monthly"
       tags: ["general"]
+      verified_max_prompt: 13891
+      max_prompt_detail: "error 402 ที่ ~32,000 — litellm.APIError: HuggingfaceException - {'error':'You have depleted your monthl"
+      status: "ok"
+      status_checked_at: "2026-08-26T07:48:59Z"
 
   # SEA-LION — โมเดล AI Singapore เน้นภาษาอาเซียนรวมไทย
   - model_name: hf/sea-lion-32b
@@ -178,7 +246,11 @@ model_list:
       description: "เน้นภาษาอาเซียนรวมไทย ฐาน Qwen"
       provider_label: "HuggingFace"
       provider_quota: "⚠️ เครดิตรายเดือนหมดแล้ว — วิ่งผ่าน fallback ไป provider อื่น"
+      quota_pool: "huggingface"
+      quota_window: "monthly"
       tags: ["thai"]
+      status: "ok"
+      status_checked_at: "2026-08-26T07:48:59Z"
 
   # ---------- รุ่นใหม่ (เพิ่ม 2026-08-23) ----------
   - model_name: hf/glm-5.2
@@ -191,7 +263,13 @@ model_list:
       description: "โมเดลจาก HuggingFace"
       provider_label: "HuggingFace"
       provider_quota: "⚠️ เครดิตรายเดือนหมดแล้ว — วิ่งผ่าน fallback ไป provider อื่น"
+      quota_pool: "huggingface"
+      quota_window: "monthly"
       tags: ["quality-top", "general"]
+      verified_max_prompt: 31951
+      max_prompt_detail: "error 402 ที่ ~64,000 — litellm.APIError: HuggingfaceException - {'error':'You have depleted your monthl"
+      status: "ok"
+      status_checked_at: "2026-08-26T07:48:59Z"
 
   - model_name: hf/kimi-k3
     litellm_params:
@@ -203,7 +281,14 @@ model_list:
       description: "โมเดลจาก HuggingFace"
       provider_label: "HuggingFace"
       provider_quota: "⚠️ เครดิตรายเดือนหมดแล้ว — วิ่งผ่าน fallback ไป provider อื่น"
+      quota_pool: "huggingface"
+      quota_window: "monthly"
       tags: ["quality-top", "general"]
+      verified_max_prompt: 31964
+      max_prompt_detail: "timeout ที่ ~64,000 — timed out"
+      status: "unknown"
+      status_checked_at: "2026-08-26T07:48:59Z"
+      status_detail: "timed out"
 
   - model_name: hf/deepseek-v4-pro
     litellm_params:
@@ -215,7 +300,13 @@ model_list:
       description: "โมเดลจาก HuggingFace"
       provider_label: "HuggingFace"
       provider_quota: "⚠️ เครดิตรายเดือนหมดแล้ว — วิ่งผ่าน fallback ไป provider อื่น"
+      quota_pool: "huggingface"
+      quota_window: "monthly"
       tags: ["quality-top", "general"]
+      verified_max_prompt: 63978
+      max_prompt_detail: "timeout ที่ ~128,000 — timed out"
+      status: "ok"
+      status_checked_at: "2026-08-26T07:48:59Z"
 
   - model_name: hf/llama-4-scout
     litellm_params:
@@ -227,7 +318,13 @@ model_list:
       description: "โมเดลจาก HuggingFace"
       provider_label: "HuggingFace"
       provider_quota: "⚠️ เครดิตรายเดือนหมดแล้ว — วิ่งผ่าน fallback ไป provider อื่น"
+      quota_pool: "huggingface"
+      quota_window: "monthly"
       tags: ["general"]
+      verified_max_prompt: 63975
+      max_prompt_detail: "error 402 ที่ ~128,000 — litellm.APIError: HuggingfaceException - {'error':'You have depleted your monthl"
+      status: "ok"
+      status_checked_at: "2026-08-26T07:48:59Z"
 
   - model_name: hf/qwen3.6-35b
     litellm_params:
@@ -239,7 +336,13 @@ model_list:
       description: "โมเดลจาก HuggingFace"
       provider_label: "HuggingFace"
       provider_quota: "⚠️ เครดิตรายเดือนหมดแล้ว — วิ่งผ่าน fallback ไป provider อื่น"
+      quota_pool: "huggingface"
+      quota_window: "monthly"
       tags: ["general"]
+      verified_max_prompt: 13865
+      max_prompt_detail: "error 402 ที่ ~32,000 — litellm.APIError: HuggingfaceException - {'error':'You have depleted your monthl"
+      status: "ok"
+      status_checked_at: "2026-08-26T07:48:59Z"
 
   - model_name: hf/gemma-4-26b
     litellm_params:
@@ -251,7 +354,13 @@ model_list:
       description: "โมเดลจาก HuggingFace"
       provider_label: "HuggingFace"
       provider_quota: "⚠️ เครดิตรายเดือนหมดแล้ว — วิ่งผ่าน fallback ไป provider อื่น"
+      quota_pool: "huggingface"
+      quota_window: "monthly"
       tags: ["general"]
+      verified_max_prompt: 127968
+      max_prompt_detail: "ผ่านทุกขั้นถึง 127,968 (ไม่ได้ลองมากกว่านี้)"
+      status: "ok"
+      status_checked_at: "2026-08-26T07:48:59Z"
 
   # SEA-LION รุ่น Gemma (คนละตัวกับ hf/sea-lion-32b ที่เป็นฐาน Qwen)
   - model_name: hf/sea-lion-gemma-27b
@@ -264,7 +373,11 @@ model_list:
       description: "เน้นภาษาอาเซียนรวมไทย ฐาน Gemma"
       provider_label: "HuggingFace"
       provider_quota: "⚠️ เครดิตรายเดือนหมดแล้ว — วิ่งผ่าน fallback ไป provider อื่น"
+      quota_pool: "huggingface"
+      quota_window: "monthly"
       tags: ["thai"]
+      status: "ok"
+      status_checked_at: "2026-08-26T07:48:59Z"
 
   # ---------- เขียนโค้ด ----------
   - model_name: hf/qwen3-coder-next
@@ -279,7 +392,13 @@ model_list:
       description: "โมเดลจาก HuggingFace"
       provider_label: "HuggingFace"
       provider_quota: "⚠️ เครดิตรายเดือนหมดแล้ว — วิ่งผ่าน fallback ไป provider อื่น"
+      quota_pool: "huggingface"
+      quota_window: "monthly"
       tags: ["coding-ok"]
+      verified_max_prompt: 127972
+      max_prompt_detail: "ผ่านทุกขั้นถึง 127,972 (ไม่ได้ลองมากกว่านี้)"
+      status: "ok"
+      status_checked_at: "2026-08-26T07:48:59Z"
 
   ####################################################################
   # เจ้าอื่นที่มี free tier — ปลดคอมเมนต์แล้วใส่ key ใน .env
@@ -307,7 +426,13 @@ model_list:
       description: "ค้นเว็บ + เปิด URL ได้ (executed_tools: search/visit) หน้าใหญ่เกินจะ error — รับ tool จาก client ไม่ได้ (Groq: tool calling is not supported with this model)"
       provider_label: "Groq"
       provider_quota: "~200K token/วัน ตอบเร็ว"
+      quota_pool: "groq"
+      quota_window: "daily"
       tags: ["web-access", "no-tools"]
+      verified_max_prompt: 5635
+      max_prompt_detail: "โควต้า ที่ ~14,000 — litellm.RateLimitError: RateLimitError: GroqException - {'error':{'message':'Rat"
+      status: "ok"
+      status_checked_at: "2026-08-26T07:48:59Z"
       verified_by: "gateway 2026-08-26 (verify-capabilities)"
 
   - model_name: gq/compound-mini
@@ -320,7 +445,11 @@ model_list:
       description: "ค้นเว็บ + เปิด URL ได้ เล็กกว่า compound เร็วกว่า — รับ tool จาก client ไม่ได้ (Groq: tool calling is not supported with this model)"
       provider_label: "Groq"
       provider_quota: "~200K token/วัน ตอบเร็ว"
+      quota_pool: "groq"
+      quota_window: "daily"
       tags: ["web-access", "no-tools"]
+      status: "ok"
+      status_checked_at: "2026-08-26T07:48:59Z"
       verified_by: "gateway 2026-08-26 (verify-capabilities)"
 
   - model_name: gq/gpt-oss-120b
@@ -335,7 +464,13 @@ model_list:
       description: "เขียนโค้ดได้ครบทั้ง 3 ข้อในการทดสอบ"
       provider_label: "Groq"
       provider_quota: "~200K token/วัน ตอบเร็ว"
+      quota_pool: "groq"
+      quota_window: "daily"
       tags: ["coding-best"]
+      verified_max_prompt: 2774
+      max_prompt_detail: "โควต้า ที่ ~14,000 — litellm.RateLimitError: RateLimitError: GroqException - {'error':{'message':'Req"
+      status: "ok"
+      status_checked_at: "2026-08-26T07:48:59Z"
 
   - model_name: gq/qwen3.6-27b
     litellm_params:
@@ -349,7 +484,13 @@ model_list:
       description: "thinking model ที่พ่น <think> ลงใน content จน token หมด — อย่าใช้เขียนโค้ด"
       provider_label: "Groq"
       provider_quota: "~200K token/วัน ตอบเร็ว"
+      quota_pool: "groq"
+      quota_window: "daily"
       tags: ["coding-weak"]
+      verified_max_prompt: 2712
+      max_prompt_detail: "โควต้า ที่ ~14,000 — litellm.RateLimitError: RateLimitError: GroqException - {'error':{'message':'Req"
+      status: "ok"
+      status_checked_at: "2026-08-26T07:48:59Z"
       verified_by: "gateway 2026-08-26 (verify-capabilities)"
 
   # ---------- Cerebras — โควต้าใหญ่สุด 1M token/วัน ----------
@@ -372,7 +513,13 @@ model_list:
       description: "เขียนโค้ดได้ครบ 3 ข้อและเร็วที่สุดในกลุ่ม — แต่ TPM สะสมทำให้ agent ที่ยิง 13K tokens ทุก call ชนเพดานเร็ว ไม่เหมาะเป็น main ของ agent loop"
       provider_label: "Cerebras"
       provider_quota: "~1M token/วัน แต่เป็นโควต้าสะสมต่อนาที (TPM) ยิงงานใหญ่ติดกันจะชน"
+      quota_pool: "cerebras"
+      quota_window: "daily"
       tags: ["coding-best"]
+      verified_max_prompt: 13655
+      max_prompt_detail: "timeout ที่ ~32,000 — timed out"
+      status: "ok"
+      status_checked_at: "2026-08-26T07:48:59Z"
       verified_by: "hermes-line-bot 2026-08-26 (tool loop + prompt 14K · ชน TPM ถ้าใช้เป็น main)"
 
   - model_name: cb/gemma-4-31b
@@ -388,7 +535,13 @@ model_list:
       description: "เขียนโค้ดได้ครบทั้ง 3 ข้อในการทดสอบ ตอบเร็ว (359ms)"
       provider_label: "Cerebras"
       provider_quota: "~1M token/วัน แต่เป็นโควต้าสะสมต่อนาที (TPM) ยิงงานใหญ่ติดกันจะชน"
+      quota_pool: "cerebras"
+      quota_window: "daily"
       tags: ["coding-best", "fast"]
+      verified_max_prompt: 13883
+      max_prompt_detail: "timeout ที่ ~32,000 — timed out"
+      status: "ok"
+      status_checked_at: "2026-08-26T07:48:59Z"
       verified_by: "gateway 2026-08-23 (bench-coding 3/3)"
 
   # zai-glm-4.7 ถูก Cerebras archive แล้ว (2026-08-23): "Model zai-glm-4.7 is
@@ -414,7 +567,13 @@ model_list:
       description: "โมเดลจาก Mistral"
       provider_label: "Mistral"
       provider_quota: "1B token/เดือน — โควต้าใจกว้างที่สุด"
+      quota_pool: "mistral"
+      quota_window: "monthly"
       tags: ["general"]
+      verified_max_prompt: 63962
+      max_prompt_detail: "โควต้า ที่ ~128,000 — litellm.RateLimitError: RateLimitError: MistralException - {'object':'error','me"
+      status: "ok"
+      status_checked_at: "2026-08-26T07:48:59Z"
 
   - model_name: mi/medium
     litellm_params:
@@ -426,7 +585,13 @@ model_list:
       description: "โมเดลจาก Mistral"
       provider_label: "Mistral"
       provider_quota: "1B token/เดือน — โควต้าใจกว้างที่สุด"
+      quota_pool: "mistral"
+      quota_window: "monthly"
       tags: ["general"]
+      verified_max_prompt: 31951
+      max_prompt_detail: "โควต้า ที่ ~64,000 — litellm.RateLimitError: RateLimitError: MistralException - {'object':'error','me"
+      status: "ok"
+      status_checked_at: "2026-08-26T07:48:59Z"
 
   - model_name: mi/large
     litellm_params:
@@ -440,7 +605,12 @@ model_list:
       description: "โมเดลจาก Mistral — ผ่านเกณฑ์ hermes: tool loop 2 รอบ + prompt 14K + อยู่กับภาษาไทย 3/3"
       provider_label: "Mistral"
       provider_quota: "1B token/เดือน — โควต้าใจกว้างที่สุด"
+      quota_pool: "mistral"
+      quota_window: "monthly"
       tags: ["coding-ok"]
+      status: "rate_limited"
+      status_checked_at: "2026-08-26T07:48:59Z"
+      status_detail: "litellm.RateLimitError: RateLimitError: MistralException - {'object':'error','message':'Rate limit exceeded','"
       verified_by: "hermes-line-bot 2026-08-26 (tool loop + prompt 14K + ภาษาไทย)"
 
   - model_name: mi/codestral
@@ -455,7 +625,13 @@ model_list:
       description: "โมเดลจาก Mistral"
       provider_label: "Mistral"
       provider_quota: "1B token/เดือน — โควต้าใจกว้างที่สุด"
+      quota_pool: "mistral"
+      quota_window: "monthly"
       tags: ["coding-ok"]
+      verified_max_prompt: 127972
+      max_prompt_detail: "ผ่านทุกขั้นถึง 127,972 (ไม่ได้ลองมากกว่านี้)"
+      status: "ok"
+      status_checked_at: "2026-08-26T07:48:59Z"
 
   # devstral — ออกแบบมาสำหรับ coding agent โดยเฉพาะ
   - model_name: mi/devstral
@@ -470,7 +646,13 @@ model_list:
       description: "โมเดลจาก Mistral"
       provider_label: "Mistral"
       provider_quota: "1B token/เดือน — โควต้าใจกว้างที่สุด"
+      quota_pool: "mistral"
+      quota_window: "monthly"
       tags: ["coding-ok"]
+      verified_max_prompt: 127972
+      max_prompt_detail: "ผ่านทุกขั้นถึง 127,972 (ไม่ได้ลองมากกว่านี้)"
+      status: "ok"
+      status_checked_at: "2026-08-26T07:48:59Z"
 
   - model_name: mi/ministral-8b
     litellm_params:
@@ -482,7 +664,13 @@ model_list:
       description: "โมเดลจาก Mistral"
       provider_label: "Mistral"
       provider_quota: "1B token/เดือน — โควต้าใจกว้างที่สุด"
+      quota_pool: "mistral"
+      quota_window: "monthly"
       tags: ["general"]
+      verified_max_prompt: 127972
+      max_prompt_detail: "ผ่านทุกขั้นถึง 127,972 (ไม่ได้ลองมากกว่านี้)"
+      status: "ok"
+      status_checked_at: "2026-08-26T07:48:59Z"
 
   # magistral — สาย reasoning ของ Mistral (เพิ่ม 2026-08-23)
   - model_name: mi/magistral-medium
@@ -498,7 +686,13 @@ model_list:
       description: "เขียนโค้ดได้ครบ 3 ข้อ — ผ่านเกณฑ์ hermes ครบรวมภาษาไทย แต่เป็น reasoning model ใช้ 146-227s ต่อ turn จริง ช้าเกินสำหรับแชท"
       provider_label: "Mistral"
       provider_quota: "1B token/เดือน — โควต้าใจกว้างที่สุด"
+      quota_pool: "mistral"
+      quota_window: "monthly"
       tags: ["coding-best"]
+      verified_max_prompt: 13850
+      max_prompt_detail: "โควต้า ที่ ~32,000 — litellm.RateLimitError: RateLimitError: MistralException - {'object':'error','me"
+      status: "ok"
+      status_checked_at: "2026-08-26T07:48:59Z"
       verified_by: "hermes-line-bot 2026-08-26 (ผ่านครบ แต่ 146-227s/turn ช้าเกินใช้กับแชท)"
 
   - model_name: mi/magistral-small
@@ -514,7 +708,13 @@ model_list:
       description: "เขียนโค้ดได้ไม่ดีในการทดสอบ ตอบเร็ว (498ms)"
       provider_label: "Mistral"
       provider_quota: "1B token/เดือน — โควต้าใจกว้างที่สุด"
+      quota_pool: "mistral"
+      quota_window: "monthly"
       tags: ["coding-weak", "fast"]
+      verified_max_prompt: 63962
+      max_prompt_detail: "โควต้า ที่ ~128,000 — litellm.RateLimitError: RateLimitError: MistralException - {'object':'error','me"
+      status: "ok"
+      status_checked_at: "2026-08-26T07:48:59Z"
 
   - model_name: mi/mistral-code
     litellm_params:
@@ -529,7 +729,13 @@ model_list:
       description: "ตอบเร็ว (416ms)"
       provider_label: "Mistral"
       provider_quota: "1B token/เดือน — โควต้าใจกว้างที่สุด"
+      quota_pool: "mistral"
+      quota_window: "monthly"
       tags: ["coding-ok", "fast"]
+      verified_max_prompt: 127972
+      max_prompt_detail: "ผ่านทุกขั้นถึง 127,972 (ไม่ได้ลองมากกว่านี้)"
+      status: "ok"
+      status_checked_at: "2026-08-26T07:48:59Z"
 
   - model_name: mi/ministral-14b
     litellm_params:
@@ -542,7 +748,13 @@ model_list:
       description: "ตอบเร็ว (512ms) — ผ่านเกณฑ์ hermes ครบ 4 ข้อ และเร็วที่สุดในกลุ่มที่ผ่าน (18s ต่อ turn จริงใน agent loop) เหมาะเป็น main ของบอทแชท"
       provider_label: "Mistral"
       provider_quota: "1B token/เดือน — โควต้าใจกว้างที่สุด"
+      quota_pool: "mistral"
+      quota_window: "monthly"
       tags: ["fast"]
+      verified_max_prompt: 127972
+      max_prompt_detail: "ผ่านทุกขั้นถึง 127,972 (ไม่ได้ลองมากกว่านี้)"
+      status: "ok"
+      status_checked_at: "2026-08-26T07:48:59Z"
       verified_by: "hermes-line-bot 2026-08-26 (tool loop + prompt 14K + ภาษาไทย 3/3 · 18s/turn)"
 
   - model_name: mi/devstral-medium
@@ -558,7 +770,13 @@ model_list:
       description: "ตอบเร็ว (595ms) — ผ่านเกณฑ์ hermes ครบ แต่ 51s ต่อ turn จริง ใกล้เพดาน reply token ของ LINE (60s)"
       provider_label: "Mistral"
       provider_quota: "1B token/เดือน — โควต้าใจกว้างที่สุด"
+      quota_pool: "mistral"
+      quota_window: "monthly"
       tags: ["coding-ok", "fast"]
+      verified_max_prompt: 127972
+      max_prompt_detail: "ผ่านทุกขั้นถึง 127,972 (ไม่ได้ลองมากกว่านี้)"
+      status: "ok"
+      status_checked_at: "2026-08-26T07:48:59Z"
       verified_by: "hermes-line-bot 2026-08-26 (tool loop + prompt 14K + ภาษาไทย 3/3 · 51s/turn)"
 
   # เพิ่ม 2026-08-26 — สาย coding ของ Mistral
@@ -575,7 +793,13 @@ model_list:
       description: "ตอบเร็ว (624ms)"
       provider_label: "Mistral"
       provider_quota: "1B token/เดือน — โควต้าใจกว้างที่สุด"
+      quota_pool: "mistral"
+      quota_window: "monthly"
       tags: ["coding-ok", "fast"]
+      verified_max_prompt: 127972
+      max_prompt_detail: "ผ่านทุกขั้นถึง 127,972 (ไม่ได้ลองมากกว่านี้)"
+      status: "ok"
+      status_checked_at: "2026-08-26T07:48:59Z"
 
   # FIM = fill-in-the-middle เหมาะกับ autocomplete ในบรรณาธิการ
   - model_name: mi/mistral-code-fim
@@ -588,7 +812,13 @@ model_list:
       description: "fill-in-the-middle — ออกแบบมาสำหรับ autocomplete ในบรรณาธิการ"
       provider_label: "Mistral"
       provider_quota: "1B token/เดือน — โควต้าใจกว้างที่สุด"
+      quota_pool: "mistral"
+      quota_window: "monthly"
       tags: ["general"]
+      verified_max_prompt: 127972
+      max_prompt_detail: "ผ่านทุกขั้นถึง 127,972 (ไม่ได้ลองมากกว่านี้)"
+      status: "ok"
+      status_checked_at: "2026-08-26T07:48:59Z"
 
   - model_name: mi/ministral-3b
     litellm_params:
@@ -603,7 +833,13 @@ model_list:
       description: "เขียนโค้ดได้ไม่ดีในการทดสอบ ตอบเร็ว (373ms)"
       provider_label: "Mistral"
       provider_quota: "1B token/เดือน — โควต้าใจกว้างที่สุด"
+      quota_pool: "mistral"
+      quota_window: "monthly"
       tags: ["coding-weak", "fast"]
+      verified_max_prompt: 127972
+      max_prompt_detail: "ผ่านทุกขั้นถึง 127,972 (ไม่ได้ลองมากกว่านี้)"
+      status: "ok"
+      status_checked_at: "2026-08-26T07:48:59Z"
 
   # ---------- Cloudflare Workers AI — ฟรี 10,000 neurons/วัน ----------
   # ต้องมี CLOUDFLARE_ACCOUNT_ID ใน .env ด้วย
@@ -621,7 +857,11 @@ model_list:
       description: "เน้นภาษาอาเซียนรวมไทย (AI Singapore)"
       provider_label: "Cloudflare Workers AI"
       provider_quota: "10,000 neurons/วัน"
+      quota_pool: "cloudflare"
+      quota_window: "daily"
       tags: ["thai"]
+      status: "ok"
+      status_checked_at: "2026-08-26T07:48:59Z"
 
   - model_name: cf/llama-3.3-70b
     litellm_params:
@@ -633,7 +873,11 @@ model_list:
       description: "โมเดลจาก Cloudflare Workers AI"
       provider_label: "Cloudflare Workers AI"
       provider_quota: "10,000 neurons/วัน"
+      quota_pool: "cloudflare"
+      quota_window: "daily"
       tags: ["general"]
+      status: "ok"
+      status_checked_at: "2026-08-26T07:48:59Z"
 
   - model_name: cf/qwen2.5-coder-32b
     litellm_params:
@@ -647,7 +891,11 @@ model_list:
       description: "เขียนโค้ดได้ครบทั้ง 3 ข้อในการทดสอบ"
       provider_label: "Cloudflare Workers AI"
       provider_quota: "10,000 neurons/วัน"
+      quota_pool: "cloudflare"
+      quota_window: "daily"
       tags: ["coding-best"]
+      status: "ok"
+      status_checked_at: "2026-08-26T07:48:59Z"
 
   # ---------- รุ่นใหม่บน Cloudflare (เพิ่ม 2026-08-23) ----------
   # Qwen3.8-27B — ตัวที่เมื่อ 2026-08-16 ยังไม่มี provider ฟรี ตอนนี้มาอยู่ที่นี่แล้ว
@@ -664,7 +912,11 @@ model_list:
       description: "thinking model ที่ token หมดก่อนเขียนโค้ดจบ + Cloudflare timeout เมื่อ max_tokens สูง"
       provider_label: "Cloudflare Workers AI"
       provider_quota: "10,000 neurons/วัน"
+      quota_pool: "cloudflare"
+      quota_window: "daily"
       tags: ["coding-weak"]
+      status: "ok"
+      status_checked_at: "2026-08-26T07:48:59Z"
 
   - model_name: cf/llama-4-scout
     litellm_params:
@@ -679,7 +931,11 @@ model_list:
       description: "ตอบเร็ว (456ms) ผ่าน tool calling + prompt 14K — แต่หลุดไปตอบอังกฤษ 1 ใน 3 ครั้งเมื่อรันใน agent loop จริงทั้งที่ผู้ใช้พิมพ์ไทย ไม่ควรเป็น main ของบอทภาษาไทย"
       provider_label: "Cloudflare Workers AI"
       provider_quota: "10,000 neurons/วัน"
+      quota_pool: "cloudflare"
+      quota_window: "daily"
       tags: ["coding-ok", "fast"]
+      status: "ok"
+      status_checked_at: "2026-08-26T07:48:59Z"
       verified_by: "hermes-line-bot 2026-08-26 (language drift 1/3 ใน tool loop)"
 
   - model_name: cf/nemotron-3-120b
@@ -695,7 +951,11 @@ model_list:
       description: "เขียนโค้ดได้ไม่ดีในการทดสอบ"
       provider_label: "Cloudflare Workers AI"
       provider_quota: "10,000 neurons/วัน"
+      quota_pool: "cloudflare"
+      quota_window: "daily"
       tags: ["coding-weak"]
+      status: "ok"
+      status_checked_at: "2026-08-26T07:48:59Z"
 
   - model_name: cf/gemma-4-26b
     litellm_params:
@@ -708,7 +968,11 @@ model_list:
       description: "โมเดลจาก Cloudflare Workers AI"
       provider_label: "Cloudflare Workers AI"
       provider_quota: "10,000 neurons/วัน"
+      quota_pool: "cloudflare"
+      quota_window: "daily"
       tags: ["general"]
+      status: "ok"
+      status_checked_at: "2026-08-26T07:48:59Z"
 
   - model_name: cf/qwen3-30b-a3b
     litellm_params:
@@ -723,7 +987,11 @@ model_list:
       description: "โมเดลจาก Cloudflare Workers AI — ทดสอบซ้ำ 2026-08-26 เรียก tool ได้แล้ว (เดิมไม่เรียก)"
       provider_label: "Cloudflare Workers AI"
       provider_quota: "10,000 neurons/วัน"
+      quota_pool: "cloudflare"
+      quota_window: "daily"
       tags: ["coding-ok"]
+      status: "ok"
+      status_checked_at: "2026-08-26T07:48:59Z"
       verified_by: "gateway 2026-08-26 (ทดสอบซ้ำ tool calling)"
 
   # เพิ่ม 2026-08-26 — ทดสอบยิงผ่านแล้ว
@@ -740,7 +1008,11 @@ model_list:
       description: "โมเดลจาก Cloudflare Workers AI"
       provider_label: "Cloudflare Workers AI"
       provider_quota: "10,000 neurons/วัน"
+      quota_pool: "cloudflare"
+      quota_window: "daily"
       tags: ["coding-ok"]
+      status: "ok"
+      status_checked_at: "2026-08-26T07:48:59Z"
 
   - model_name: cf/qwq-32b
     litellm_params:
@@ -753,7 +1025,11 @@ model_list:
       description: "โมเดลจาก Cloudflare Workers AI"
       provider_label: "Cloudflare Workers AI"
       provider_quota: "10,000 neurons/วัน"
+      quota_pool: "cloudflare"
+      quota_window: "daily"
       tags: ["general"]
+      status: "ok"
+      status_checked_at: "2026-08-26T07:48:59Z"
 
   - model_name: cf/deepseek-r1-32b
     litellm_params:
@@ -766,7 +1042,11 @@ model_list:
       description: "โมเดลจาก Cloudflare Workers AI"
       provider_label: "Cloudflare Workers AI"
       provider_quota: "10,000 neurons/วัน"
+      quota_pool: "cloudflare"
+      quota_window: "daily"
       tags: ["no-tools"]
+      status: "ok"
+      status_checked_at: "2026-08-26T07:48:59Z"
       verified_by: "gateway 2026-08-26 (verify-capabilities)"
 
   - model_name: cf/granite-4-micro
@@ -780,7 +1060,11 @@ model_list:
       description: "ตอบเร็ว (676ms)"
       provider_label: "Cloudflare Workers AI"
       provider_quota: "10,000 neurons/วัน"
+      quota_pool: "cloudflare"
+      quota_window: "daily"
       tags: ["fast"]
+      status: "ok"
+      status_checked_at: "2026-08-26T07:48:59Z"
 
   # โมเดล vision ตัวเดียวของ gateway (เปิดใช้ 2026-08-26)
   #
@@ -799,7 +1083,11 @@ model_list:
       description: "ไม่เรียก tool — และ vision ยังติด AiError: Unable to add image (format ที่ Cloudflare รับยังไม่ตรง)"
       provider_label: "Cloudflare Workers AI"
       provider_quota: "10,000 neurons/วัน"
+      quota_pool: "cloudflare"
+      quota_window: "daily"
       tags: ["general", "no-tools"]
+      status: "ok"
+      status_checked_at: "2026-08-26T07:48:59Z"
       verified_by: "gateway 2026-08-26 (verify-capabilities — vision ยังติด format)"
 
   # glm-5.2 กับ deepseek-v4-pro-0813 มีบน Cloudflare แต่ยังไม่อยู่ใน Workers Free plan
@@ -823,7 +1111,11 @@ model_list:
       description: "context 1M ตอบไทยดี"
       provider_label: "OpenRouter"
       provider_quota: "50–1,000 req/วัน แล้วแต่ยอดเติมเงิน"
+      quota_pool: "openrouter"
+      quota_window: "daily"
       tags: ["coding-best", "long-context"]
+      status: "ok"
+      status_checked_at: "2026-08-26T07:48:59Z"
 
   - model_name: or/nemotron-lightning
     litellm_params:
@@ -836,7 +1128,11 @@ model_list:
       description: "พ่น reasoning ปนมาใน content ต้องกรองเอง"
       provider_label: "OpenRouter"
       provider_quota: "50–1,000 req/วัน แล้วแต่ยอดเติมเงิน"
+      quota_pool: "openrouter"
+      quota_window: "daily"
       tags: ["long-context"]
+      status: "ok"
+      status_checked_at: "2026-08-26T07:48:59Z"
 
   - model_name: or/nemotron-super-120b
     litellm_params:
@@ -848,7 +1144,11 @@ model_list:
       description: "โมเดลจาก OpenRouter"
       provider_label: "OpenRouter"
       provider_quota: "50–1,000 req/วัน แล้วแต่ยอดเติมเงิน"
+      quota_pool: "openrouter"
+      quota_window: "daily"
       tags: ["general"]
+      status: "ok"
+      status_checked_at: "2026-08-26T07:48:59Z"
 
 
   - model_name: or/north-mini-code
@@ -863,7 +1163,11 @@ model_list:
       description: "เขียนโค้ดได้ครบทั้ง 3 ข้อในการทดสอบ"
       provider_label: "OpenRouter"
       provider_quota: "50–1,000 req/วัน แล้วแต่ยอดเติมเงิน"
+      quota_pool: "openrouter"
+      quota_window: "daily"
       tags: ["coding-best"]
+      status: "ok"
+      status_checked_at: "2026-08-26T07:48:59Z"
 
   # เพิ่ม 2026-08-23 — ทดสอบยิงผ่านแล้ว
   - model_name: or/dots-3-note
@@ -879,7 +1183,11 @@ model_list:
       description: "context 512K ใหญ่สุดในกลุ่ม OpenRouter :free"
       provider_label: "OpenRouter"
       provider_quota: "50–1,000 req/วัน แล้วแต่ยอดเติมเงิน"
+      quota_pool: "openrouter"
+      quota_window: "daily"
       tags: ["coding-ok", "long-context"]
+      status: "ok"
+      status_checked_at: "2026-08-26T07:48:59Z"
 
   - model_name: or/laguna-s-2.1
     litellm_params:
@@ -893,7 +1201,11 @@ model_list:
       description: "เขียนโค้ดได้ไม่ดีในการทดสอบ"
       provider_label: "OpenRouter"
       provider_quota: "50–1,000 req/วัน แล้วแต่ยอดเติมเงิน"
+      quota_pool: "openrouter"
+      quota_window: "daily"
       tags: ["coding-weak"]
+      status: "ok"
+      status_checked_at: "2026-08-26T07:48:59Z"
 
 
   # เพิ่ม 2026-08-23 (รอบสอง) — ตัวที่ตกสำรวจรอบแรกเพราะกรองด้วย suffix :free
@@ -913,7 +1225,13 @@ model_list:
       description: "ได้ 3/3 พร้อม context 1M — ผ่านเกณฑ์ hermes ครบ แต่ช้าสุดในกลุ่ม (~19s ต่อ turn) ไม่เหมาะกับแชทที่ต้องตอบไว"
       provider_label: "OpenRouter"
       provider_quota: "50–1,000 req/วัน แล้วแต่ยอดเติมเงิน"
+      quota_pool: "openrouter"
+      quota_window: "daily"
       tags: ["coding-best", "long-context"]
+      verified_max_prompt: 31833
+      max_prompt_detail: "โควต้า ที่ ~64,000 — litellm.RateLimitError: RateLimitError: OpenrouterException - {'error':{'message"
+      status: "ok"
+      status_checked_at: "2026-08-26T07:48:59Z"
       verified_by: "hermes-line-bot 2026-08-26 (tool loop + prompt 14K + ภาษาไทย · ช้า ~19s/turn)"
 
   # router ของ OpenRouter เอง — เลือกโมเดลฟรีที่ว่างให้อัตโนมัติ
@@ -930,7 +1248,11 @@ model_list:
       description: "router ของ OpenRouter เลือกโมเดลฟรีที่ว่างให้เอง — ผลไม่คงที่ เหมาะเป็น fallback"
       provider_label: "OpenRouter"
       provider_quota: "50–1,000 req/วัน แล้วแต่ยอดเติมเงิน"
+      quota_pool: "openrouter"
+      quota_window: "daily"
       tags: ["coding-ok"]
+      status: "ok"
+      status_checked_at: "2026-08-26T07:48:59Z"
 
 
 
@@ -948,7 +1270,11 @@ model_list:
       description: "โมเดลจาก OpenRouter"
       provider_label: "OpenRouter"
       provider_quota: "50–1,000 req/วัน แล้วแต่ยอดเติมเงิน"
+      quota_pool: "openrouter"
+      quota_window: "daily"
       tags: ["coding-ok"]
+      status: "ok"
+      status_checked_at: "2026-08-26T07:48:59Z"
 
   - model_name: or/nemotron-omni-30b
     litellm_params:
@@ -961,7 +1287,11 @@ model_list:
       description: "โมเดลจาก OpenRouter"
       provider_label: "OpenRouter"
       provider_quota: "50–1,000 req/วัน แล้วแต่ยอดเติมเงิน"
+      quota_pool: "openrouter"
+      quota_window: "daily"
       tags: ["general"]
+      status: "ok"
+      status_checked_at: "2026-08-26T07:48:59Z"
 
   # ⚠️ 2026-08-26 ถอด or/gemma-4-31b — ขึ้น "Provider returned error" ต่อเนื่อง
   # ตัวที่ยังใช้ไม่ได้ (ลองซ้ำแล้ว): z-ai/glm-5.2:free, poolside/laguna-xs-2.1:free,
@@ -1003,7 +1333,12 @@ model_list:
       description: "โมเดลจาก NVIDIA NIM — โปรเจกต์ hermes ยิงจริง 2026-08-25 ผ่านทั้ง tool calling และ prompt 14K"
       provider_label: "NVIDIA NIM"
       provider_quota: "40 RPM ไม่มีเพดานรายวัน แต่บาง endpoint ช้า/timeout"
+      quota_pool: "nvidia-nim"
+      quota_window: "rpm-only"
       tags: ["general"]
+      status: "rate_limited"
+      status_checked_at: "2026-08-26T07:48:59Z"
+      status_detail: "litellm.RateLimitError: RateLimitError: Nvidia_nimException - Error code: 429 - {'status': 429, 'title': 'Too "
       verified_by: "hermes 2026-08-25 (tool calling + prompt 14K)"
 
   - model_name: nim/step-3.7-flash
@@ -1016,7 +1351,12 @@ model_list:
       description: "โมเดลจาก NVIDIA NIM"
       provider_label: "NVIDIA NIM"
       provider_quota: "40 RPM ไม่มีเพดานรายวัน แต่บาง endpoint ช้า/timeout"
+      quota_pool: "nvidia-nim"
+      quota_window: "rpm-only"
       tags: ["general"]
+      status: "unknown"
+      status_checked_at: "2026-08-26T07:48:59Z"
+      status_detail: "timed out"
 
   - model_name: nim/nemotron-nano-30b
     litellm_params:
@@ -1028,7 +1368,13 @@ model_list:
       description: "โมเดลจาก NVIDIA NIM"
       provider_label: "NVIDIA NIM"
       provider_quota: "40 RPM ไม่มีเพดานรายวัน แต่บาง endpoint ช้า/timeout"
+      quota_pool: "nvidia-nim"
+      quota_window: "rpm-only"
       tags: ["general"]
+      verified_max_prompt: 127957
+      max_prompt_detail: "ผ่านทุกขั้นถึง 127,957 (ไม่ได้ลองมากกว่านี้)"
+      status: "ok"
+      status_checked_at: "2026-08-26T07:48:59Z"
 
   - model_name: nim/gemma-4-31b
     litellm_params:
@@ -1040,7 +1386,12 @@ model_list:
       description: "โมเดลจาก NVIDIA NIM"
       provider_label: "NVIDIA NIM"
       provider_quota: "40 RPM ไม่มีเพดานรายวัน แต่บาง endpoint ช้า/timeout"
+      quota_pool: "nvidia-nim"
+      quota_window: "rpm-only"
       tags: ["general"]
+      status: "unknown"
+      status_checked_at: "2026-08-26T07:48:59Z"
+      status_detail: "timed out"
 
   - model_name: nim/mistral-nemotron
     litellm_params:
@@ -1052,7 +1403,11 @@ model_list:
       description: "โมเดลจาก NVIDIA NIM"
       provider_label: "NVIDIA NIM"
       provider_quota: "40 RPM ไม่มีเพดานรายวัน แต่บาง endpoint ช้า/timeout"
+      quota_pool: "nvidia-nim"
+      quota_window: "rpm-only"
       tags: ["general"]
+      status: "ok"
+      status_checked_at: "2026-08-26T07:48:59Z"
 
   - model_name: nim/nemotron-super-49b
     litellm_params:
@@ -1064,7 +1419,13 @@ model_list:
       description: "โมเดลจาก NVIDIA NIM"
       provider_label: "NVIDIA NIM"
       provider_quota: "40 RPM ไม่มีเพดานรายวัน แต่บาง endpoint ช้า/timeout"
+      quota_pool: "nvidia-nim"
+      quota_window: "rpm-only"
       tags: ["general"]
+      verified_max_prompt: 127960
+      max_prompt_detail: "ผ่านทุกขั้นถึง 127,960 (ไม่ได้ลองมากกว่านี้)"
+      status: "ok"
+      status_checked_at: "2026-08-26T07:48:59Z"
 
   - model_name: nim/llama-3.3-70b
     litellm_params:
@@ -1076,7 +1437,13 @@ model_list:
       description: "โมเดลจาก NVIDIA NIM — ทดสอบซ้ำ 2026-08-26 เรียก tool ได้แล้ว (เดิมเคย timeout)"
       provider_label: "NVIDIA NIM"
       provider_quota: "40 RPM ไม่มีเพดานรายวัน แต่บาง endpoint ช้า/timeout"
+      quota_pool: "nvidia-nim"
+      quota_window: "rpm-only"
       tags: ["general"]
+      verified_max_prompt: 13768
+      max_prompt_detail: "timeout ที่ ~32,000 — timed out"
+      status: "ok"
+      status_checked_at: "2026-08-26T07:48:59Z"
       verified_by: "gateway 2026-08-26 (ทดสอบซ้ำ tool calling)"
 
   - model_name: nim/deepseek-v4-flash
@@ -1089,7 +1456,12 @@ model_list:
       description: "โมเดลจาก NVIDIA NIM"
       provider_label: "NVIDIA NIM"
       provider_quota: "40 RPM ไม่มีเพดานรายวัน แต่บาง endpoint ช้า/timeout"
+      quota_pool: "nvidia-nim"
+      quota_window: "rpm-only"
       tags: ["general"]
+      status: "unknown"
+      status_checked_at: "2026-08-26T07:48:59Z"
+      status_detail: "litellm.NotFoundError: NotFoundError: Nvidia_nimException - Error code: 404 - {'status': 404, 'title': 'Not Fo"
 
   # ---------- Embeddings (เติมช่องว่างที่ gateway ยังไม่มี) ----------
   # ⚠️ 2026-08-26: NVIDIA ปลด embedding หลายตัวพร้อมกัน ("has reached its end of life")
@@ -1105,7 +1477,11 @@ model_list:
       description: "embedding 2048 มิติ — ตัวเดียวที่เหลือหลัง NVIDIA ปลดตัวอื่น"
       provider_label: "NVIDIA NIM"
       provider_quota: "embedding"
+      quota_pool: "nvidia-nim"
+      quota_window: "rpm-only"
       tags: ["embedding"]
+      status: "ok"
+      status_checked_at: "2026-08-26T07:48:59Z"
 
   # ---------- Cloudflare Workers AI ----------
   # ฟรี 10,000 neurons/วัน ต้องมี CLOUDFLARE_ACCOUNT_ID ด้วย
@@ -1145,7 +1521,13 @@ model_list:
       description: "คุณภาพสูงสุดใน gateway — แต่โควต้า OKMD ~40K token/วัน แชร์ทั้งตระกูล Claude"
       provider_label: "OKMD Playground"
       provider_quota: "⚠️ ~40K token/วัน และแชร์กันทั้งตระกูล ได้ราว 1 turn/ตระกูล/วัน"
+      quota_pool: "okmd-claude"
+      quota_window: "daily"
       tags: ["quality-top", "general"]
+      verified_max_prompt: 31945
+      max_prompt_detail: "error 401 ที่ ~64,000 — litellm.AuthenticationError: AuthenticationError: OpenAIException - Error code: "
+      status: "ok"
+      status_checked_at: "2026-08-26T07:48:59Z"
 
   # Claude Sonnet 4.6
   - model_name: okmd/claude-sonnet-4.6
@@ -1159,7 +1541,11 @@ model_list:
       description: "แชร์โควต้ากับ claude-sonnet-5 (ตระกูลเดียวกัน ~40K/วัน)"
       provider_label: "OKMD Playground"
       provider_quota: "⚠️ ~40K token/วัน และแชร์กันทั้งตระกูล ได้ราว 1 turn/ตระกูล/วัน"
+      quota_pool: "okmd-claude"
+      quota_window: "daily"
       tags: ["quality-top", "general"]
+      status: "ok"
+      status_checked_at: "2026-08-26T07:48:59Z"
 
   # GPT-5.4
   - model_name: okmd/gpt-5.4
@@ -1173,7 +1559,13 @@ model_list:
       description: "GPT-5.4 — ไม่มีที่อื่นใน gateway โควต้าแชร์ทั้งตระกูล GPT"
       provider_label: "OKMD Playground"
       provider_quota: "⚠️ ~40K token/วัน และแชร์กันทั้งตระกูล ได้ราว 1 turn/ตระกูล/วัน"
+      quota_pool: "okmd-gpt"
+      quota_window: "daily"
       tags: ["quality-top", "general"]
+      verified_max_prompt: 31964
+      max_prompt_detail: "error 401 ที่ ~64,000 — litellm.AuthenticationError: AuthenticationError: OpenAIException - Error code: "
+      status: "ok"
+      status_checked_at: "2026-08-26T07:48:59Z"
 
   - model_name: okmd/gpt-5.4-mini
     litellm_params:
@@ -1186,7 +1578,13 @@ model_list:
       description: "โมเดลจาก OKMD Playground"
       provider_label: "OKMD Playground"
       provider_quota: "⚠️ ~40K token/วัน และแชร์กันทั้งตระกูล ได้ราว 1 turn/ตระกูล/วัน"
+      quota_pool: "okmd-gpt"
+      quota_window: "daily"
       tags: ["general"]
+      verified_max_prompt: 31964
+      max_prompt_detail: "error 401 ที่ ~64,000 — litellm.AuthenticationError: AuthenticationError: OpenAIException - Error code: "
+      status: "ok"
+      status_checked_at: "2026-08-26T07:48:59Z"
 
   - model_name: okmd/gpt-5.4-nano
     litellm_params:
@@ -1199,7 +1597,11 @@ model_list:
       description: "โมเดลจาก OKMD Playground"
       provider_label: "OKMD Playground"
       provider_quota: "⚠️ ~40K token/วัน และแชร์กันทั้งตระกูล ได้ราว 1 turn/ตระกูล/วัน"
+      quota_pool: "okmd-gpt"
+      quota_window: "daily"
       tags: ["general"]
+      status: "ok"
+      status_checked_at: "2026-08-26T07:48:59Z"
 
   # Gemini รุ่นใหม่สุดที่นี่
   - model_name: okmd/gemini-3.7-flash
@@ -1214,7 +1616,13 @@ model_list:
       description: "โมเดลจาก OKMD Playground"
       provider_label: "OKMD Playground"
       provider_quota: "⚠️ ~40K token/วัน และแชร์กันทั้งตระกูล ได้ราว 1 turn/ตระกูล/วัน"
+      quota_pool: "okmd-gemini"
+      quota_window: "daily"
       tags: ["quality-top", "long-context"]
+      verified_max_prompt: 13953
+      max_prompt_detail: "error 401 ที่ ~32,000 — litellm.AuthenticationError: AuthenticationError: OpenAIException - Error code: "
+      status: "ok"
+      status_checked_at: "2026-08-26T07:48:59Z"
 
   - model_name: okmd/gemini-3.5-flash
     litellm_params:
@@ -1228,7 +1636,13 @@ model_list:
       description: "โมเดลจาก OKMD Playground"
       provider_label: "OKMD Playground"
       provider_quota: "⚠️ ~40K token/วัน และแชร์กันทั้งตระกูล ได้ราว 1 turn/ตระกูล/วัน"
+      quota_pool: "okmd-gemini"
+      quota_window: "daily"
       tags: ["long-context"]
+      verified_max_prompt: 31984
+      max_prompt_detail: "error 401 ที่ ~64,000 — litellm.AuthenticationError: AuthenticationError: OpenAIException - Error code: "
+      status: "ok"
+      status_checked_at: "2026-08-26T07:48:59Z"
 
   - model_name: okmd/gemini-3.1-pro
     litellm_params:
@@ -1241,7 +1655,11 @@ model_list:
       description: "โมเดลจาก OKMD Playground"
       provider_label: "OKMD Playground"
       provider_quota: "⚠️ ~40K token/วัน และแชร์กันทั้งตระกูล ได้ราว 1 turn/ตระกูล/วัน"
+      quota_pool: "okmd-gemini"
+      quota_window: "daily"
       tags: ["general"]
+      status: "ok"
+      status_checked_at: "2026-08-26T07:48:59Z"
 
   - model_name: okmd/gemini-3.1-flash-lite
     litellm_params:
@@ -1254,7 +1672,11 @@ model_list:
       description: "โมเดลจาก OKMD Playground"
       provider_label: "OKMD Playground"
       provider_quota: "⚠️ ~40K token/วัน และแชร์กันทั้งตระกูล ได้ราว 1 turn/ตระกูล/วัน"
+      quota_pool: "okmd-gemini"
+      quota_window: "daily"
       tags: ["general"]
+      status: "ok"
+      status_checked_at: "2026-08-26T07:48:59Z"
 
   - model_name: okmd/gemini-2.5-flash-lite
     litellm_params:
@@ -1267,7 +1689,11 @@ model_list:
       description: "โมเดลจาก OKMD Playground"
       provider_label: "OKMD Playground"
       provider_quota: "⚠️ ~40K token/วัน และแชร์กันทั้งตระกูล ได้ราว 1 turn/ตระกูล/วัน"
+      quota_pool: "okmd-gemini"
+      quota_window: "daily"
       tags: ["general"]
+      status: "ok"
+      status_checked_at: "2026-08-26T07:48:59Z"
 
   # Grok — ไม่มีที่อื่นใน gateway
   - model_name: okmd/grok-4.3
@@ -1281,7 +1707,13 @@ model_list:
       description: "Grok — ไม่มีที่อื่นใน gateway"
       provider_label: "OKMD Playground"
       provider_quota: "⚠️ ~40K token/วัน และแชร์กันทั้งตระกูล ได้ราว 1 turn/ตระกูล/วัน"
+      quota_pool: "okmd-grok"
+      quota_window: "daily"
       tags: ["quality-top", "general"]
+      verified_max_prompt: 31702
+      max_prompt_detail: "error 401 ที่ ~64,000 — litellm.AuthenticationError: AuthenticationError: OpenAIException - Error code: "
+      status: "ok"
+      status_checked_at: "2026-08-26T07:48:59Z"
 
   - model_name: okmd/deepseek-v4-pro
     litellm_params:
@@ -1294,7 +1726,13 @@ model_list:
       description: "โมเดลจาก OKMD Playground"
       provider_label: "OKMD Playground"
       provider_quota: "⚠️ ~40K token/วัน และแชร์กันทั้งตระกูล ได้ราว 1 turn/ตระกูล/วัน"
+      quota_pool: "okmd-deepseek"
+      quota_window: "daily"
       tags: ["quality-top", "general"]
+      verified_max_prompt: 127824
+      max_prompt_detail: "ผ่านทุกขั้นถึง 127,824 (ไม่ได้ลองมากกว่านี้)"
+      status: "ok"
+      status_checked_at: "2026-08-26T07:48:59Z"
 
   - model_name: okmd/deepseek-v4-flash
     litellm_params:
@@ -1307,7 +1745,13 @@ model_list:
       description: "โมเดลจาก OKMD Playground"
       provider_label: "OKMD Playground"
       provider_quota: "⚠️ ~40K token/วัน และแชร์กันทั้งตระกูล ได้ราว 1 turn/ตระกูล/วัน"
+      quota_pool: "okmd-deepseek"
+      quota_window: "daily"
       tags: ["general"]
+      verified_max_prompt: 64060
+      max_prompt_detail: "error 401 ที่ ~128,000 — litellm.AuthenticationError: AuthenticationError: OpenAIException - Error code: "
+      status: "ok"
+      status_checked_at: "2026-08-26T07:48:59Z"
 
   # Qwen รุ่นใหม่กว่าที่อื่นใน gateway
   - model_name: okmd/qwen3.7-max
@@ -1321,7 +1765,13 @@ model_list:
       description: "โมเดลจาก OKMD Playground"
       provider_label: "OKMD Playground"
       provider_quota: "⚠️ ~40K token/วัน และแชร์กันทั้งตระกูล ได้ราว 1 turn/ตระกูล/วัน"
+      quota_pool: "okmd-qwen"
+      quota_window: "daily"
       tags: ["general"]
+      verified_max_prompt: 31975
+      max_prompt_detail: "error 401 ที่ ~64,000 — litellm.AuthenticationError: AuthenticationError: OpenAIException - Error code: "
+      status: "ok"
+      status_checked_at: "2026-08-26T07:48:59Z"
 
   - model_name: okmd/qwen3.7-plus
     litellm_params:
@@ -1334,7 +1784,13 @@ model_list:
       description: "โมเดลจาก OKMD Playground"
       provider_label: "OKMD Playground"
       provider_quota: "⚠️ ~40K token/วัน และแชร์กันทั้งตระกูล ได้ราว 1 turn/ตระกูล/วัน"
+      quota_pool: "okmd-qwen"
+      quota_window: "daily"
       tags: ["general"]
+      verified_max_prompt: 2703
+      max_prompt_detail: "error 401 ที่ ~14,000 — litellm.AuthenticationError: AuthenticationError: OpenAIException - Error code: "
+      status: "ok"
+      status_checked_at: "2026-08-26T07:48:59Z"
 
   - model_name: okmd/qwen3.6-flash
     litellm_params:
@@ -1347,7 +1803,11 @@ model_list:
       description: "โมเดลจาก OKMD Playground — ไม่เรียก tool"
       provider_label: "OKMD Playground"
       provider_quota: "⚠️ ~40K token/วัน และแชร์กันทั้งตระกูล ได้ราว 1 turn/ตระกูล/วัน"
+      quota_pool: "okmd-qwen"
+      quota_window: "daily"
       tags: ["general", "no-tools"]
+      status: "ok"
+      status_checked_at: "2026-08-26T07:48:59Z"
       verified_by: "gateway 2026-08-26 (verify-capabilities)"
 
   # okmd/qwen3.5-9b อยู่ใน /v1/models แต่ยิงจริงคืน "No models provided" (400)
@@ -1364,7 +1824,13 @@ model_list:
       description: "โมเดลจาก OKMD Playground"
       provider_label: "OKMD Playground"
       provider_quota: "⚠️ ~40K token/วัน และแชร์กันทั้งตระกูล ได้ราว 1 turn/ตระกูล/วัน"
+      quota_pool: "okmd-llama"
+      quota_window: "daily"
       tags: ["general"]
+      verified_max_prompt: 31963
+      max_prompt_detail: "error 401 ที่ ~64,000 — litellm.AuthenticationError: AuthenticationError: OpenAIException - Error code: "
+      status: "ok"
+      status_checked_at: "2026-08-26T07:48:59Z"
 
   - model_name: okmd/llama-4-scout
     litellm_params:
@@ -1377,7 +1843,13 @@ model_list:
       description: "โมเดลจาก OKMD Playground"
       provider_label: "OKMD Playground"
       provider_quota: "⚠️ ~40K token/วัน และแชร์กันทั้งตระกูล ได้ราว 1 turn/ตระกูล/วัน"
+      quota_pool: "okmd-llama"
+      quota_window: "daily"
       tags: ["general"]
+      verified_max_prompt: 13886
+      max_prompt_detail: "error 401 ที่ ~32,000 — litellm.AuthenticationError: AuthenticationError: OpenAIException - Error code: "
+      status: "ok"
+      status_checked_at: "2026-08-26T07:48:59Z"
 
   - model_name: okmd/mistral-medium-3.1
     litellm_params:
@@ -1390,7 +1862,13 @@ model_list:
       description: "โมเดลจาก OKMD Playground"
       provider_label: "OKMD Playground"
       provider_quota: "⚠️ ~40K token/วัน และแชร์กันทั้งตระกูล ได้ราว 1 turn/ตระกูล/วัน"
+      quota_pool: "okmd-mistral"
+      quota_window: "daily"
       tags: ["general"]
+      verified_max_prompt: 31964
+      max_prompt_detail: "error 401 ที่ ~64,000 — litellm.AuthenticationError: AuthenticationError: OpenAIException - Error code: "
+      status: "ok"
+      status_checked_at: "2026-08-26T07:48:59Z"
 
   # Amazon Nova
   - model_name: okmd/nova-pro
@@ -1404,7 +1882,13 @@ model_list:
       description: "โมเดลจาก OKMD Playground"
       provider_label: "OKMD Playground"
       provider_quota: "⚠️ ~40K token/วัน และแชร์กันทั้งตระกูล ได้ราว 1 turn/ตระกูล/วัน"
+      quota_pool: "okmd-nova"
+      quota_window: "daily"
       tags: ["general"]
+      verified_max_prompt: 13885
+      max_prompt_detail: "error 401 ที่ ~32,000 — litellm.AuthenticationError: AuthenticationError: OpenAIException - Error code: "
+      status: "ok"
+      status_checked_at: "2026-08-26T07:48:59Z"
 
   - model_name: okmd/nova-2-lite
     litellm_params:
@@ -1417,7 +1901,11 @@ model_list:
       description: "โมเดลจาก OKMD Playground"
       provider_label: "OKMD Playground"
       provider_quota: "⚠️ ~40K token/วัน และแชร์กันทั้งตระกูล ได้ราว 1 turn/ตระกูล/วัน"
+      quota_pool: "okmd-nova"
+      quota_window: "daily"
       tags: ["general"]
+      status: "ok"
+      status_checked_at: "2026-08-26T07:48:59Z"
 
   # Perplexity Sonar — น่าจะค้นเว็บได้ ยังไม่ทดสอบ
   - model_name: okmd/sonar-pro
@@ -1431,7 +1919,14 @@ model_list:
       description: "Perplexity Sonar — ค้นเว็บได้ ตอบพร้อม citation — รับ tool จาก client ไม่ได้ (No endpoints found that support tool use) — แต่ค้นเว็บเองได้"
       provider_label: "OKMD Playground"
       provider_quota: "⚠️ ~40K token/วัน และแชร์กันทั้งตระกูล ได้ราว 1 turn/ตระกูล/วัน"
+      quota_pool: "okmd-sonar"
+      quota_window: "daily"
       tags: ["web-access", "no-tools"]
+      verified_max_prompt: 31977
+      max_prompt_detail: "error 401 ที่ ~64,000 — litellm.AuthenticationError: AuthenticationError: OpenAIException - Error code: "
+      status: "unknown"
+      status_checked_at: "2026-08-26T07:48:59Z"
+      status_detail: "litellm.BadRequestError: OpenAIException - Provider returned error"
       verified_by: "gateway 2026-08-26 (verify-capabilities)"
 
 
@@ -1464,7 +1959,12 @@ model_list:
       description: "โมเดลจาก OpenCode Zen"
       provider_label: "OpenCode Zen"
       provider_quota: "ไม่ต้องมี API key แต่ rate limit เข้ม (~15 req ติดกันก็ตัน)"
+      quota_pool: "opencode-zen"
+      quota_window: "rpm-only"
       tags: ["no-api-key"]
+      status: "rate_limited"
+      status_checked_at: "2026-08-26T07:48:59Z"
+      status_detail: "litellm.RateLimitError: RateLimitError: OpenAIException - Error from provider (Console): Rate limit exceeded. "
 
   # ตัวเดียวกับ or/nemotron-ultra-550b แต่ไม่ติดโควต้ารายวันของ OpenRouter
   - model_name: zen/nemotron-3-ultra
@@ -1478,7 +1978,14 @@ model_list:
       description: "โมเดลเดียวกับ or/nemotron-ultra-550b แต่ไม่กินโควต้า OpenRouter"
       provider_label: "OpenCode Zen"
       provider_quota: "ไม่ต้องมี API key แต่ rate limit เข้ม (~15 req ติดกันก็ตัน)"
+      quota_pool: "opencode-zen"
+      quota_window: "rpm-only"
       tags: ["no-api-key"]
+      verified_max_prompt: 127957
+      max_prompt_detail: "ผ่านทุกขั้นถึง 127,957 (ไม่ได้ลองมากกว่านี้)"
+      status: "unknown"
+      status_checked_at: "2026-08-26T07:48:59Z"
+      status_detail: "litellm.BadRequestError: OpenAIException - Error from provider (Console): Upstream request failed: [502] Upstr"
 
   # พ่น thinking ปนใน content
   - model_name: zen/nemotron-lightning
@@ -1492,7 +1999,13 @@ model_list:
       description: "โมเดลจาก OpenCode Zen"
       provider_label: "OpenCode Zen"
       provider_quota: "ไม่ต้องมี API key แต่ rate limit เข้ม (~15 req ติดกันก็ตัน)"
+      quota_pool: "opencode-zen"
+      quota_window: "rpm-only"
       tags: ["no-api-key"]
+      verified_max_prompt: 127957
+      max_prompt_detail: "ผ่านทุกขั้นถึง 127,957 (ไม่ได้ลองมากกว่านี้)"
+      status: "ok"
+      status_checked_at: "2026-08-26T07:48:59Z"
 
   - model_name: zen/mimo-v2.5
     litellm_params:
@@ -1505,7 +2018,12 @@ model_list:
       description: "โมเดลจาก OpenCode Zen"
       provider_label: "OpenCode Zen"
       provider_quota: "ไม่ต้องมี API key แต่ rate limit เข้ม (~15 req ติดกันก็ตัน)"
+      quota_pool: "opencode-zen"
+      quota_window: "rpm-only"
       tags: ["no-api-key"]
+      status: "rate_limited"
+      status_checked_at: "2026-08-26T07:48:59Z"
+      status_detail: "litellm.RateLimitError: RateLimitError: OpenAIException - Error from provider (Console): Rate limit exceeded. "
 
   # สาย coding
   - model_name: zen/laguna-s-2.1
@@ -1519,7 +2037,13 @@ model_list:
       description: "โมเดลจาก OpenCode Zen"
       provider_label: "OpenCode Zen"
       provider_quota: "ไม่ต้องมี API key แต่ rate limit เข้ม (~15 req ติดกันก็ตัน)"
+      quota_pool: "opencode-zen"
+      quota_window: "rpm-only"
       tags: ["no-api-key"]
+      verified_max_prompt: 127914
+      max_prompt_detail: "ผ่านทุกขั้นถึง 127,914 (ไม่ได้ลองมากกว่านี้)"
+      status: "ok"
+      status_checked_at: "2026-08-26T07:48:59Z"
 
   - model_name: zen/x-preview-f
     litellm_params:
@@ -1532,7 +2056,13 @@ model_list:
       description: "โมเดลจาก OpenCode Zen"
       provider_label: "OpenCode Zen"
       provider_quota: "ไม่ต้องมี API key แต่ rate limit เข้ม (~15 req ติดกันก็ตัน)"
+      quota_pool: "opencode-zen"
+      quota_window: "rpm-only"
       tags: ["no-api-key"]
+      verified_max_prompt: 31833
+      max_prompt_detail: "error 503 ที่ ~64,000 — litellm.ServiceUnavailableError: ServiceUnavailableError: OpenAIException - Erro"
+      status: "ok"
+      status_checked_at: "2026-08-26T07:48:59Z"
 
   # thinking model
   - model_name: zen/hy3
@@ -1546,7 +2076,13 @@ model_list:
       description: "โมเดลจาก OpenCode Zen"
       provider_label: "OpenCode Zen"
       provider_quota: "ไม่ต้องมี API key แต่ rate limit เข้ม (~15 req ติดกันก็ตัน)"
+      quota_pool: "opencode-zen"
+      quota_window: "rpm-only"
       tags: ["no-api-key"]
+      verified_max_prompt: 127968
+      max_prompt_detail: "ผ่านทุกขั้นถึง 127,968 (ไม่ได้ลองมากกว่านี้)"
+      status: "ok"
+      status_checked_at: "2026-08-26T07:48:59Z"
 
   # ที่ลองแล้วยังใช้ไม่ได้ (2026-08-26):
   #   deepseek-v4-flash-free -> "Upstream request failed"
@@ -1571,7 +2107,13 @@ model_list:
       description: "โมเดลจาก LLM7.io"
       provider_label: "LLM7.io"
       provider_quota: "ไม่ต้องมี API key สำหรับโมเดลนี้"
+      quota_pool: "llm7"
+      quota_window: "rpm-only"
       tags: ["no-api-key"]
+      verified_max_prompt: 127983
+      max_prompt_detail: "ผ่านทุกขั้นถึง 127,983 (ไม่ได้ลองมากกว่านี้)"
+      status: "ok"
+      status_checked_at: "2026-08-26T07:48:59Z"
 
   - model_name: l7/codestral
     litellm_params:
@@ -1584,7 +2126,13 @@ model_list:
       description: "โมเดลจาก LLM7.io — ไม่เรียก tool"
       provider_label: "LLM7.io"
       provider_quota: "ไม่ต้องมี API key สำหรับโมเดลนี้"
+      quota_pool: "llm7"
+      quota_window: "rpm-only"
       tags: ["no-api-key", "no-tools"]
+      verified_max_prompt: 31990
+      max_prompt_detail: "error 400 ที่ ~64,000 — litellm.BadRequestError: OpenAIException - Context window exceeded for this mode"
+      status: "ok"
+      status_checked_at: "2026-08-26T07:48:59Z"
       verified_by: "gateway 2026-08-26 (verify-capabilities)"
 
   # ปลดคอมเมนต์เมื่อมี LLM7_API_KEY แล้ว (เปลี่ยน api_key เป็น os.environ/LLM7_API_KEY
@@ -1754,7 +2302,13 @@ model_list:
       description: "โมเดลไทย (OpenThaiGPT) — thinking model — ไม่เรียก tool ตอบเป็นข้อความแทน (thinking model)"
       provider_label: "ThaiLLM"
       provider_quota: "จำกัดด้วย req/min"
+      quota_pool: "thaillm"
+      quota_window: "rpm-only"
       tags: ["thai", "no-tools"]
+      verified_max_prompt: 13865
+      max_prompt_detail: "ชนเพดาน ที่ ~32,000 — litellm.ContextWindowExceededError: litellm.BadRequestError: ContextWindowExceed"
+      status: "ok"
+      status_checked_at: "2026-08-26T07:48:59Z"
       verified_by: "gateway 2026-08-26 (verify-capabilities)"
 
   # Pathumma (NECTEC) — thinking model
@@ -1770,7 +2324,13 @@ model_list:
       description: "โมเดลไทย (NECTEC) — thinking model"
       provider_label: "ThaiLLM"
       provider_quota: "จำกัดด้วย req/min"
+      quota_pool: "thaillm"
+      quota_window: "rpm-only"
       tags: ["thai"]
+      verified_max_prompt: 13865
+      max_prompt_detail: "ชนเพดาน ที่ ~32,000 — litellm.ContextWindowExceededError: litellm.BadRequestError: ContextWindowExceed"
+      status: "ok"
+      status_checked_at: "2026-08-26T07:48:59Z"
 
   # Typhoon-S (SCB10X) — ตอบตรงไม่มี think
   - model_name: th/typhoon
@@ -1785,7 +2345,13 @@ model_list:
       description: "โมเดลไทย (SCB10X) ตอบตรงไม่มี <think> ใช้ง่ายสุดในกลุ่มไทย"
       provider_label: "ThaiLLM"
       provider_quota: "จำกัดด้วย req/min"
+      quota_pool: "thaillm"
+      quota_window: "rpm-only"
       tags: ["thai"]
+      verified_max_prompt: 13865
+      max_prompt_detail: "ชนเพดาน ที่ ~32,000 — litellm.ContextWindowExceededError: litellm.BadRequestError: ContextWindowExceed"
+      status: "ok"
+      status_checked_at: "2026-08-26T07:48:59Z"
 
   # THaLLE (KBTG) — thinking model
   - model_name: th/thalle
@@ -1800,7 +2366,13 @@ model_list:
       description: "โมเดลไทย (KBTG) — thinking model"
       provider_label: "ThaiLLM"
       provider_quota: "จำกัดด้วย req/min"
+      quota_pool: "thaillm"
+      quota_window: "rpm-only"
       tags: ["thai"]
+      verified_max_prompt: 13865
+      max_prompt_detail: "ชนเพดาน ที่ ~32,000 — litellm.ContextWindowExceededError: litellm.BadRequestError: ContextWindowExceed"
+      status: "ok"
+      status_checked_at: "2026-08-26T07:48:59Z"
 
   # ---------- Ollama Cloud — โมเดลใหญ่โดยไม่ต้องมี GPU ----------
   # ต่างจาก Ollama ที่รันเอง: อันนี้ Ollama โฮสต์ให้ ไม่กิน RAM/GPU ของเรา
@@ -1822,7 +2394,15 @@ model_list:
       description: "โมเดลจาก Ollama Cloud — ผ่านเกณฑ์ hermes ครบ แต่ call แรกช้ามาก (~105s ตอน cold) ตัวใหญ่สุดที่ Ollama Cloud ให้ฟรี"
       provider_label: "Ollama Cloud"
       provider_quota: "⚠️ โควตารายสัปดาห์ที่หมดได้ และหมดพร้อมกันทั้งตระกูล oc/* — เจอจริง 2026-08-26"
+      quota_pool: "ollama-cloud"
+      quota_window: "weekly"
       tags: ["general"]
+      status: "rate_limited"
+      status_checked_at: "2026-08-26T07:48:59Z"
+      status_detail: "litellm.RateLimitError: RateLimitError: OpenAIException - you (monthop) have reached your weekly usage limit, "
+      status: "rate_limited"
+      status_checked_at: "2026-08-26T07:46:15Z"
+      status_detail: "litellm.RateLimitError: RateLimitError: OpenAIException - you (monthop) have reached your weekly usage limit, "
       verified_by: "hermes-line-bot 2026-08-26 (tool loop + prompt 14K · call แรก ~105s)"
 
   - model_name: oc/nemotron-3-super
@@ -1837,7 +2417,15 @@ model_list:
       description: "โมเดลจาก Ollama Cloud"
       provider_label: "Ollama Cloud"
       provider_quota: "ไม่ประกาศโควต้า (light usage)"
+      quota_pool: "ollama-cloud"
+      quota_window: "weekly"
       tags: ["general"]
+      status: "rate_limited"
+      status_checked_at: "2026-08-26T07:48:59Z"
+      status_detail: "litellm.RateLimitError: RateLimitError: OpenAIException - you (monthop) have reached your weekly usage limit, "
+      status: "rate_limited"
+      status_checked_at: "2026-08-26T07:46:15Z"
+      status_detail: "litellm.RateLimitError: RateLimitError: OpenAIException - you (monthop) have reached your weekly usage limit, "
 
   - model_name: oc/nemotron-3-nano-30b
     litellm_params:
@@ -1851,7 +2439,15 @@ model_list:
       description: "โมเดลจาก Ollama Cloud"
       provider_label: "Ollama Cloud"
       provider_quota: "ไม่ประกาศโควต้า (light usage)"
+      quota_pool: "ollama-cloud"
+      quota_window: "weekly"
       tags: ["general"]
+      status: "rate_limited"
+      status_checked_at: "2026-08-26T07:48:59Z"
+      status_detail: "litellm.RateLimitError: RateLimitError: OpenAIException - you (monthop) have reached your weekly usage limit, "
+      status: "rate_limited"
+      status_checked_at: "2026-08-26T07:46:15Z"
+      status_detail: "litellm.RateLimitError: RateLimitError: OpenAIException - you (monthop) have reached your weekly usage limit, "
 
   - model_name: oc/minimax-m3
     litellm_params:
@@ -1865,7 +2461,15 @@ model_list:
       description: "โมเดลจาก Ollama Cloud"
       provider_label: "Ollama Cloud"
       provider_quota: "⚠️ โควตารายสัปดาห์ที่หมดได้ และหมดพร้อมกันทั้งตระกูล oc/* — เจอจริง 2026-08-26"
+      quota_pool: "ollama-cloud"
+      quota_window: "weekly"
       tags: ["general"]
+      status: "rate_limited"
+      status_checked_at: "2026-08-26T07:48:59Z"
+      status_detail: "litellm.RateLimitError: RateLimitError: OpenAIException - you (monthop) have reached your weekly usage limit, "
+      status: "rate_limited"
+      status_checked_at: "2026-08-26T07:46:15Z"
+      status_detail: "litellm.RateLimitError: RateLimitError: OpenAIException - you (monthop) have reached your weekly usage limit, "
       verified_by: "hermes-line-bot 2026-08-26 (main เดิมของ hermes · โควตารายสัปดาห์หมด 08-26)"
 
   - model_name: oc/gemma4-31b
@@ -1880,7 +2484,15 @@ model_list:
       description: "โมเดลจาก Ollama Cloud"
       provider_label: "Ollama Cloud"
       provider_quota: "ไม่ประกาศโควต้า (light usage)"
+      quota_pool: "ollama-cloud"
+      quota_window: "weekly"
       tags: ["general"]
+      status: "rate_limited"
+      status_checked_at: "2026-08-26T07:48:59Z"
+      status_detail: "litellm.RateLimitError: RateLimitError: OpenAIException - you (monthop) have reached your weekly usage limit, "
+      status: "rate_limited"
+      status_checked_at: "2026-08-26T07:46:15Z"
+      status_detail: "litellm.RateLimitError: RateLimitError: OpenAIException - you (monthop) have reached your weekly usage limit, "
 
   - model_name: oc/gpt-oss-120b
     litellm_params:
@@ -1896,7 +2508,15 @@ model_list:
       description: "เร็ว (1.6s) ผ่าน tool calling + prompt 14K — แต่หลุดไปตอบภาษาอื่นเมื่อรันใน agent loop จริง (ตอบจีน 2 ใน 3 ครั้งทั้งที่ผู้ใช้พิมพ์ไทย) ไม่ควรเป็น main ของบอทภาษาไทย"
       provider_label: "Ollama Cloud"
       provider_quota: "⚠️ โควตารายสัปดาห์ที่หมดได้ และหมดพร้อมกันทั้งตระกูล oc/* — เจอจริง 2026-08-26"
+      quota_pool: "ollama-cloud"
+      quota_window: "weekly"
       tags: ["coding-best"]
+      status: "rate_limited"
+      status_checked_at: "2026-08-26T07:48:59Z"
+      status_detail: "litellm.RateLimitError: RateLimitError: OpenAIException - you (monthop) have reached your weekly usage limit, "
+      status: "rate_limited"
+      status_checked_at: "2026-08-26T07:46:15Z"
+      status_detail: "litellm.RateLimitError: RateLimitError: OpenAIException - you (monthop) have reached your weekly usage limit, "
       verified_by: "hermes-line-bot 2026-08-26 (language drift ใน tool loop — ยิง API ตรงไม่เห็น)"
 
   - model_name: oc/gpt-oss-20b
@@ -1911,7 +2531,15 @@ model_list:
       description: "โมเดลจาก Ollama Cloud"
       provider_label: "Ollama Cloud"
       provider_quota: "ไม่ประกาศโควต้า (light usage)"
+      quota_pool: "ollama-cloud"
+      quota_window: "weekly"
       tags: ["general"]
+      status: "rate_limited"
+      status_checked_at: "2026-08-26T07:48:59Z"
+      status_detail: "litellm.RateLimitError: RateLimitError: OpenAIException - you (monthop) have reached your weekly usage limit, "
+      status: "rate_limited"
+      status_checked_at: "2026-08-26T07:46:15Z"
+      status_detail: "litellm.RateLimitError: RateLimitError: OpenAIException - you (monthop) have reached your weekly usage limit, "
 
   # ต้องมี Pro ($20/เดือน) ขึ้นไปถึงจะใช้ได้ — ทดสอบ 2026-08-17 บนชั้นฟรีคืน
   # "this model requires a subscription": glm-5.1, glm-5.2, qwen3.5:397b,
@@ -1967,17 +2595,17 @@ litellm_settings:
     - hf/qwen3-coder-next: [cf/qwen2.5-coder-32b, mi/mistral-code, or/auto-free]
     - hf/glm-5.2: [oc/nemotron-3-super, mi/magistral-medium, or/auto-free]
     - hf/kimi-k3: [oc/nemotron-3-ultra, mi/large, or/auto-free]
-    - hf/deepseek-v4-pro: [mi/large, or/nemotron-ultra-550b, or/auto-free]
+    - hf/deepseek-v4-pro: [mi/large, or/nemotron-ultra-550b, zen/nemotron-3-ultra]
     - hf/sea-lion-32b: [cf/sea-lion-27b, or/auto-free]
     - hf/sea-lion-gemma-27b: [cf/sea-lion-27b, or/auto-free]
     - hf/gemma-4-26b: [cf/gemma-4-26b, cb/gemma-4-31b, or/auto-free]
     - hf/llama-4-scout: [cf/llama-4-scout, or/auto-free]
     - hf/qwen2.5-7b: [mi/ministral-8b, cb/gemma-4-31b, or/auto-free]
     - cb/gemma-4-31b: [cf/qwen2.5-coder-32b, mi/magistral-medium, or/auto-free]
-    - hf/qwen3.5-397b: [or/nemotron-ultra-550b, oc/nemotron-3-ultra, or/auto-free]
+    - hf/qwen3.5-397b: [or/nemotron-ultra-550b, oc/nemotron-3-ultra, zen/nemotron-3-ultra]
     - hf/glm-4.7: [oc/nemotron-3-super, mi/magistral-medium, or/auto-free]
     - hf/kimi-k2.6: [oc/nemotron-3-ultra, mi/large, or/auto-free]
-    - hf/deepseek-r1: [mi/magistral-medium, or/nemotron-super-120b, or/auto-free]
+    - hf/deepseek-r1: [mi/magistral-medium, or/nemotron-super-120b, cb/gpt-oss-120b]
     - hf/deepseek-v3.2: [mi/large, cf/nemotron-3-120b, or/auto-free]
     - hf/qwen3.6-27b: [gq/qwen3.6-27b, cf/qwen3-30b-a3b, or/auto-free]
     - hf/qwen3.6-35b: [cf/qwen3-30b-a3b, gq/qwen3.6-27b, or/auto-free]

@@ -4,6 +4,7 @@
     set -a; source .env; set +a
     python3 scripts/health-check.py              # ตรวจทุกตัว
     python3 scripts/health-check.py gq/ cb/      # ตรวจเฉพาะ prefix ที่ระบุ
+    python3 scripts/health-check.py --write      # เขียนผลกลับเข้า model_info
 
 แยกสาเหตุที่ล้มเหลวออกเป็น 2 กลุ่ม เพราะวิธีแก้ต่างกันสิ้นเชิง:
 
@@ -12,6 +13,15 @@
 
 ตัวอย่างที่เคยเจอจริง: Groq ปลด llama-3.1-8b-instant ออกจาก free tier
 ระหว่างวัน (2026-08-23) config จึงมีโมเดลที่ตายอยู่โดยไม่มีใครรู้
+
+--write เขียน status / status_checked_at / status_detail กลับเข้า model_info
+ของ litellm/config.yaml เพื่อให้ consumer กรองด้วย status == "ok" ได้
+(ขอมาใน issue #3)
+
+⚠️ ต้อง restart litellm ถึงจะเห็นผลใน /model/info — LiteLLM ไม่ยอมให้แก้
+โมเดลที่มาจาก config ผ่าน API ("Cannot edit config-based model") จึงตั้ง cron
+ถี่ ๆ ไม่ได้ แนะนำวันละครั้งหรือตอนสงสัยว่าโควต้าหมด แล้ว commit ผลเข้า git
+ไปด้วยจะได้มีประวัติว่าโมเดลไหนตายตอนไหน
 """
 from __future__ import annotations
 
@@ -26,22 +36,12 @@ from pathlib import Path
 
 import yaml
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from failure_hints import classify  # noqa: E402
+
 ROOT = Path(__file__).resolve().parent.parent
 BASE = os.environ.get("LITELLM_URL", "http://localhost:4000")
 KEY = os.environ.get("LITELLM_MASTER_KEY")
-
-# ข้อความที่บอกว่าเป็นโควต้าหมด ไม่ใช่โมเดลตาย
-QUOTA_HINTS = (
-    "depleted your monthly", "used up your daily", "rate limit",
-    "ratelimiterror", "429", "too many requests", "quota", "insufficient",
-    "payment required", "tokens per minute",
-)
-# ข้อความที่บอกว่าโมเดลหายไปจริง
-DEAD_HINTS = (
-    "does not exist", "model_not_found", "not found for account", "no endpoints found",
-    "unavailable for free", "archived", "requires a subscription", "not available on the workers free",
-)
-
 
 def _post(path: str, body: dict, timeout: int = 120) -> dict:
     req = urllib.request.Request(
@@ -69,17 +69,6 @@ def _error_text(exc: Exception) -> str:
     return raw.strip()
 
 
-def classify(msg: str) -> str:
-    low = msg.lower()
-    if any(h in low for h in DEAD_HINTS):
-        return "ตายถาวร"
-    if any(h in low for h in QUOTA_HINTS):
-        return "โควต้าหมด"
-    if "timed out" in low or "timeout" in low:
-        return "timeout"
-    return "อื่นๆ"
-
-
 def check(model: str) -> tuple[str, str, str]:
     is_embedding = model.startswith("emb/")
     try:
@@ -104,8 +93,9 @@ def main() -> int:
 
     cfg = yaml.safe_load((ROOT / "litellm/config.yaml").read_text())
     models = [m["model_name"] for m in cfg["model_list"]]
-    if len(sys.argv) > 1:
-        wanted = tuple(sys.argv[1:])
+    args = [a for a in sys.argv[1:] if not a.startswith("--")]
+    if args:
+        wanted = tuple(args)
         models = [m for m in models if m.startswith(wanted)]
         if not models:
             print(f"ไม่มีโมเดลที่ขึ้นต้นด้วย {wanted}", file=sys.stderr)
@@ -134,8 +124,57 @@ def main() -> int:
         for model, _, msg in rows:
             print(f"  {model:<24} {msg}")
 
+    if "--write" in sys.argv:
+        _write_back(results)
+
     # ให้ CI/สคริปต์อื่นเช็คได้ว่ามีของตายไหม
     return 1 if any(r[1] == "ตายถาวร" for r in results) else 0
+
+
+# แปลงผลตรวจเป็นค่า status ที่ consumer ใช้กรองได้
+_STATUS = {
+    "OK": "ok",
+    "โควต้าหมด": "rate_limited",
+    "ตายถาวร": "dead",
+    "ชนเพดาน": "ok",   # ตอบ error เรื่องความยาวได้ = โมเดลยังมีชีวิต
+    "timeout": "unknown",
+    "อื่นๆ": "unknown",
+}
+
+
+def _write_back(results: list[tuple[str, str, str]]) -> None:
+    """เขียน status กลับเข้า model_info ของ config.yaml"""
+    from datetime import datetime, timezone
+
+    stamp = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+    path = ROOT / "litellm/config.yaml"
+    text = path.read_text()
+    written = 0
+
+    for model, verdict, detail in results:
+        status = _STATUS.get(verdict, "unknown")
+        block = f'      status: "{status}"\n      status_checked_at: "{stamp}"\n'
+        if detail:
+            safe = re.sub(r"\s+", " ", detail).replace('"', "'")[:120]
+            block += f'      status_detail: "{safe}"\n'
+
+        # ลบของเดิมก่อน แล้วแทรกใหม่ต่อจาก tags
+        pat_old = re.compile(
+            r"(- model_name: " + re.escape(model) + r"\n(?:.*?\n)*?)"
+            r"(?:      status: \"[^\"]*\"\n)?"
+            r"(?:      status_checked_at: \"[^\"]*\"\n)?"
+            r"(?:      status_detail: \"[^\"]*\"\n)?"
+            r"(      tags: \[[^\]]*\]\n)"
+        )
+        new, n = pat_old.subn(lambda m: m.group(1) + m.group(2) + block, text, count=1)
+        if n:
+            text = new
+            written += 1
+
+    path.write_text(text)
+    print(f"\nเขียน status กลับเข้า config แล้ว {written} ตัว (เวลา {stamp})")
+    print("⚠️  ต้อง restart litellm ถึงจะเห็นใน /model/info:")
+    print("    docker compose restart litellm")
 
 
 if __name__ == "__main__":

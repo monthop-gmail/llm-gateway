@@ -10,6 +10,7 @@
 #   ./scripts/pick-model.sh quality         # คุณภาพสูงสุด
 #   ./scripts/pick-model.sh long            # context ยาว
 #   ./scripts/pick-model.sh embedding       # embeddings สำหรับ RAG
+#   ./scripts/pick-model.sh big-prompt      # รับ prompt 30K+ ได้จริง
 #   ./scripts/pick-model.sh all             # ทุกตัวพร้อมรายละเอียด
 #   ./scripts/pick-model.sh <คำค้น>          # ค้นจากชื่อหรือคำอธิบาย
 #
@@ -57,6 +58,10 @@ GROUPS = {
     "embedding": (["embedding"], "embeddings สำหรับ RAG"),
 }
 
+# หมวดที่ไม่ได้ดูจาก tag แต่ดูจากผลวัดจริง
+def _big_prompt(r):
+    return (info(r).get("verified_max_prompt") or 0) >= 30_000
+
 def info(r):
     return r.get("model_info") or {}
 
@@ -70,6 +75,14 @@ def fmt(r, show_all=False):
         bits.append(str(mi["latency_ms"]) + "ms")
     if mi.get("supports_function_calling") is False:
         bits.append("ไม่รองรับ tool")
+    cap = mi.get("verified_max_prompt")
+    if cap:
+        # ≥ ไม่ใช่ ≤ — เลขนี้คือขนาดที่ยิงผ่านแล้ว เพดานจริงอยู่สูงกว่านี้
+        # และบางตัวหยุดเพราะโควต้าหมดกลางคัน ไม่ใช่เพราะชนเพดาน
+        bits.append(f"prompt ≥{cap//1000}K")
+    st = mi.get("status")
+    if st and st != "ok":
+        bits.append({"rate_limited": "โควต้าหมดตอนนี้", "dead": "ตายแล้ว"}.get(st, st))
     head = "  " + name.ljust(26)
     if bits:
         head += "(" + ", ".join(bits) + ")"
@@ -79,8 +92,16 @@ def fmt(r, show_all=False):
         out.append("      " + d)
     if show_all and mi.get("provider_quota"):
         out.append("      โควต้า: " + mi["provider_quota"])
+    if show_all and mi.get("max_prompt_detail"):
+        out.append("      เพดาน prompt: " + mi["max_prompt_detail"])
     if show_all and mi.get("verified_by"):
         out.append("      ยืนยันโดย: " + mi["verified_by"])
+    if show_all and mi.get("status_checked_at"):
+        st = mi.get("status", "?")
+        line = "      สถานะ: " + st + " (ตรวจ " + mi["status_checked_at"] + ")"
+        if mi.get("status_detail"):
+            line += " — " + mi["status_detail"][:70]
+        out.append(line)
     return "\n".join(out)
 
 if not q:
@@ -88,8 +109,19 @@ if not q:
     for k, (tags, desc) in GROUPS.items():
         n = sum(1 for r in rows if set(tags) & set(info(r).get("tags", [])))
         print(f"  {k:<11} {n:>3} ตัว   {desc}")
+    n = sum(1 for r in rows if _big_prompt(r))
+    print(f"  big-prompt  {n:>3} ตัว   ยิง prompt 30K+ ผ่านจริง (ไม่ใช่แค่สเปก)")
     print(f"\n  all         {len(rows):>3} ตัว   ทุกตัวพร้อมรายละเอียด")
     print("\nใช้: ./scripts/pick-model.sh <หมวด>  หรือใส่คำค้นอะไรก็ได้")
+    sys.exit(0)
+
+if q == "big-prompt":
+    hits = sorted((r for r in rows if _big_prompt(r)),
+                  key=lambda r: -info(r)["verified_max_prompt"])
+    print(f"ยิง prompt 30K+ ผ่านจริง — {len(hits)} ตัว\n")
+    for r in hits:
+        print(fmt(r, show_all=True))
+        print()
     sys.exit(0)
 
 if q == "all":
@@ -100,12 +132,22 @@ if q == "all":
 if q in GROUPS:
     tags, desc = GROUPS[q]
     hits = [r for r in rows if set(tags) & set(info(r).get("tags", []))]
+    # ตัวที่ตรวจแล้วว่าใช้ไม่ได้ตอนนี้ เอาลงไปท้ายสุด ไม่ซ่อน เพราะโควต้าเดี๋ยวก็คืน
+    down = [r for r in hits if info(r).get("status") in ("dead", "rate_limited")]
+    hits = [r for r in hits if r not in down]
     # เรียงตามเวลาที่วัดได้ เร็วก่อน
     hits.sort(key=lambda r: info(r).get("benchmark_seconds") or info(r).get("latency_ms", 0) / 1000 or 999)
-    print(f"{desc} — {len(hits)} ตัว\n")
+    print(f"{desc} — {len(hits)} ตัวที่ใช้ได้ตอนนี้\n")
     for r in hits:
         print(fmt(r, show_all=True))
         print()
+    if down:
+        print(f"อีก {len(down)} ตัวในหมวดนี้ตรวจแล้วใช้ไม่ได้ตอนนี้:")
+        for r in down:
+            mi = info(r)
+            name = r.get("model_name", "?")
+            det = (mi.get("status_detail") or "")[:60]
+            print(f"  {name:<26} {mi.get("status")} — {det}")
     sys.exit(0)
 
 # ค้นอิสระจากชื่อ + คำอธิบาย + tag

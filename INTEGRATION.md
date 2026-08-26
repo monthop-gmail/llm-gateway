@@ -169,3 +169,98 @@ agent loop มาก เพราะ agent ยิงหลาย call ต่อ 
 > hermes บันทึกผลของตัวเองไว้ที่
 > https://github.com/monthop-gmail/hermes-line-bot/blob/main/docs/MODEL-PROBE.md
 > ถ้าเกณฑ์เปลี่ยนหรือมีผลใหม่ ส่ง PR มาอัปเดต `model_info` ที่นี่ด้วย
+
+---
+
+## ฟิลด์สถานะและเพดาน prompt (issue #3 ข้อ 1, 2, 4)
+
+เพิ่มใน `model_info` ของทั้ง 115 โมเดล ดึงผ่าน `/model/info` ได้เหมือนฟิลด์อื่น
+
+| ฟิลด์ | ตัวอย่าง | ใช้ยังไง |
+|---|---|---|
+| `status` | `ok` / `rate_limited` / `dead` / `unknown` | กรองก่อนเลือกโมเดล |
+| `status_checked_at` | `2026-08-26T07:48:59Z` | ถ้าเก่ากว่าวันสองวันอย่าเพิ่งเชื่อ |
+| `status_detail` | ข้อความ error ที่ provider ตอบมาจริง | ไว้ดูว่าพังเพราะอะไร |
+| `quota_pool` | `ollama-cloud`, `okmd-gemini` | ตัวที่ pool เดียวกัน **ตายพร้อมกัน** |
+| `quota_window` | `daily` / `weekly` / `monthly` | รู้ว่าต้องรอนานแค่ไหน |
+| `verified_max_prompt` | `13883` | token ที่ยิงผ่านแล้วจริง — เป็นค่า **อย่างน้อย** ไม่ใช่เพดาน |
+| `max_prompt_detail` | `timeout ที่ ~32,000 — timed out` | พังยังไงตอนเกินเพดาน |
+
+### `quota_pool` สำคัญกว่าที่คิด — fallback ที่ไร้ผล
+
+เราพบว่าตัวเอง**เขียน fallback ผิด 3 เส้น**เพราะไม่มีฟิลด์นี้ — ตั้ง `or/auto-free`
+เป็นตัวสำรองของโมเดล `or/*` ตัวอื่น ทั้งที่กินโควต้า OpenRouter ก้อนเดียวกัน
+พอโควต้าหมด ตัวสำรองก็หมดพร้อมกัน = ไม่มีตัวสำรอง
+
+**กติกา: ตัวสำรองต้องคนละ `quota_pool` เสมอ** ฝั่ง consumer ที่เขียน retry เองก็ใช้กติกาเดียวกัน
+
+### `verified_max_prompt` — เลขที่โฆษณาไว้เชื่อไม่ได้
+
+วัดด้วย `scripts/probe-context.py` ไต่ขนาด 4K → 14K → 32K → 64K → 128K
+หยุดที่ขั้นแรกที่พัง แล้วบันทึกจำนวน token ที่ **provider นับเอง** จาก `usage`
+ไม่ใช่ที่เราเดา (tokenizer แต่ละเจ้าให้ตัวเลขต่างกันได้ถึง 40%)
+
+ที่เจอจริง: **Cerebras ค้างเงียบที่ 32K** — ไม่ตอบ ไม่คืน error รอ 240 วินาที
+ก็ยังไม่มีอะไรกลับมา แปลว่า agent ที่ยัด context ยาวจะ **แขวนค้าง** ไม่ใช่ได้ error
+ให้จับ ฝั่ง consumer ต้องตั้ง client timeout เอง อย่ารอให้ provider บอก
+
+`max_prompt_detail` แยกให้ว่าหยุดเพราะอะไร ตามที่ issue ขอ (429 ≠ 500):
+
+- `ชนเพดาน` — เจอเพดานจริง ยิงใหม่ก็เท่าเดิม
+- `โควต้า` — ยังไม่รู้เพดาน ต้องมาวัดใหม่ตอนโควต้าคืน **อย่าเอาเลขนี้ไปใช้**
+- `timeout` — provider แขวน (เคสของ Cerebras)
+
+### HTTP status code ของ provider โกหก — อย่าตัดสินจากตัวเลข
+
+เจอตอนวัดรอบนี้ ทั้งสามเคสถ้าดูแค่ code จะสรุปผิดหมด:
+
+| provider | ตอบมา | ความจริง |
+|---|---|---|
+| Cloudflare | **500** Internal Error | `AiError: you have used up your daily free allocation` — โควต้าวันหมด |
+| OKMD | **401** Unauthorized | `This model reached daily limit.` — โควต้าหมด **ไม่ใช่ key เสีย** |
+| Groq | **413** Request too large | TPM limit ไม่ใช่เพดาน context — prompt เท่าเดิมยิงพรุ่งนี้ผ่าน |
+
+เคส OKMD อันตรายที่สุด — ปลายทางที่เห็น 401 มักจะไปไล่หาว่า key หมดอายุหรือ
+ตั้งค่าผิด ทั้งที่แค่รอโควต้ารีเซ็ตก็จบ **อย่า disable key เพราะเห็น 401 จาก okmd**
+
+ตรรกะการแยกอยู่ที่ `scripts/failure_hints.py` ที่เดียว ทั้ง health-check และ
+probe-context เรียกใช้ตัวเดียวกัน (แยกออกมาเพราะเคยจำแนกไม่ตรงกันจนสรุปผิดมาแล้ว)
+ถ้าปลายทางเขียน retry เอง ลอกรายการคำใบ้จากไฟล์นี้ไปได้เลย
+
+### ผลวัดรอบแรก (2026-08-26)
+
+จาก 103 ตัวที่วัดได้ — 65 ตัวได้ค่า อีก 38 ตัวยังไม่รู้เพราะโควต้าหมดก่อน
+
+- **44 ตัวยิง 30K+ ผ่าน** — ดูด้วย `./scripts/pick-model.sh big-prompt`
+- **23 ตัวผ่าน 128K** ยกกลุ่ม Mistral ทั้งชุด กับ `zen/*`, `nim/nemotron-*`
+- **Cerebras ทั้ง 2 ตัวค้างที่ 32K** ผ่านแค่ ~13.8K — ตัวเร็วที่สุดของเรากลับ
+  รับ context ได้น้อยสุด งาน coding agent ที่อ่านหลายไฟล์อย่าใช้เป็นตัวหลัก
+- **ThaiLLM ทั้ง 4 ตัวเพดาน ~14K–32K** และเป็น `ชนเพดาน` จริง (ตอบ error ชัดเจน
+  ไม่ค้าง) เป็นกลุ่มเดียวที่บอกเพดานตัวเองอย่างตรงไปตรงมา
+
+⚠️ ตัวที่ `max_prompt_detail` ขึ้นต้นว่า `โควต้า` **อย่าเอาเลขไปใช้** — มันแค่แปลว่า
+วัดไม่จบ ไม่ได้แปลว่ารับได้แค่นั้น ต้องวัดใหม่ตอนโควต้าคืน
+
+### ข้อจำกัดที่ต้องรู้: อัปเดต status แบบ real-time ไม่ได้
+
+เราลอง `PATCH /model/{id}/update` แล้ว LiteLLM ตอบว่า:
+
+```
+Cannot edit config-based model. Store model in DB via /model/new first.
+```
+
+โมเดลที่มาจาก `config.yaml` แก้ผ่าน API ไม่ได้เลย ทางเดียวคือเขียนกลับไฟล์แล้ว
+`docker compose restart litellm` **จึงตั้ง cron ทุก 30 นาทีตามที่ขอมาใน issue ไม่ได้**
+— จะ restart 48 ครั้งต่อวัน
+
+ที่ทำได้จริง คือรันวันละครั้งหรือตอนสงสัยว่าโควต้าหมด แล้ว commit ผลเข้า git
+ข้อดีที่ตามมาคือมีประวัติว่าโมเดลไหนตายตอนไหนใน `git log`
+
+**ดังนั้นอย่าใช้ `status` เป็นตัวตัดสินตอน runtime** — ใช้ดูภาพรวมว่าตัวไหนใช้ได้
+ส่วนตอนยิงจริงยังต้องดัก error แล้ว fallback ไป `quota_pool` อื่นเหมือนเดิม
+
+```bash
+python3 scripts/health-check.py --write     # เขียน status
+python3 scripts/probe-context.py --write    # เขียน verified_max_prompt
+docker compose restart litellm              # ~10 วินาที
+```
