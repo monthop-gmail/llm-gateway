@@ -495,10 +495,11 @@ model_list:
       benchmark_coding: "3/3"
       benchmark_seconds: 4.9
       latency_ms: 1282
-      description: "เขียนโค้ดได้ครบทั้ง 3 ข้อในการทดสอบ"
+      description: "เขียนโค้ดได้ครบ 3 ข้อ — ผ่านเกณฑ์ hermes ครบรวมภาษาไทย แต่เป็น reasoning model ใช้ 146-227s ต่อ turn จริง ช้าเกินสำหรับแชท"
       provider_label: "Mistral"
       provider_quota: "1B token/เดือน — โควต้าใจกว้างที่สุด"
       tags: ["coding-best"]
+      verified_by: "hermes-line-bot 2026-08-26 (ผ่านครบ แต่ 146-227s/turn ช้าเกินใช้กับแชท)"
 
   - model_name: mi/magistral-small
     litellm_params:
@@ -538,10 +539,11 @@ model_list:
       mode: "chat"
       supports_function_calling: true
       latency_ms: 512
-      description: "ตอบเร็ว (512ms)"
+      description: "ตอบเร็ว (512ms) — ผ่านเกณฑ์ hermes ครบ 4 ข้อ และเร็วที่สุดในกลุ่มที่ผ่าน (18s ต่อ turn จริงใน agent loop) เหมาะเป็น main ของบอทแชท"
       provider_label: "Mistral"
       provider_quota: "1B token/เดือน — โควต้าใจกว้างที่สุด"
       tags: ["fast"]
+      verified_by: "hermes-line-bot 2026-08-26 (tool loop + prompt 14K + ภาษาไทย 3/3 · 18s/turn)"
 
   - model_name: mi/devstral-medium
     litellm_params:
@@ -553,10 +555,11 @@ model_list:
       benchmark_coding: "2/3"
       benchmark_seconds: 13.5
       latency_ms: 595
-      description: "ตอบเร็ว (595ms)"
+      description: "ตอบเร็ว (595ms) — ผ่านเกณฑ์ hermes ครบ แต่ 51s ต่อ turn จริง ใกล้เพดาน reply token ของ LINE (60s)"
       provider_label: "Mistral"
       provider_quota: "1B token/เดือน — โควต้าใจกว้างที่สุด"
       tags: ["coding-ok", "fast"]
+      verified_by: "hermes-line-bot 2026-08-26 (tool loop + prompt 14K + ภาษาไทย 3/3 · 51s/turn)"
 
   # เพิ่ม 2026-08-26 — สาย coding ของ Mistral
   - model_name: mi/mistral-code-agent
@@ -673,10 +676,11 @@ model_list:
       benchmark_coding: "2/3"
       benchmark_seconds: 21.5
       latency_ms: 456
-      description: "ตอบเร็ว (456ms)"
+      description: "ตอบเร็ว (456ms) ผ่าน tool calling + prompt 14K — แต่หลุดไปตอบอังกฤษ 1 ใน 3 ครั้งเมื่อรันใน agent loop จริงทั้งที่ผู้ใช้พิมพ์ไทย ไม่ควรเป็น main ของบอทภาษาไทย"
       provider_label: "Cloudflare Workers AI"
       provider_quota: "10,000 neurons/วัน"
       tags: ["coding-ok", "fast"]
+      verified_by: "hermes-line-bot 2026-08-26 (language drift 1/3 ใน tool loop)"
 
   - model_name: cf/nemotron-3-120b
     litellm_params:
@@ -1817,7 +1821,7 @@ model_list:
       latency_ms: 3665
       description: "โมเดลจาก Ollama Cloud — ผ่านเกณฑ์ hermes ครบ แต่ call แรกช้ามาก (~105s ตอน cold) ตัวใหญ่สุดที่ Ollama Cloud ให้ฟรี"
       provider_label: "Ollama Cloud"
-      provider_quota: "ไม่ประกาศโควต้า (light usage)"
+      provider_quota: "⚠️ โควตารายสัปดาห์ที่หมดได้ และหมดพร้อมกันทั้งตระกูล oc/* — เจอจริง 2026-08-26"
       tags: ["general"]
       verified_by: "hermes-line-bot 2026-08-26 (tool loop + prompt 14K · call แรก ~105s)"
 
@@ -1860,9 +1864,9 @@ model_list:
       latency_ms: 1458
       description: "โมเดลจาก Ollama Cloud"
       provider_label: "Ollama Cloud"
-      provider_quota: "ไม่ประกาศโควต้า (light usage)"
+      provider_quota: "⚠️ โควตารายสัปดาห์ที่หมดได้ และหมดพร้อมกันทั้งตระกูล oc/* — เจอจริง 2026-08-26"
       tags: ["general"]
-      verified_by: "hermes 2026-08-25 (main model ที่เลือกใช้จริง)"
+      verified_by: "hermes-line-bot 2026-08-26 (main เดิมของ hermes · โควตารายสัปดาห์หมด 08-26)"
 
   - model_name: oc/gemma4-31b
     litellm_params:
@@ -1891,7 +1895,7 @@ model_list:
       latency_ms: 1484
       description: "เร็ว (1.6s) ผ่าน tool calling + prompt 14K — แต่หลุดไปตอบภาษาอื่นเมื่อรันใน agent loop จริง (ตอบจีน 2 ใน 3 ครั้งทั้งที่ผู้ใช้พิมพ์ไทย) ไม่ควรเป็น main ของบอทภาษาไทย"
       provider_label: "Ollama Cloud"
-      provider_quota: "ไม่ประกาศโควต้า (light usage)"
+      provider_quota: "⚠️ โควตารายสัปดาห์ที่หมดได้ และหมดพร้อมกันทั้งตระกูล oc/* — เจอจริง 2026-08-26"
       tags: ["coding-best"]
       verified_by: "hermes-line-bot 2026-08-26 (language drift ใน tool loop — ยิง API ตรงไม่เห็น)"
 
