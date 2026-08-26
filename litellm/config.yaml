@@ -31,8 +31,6 @@ model_list:
       quota_pool: "huggingface"
       quota_window: "monthly"
       tags: ["general"]
-      verified_max_prompt: 127972
-      max_prompt_detail: "ผ่านทุกขั้นถึง 127,972 (ไม่ได้ลองมากกว่านี้)"
       status: "rate_limited"
       status_checked_at: "2026-08-26T11:20:24Z"
       status_detail: "litellm.APIError: HuggingfaceException - {'error':'You have depleted your monthly included credits. Purchase p"
@@ -51,8 +49,6 @@ model_list:
       quota_pool: "huggingface"
       quota_window: "monthly"
       tags: ["general"]
-      verified_max_prompt: 127972
-      max_prompt_detail: "ผ่านทุกขั้นถึง 127,972 (ไม่ได้ลองมากกว่านี้)"
       status: "dead"
       status_checked_at: "2026-08-26T11:20:24Z"
       status_detail: "litellm.BadRequestError: HuggingfaceException - {'error':{'message':'The requested model 'Qwen/Qwen2.5-7B-Inst"
@@ -71,8 +67,6 @@ model_list:
       quota_pool: "huggingface"
       quota_window: "monthly"
       tags: ["general"]
-      verified_max_prompt: 127968
-      max_prompt_detail: "ผ่านทุกขั้นถึง 127,968 (ไม่ได้ลองมากกว่านี้)"
       status: "rate_limited"
       status_checked_at: "2026-08-26T11:20:24Z"
       status_detail: "litellm.APIError: HuggingfaceException - {'error':'You have depleted your monthly included credits. Purchase p"
@@ -92,8 +86,6 @@ model_list:
       quota_pool: "huggingface"
       quota_window: "monthly"
       tags: ["general"]
-      verified_max_prompt: 2774
-      max_prompt_detail: "error 402 ที่ ~14,000 — litellm.APIError: HuggingfaceException - {'error':'You have depleted your monthl"
       status: "rate_limited"
       status_checked_at: "2026-08-26T11:20:24Z"
       status_detail: "litellm.APIError: HuggingfaceException - {'error':'You have depleted your monthly included credits. Purchase p"
@@ -113,8 +105,6 @@ model_list:
       quota_pool: "huggingface"
       quota_window: "monthly"
       tags: ["general"]
-      verified_max_prompt: 13768
-      max_prompt_detail: "error 402 ที่ ~32,000 — litellm.APIError: HuggingfaceException - {'error':'You have depleted your monthl"
       status: "rate_limited"
       status_checked_at: "2026-08-26T11:20:24Z"
       status_detail: "litellm.APIError: HuggingfaceException - {'error':'You have depleted your monthly included credits. Purchase p"
@@ -133,8 +123,6 @@ model_list:
       quota_pool: "huggingface"
       quota_window: "monthly"
       tags: ["general"]
-      verified_max_prompt: 13655
-      max_prompt_detail: "timeout ที่ ~32,000 — timed out"
       status: "rate_limited"
       status_checked_at: "2026-08-26T11:20:24Z"
       status_detail: "litellm.APIError: HuggingfaceException - {'error':'You have depleted your monthly included credits. Purchase p"
@@ -171,8 +159,6 @@ model_list:
       quota_pool: "huggingface"
       quota_window: "monthly"
       tags: ["general"]
-      verified_max_prompt: 13850
-      max_prompt_detail: "error 402 ที่ ~32,000 — litellm.APIError: HuggingfaceException - {'error':'You have depleted your monthl"
       status: "rate_limited"
       status_checked_at: "2026-08-26T11:20:24Z"
       status_detail: "litellm.APIError: HuggingfaceException - {'error':'You have depleted your monthly included credits. Purchase p"
@@ -191,8 +177,6 @@ model_list:
       quota_pool: "huggingface"
       quota_window: "monthly"
       tags: ["general"]
-      verified_max_prompt: 63978
-      max_prompt_detail: "error 402 ที่ ~128,000 — litellm.APIError: HuggingfaceException - {'error':'You have depleted your monthl"
       status: "rate_limited"
       status_checked_at: "2026-08-26T11:20:24Z"
       status_detail: "litellm.APIError: HuggingfaceException - {'error':'You have depleted your monthly included credits. Purchase p"
@@ -230,8 +214,6 @@ model_list:
       quota_pool: "huggingface"
       quota_window: "monthly"
       tags: ["general"]
-      verified_max_prompt: 127972
-      max_prompt_detail: "ผ่านทุกขั้นถึง 127,972 (ไม่ได้ลองมากกว่านี้)"
       status: "rate_limited"
       status_checked_at: "2026-08-26T11:20:24Z"
       status_detail: "litellm.APIError: HuggingfaceException - {'error':'You have depleted your monthly included credits. Purchase p"
@@ -252,8 +234,6 @@ model_list:
       quota_pool: "huggingface"
       quota_window: "monthly"
       tags: ["general"]
-      verified_max_prompt: 13891
-      max_prompt_detail: "error 402 ที่ ~32,000 — litellm.APIError: HuggingfaceException - {'error':'You have depleted your monthl"
       status: "rate_limited"
       status_checked_at: "2026-08-26T11:20:24Z"
       status_detail: "litellm.APIError: HuggingfaceException - {'error':'You have depleted your monthly included credits. Purchase p"
@@ -291,8 +271,6 @@ model_list:
       quota_pool: "huggingface"
       quota_window: "monthly"
       tags: ["quality-top", "general"]
-      verified_max_prompt: 31951
-      max_prompt_detail: "error 402 ที่ ~64,000 — litellm.APIError: HuggingfaceException - {'error':'You have depleted your monthl"
       status: "rate_limited"
       status_checked_at: "2026-08-26T11:20:24Z"
       status_detail: "litellm.APIError: HuggingfaceException - {'error':'You have depleted your monthly included credits. Purchase p"
@@ -311,8 +289,6 @@ model_list:
       quota_pool: "huggingface"
       quota_window: "monthly"
       tags: ["quality-top", "general"]
-      verified_max_prompt: 31964
-      max_prompt_detail: "timeout ที่ ~64,000 — timed out"
       status: "rate_limited"
       status_checked_at: "2026-08-26T11:20:24Z"
       status_detail: "litellm.APIError: HuggingfaceException - {'error':'You have depleted your monthly included credits. Purchase p"
@@ -331,8 +307,6 @@ model_list:
       quota_pool: "huggingface"
       quota_window: "monthly"
       tags: ["quality-top", "general"]
-      verified_max_prompt: 63978
-      max_prompt_detail: "timeout ที่ ~128,000 — timed out"
       status: "rate_limited"
       status_checked_at: "2026-08-26T11:20:24Z"
       status_detail: "litellm.APIError: HuggingfaceException - {'error':'You have depleted your monthly included credits. Purchase p"
@@ -370,8 +344,6 @@ model_list:
       quota_pool: "huggingface"
       quota_window: "monthly"
       tags: ["general"]
-      verified_max_prompt: 13865
-      max_prompt_detail: "error 402 ที่ ~32,000 — litellm.APIError: HuggingfaceException - {'error':'You have depleted your monthl"
       status: "rate_limited"
       status_checked_at: "2026-08-26T11:20:24Z"
       status_detail: "litellm.APIError: HuggingfaceException - {'error':'You have depleted your monthly included credits. Purchase p"
@@ -390,8 +362,6 @@ model_list:
       quota_pool: "huggingface"
       quota_window: "monthly"
       tags: ["general"]
-      verified_max_prompt: 127968
-      max_prompt_detail: "ผ่านทุกขั้นถึง 127,968 (ไม่ได้ลองมากกว่านี้)"
       status: "rate_limited"
       status_checked_at: "2026-08-26T11:20:24Z"
       status_detail: "litellm.APIError: HuggingfaceException - {'error':'You have depleted your monthly included credits. Purchase p"
@@ -423,16 +393,12 @@ model_list:
     model_info:
       mode: "chat"
       supports_function_calling: true
-      benchmark_coding: "2/3"
-      benchmark_seconds: 10.8
       description: "โมเดลจาก HuggingFace"
       provider_label: "HuggingFace"
       provider_quota: "⚠️ เครดิตรายเดือนหมดแล้ว — วิ่งผ่าน fallback ไป provider อื่น"
       quota_pool: "huggingface"
       quota_window: "monthly"
       tags: ["coding-ok"]
-      verified_max_prompt: 127972
-      max_prompt_detail: "ผ่านทุกขั้นถึง 127,972 (ไม่ได้ลองมากกว่านี้)"
       status: "rate_limited"
       status_checked_at: "2026-08-26T11:20:24Z"
       status_detail: "litellm.APIError: HuggingfaceException - {'error':'You have depleted your monthly included credits. Purchase p"
@@ -1495,8 +1461,6 @@ model_list:
       quota_pool: "nvidia-nim"
       quota_window: "rpm-only"
       tags: ["general"]
-      verified_max_prompt: 127960
-      max_prompt_detail: "ผ่านทุกขั้นถึง 127,960 (ไม่ได้ลองมากกว่านี้)"
       status: "dead"
       status_checked_at: "2026-08-26T11:35:21Z"
       status_detail: "litellm.APIError: APIError: Nvidia_nimException - Error code: 410 - {'type': 'about:blank', 'title': 'Gone', '"
@@ -1515,8 +1479,6 @@ model_list:
       quota_pool: "nvidia-nim"
       quota_window: "rpm-only"
       tags: ["general"]
-      verified_max_prompt: 13768
-      max_prompt_detail: "timeout ที่ ~32,000 — timed out"
       verified_by: "gateway 2026-08-26 (ทดสอบซ้ำ tool calling)"
       status: "dead"
       status_checked_at: "2026-08-26T11:35:21Z"

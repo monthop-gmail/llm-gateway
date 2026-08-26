@@ -11,6 +11,7 @@
 #   ./scripts/pick-model.sh long            # context ยาว
 #   ./scripts/pick-model.sh embedding       # embeddings สำหรับ RAG
 #   ./scripts/pick-model.sh agent           # เอาไปทำ agent ได้ (tool + 14K + โควต้าไหว)
+#   ./scripts/pick-model.sh agent 60000     # ตั้งเพดาน prompt ที่ agent ใช้จริงเอง
 #   ./scripts/pick-model.sh big-prompt      # รับ prompt 30K+ ได้จริง
 #   ./scripts/pick-model.sh all             # ทุกตัวพร้อมรายละเอียด
 #   ./scripts/pick-model.sh <คำค้น>          # ค้นจากชื่อหรือคำอธิบาย
@@ -40,7 +41,7 @@ raw=$(curl -sS --max-time 30 "$URL/model/info" -H "Authorization: Bearer $KEY") 
 
 query="${1:-}"
 
-echo "$raw" | QUERY="$query" python3 -c '
+echo "$raw" | QUERY="$query" FLOOR="${2:-}" python3 -c '
 import json, os, sys
 
 rows = json.load(sys.stdin).get("data", [])
@@ -73,7 +74,7 @@ def _big_prompt(r):
 # "อย่างน้อยเท่านี้" ไม่ใช่เพดาน — ตัวที่ผ่านขั้น 14K แล้วไปพังที่ขั้น 32K
 # จะได้เลข ~13,6xx-13,9xx เสมอ (นั่นคือ prompt_tokens จริงของขั้น 14K)
 # ถ้าตัดที่ 14,000 ตรง ๆ จะตกหล่น 16 ตัวรวมทั้ง cb/* ที่เป็น tier เร็วสุด
-AGENT_FLOOR = 13_300
+AGENT_FLOOR = int(os.environ.get("FLOOR") or 13_300)
 
 def _agent_ready(r):
     mi = info(r)
@@ -147,10 +148,23 @@ if not q:
     sys.exit(0)
 
 if q == "agent":
-    hits = sorted((r for r in rows if _agent_ready(r)),
-                  key=lambda r: info(r).get("latency_ms_14k")
-                  or info(r).get("latency_ms") or 10 ** 9)
-    print(f"เอาไปทำ agent ได้ — {len(hits)} ตัว (เรียงตามเวลาตอบที่ prompt 14K)\n")
+    def _agent_shape(r):
+        """เข้าเกณฑ์ agent ทุกข้อ ยกเว้นเรื่อง status — ใช้แยกตัวที่แค่โควต้าหมด"""
+        mi = info(r)
+        return (mi.get("supports_function_calling") is True
+                and (mi.get("verified_max_prompt") or 0) >= AGENT_FLOOR
+                and mi.get("quota_window") != "rpm-only"
+                and not mi.get("answered_by"))
+
+    by_speed = lambda r: (info(r).get("latency_ms_14k")
+                          or info(r).get("latency_ms") or 10 ** 9)
+    hits = sorted((r for r in rows if _agent_ready(r)), key=by_speed)
+    # ตัวสำรองที่ดีคือตัวที่ว่างตอนตัวหลักตาย ไม่ใช่ตัวที่ว่างตอนนี้ — จึงไม่ซ่อน
+    # ตัวที่โควต้าหมด แค่ย้ายไปท้ายลิสต์ (เหมือนที่หมวดอื่นทำ)
+    down = sorted((r for r in rows if _agent_shape(r) and not _agent_ready(r)),
+                  key=by_speed)
+    floor_note = f" · floor {AGENT_FLOOR:,} token"
+    print(f"เอาไปทำ agent ได้ — {len(hits)} ตัวที่ใช้ได้ตอนนี้{floor_note}\n")
     for r in hits:
         print(fmt(r, show_all=True))
         print()
@@ -166,7 +180,19 @@ if q == "agent":
     print("โควต้าของแต่ละก้อน — agent ยิงถี่ ให้ดูข้อนี้ก่อนตัดสินใจ:\n")
     for key, (n, quota) in sorted(pools.items(), key=lambda kv: -kv[1][0]):
         print(f"  {key:<16} {n:>2} ตัว   {quota[:78]}")
-    print("\n  ตัวที่อยู่ก้อนเดียวกันหมดโควต้าพร้อมกัน — เลือกตัวสำรองข้ามก้อนเสมอ")
+    if len(pools) <= 1:
+        # ถ้าเหลือก้อนเดียว คำแนะนำ "เลือกตัวสำรองข้ามก้อน" ทำตามไม่ได้
+        print("\n  ⚠️ ที่ floor นี้เหลือ quota_pool เดียว — สร้าง fallback chain")
+        print("     ข้ามก้อนไม่ได้ ลอง floor ต่ำลง หรือดูรายชื่อที่โควต้าหมดข้างล่าง")
+    else:
+        print("\n  ตัวที่อยู่ก้อนเดียวกันหมดโควต้าพร้อมกัน — เลือกตัวสำรองข้ามก้อนเสมอ")
+    if down:
+        print(f"\nอีก {len(down)} ตัวเข้าเกณฑ์ครบแต่โควต้าหมดตอนนี้ — ไม่ตัดทิ้ง")
+        print("เพราะตัวสำรองที่ดีคือตัวที่ว่างตอนตัวหลักตาย ไม่ใช่ตัวที่ว่างตอนนี้:\n")
+        for r in down:
+            mi = info(r)
+            name = r.get("model_name", "?")
+            print(f"  {name:<26} {mi.get("status")}  pool={mi.get("quota_pool")}")
     sys.exit(0)
 
 if q == "big-prompt":

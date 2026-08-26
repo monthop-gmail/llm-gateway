@@ -146,6 +146,30 @@ else
 	ok "จัดรูปแบบแล้ว"
 fi
 
+# ------------------------------------------------------------- ค่าที่ยืมมา
+note "ตรวจว่าไม่มีค่าวัดผลติดอยู่กับโมเดลที่ตัวสำรองตอบแทน"
+if out=$(python3 -c "
+import sys, yaml
+c = yaml.safe_load(open('litellm/config.yaml'))
+# answered_by = ชื่อนี้ไม่ได้ตอบเอง ค่าที่วัดผ่านชื่อนี้จึงเป็นของตัวสำรอง
+measured = ('verified_max_prompt', 'max_prompt_detail', 'latency_ms_14k', 'benchmark_coding')
+bad = []
+for m in c['model_list']:
+    mi = m.get('model_info') or {}
+    if not mi.get('answered_by'):
+        continue
+    hit = [k for k in measured if mi.get(k) is not None]
+    if hit:
+        bad.append(f\"{m['model_name']}: {', '.join(hit)}\")
+print('\n'.join(bad))
+sys.exit(1 if bad else 0)
+"); then
+	ok "ไม่มีค่าวัดผลติดกับตัวที่ตัวสำรองตอบแทน"
+else
+	echo "$out" | sed 's/^/    /'
+	err "ค่าเหล่านี้เป็นของตัวสำรอง ไม่ใช่ของโมเดลที่ขอ — ต้องลบหรือวัดใหม่ (ดู issue #7)"
+fi
+
 # --------------------------------------------------------------- ชื่อฟิลด์
 note "ตรวจว่าฟิลด์ที่เราตั้งเองไม่ชนกับของ LiteLLM"
 if ! docker compose ps --status running litellm >/dev/null 2>&1; then

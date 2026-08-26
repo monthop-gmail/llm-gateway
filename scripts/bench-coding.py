@@ -94,6 +94,9 @@ def ask(model, prompt, timeout=300):
         "model": model,
         "messages": [{"role": "user", "content": prompt}],
         "max_tokens": 3000, "temperature": 0,
+        # วัดตัวจริง ไม่ใช่ตัวสำรอง — เคยได้คะแนน coding ของ mistral-code
+        # ไปแปะให้ hf/qwen3-coder-next มาแล้ว
+        "disable_fallbacks": True,
     }).encode()
     req = urllib.request.Request(BASE, data=body, headers={
         "Authorization": f"Bearer {KEY}", "Content-Type": "application/json"})
