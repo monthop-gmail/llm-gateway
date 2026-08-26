@@ -71,6 +71,7 @@ PY
 | provider | ตัวแปร | สมัครที่ | หมายเหตุ |
 |---|---|---|---|
 | **OpenCode Zen** | — **ไม่ต้องมี key** | — | ⭐ ยิงได้ทันที ไม่ต้องสมัครอะไรเลย |
+| **LLM7.io** | — **ไม่ต้องมี key** (2 โมเดล) | llm7.io | ขอ key ฟรีเพื่อปลดล็อกอีก 44 โมเดล |
 | **Groq** | `GROQ_API_KEY` | console.groq.com | เริ่มที่นี่ถ้าต้องการโควต้าเยอะ — ฟรี ไม่ต้องใช้บัตร |
 | Cerebras | `CEREBRAS_API_KEY` | cloud.cerebras.ai | เร็วสุดสำหรับ coding |
 | Cloudflare | `CLOUDFLARE_API_KEY` + `CLOUDFLARE_ACCOUNT_ID` | dash.cloudflare.com | 10,000 neurons/วัน |
@@ -140,7 +141,7 @@ client.chat.completions.create(model="cb/gemma-4-31b", messages=[...])
 
 ## โมเดลที่ตั้งไว้ให้
 
-รวม **112 โมเดล** จาก 10 provider — ทดสอบยิงจริงผ่านทั้งหมด (อัปเดต 2026-08-26)
+รวม **114 โมเดล** จาก 11 provider — ทดสอบยิงจริงผ่านทั้งหมด (อัปเดต 2026-08-26)
 ทุกตัวใช้ `sk-...` ใบเดียวกัน สลับโมเดลได้โดยไม่ต้องแก้ฝั่ง client
 
 ### โควต้าฟรีของแต่ละเจ้า — ดูก่อนเลือกโมเดล
@@ -161,6 +162,7 @@ client.chat.completions.create(model="cb/gemma-4-31b", messages=[...])
 | SEA-LION (ยังไม่เปิด) | 10 req/min | งานภาษาอาเซียน |
 | Ollama Cloud | ไม่ประกาศ ("light usage") | ทั่วไป |
 | **OpenCode Zen** | **ไม่ต้องมี key** แต่ ~15 req ติดกันก็ตัน | ตัวสำรอง ใช้ประปราย |
+| **LLM7.io** | **ไม่ต้องมี key** (2 โมเดล) | ตัวสำรอง |
 | HuggingFace | เครดิตรายเดือน — **หมดแล้ว** | — |
 
 > **จุดที่คนพลาดบ่อยที่สุดคือ OKMD** — โควต้า ~40K token/วันนั้น **แชร์กันทั้งตระกูล**
@@ -480,6 +482,35 @@ Ollama โฮสต์ให้ ไม่กิน RAM/GPU เครื่อง
 แต่ยิงแล้วคืน upstream error / internal server error)
 
 เช็ครายชื่อปัจจุบัน: `curl -s https://opencode.ai/zen/v1/models`
+
+### LLM7.io — ไม่ต้องมี key (บางตัว)
+
+`https://api.llm7.io/v1` — `/v1/models` มี **46 โมเดล** รวม `claude-opus-5`,
+`gpt-5.6-sol`, `grok-4.6`, `gemini-3.7-flash` แต่ส่วนใหญ่คืน `"Missing API key"`
+
+| model_name | หมายเหตุ |
+|---|---|
+| `l7/llama-3.1-8b` | meta-Llama-3.1-8B-Instruct-Turbo — ยิงได้เลย |
+| `l7/codestral` | codestral-latest — ยิงได้เลย เขียนโค้ด |
+
+> ขอ key ฟรีที่ https://llm7.io (ไม่ต้องใช้บัตร) แล้วเปลี่ยน `api_key` เป็น
+> `os.environ/LLM7_API_KEY` จะปลดล็อกอีก 44 โมเดล — มีตัวอย่างคอมเมนต์ไว้ใน config
+
+### ต้นทางของโมเดลที่ตอนนี้ใช้ผ่านคนกลาง (เตรียม config ไว้ รอ key)
+
+GLM / Qwen / DeepSeek / Grok ของเราตอนนี้วิ่งผ่าน HF (เครดิตหมด),
+OKMD (40K token/วัน) หรือ Cloudflare (10K neurons/วัน) — **ติดโควต้าคนกลางทั้งหมด**
+ต่อตรงเข้าต้นทางจะได้โควต้าของตัวเองเต็มๆ
+
+| provider | ต้นทางของ | สมัคร | บัตร |
+|---|---|---|---|
+| **Z AI (Zhipu)** | GLM | z.ai | ไม่ต้อง |
+| **Alibaba Model Studio** | Qwen | modelstudio.console.alibabacloud.com | ไม่ต้อง |
+| **DeepSeek** | DeepSeek | platform.deepseek.com | ไม่ต้อง |
+| **Cohere** | Command-A (ยังไม่มีใน gateway เลย) | dashboard.cohere.com | ไม่ต้อง |
+| **xAI** | Grok | console.x.ai | ⚠️ ต้องผูกบัตร |
+
+endpoint ทั้งหมดยืนยันแล้วว่า path ถูก (คืน 401 ไม่ใช่ 404) เมื่อ 2026-08-26
 
 ### Embeddings (NVIDIA NIM)
 

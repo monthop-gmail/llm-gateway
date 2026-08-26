@@ -737,6 +737,88 @@ model_list:
   #   deepseek-v4-flash-free -> "Upstream request failed"
   #   muse-spark-1.2-contributor-free -> "Internal server error"
 
+
+  ####################################################################
+  # ---------- LLM7.io — ไม่ต้องมี key (บางตัว) ----------
+  # https://api.llm7.io/v1 — OpenAI-compatible
+  # /v1/models มี 46 โมเดล (claude-opus-5, gpt-5.6, grok-4.6, gemini-3.7 ฯลฯ)
+  # แต่ส่วนใหญ่คืน "Missing API key" — ที่ยิงได้เลยมี 2 ตัว (ทดสอบ 2026-08-26)
+  # ขอ key ฟรีได้ที่ https://llm7.io (ไม่ต้องใช้บัตร) แล้วปลดล็อกที่เหลือ
+  ####################################################################
+  - model_name: l7/llama-3.1-8b
+    litellm_params:
+      model: openai/meta-Llama-3.1-8B-Instruct-Turbo
+      api_base: https://api.llm7.io/v1
+      api_key: ""
+
+  - model_name: l7/codestral
+    litellm_params:
+      model: openai/codestral-latest
+      api_base: https://api.llm7.io/v1
+      api_key: ""
+
+  # ปลดคอมเมนต์เมื่อมี LLM7_API_KEY แล้ว (เปลี่ยน api_key เป็น os.environ/LLM7_API_KEY
+  # ทั้งสองตัวข้างบนด้วย) — ตัวอย่างของที่จะได้เพิ่ม:
+  # - model_name: l7/claude-opus-5
+  #   litellm_params:
+  #     model: openai/claude-opus-5
+  #     api_base: https://api.llm7.io/v1
+  #     api_key: os.environ/LLM7_API_KEY
+  #
+  # - model_name: l7/gpt-5.6-sol
+  #   litellm_params:
+  #     model: openai/gpt-5.6-sol
+  #     api_base: https://api.llm7.io/v1
+  #     api_key: os.environ/LLM7_API_KEY
+
+  ####################################################################
+  # ---------- ต้นทางของโมเดลที่เราใช้ผ่านคนกลางอยู่ (ยังไม่มี key) ----------
+  # ตอนนี้ GLM/Qwen/DeepSeek/Grok ของเราวิ่งผ่าน HF (เครดิตหมด),
+  # OKMD (40K token/วัน) หรือ Cloudflare (10K neurons/วัน) ซึ่งติดโควต้าคนกลาง
+  # ต่อตรงเข้าต้นทางจะได้โควต้าของตัวเองเต็มๆ
+  # ทุกเจ้าสมัครฟรีไม่ต้องใช้บัตร (ยกเว้นที่ระบุ) — endpoint ยืนยันแล้วว่า path ถูก
+  # (คืน 401 ไม่ใช่ 404) เมื่อ 2026-08-26
+  ####################################################################
+
+  # Z AI (Zhipu) — ต้นทางของ GLM  https://z.ai
+  # - model_name: zai/glm-5.2
+  #   litellm_params:
+  #     model: openai/glm-4.6
+  #     api_base: https://api.z.ai/api/paas/v4
+  #     api_key: os.environ/ZAI_API_KEY
+
+  # Alibaba Model Studio — ต้นทางของ Qwen  https://modelstudio.console.alibabacloud.com
+  # ใช้ endpoint intl (dashscope-intl) สำหรับนอกจีน
+  # - model_name: qw/qwen3.5-plus
+  #   litellm_params:
+  #     model: openai/qwen3.5-plus
+  #     api_base: https://dashscope-intl.aliyuncs.com/compatible-mode/v1
+  #     api_key: os.environ/QWEN_API_KEY
+
+  # DeepSeek ต้นทาง  https://platform.deepseek.com
+  # - model_name: ds/deepseek-chat
+  #   litellm_params:
+  #     model: deepseek/deepseek-chat
+  #     api_key: os.environ/DEEPSEEK_API_KEY
+  #
+  # - model_name: ds/deepseek-reasoner
+  #   litellm_params:
+  #     model: deepseek/deepseek-reasoner
+  #     api_key: os.environ/DEEPSEEK_API_KEY
+
+  # xAI (Grok) ต้นทาง  https://console.x.ai  ⚠️ ต้องผูกบัตร
+  # ตอนนี้มี Grok แค่ผ่าน okmd/grok-4.3 ซึ่งโควต้า 40K/วัน
+  # - model_name: xai/grok-4.6
+  #   litellm_params:
+  #     model: xai/grok-4.6
+  #     api_key: os.environ/XAI_API_KEY
+
+  # Cohere — Command-A ยังไม่มีที่ไหนใน gateway เลย  https://dashboard.cohere.com
+  # - model_name: co/command-a
+  #   litellm_params:
+  #     model: cohere/command-a-03-2025
+  #     api_key: os.environ/COHERE_API_KEY
+
   ####################################################################
   # provider ไทย/อาเซียนที่เตรียมไว้แล้วแต่ยังไม่มี key
   # ปลดคอมเมนต์ได้ทันทีที่สมัคร — ชื่อโมเดลยืนยันแล้วจาก
