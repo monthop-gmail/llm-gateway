@@ -839,7 +839,7 @@ scripts/backup.sh               สำรอง virtual key + spend log
 scripts/restore.sh              กู้คืนจาก backup
 scripts/validate.sh             ตรวจ config ทั้งหมด (CI เรียกตัวนี้)
 scripts/health-check.py         ยิงทุกโมเดลหาว่าตัวไหนตาย แยกจากตัวที่แค่โควต้าหมด
-scripts/verify-capabilities.py  ตรวจ tool calling ซ้ำเทียบกับ config
+scripts/verify-capabilities.py  ตรวจ tool calling ซ้ำเทียบกับ config (ยิง API ตรง — ดูขอบเขตใน INTEGRATION.md)
 scripts/pick-model.sh           ช่วยเลือกโมเดลตามงาน (อ่านจาก /model/info)
 scripts/bench-coding.py         วัดความสามารถเขียนโค้ดของโมเดล
 CLIENTS.md                      วิธีต่อ AI agent / coding agent
