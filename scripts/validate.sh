@@ -166,14 +166,17 @@ sys.exit(1 if bad else 0)
 "); then
 	ok "ไม่มีค่าวัดผลติดกับตัวที่ตัวสำรองตอบแทน"
 else
-	echo "$out" | sed 's/^/    /'
+	printf '    %s\n' "${out//$'\n'/$'\n'    }"
 	err "ค่าเหล่านี้เป็นของตัวสำรอง ไม่ใช่ของโมเดลที่ขอ — ต้องลบหรือวัดใหม่ (ดู issue #7)"
 fi
 
 # --------------------------------------------------------------- ชื่อฟิลด์
 note "ตรวจว่าฟิลด์ที่เราตั้งเองไม่ชนกับของ LiteLLM"
-if ! docker compose ps --status running litellm >/dev/null 2>&1; then
-	warn "ข้าม — litellm ไม่ได้รัน"
+# docker compose ps คืน 0 พร้อม output ว่างเมื่อไม่เจอ container จึงต้องดูที่ output
+# ไม่ใช่ exit code — พลาดตรงนี้ทำให้ CI แดงมาตั้งแต่ d7e0754 โดยรายงานว่า "ชนกัน: "
+# (รายการว่าง) ทั้งที่จริงคือรันคำสั่งไม่ได้
+if [ -z "$(docker compose ps -q --status running litellm 2>/dev/null)" ]; then
+	warn "ข้าม — litellm ไม่ได้รัน (ตรวจข้อนี้ต้องมี container)"
 elif out=$(docker compose exec -T litellm python -c "
 import sys, yaml, litellm
 keys = set()
