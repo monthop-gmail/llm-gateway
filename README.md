@@ -81,8 +81,10 @@ PY
 | ThaiLLM (ไทย) | `THAILLM_API_KEY` | thaillm.or.th | โมเดลภาษาไทยที่พัฒนาในไทย |
 | HuggingFace | `HF_TOKEN` | huggingface.co/settings/tokens | ⚠️ ดูหมายเหตุด้านล่าง |
 | Typhoon (ไทย) | `TYPHOON_API_KEY` | playground.opentyphoon.ai | ยังไม่เปิด — config รอไว้แล้ว |
-| SEA-LION | `SEALION_API_KEY` | sea-lion.ai | ยังไม่เปิด — config รอไว้แล้ว |
+| SEA-LION | `SEALION_API_KEY` | playground.sea-lion.ai | ยังไม่เปิด — config รอไว้แล้ว |
 | Chinda (ไทย) | `IAPP_API_KEY` | iapp.co.th | ยังไม่เปิด — config รอไว้แล้ว |
+| KNPLabs (ไทย) | `KNPLAB_API_KEY` | play.knplabai.com | ยังไม่เปิด — config รอไว้แล้ว |
+| Float16 (ไทย) | `FLOAT16_API_KEY` + `FLOAT16_BASE_URL` | float16.cloud | ยังไม่เปิด — ต้องตั้ง base URL เอง |
 
 > **HuggingFace ไม่ใช่ตัวเลือกแรกอีกแล้ว** — โปรเจกต์นี้เริ่มจาก HF แต่เครดิต
 > รายเดือนของบัญชีที่ใช้ทดสอบหมดตั้งแต่ 2026-08-23 (`"You have depleted your
@@ -420,17 +422,29 @@ Ollama โฮสต์ให้ ไม่กิน RAM/GPU เครื่อง
 >
 > ทุกตัวใช้ model id ว่า `/model` จึงเขียนเป็น `openai//model` (สอง slash ไม่ใช่พิมพ์ผิด)
 
-**ยังมีอีก 3 เจ้าที่เตรียม config ไว้แล้วแต่ยังไม่มี key** — ปลดคอมเมนต์ใน
+**ยังมีอีก 5 เจ้าที่เตรียม config ไว้แล้วแต่ยังไม่มี key** — ปลดคอมเมนต์ใน
 `litellm/config.yaml` ได้ทันทีที่สมัคร:
 
-| | endpoint | โควต้าฟรี |
-|---|---|---|
-| Typhoon ตรง (SCB 10X) | `api.opentyphoon.ai/v1` | ~50 req/min แต่ context แค่ 8K |
-| SEA-LION ตรง (AI Singapore) | `api.sea-lion.ai/v1` | 10 req/min |
-| Chinda Thai LLM 4B (iApp) | `api.iapp.co.th/v3/llm/chinda-thaillm-4b` | ดูหน้าโปรฯ |
+| provider | endpoint | โควต้าฟรี | โมเดลที่เตรียมไว้ |
+|---|---|---|---|
+| **Typhoon ตรง** (SCB 10X) 🇹🇭 | `api.opentyphoon.ai/v1` | ~50 req/min, ctx 8K | `typhoon-v2.5-30b-a3b-instruct`, `typhoon-v2.1-12b-instruct` |
+| **SEA-LION ตรง** (AI Singapore) 🇸🇬 | `api.sea-lion.ai/v1` | 10 req/min | `Qwen-SEA-LION-v4.5-27B-IT`, `Llama-SEA-LION-v3.5-70B-R` |
+| **Chinda** (iApp) 🇹🇭 | `api.iapp.co.th/v3/llm/chinda-thaillm-4b` | ดูหน้าโปรฯ | `chinda-qwen3-4b` (ฐาน Qwen3-4B) |
+| **KNPLabs** 🇹🇭 | `play.knplabai.com/ai/v1` (ฟรี)<br>`streamapi.knplabai.com/v1` (จ่ายเงิน) | — | `gpt-4o-mini` / tier จ่ายเงินมี 664 โมเดล |
+| **Float16.cloud** 🇹🇭 | ⚠️ endpoint แยกต่อลูกค้า | — | โฮสต์ Typhoon/Qwen3/GPT-OSS บน H100 |
 
 ต่างจากที่มีอยู่ตรงที่ยิงตรงเข้าเจ้าของโมเดล ไม่ผ่าน HF/Cloudflare/thaillm.or.th
-จึงไม่ติดโควต้าของตัวกลาง
+จึงไม่กินโควต้าของตัวกลาง
+
+> ชื่อโมเดลข้างบนยืนยันจาก `test-opencode-free-model/config/models.json` แล้ว
+> — เดิมเดาไว้ผิด 2 ตัว (`Gemma-SEA-LION-v4-27B-IT` ที่จริงคือ `Qwen-SEA-LION-v4.5-27B-IT`
+> และ `chinda-thaillm-4b` ที่จริงคือ `chinda-qwen3-4b`) ถ้าใส่ key แล้วยิงตามชื่อเดิมจะพัง
+>
+> **Float16 ไม่มี host กลาง** — `api.float16.cloud` คืน HTTP 000 ต้องตั้ง
+> `FLOAT16_BASE_URL` ให้ตรงกับ endpoint ที่ได้รับตอนสมัคร
+>
+> **KNPLabs มี 2 tier คนละ host คนละ key** — tier จ่ายเงินมีบันทึกว่าทดสอบเมื่อ
+> 2026-08-13 ผ่าน 11/12 latency กลาง 3.5 วิ
 
 ### Embeddings (NVIDIA NIM)
 

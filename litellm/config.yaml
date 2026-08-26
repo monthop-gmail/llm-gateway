@@ -669,39 +669,88 @@ model_list:
       api_key: os.environ/OKMD_API_KEY
 
 
-  # ---------- Typhoon ตรงจาก SCB 10X (ยังไม่มี key) ----------
+  ####################################################################
+  # provider ไทย/อาเซียนที่เตรียมไว้แล้วแต่ยังไม่มี key
+  # ปลดคอมเมนต์ได้ทันทีที่สมัคร — ชื่อโมเดลยืนยันแล้วจาก
+  # /opt/docker-test/test-opencode-free-model/config/models.json
+  # ทั้งหมดยิงตรงเข้าเจ้าของโมเดล ไม่ผ่าน HF/Cloudflare/thaillm.or.th
+  # จึงไม่กินโควต้าของตัวกลาง
+  ####################################################################
+
+  # ---------- Typhoon ตรงจาก SCB 10X ----------
   # ต่างจาก th/typhoon ที่ต่อผ่าน thaillm.or.th — อันนี้ยิงตรงเข้า opentyphoon.ai
-  # สมัครฟรีที่ https://playground.opentyphoon.ai/ แล้วใส่ TYPHOON_API_KEY ใน .env
+  # สมัครฟรี https://playground.opentyphoon.ai/ → TYPHOON_API_KEY
   # ฟรี ~50 req/min แต่ context แค่ 8K
-  # /v1/models เปิดสาธารณะ (ตรวจ 2026-08-26 มี typhoon-v2.5-30b-a3b-instruct)
-  # แต่ chat ต้องมี key
+  # /v1/models เปิดสาธารณะ (ตรวจ 2026-08-26) แต่ chat ต้องมี key
   #
-  # - model_name: ty/typhoon-v2.5-30b
+  # - model_name: ty/typhoon-2.5-30b
   #   litellm_params:
   #     model: openai/typhoon-v2.5-30b-a3b-instruct
   #     api_base: https://api.opentyphoon.ai/v1
   #     api_key: os.environ/TYPHOON_API_KEY
+  #
+  # - model_name: ty/typhoon-2.1-12b
+  #   litellm_params:
+  #     model: openai/typhoon-v2.1-12b-instruct
+  #     api_base: https://api.opentyphoon.ai/v1
+  #     api_key: os.environ/TYPHOON_API_KEY
 
-  # ---------- SEA-LION ตรงจาก AI Singapore (ยังไม่มี key) ----------
+  # ---------- SEA-LION ตรงจาก AI Singapore ----------
   # ต่างจาก hf/sea-lion-* และ cf/sea-lion-27b ที่ต่อผ่าน HF/Cloudflare
-  # สมัคร trial key ที่ https://sea-lion.ai แล้วใส่ SEALION_API_KEY
+  # สมัคร trial key https://playground.sea-lion.ai/ (API Key Manager, 1 key/บัญชี)
   # ฟรี 10 req/min
   #
-  # - model_name: sl/sea-lion-v4
+  # - model_name: sl/qwen-sea-lion-27b
   #   litellm_params:
-  #     model: openai/aisingapore/Gemma-SEA-LION-v4-27B-IT
+  #     model: openai/aisingapore/Qwen-SEA-LION-v4.5-27B-IT
+  #     api_base: https://api.sea-lion.ai/v1
+  #     api_key: os.environ/SEALION_API_KEY
+  #
+  # - model_name: sl/llama-sea-lion-70b
+  #   litellm_params:
+  #     model: openai/aisingapore/Llama-SEA-LION-v3.5-70B-R
   #     api_base: https://api.sea-lion.ai/v1
   #     api_key: os.environ/SEALION_API_KEY
 
-  # ---------- Chinda Thai LLM (iApp) — โมเดลไทยจากเอกชนไทย (ยังไม่มี key) ----------
-  # ฐาน Qwen3-4B สมัครที่ https://iapp.co.th แล้วใส่ IAPP_API_KEY
-  # path ที่ถูกคือ .../chinda-thaillm-4b/... (ตรวจแล้วคืน 401 ไม่ใช่ 404)
+  # ---------- Chinda Thai LLM (iApp Technology) ----------
+  # โมเดลไทยจากเอกชนไทย ฐาน Qwen3-4B
+  # ขอ key ฟรีที่ https://iapp.co.th/ → IAPP_API_KEY
+  # path ยืนยันแล้ว (คืน 401 ไม่ใช่ 404) ชื่อโมเดลคือ chinda-qwen3-4b
   #
   # - model_name: th/chinda-4b
   #   litellm_params:
-  #     model: openai/chinda-thaillm-4b
+  #     model: openai/chinda-qwen3-4b
   #     api_base: https://api.iapp.co.th/v3/llm/chinda-thaillm-4b
   #     api_key: os.environ/IAPP_API_KEY
+
+  # ---------- KNPLabs (ผู้ให้บริการไทย) ----------
+  # มี 2 tier คนละ host คนละ key — สมัครที่ https://play.knplabai.com/
+  #   ฟรี      play.knplabai.com/ai/v1
+  #   จ่ายเงิน  streamapi.knplabai.com/v1 — 664 โมเดล (ไม่มีโมเดลไทย)
+  #     ทดสอบเมื่อ 2026-08-13 ผ่าน 11/12 latency กลาง 3.5 วิ
+  #
+  # - model_name: knp/gpt-4o-mini
+  #   litellm_params:
+  #     model: openai/gpt-4o-mini
+  #     api_base: https://play.knplabai.com/ai/v1
+  #     api_key: os.environ/KNPLAB_API_KEY
+  #
+  # - model_name: knp/claude-sonnet-4.6
+  #   litellm_params:
+  #     model: openai/claude-sonnet-4-6
+  #     api_base: https://streamapi.knplabai.com/v1
+  #     api_key: os.environ/KNPLAB_STREAM_API_KEY
+
+  # ---------- Float16.cloud (GPU cloud ไทย) ----------
+  # โฮสต์ Typhoon/Qwen3/GPT-OSS บน H100 — สมัครที่ https://float16.cloud/
+  # ⚠️ endpoint แยกต่อลูกค้า ไม่มี host กลาง (api.float16.cloud คืน HTTP 000)
+  #    ต้องตั้ง FLOAT16_BASE_URL ให้ตรงกับที่ได้รับ และแก้ชื่อโมเดลตามที่ deploy
+  #
+  # - model_name: f16/typhoon-12b
+  #   litellm_params:
+  #     model: openai/typhoon-v2.1-12b-instruct
+  #     api_base: os.environ/FLOAT16_BASE_URL
+  #     api_key: os.environ/FLOAT16_API_KEY
 
   # ---------- ThaiLLM — โมเดลภาษาไทยที่พัฒนาในไทย ----------
   # https://thaillm.or.th — แต่ละเจ้ามี endpoint แยกกัน แต่ใช้ key เดียวกัน
