@@ -1272,13 +1272,17 @@ model_list:
       context_window: 1000000
       description: "context 1M ตอบไทยดี"
       provider_label: "OpenRouter"
-      provider_quota: "50–1,000 req/วัน แล้วแต่ยอดเติมเงิน"
       quota_pool: "openrouter"
       quota_window: "daily"
       tags: ["coding-best", "long-context"]
       stability: "stable"
       status: "ok"
       status_checked_at: "2026-08-27T06:04:13Z"
+      quota_requests_per_window: 50
+      quota_rpm: 20
+      quota_source: "provider-docs"
+      quota_checked_at: "2026-08-27"
+      provider_quota: "50 req/วัน + 20 req/นาที — ผูกกับยอดเติมเงินสะสมของบัญชีเรา (ตอนนี้ $5 · ถ้าเกิน $10 จะเป็น 1,000 req/วัน)"
 
   - model_name: or/nemotron-lightning
     litellm_params:
@@ -1290,13 +1294,17 @@ model_list:
       context_window: 1000000
       description: "พ่น reasoning ปนมาใน content ต้องกรองเอง"
       provider_label: "OpenRouter"
-      provider_quota: "50–1,000 req/วัน แล้วแต่ยอดเติมเงิน"
       quota_pool: "openrouter"
       quota_window: "daily"
       tags: ["long-context"]
       stability: "stable"
       status: "ok"
       status_checked_at: "2026-08-27T06:04:13Z"
+      quota_requests_per_window: 50
+      quota_rpm: 20
+      quota_source: "provider-docs"
+      quota_checked_at: "2026-08-27"
+      provider_quota: "50 req/วัน + 20 req/นาที — ผูกกับยอดเติมเงินสะสมของบัญชีเรา (ตอนนี้ $5 · ถ้าเกิน $10 จะเป็น 1,000 req/วัน)"
 
   - model_name: or/nemotron-super-120b
     litellm_params:
@@ -1307,13 +1315,17 @@ model_list:
       supports_function_calling: true
       description: "โมเดลจาก OpenRouter"
       provider_label: "OpenRouter"
-      provider_quota: "50–1,000 req/วัน แล้วแต่ยอดเติมเงิน"
       quota_pool: "openrouter"
       quota_window: "daily"
       tags: ["general"]
       stability: "stable"
       status: "ok"
       status_checked_at: "2026-08-27T06:04:13Z"
+      quota_requests_per_window: 50
+      quota_rpm: 20
+      quota_source: "provider-docs"
+      quota_checked_at: "2026-08-27"
+      provider_quota: "50 req/วัน + 20 req/นาที — ผูกกับยอดเติมเงินสะสมของบัญชีเรา (ตอนนี้ $5 · ถ้าเกิน $10 จะเป็น 1,000 req/วัน)"
 
 
   - model_name: or/north-mini-code
@@ -1327,13 +1339,17 @@ model_list:
       benchmark_seconds: 97.6
       description: "เขียนโค้ดได้ครบทั้ง 3 ข้อในการทดสอบ"
       provider_label: "OpenRouter"
-      provider_quota: "50–1,000 req/วัน แล้วแต่ยอดเติมเงิน"
       quota_pool: "openrouter"
       quota_window: "daily"
       tags: ["coding-best"]
       stability: "stable"
       status: "ok"
       status_checked_at: "2026-08-27T06:04:13Z"
+      quota_requests_per_window: 50
+      quota_rpm: 20
+      quota_source: "provider-docs"
+      quota_checked_at: "2026-08-27"
+      provider_quota: "50 req/วัน + 20 req/นาที — ผูกกับยอดเติมเงินสะสมของบัญชีเรา (ตอนนี้ $5 · ถ้าเกิน $10 จะเป็น 1,000 req/วัน)"
 
   # เพิ่ม 2026-08-23 — ทดสอบยิงผ่านแล้ว
   - model_name: or/dots-3-note
@@ -1348,13 +1364,17 @@ model_list:
       context_window: 512000
       description: "context 512K ใหญ่สุดในกลุ่ม OpenRouter :free"
       provider_label: "OpenRouter"
-      provider_quota: "50–1,000 req/วัน แล้วแต่ยอดเติมเงิน"
       quota_pool: "openrouter"
       quota_window: "daily"
       tags: ["coding-ok", "long-context"]
       stability: "preview"
       status: "ok"
       status_checked_at: "2026-08-27T06:04:13Z"
+      quota_requests_per_window: 50
+      quota_rpm: 20
+      quota_source: "provider-docs"
+      quota_checked_at: "2026-08-27"
+      provider_quota: "50 req/วัน + 20 req/นาที — ผูกกับยอดเติมเงินสะสมของบัญชีเรา (ตอนนี้ $5 · ถ้าเกิน $10 จะเป็น 1,000 req/วัน)"
 
   - model_name: or/laguna-s-2.1
     litellm_params:
@@ -1367,7 +1387,6 @@ model_list:
       benchmark_seconds: 103.5
       description: "เขียนโค้ดได้ไม่ดีในการทดสอบ"
       provider_label: "OpenRouter"
-      provider_quota: "50–1,000 req/วัน แล้วแต่ยอดเติมเงิน"
       quota_pool: "openrouter"
       quota_window: "daily"
       tags: ["coding-weak"]
@@ -1375,6 +1394,11 @@ model_list:
       status: "rate_limited"
       status_checked_at: "2026-08-27T06:04:13Z"
       status_detail: "litellm.RateLimitError: RateLimitError: OpenrouterException - {'error':{'message':'Provider returned error','c"
+      quota_requests_per_window: 50
+      quota_rpm: 20
+      quota_source: "provider-docs"
+      quota_checked_at: "2026-08-27"
+      provider_quota: "50 req/วัน + 20 req/นาที — ผูกกับยอดเติมเงินสะสมของบัญชีเรา (ตอนนี้ $5 · ถ้าเกิน $10 จะเป็น 1,000 req/วัน)"
 
 
   # เพิ่ม 2026-08-23 (รอบสอง) — ตัวที่ตกสำรวจรอบแรกเพราะกรองด้วย suffix :free
@@ -1390,7 +1414,6 @@ model_list:
       supports_function_calling: true
       context_window: 1000000
       provider_label: "OpenRouter"
-      provider_quota: "50–1,000 req/วัน แล้วแต่ยอดเติมเงิน"
       quota_pool: "openrouter"
       quota_window: "daily"
       verified_by: "hermes-line-bot 2026-08-26 (tool loop + prompt 14K + ภาษาไทย · ช้า ~19s/turn)"
@@ -1401,6 +1424,11 @@ model_list:
       answered_by: "codestral-latest"
       description: "⚠️ หมดอายุแล้ว — เป็นโมเดล stealth ที่ OpenRouter ปิดเมื่อ 2026-08-27 (เฉลยว่าคือ GLM-5.3 Flash ซึ่งเสียเงิน) เก็บชื่อไว้เป็น alias เท่านั้น ยิงมาแล้วจะได้ mi/codestral ตอบแทน — โปรเจกต์ใหม่อย่าใช้ชื่อนี้"
       tags: ["deprecated"]
+      quota_requests_per_window: 50
+      quota_rpm: 20
+      quota_source: "provider-docs"
+      quota_checked_at: "2026-08-27"
+      provider_quota: "50 req/วัน + 20 req/นาที — ผูกกับยอดเติมเงินสะสมของบัญชีเรา (ตอนนี้ $5 · ถ้าเกิน $10 จะเป็น 1,000 req/วัน)"
 
   # router ของ OpenRouter เอง — เลือกโมเดลฟรีที่ว่างให้อัตโนมัติ
   # ทดสอบแล้ววิ่งไป nemotron-3-ultra-550b ให้เอง เหมาะเป็น fallback ปลายทาง
@@ -1415,13 +1443,17 @@ model_list:
       benchmark_seconds: 60.3
       description: "router ของ OpenRouter เลือกโมเดลฟรีที่ว่างให้เอง — ผลไม่คงที่ เหมาะเป็น fallback"
       provider_label: "OpenRouter"
-      provider_quota: "50–1,000 req/วัน แล้วแต่ยอดเติมเงิน"
       quota_pool: "openrouter"
       quota_window: "daily"
       tags: ["coding-ok"]
       stability: "stable"
       status: "ok"
       status_checked_at: "2026-08-27T06:04:13Z"
+      quota_requests_per_window: 50
+      quota_rpm: 20
+      quota_source: "provider-docs"
+      quota_checked_at: "2026-08-27"
+      provider_quota: "50 req/วัน + 20 req/นาที — ผูกกับยอดเติมเงินสะสมของบัญชีเรา (ตอนนี้ $5 · ถ้าเกิน $10 จะเป็น 1,000 req/วัน)"
 
 
 
@@ -1438,7 +1470,6 @@ model_list:
       latency_ms: 4191
       description: "โมเดลจาก OpenRouter"
       provider_label: "OpenRouter"
-      provider_quota: "50–1,000 req/วัน แล้วแต่ยอดเติมเงิน"
       quota_pool: "openrouter"
       quota_window: "daily"
       tags: ["coding-ok"]
@@ -1446,6 +1477,11 @@ model_list:
       status: "unknown"
       status_checked_at: "2026-08-27T06:04:13Z"
       status_detail: "timed out"
+      quota_requests_per_window: 50
+      quota_rpm: 20
+      quota_source: "provider-docs"
+      quota_checked_at: "2026-08-27"
+      provider_quota: "50 req/วัน + 20 req/นาที — ผูกกับยอดเติมเงินสะสมของบัญชีเรา (ตอนนี้ $5 · ถ้าเกิน $10 จะเป็น 1,000 req/วัน)"
 
   - model_name: or/nemotron-omni-30b
     litellm_params:
@@ -1457,7 +1493,6 @@ model_list:
       latency_ms: 2151
       description: "โมเดลจาก OpenRouter"
       provider_label: "OpenRouter"
-      provider_quota: "50–1,000 req/วัน แล้วแต่ยอดเติมเงิน"
       quota_pool: "openrouter"
       quota_window: "daily"
       tags: ["general"]
@@ -1465,6 +1500,11 @@ model_list:
       status: "unknown"
       status_checked_at: "2026-08-27T06:04:13Z"
       status_detail: "litellm.APIError: APIError: OpenrouterException - Upstream error from Nvidia: ResourceExhausted: Worker local "
+      quota_requests_per_window: 50
+      quota_rpm: 20
+      quota_source: "provider-docs"
+      quota_checked_at: "2026-08-27"
+      provider_quota: "50 req/วัน + 20 req/นาที — ผูกกับยอดเติมเงินสะสมของบัญชีเรา (ตอนนี้ $5 · ถ้าเกิน $10 จะเป็น 1,000 req/วัน)"
 
   # ⚠️ 2026-08-26 ถอด or/gemma-4-31b — ขึ้น "Provider returned error" ต่อเนื่อง
   # ตัวที่ยังใช้ไม่ได้ (ลองซ้ำแล้ว): z-ai/glm-5.2:free, poolside/laguna-xs-2.1:free,
