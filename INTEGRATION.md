@@ -257,8 +257,14 @@ jq '.data[] | select(.model_info.latency_ms_14k < 2000) | .model_name'
 |---|---|---|
 | `quota_tokens_per_window` | `40000` | เจ้าที่นับเป็น token |
 | `quota_requests_per_window` | `1000` | OpenRouter |
-| `quota_tpm` | `60000` | Groq — ต่อนาที ไม่ใช่ต่อวัน |
+| `quota_tpm` | `60000` | Groq — token ต่อ**นาที** ไม่ใช่ต่อวัน |
+| `quota_rpm` | `40` | NVIDIA NIM — request ต่อ**นาที** |
 | `quota_neurons_per_window` | `10000` | Cloudflare |
+
+⚠️ **ฟิลด์ที่ลงท้ายด้วย `_per_window` ผูกกับ `quota_window` ส่วน `_tpm`/`_rpm` เป็น
+ต่อนาทีเสมอ** — แยกกันเพราะ NVIDIA NIM มี 40 request/นาที ถ้าเขียนเป็น
+`quota_requests_per_window: 40` คู่กับ `quota_window: rpm-only` คนที่ไม่ได้ดู
+`quota_window` ประกอบจะอ่านเป็น 40 ครั้งต่อวัน ซึ่งผิดไป 1,440 เท่า
 
 **ที่มาของตัวเลขสำคัญเท่ากับตัวเลข**
 

@@ -161,7 +161,7 @@ authored = {
     'supports_function_calling', 'max_input_tokens', 'context_window',
     'quota_pool', 'quota_window', 'stability',
     'quota_tokens_per_window', 'quota_requests_per_window', 'quota_tpm',
-    'quota_neurons_per_window', 'quota_source', 'quota_checked_at',
+    'quota_neurons_per_window', 'quota_rpm', 'quota_source', 'quota_checked_at',
     'quota_observed_tokens', 'quota_observed_window',
     'quota_observed_window_start', 'quota_observed_by',
     # ฟิลด์ที่บอกสถานะของ alias เอง ไม่ใช่ผลวัดของโมเดล
