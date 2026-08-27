@@ -174,8 +174,8 @@ def main() -> int:
             continue
         models.append(name)
 
-    print(f"วัด {len(models)} โมเดล × {len(sizes)} ขนาด × {ROUNDS} รอบ")
-    print(f"โจทย์: หลายคำถามในประโยคเดียว + สั่งตอบสั้น (รูปแบบที่ทำให้หลุดจริง)\n")
+    print(f"วัด {len(models)} โมเดล {len(sizes)} ขนาด รอบละ {ROUNDS} ครั้ง")
+    print("โจทย์: หลายคำถามในประโยคเดียว + สั่งตอบสั้น (รูปแบบที่ทำให้หลุดจริง)\n")
 
     results: dict[str, dict[int, str]] = {}
     for name in models:
@@ -190,8 +190,10 @@ def main() -> int:
 
     if write:
         sys.path.insert(0, os.path.join(ROOT, "scripts"))
-        from config_edit import set_fields
         from datetime import datetime, timezone
+
+        from config_edit import set_fields
+
         stamp = datetime.now(timezone.utc).strftime("%Y-%m-%d")
         path = os.path.join(ROOT, "litellm/config.yaml")
         text = open(path).read()
