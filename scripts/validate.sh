@@ -170,6 +170,27 @@ else
 	err "ค่าเหล่านี้เป็นของตัวสำรอง ไม่ใช่ของโมเดลที่ขอ — ต้องลบหรือวัดใหม่ (ดู issue #7)"
 fi
 
+# ------------------------------------------------------- อัญประกาศใน pick-model
+note "ตรวจว่าบล็อก Python ใน pick-model.sh ไม่มีอัญประกาศเดี่ยว"
+# บล็อกนั้นอยู่ใน python3 -c '...' ของ shell อัญประกาศเดี่ยวตัวเดียวจะปิด string
+# แล้วโค้ดที่เหลือกลายเป็นคำสั่ง shell — พลาดมาแล้ว 2 ครั้ง ครั้งหลังเงียบมาก
+# เพราะบรรทัดที่พังอยู่ใน branch ที่ยังไม่เคยถูกเรียก bash -n ก็ไม่จับให้
+if out=$(python3 -c "
+import sys
+lines = open('scripts/pick-model.sh').read().split(chr(10))
+start = next(i for i, x in enumerate(lines) if 'python3 -c' in x)
+end = next(i for i in range(start + 1, len(lines)) if lines[i].strip() == chr(39))
+bad = [f'{i+1}: {lines[i].strip()[:70]}'
+       for i in range(start + 1, end) if chr(39) in lines[i]]
+print(chr(10).join(bad))
+sys.exit(1 if bad else 0)
+"); then
+	ok "ไม่มีอัญประกาศเดี่ยวในบล็อก Python"
+else
+	printf '    %s\n' "${out//$'\n'/$'\n'    }"
+	err "ใช้อัญประกาศคู่แทน — อัญประกาศเดี่ยวจะปิด string ของ shell"
+fi
+
 # ------------------------------------------------------------------ stability
 note "ตรวจว่า stability ตรงกับชื่อโมเดลที่ provider ตั้ง"
 if out=$(python3 -c "

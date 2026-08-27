@@ -196,7 +196,8 @@ if q == "agent":
         print(f"\n⚠️ {len(shaky)} ตัวในรายการเป็น preview/stealth — มีวันหมดอายุในตัว")
         print("   อย่าเอาไปวางเป็นตัวสำรองถาวร:")
         for r in shaky:
-            print(f"     {r.get('model_name'):<26} {info(r).get('stability')}")
+            nm = r.get("model_name", "?")
+            print(f"     {nm:<26} {info(r).get("stability")}")
     if down:
         print(f"\nอีก {len(down)} ตัวเข้าเกณฑ์ครบแต่โควต้าหมดตอนนี้ — ไม่ตัดทิ้ง")
         print("เพราะตัวสำรองที่ดีคือตัวที่ว่างตอนตัวหลักตาย ไม่ใช่ตัวที่ว่างตอนนี้:\n")
