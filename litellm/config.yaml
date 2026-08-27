@@ -1346,23 +1346,19 @@ model_list:
     model_info:
       mode: "chat"
       supports_function_calling: true
-      benchmark_coding: "3/3"
-      benchmark_seconds: 52.9
       context_window: 1000000
-      description: "ได้ 3/3 พร้อม context 1M — ผ่านเกณฑ์ hermes ครบ แต่ช้าสุดในกลุ่ม (~19s ต่อ turn) ไม่เหมาะกับแชทที่ต้องตอบไว"
       provider_label: "OpenRouter"
       provider_quota: "50–1,000 req/วัน แล้วแต่ยอดเติมเงิน"
       quota_pool: "openrouter"
       quota_window: "daily"
-      tags: ["coding-best", "long-context"]
-      verified_max_prompt: 31833
-      max_prompt_detail: "โควต้า ที่ ~64,000 — litellm.RateLimitError: RateLimitError: OpenrouterException - {'error':{'message"
       verified_by: "hermes-line-bot 2026-08-26 (tool loop + prompt 14K + ภาษาไทย · ช้า ~19s/turn)"
       stability: "stealth"
       status: "dead"
       status_checked_at: "2026-08-27T06:04:13Z"
       status_detail: "litellm.NotFoundError: NotFoundError: OpenrouterException - {'error':{'message':'Thank you for participating i"
       answered_by: "codestral-latest"
+      description: "⚠️ หมดอายุแล้ว — เป็นโมเดล stealth ที่ OpenRouter ปิดเมื่อ 2026-08-27 (เฉลยว่าคือ GLM-5.3 Flash ซึ่งเสียเงิน) เก็บชื่อไว้เป็น alias เท่านั้น ยิงมาแล้วจะได้ mi/codestral ตอบแทน — โปรเจกต์ใหม่อย่าใช้ชื่อนี้"
+      tags: ["deprecated"]
 
   # router ของ OpenRouter เอง — เลือกโมเดลฟรีที่ว่างให้อัตโนมัติ
   # ทดสอบแล้ววิ่งไป nemotron-3-ultra-550b ให้เอง เหมาะเป็น fallback ปลายทาง

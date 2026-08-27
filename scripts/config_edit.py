@@ -16,13 +16,22 @@ from __future__ import annotations
 import re
 
 
-def _quote(v) -> str:
+def _scalar(v) -> str:
     if isinstance(v, bool):
         return "true" if v else "false"
     if isinstance(v, (int, float)):
         return str(v)
     s = re.sub(r"\s+", " ", str(v)).replace('"', "'")
     return '"' + s + '"'
+
+
+def _quote(v) -> str:
+    # ลิสต์เขียนแบบ flow ให้เหมือนที่คนเขียนไว้ในไฟล์ (tags: ["a", "b"])
+    # ถ้าไม่รองรับแล้วเผลอส่งลิสต์เข้ามา จะได้ string หน้าตาเหมือนลิสต์
+    # ซึ่ง consumer ที่ทำ set(tags) จะได้ตัวอักษรทีละตัวแทนที่จะได้ error
+    if isinstance(v, (list, tuple)):
+        return "[" + ", ".join(_scalar(x) for x in v) + "]"
+    return _scalar(v)
 
 
 def set_fields(text: str, model: str, fields: dict) -> tuple[str, bool]:

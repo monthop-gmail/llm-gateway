@@ -139,6 +139,22 @@ def test_รูปแบบค่าแต่ละชนิด(value, expect):
     assert expect in out
 
 
+def test_ค่าที่เป็นลิสต์ต้องออกมาเป็นลิสต์จริง():
+    """เคยพลาด: ส่ง tags เป็นลิสต์แล้วได้ string หน้าตาเหมือนลิสต์กลับมา
+
+    ร้ายตรงที่ consumer ที่ทำ set(tags) จะไม่ error แต่ได้ตัวอักษรทีละตัว
+    """
+    out, _ = set_fields(SAMPLE, "a/one", {"tags": ["deprecated", "slow"]})
+    got = info(out, "a/one")["tags"]
+    assert isinstance(got, list), f"ได้ {type(got).__name__} แทนที่จะเป็น list"
+    assert got == ["deprecated", "slow"]
+
+
+def test_ลิสต์ว่าง():
+    out, _ = set_fields(SAMPLE, "a/one", {"tags": []})
+    assert info(out, "a/one")["tags"] == []
+
+
 def test_ข้อความมีอัญประกาศคู่ต้องไม่ทำ_yaml_พัง():
     """ข้อความ error จาก provider มี " ปนมาเป็นปกติ"""
     msg = 'error: {"detail": "gone"} เมื่อ 2026-08-26'
