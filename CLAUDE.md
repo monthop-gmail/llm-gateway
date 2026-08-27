@@ -124,6 +124,20 @@ LiteLLM **ไม่ยอมให้แก้โมเดลที่มาจ�
 - `latency_ms_14k` ยังเป็น call เดียว ไม่ใช่เวลาต่อ turn (ต่างกันได้ 35–180 เท่า)
 - `answered_by` มีค่า = ชื่อนั้นเป็น alias แล้ว `quota_pool` ก็ไม่ตรงกับที่กินจริงด้วย
 
+### fallback มี 3 โหมด ไม่ใช่ 2
+
+```jsonc
+{"model": "A"}                              // ใช้ chain ของ gateway
+{"model": "A", "fallbacks": ["B", "C"]}     // ใช้ chain ของ client — ทับของ gateway
+{"model": "A", "fallbacks": []}             // ไม่มี fallback (= disable_fallbacks)
+```
+
+โหมดกลางสำคัญสำหรับ platform ที่ให้ผู้ใช้ประกาศ chain เอง — **ไม่ต้องปิด fallback
+ที่ gateway** และ **"ไม่ประกาศ" กับ "ประกาศว่าไม่เอา" ต้องส่งไม่เหมือนกัน**
+
+⚠️ ชื่อผิดใน `fallbacks` ไม่มีใครบอก — LiteLLM คืน error ของตัวหลักมาเฉย ๆ
+อาการเหมือนไม่ได้ตั้ง fallback เลย ต้องตรวจชื่อกับ `/model/info` ตอนบันทึก config
+
 ## ข้อตกลงกับทีมอื่น
 
 - **restart `llm-litellm` ต้องแจ้งใน issue ก่อนเสมอ** — มี `nst-hermes-line-bot`,
