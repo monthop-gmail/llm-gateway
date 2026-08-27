@@ -1236,7 +1236,7 @@ model_list:
       tags: ["coding-best", "long-context"]
       stability: "stable"
       status: "ok"
-      status_checked_at: "2026-08-27T05:51:09Z"
+      status_checked_at: "2026-08-27T06:04:13Z"
 
   - model_name: or/nemotron-lightning
     litellm_params:
@@ -1254,7 +1254,7 @@ model_list:
       tags: ["long-context"]
       stability: "stable"
       status: "ok"
-      status_checked_at: "2026-08-27T05:51:09Z"
+      status_checked_at: "2026-08-27T06:04:13Z"
 
   - model_name: or/nemotron-super-120b
     litellm_params:
@@ -1271,7 +1271,7 @@ model_list:
       tags: ["general"]
       stability: "stable"
       status: "ok"
-      status_checked_at: "2026-08-27T05:51:09Z"
+      status_checked_at: "2026-08-27T06:04:13Z"
 
 
   - model_name: or/north-mini-code
@@ -1291,7 +1291,7 @@ model_list:
       tags: ["coding-best"]
       stability: "stable"
       status: "ok"
-      status_checked_at: "2026-08-27T05:51:09Z"
+      status_checked_at: "2026-08-27T06:04:13Z"
 
   # เพิ่ม 2026-08-23 — ทดสอบยิงผ่านแล้ว
   - model_name: or/dots-3-note
@@ -1312,7 +1312,7 @@ model_list:
       tags: ["coding-ok", "long-context"]
       stability: "preview"
       status: "ok"
-      status_checked_at: "2026-08-27T05:51:09Z"
+      status_checked_at: "2026-08-27T06:04:13Z"
 
   - model_name: or/laguna-s-2.1
     litellm_params:
@@ -1330,8 +1330,9 @@ model_list:
       quota_window: "daily"
       tags: ["coding-weak"]
       stability: "stable"
-      status: "ok"
-      status_checked_at: "2026-08-27T05:51:09Z"
+      status: "rate_limited"
+      status_checked_at: "2026-08-27T06:04:13Z"
+      status_detail: "litellm.RateLimitError: RateLimitError: OpenrouterException - {'error':{'message':'Provider returned error','c"
 
 
   # เพิ่ม 2026-08-23 (รอบสอง) — ตัวที่ตกสำรวจรอบแรกเพราะกรองด้วย suffix :free
@@ -1359,8 +1360,9 @@ model_list:
       verified_by: "hermes-line-bot 2026-08-26 (tool loop + prompt 14K + ภาษาไทย · ช้า ~19s/turn)"
       stability: "stealth"
       status: "dead"
-      status_checked_at: "2026-08-27T05:51:09Z"
+      status_checked_at: "2026-08-27T06:04:13Z"
       status_detail: "litellm.NotFoundError: NotFoundError: OpenrouterException - {'error':{'message':'Thank you for participating i"
+      answered_by: "codestral-latest"
 
   # router ของ OpenRouter เอง — เลือกโมเดลฟรีที่ว่างให้อัตโนมัติ
   # ทดสอบแล้ววิ่งไป nemotron-3-ultra-550b ให้เอง เหมาะเป็น fallback ปลายทาง
@@ -1381,7 +1383,7 @@ model_list:
       tags: ["coding-ok"]
       stability: "stable"
       status: "ok"
-      status_checked_at: "2026-08-27T05:51:09Z"
+      status_checked_at: "2026-08-27T06:04:13Z"
 
 
 
@@ -1404,7 +1406,7 @@ model_list:
       tags: ["coding-ok"]
       stability: "stable"
       status: "unknown"
-      status_checked_at: "2026-08-27T05:51:09Z"
+      status_checked_at: "2026-08-27T06:04:13Z"
       status_detail: "timed out"
 
   - model_name: or/nemotron-omni-30b
@@ -1422,8 +1424,9 @@ model_list:
       quota_window: "daily"
       tags: ["general"]
       stability: "stable"
-      status: "ok"
-      status_checked_at: "2026-08-27T05:51:09Z"
+      status: "unknown"
+      status_checked_at: "2026-08-27T06:04:13Z"
+      status_detail: "litellm.APIError: APIError: OpenrouterException - Upstream error from Nvidia: ResourceExhausted: Worker local "
 
   # ⚠️ 2026-08-26 ถอด or/gemma-4-31b — ขึ้น "Provider returned error" ต่อเนื่อง
   # ตัวที่ยังใช้ไม่ได้ (ลองซ้ำแล้ว): z-ai/glm-5.2:free, poolside/laguna-xs-2.1:free,

@@ -43,6 +43,26 @@ LIMIT_HINTS = (
 )
 
 
+# ข้อความที่ LiteLLM สร้างเอง ไม่ใช่คำตอบของ provider — สรุปอะไรไม่ได้
+#
+# พอโมเดลพังซ้ำ ๆ LiteLLM จะ cooldown แล้วหยุดยิงไป provider เลย คำตอบที่ได้
+# จึงเป็นข้อความของ LiteLLM เอง ซึ่งบังข้อความจริงที่บอกว่าโมเดลตายหรือแค่โควต้าหมด
+#
+# เจอจริง 2026-08-27: or/ox-alpha ตรวจรอบแรกได้ "ตายถาวร" ถูกต้องจากข้อความ
+# retirement ของ OpenRouter พอตรวจซ้ำอีกรอบกลายเป็น "อื่นๆ" เพราะ cooldown
+# ถ้าเขียนทับก็จะเสียข้อสรุปที่ถูกไปเฉย ๆ
+INCONCLUSIVE_HINTS = (
+    "no deployments available",
+    "no healthy deployment",
+    "cooldown",
+)
+
+
+def is_inconclusive(msg: str) -> bool:
+    """True = อย่าเอาผลรอบนี้ไปเขียนทับของเดิม เพราะยังไม่ได้คุยกับ provider จริง"""
+    return any(h in msg.lower() for h in INCONCLUSIVE_HINTS)
+
+
 def classify(msg: str) -> str:
     """คืน: โควต้าหมด | ตายถาวร | ชนเพดาน | timeout | อื่นๆ
 

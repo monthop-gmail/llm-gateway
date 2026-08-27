@@ -47,7 +47,7 @@ import yaml
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from config_edit import set_fields
-from failure_hints import classify
+from failure_hints import classify, is_inconclusive
 
 ROOT = Path(__file__).resolve().parent.parent
 BASE = os.environ.get("LITELLM_URL", "http://localhost:4000")
@@ -205,7 +205,14 @@ def _write_back(results: list[tuple[str, str, str, str]]) -> None:
     text = path.read_text()
     written = 0
 
+    skipped = []
     for model, verdict, detail, answered in results:
+        # cooldown ของ LiteLLM บังข้อความจริงของ provider — เก็บของเดิมไว้ดีกว่า
+        # เขียนทับด้วย unknown แล้วเสียข้อสรุปที่เคยถูกไป
+        if detail and is_inconclusive(detail):
+            skipped.append(model)
+            text, _ = set_fields(text, model, {"answered_by": answered or None})
+            continue
         text, ok = set_fields(text, model, {
             "status": _STATUS.get(verdict, "unknown"),
             "status_checked_at": stamp,
@@ -216,6 +223,10 @@ def _write_back(results: list[tuple[str, str, str, str]]) -> None:
 
     path.write_text(text)
     print(f"\nเขียน status กลับเข้า config แล้ว {written} ตัว (เวลา {stamp})")
+    if skipped:
+        print(f"ไม่เขียนทับ {len(skipped)} ตัว — LiteLLM cooldown บังคำตอบจริงของ provider:")
+        for m in skipped:
+            print(f"  {m}")
     print("⚠️  ต้อง restart litellm ถึงจะเห็นใน /model/info:")
     print("    docker compose restart litellm")
 

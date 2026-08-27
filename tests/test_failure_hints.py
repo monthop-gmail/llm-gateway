@@ -16,7 +16,7 @@ from pathlib import Path
 import pytest
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "scripts"))
-from failure_hints import classify
+from failure_hints import classify, is_inconclusive
 
 # ข้อความจริงที่เก็บมาจากการยิง ไม่ใช่ที่แต่งขึ้น
 REAL = [
@@ -83,6 +83,22 @@ def test_โมเดล_stealth_ที่หมดอายุต้องเ�
     msg = ("Thank you for participating in the Stealth Ox Alpha testing period. "
            "This model was ZAI's GLM-5.3 Flash.")
     assert classify(msg) == "ตายถาวร"
+
+
+def test_cooldown_ของ_litellm_สรุปไม่ได้():
+    """พอโมเดลพังซ้ำ ๆ LiteLLM หยุดยิงไป provider แล้วตอบเอง ข้อความจริงจึงถูกบัง
+
+    เจอจริงกับ or/ox-alpha — ตรวจรอบแรกได้ "ตายถาวร" ถูกต้อง รอบสองกลายเป็น
+    "อื่นๆ" เพราะ cooldown ถ้าเขียนทับจะเสียข้อสรุปที่ถูกไปเฉย ๆ
+    """
+    msg = "No deployments available for selected model, Try again in 5 seconds"
+    assert is_inconclusive(msg)
+    assert classify(msg) == "อื่นๆ"
+
+
+def test_ข้อความจาก_provider_จริงต้องไม่ถูกมองว่าสรุปไม่ได้():
+    for _, msg in REAL:
+        assert not is_inconclusive(msg), msg
 
 
 def test_ข้อความว่างไม่พัง():
