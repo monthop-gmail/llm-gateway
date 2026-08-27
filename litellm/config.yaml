@@ -1045,13 +1045,11 @@ model_list:
       benchmark_coding: "2/3"
       benchmark_seconds: 21.5
       latency_ms: 456
-      description: "ตอบเร็ว (456ms) ผ่าน tool calling + prompt 14K — แต่หลุดไปตอบอังกฤษ 1 ใน 3 ครั้งเมื่อรันใน agent loop จริงทั้งที่ผู้ใช้พิมพ์ไทย ไม่ควรเป็น main ของบอทภาษาไทย"
       provider_label: "Cloudflare Workers AI"
       provider_quota: "10,000 neurons/วัน"
       quota_pool: "cloudflare"
       quota_window: "daily"
       tags: ["coding-ok", "fast"]
-      verified_by: "hermes-line-bot 2026-08-26 (language drift 1/3 ใน tool loop)"
       status: "rate_limited"
       status_checked_at: "2026-08-26T11:20:24Z"
       status_detail: "litellm.APIConnectionError: CloudflareException - {'errors':[{'message':'AiError: AiError: you have used up yo"
@@ -1059,6 +1057,8 @@ model_list:
       quota_source: "provider-docs"
       quota_checked_at: "2026-08-27"
       stability: "stable"
+      description: "ตอบเร็ว (456ms) ผ่าน tool calling + prompt 14K — ผลภาษายังไม่มี รอวัดด้วย probe-language.py (ผลเดิม 'หลุดอังกฤษ 1/3' ถอนแล้ว ดู #14)"
+      verified_by: "hermes-line-bot 2026-08-26 (tool calling + prompt 14K)"
 
   - model_name: cf/nemotron-3-120b
     litellm_params:
