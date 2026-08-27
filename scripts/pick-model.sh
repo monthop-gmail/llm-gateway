@@ -78,6 +78,17 @@ AGENT_FLOOR = int(os.environ.get("FLOOR") or 13_300)
 
 def _agent_ready(r):
     mi = info(r)
+    # โควต้าทั้งรอบต้องพอยิงอย่างน้อย 1 turn ไม่งั้นมันคือโมเดลที่ "รับ prompt
+    # ขนาดนี้ได้" แต่ "ยิงได้ไม่ถึงครั้งเดียวต่อวัน" — okmd/deepseek-v4-pro มี
+    # verified_max_prompt 127,824 แต่โควต้า 40,000/วัน ซึ่งเล็กกว่า turn เดียว
+    # ของ hermes (59,497) hermes เกือบเอาไปวางเป็น fallback เพราะเลข prompt สวย
+    #
+    # เทียบเฉพาะเจ้าที่นับเป็น token — requests/neurons/tpm แปลงข้ามหน่วยไม่ได้
+    # และการเดาอัตราแลกเปลี่ยนคือทางที่ผิดเงียบ ๆ (issue #5) จึงปล่อยผ่านแล้ว
+    # ไปแสดงให้คนตัดสินใจเองในสรุปท้ายหมวดแทน
+    quota_tokens = mi.get("quota_tokens_per_window")
+    if quota_tokens is not None and quota_tokens < AGENT_FLOOR:
+        return False
     return (mi.get("supports_function_calling") is True
             and mi.get("status") in (None, "ok")
             and (mi.get("verified_max_prompt") or 0) >= AGENT_FLOOR
@@ -102,6 +113,10 @@ def fmt(r, show_all=False):
         bits.append(str(mi["latency_ms"]) + "ms (prompt สั้น)")
     if mi.get("supports_function_calling") is False:
         bits.append("ไม่รองรับ tool")
+    q = mi.get("quota_tokens_per_window")
+    if q:
+        qw = mi.get("quota_window") or "?"
+        bits.append("โควต้า " + str(q // 1000) + "K/" + qw)
     cap = mi.get("verified_max_prompt")
     if cap:
         # ≥ ไม่ใช่ ≤ — เลขนี้คือขนาดที่ยิงผ่านแล้ว เพดานจริงอยู่สูงกว่านี้
@@ -154,9 +169,23 @@ if q == "agent":
     def _agent_shape(r):
         """เข้าเกณฑ์ agent ทุกข้อ ยกเว้นเรื่อง status — ใช้แยกตัวที่แค่โควต้าหมด"""
         mi = info(r)
+        q = mi.get("quota_tokens_per_window")
+        # โควต้าเล็กเกินไม่ใช่ "หมดตอนนี้" — รอไปก็ไม่ดีขึ้น จึงไม่ควรอยู่ในลิสต์
+        # ตัวสำรอง ต้องแยกไปอีกหมวดพร้อมเหตุผลของมันเอง
+        if q is not None and q < AGENT_FLOOR:
+            return False
         return (mi.get("supports_function_calling") is True
                 and (mi.get("verified_max_prompt") or 0) >= AGENT_FLOOR
                 and mi.get("quota_window") != "rpm-only"
+                and not mi.get("answered_by"))
+
+    def _too_small(r):
+        """ผ่านทุกข้อ แต่โควต้าทั้งรอบเล็กกว่า 1 turn — ใช้ไม่ได้ทั้งเป็น main และ fallback"""
+        mi = info(r)
+        q = mi.get("quota_tokens_per_window")
+        return (q is not None and q < AGENT_FLOOR
+                and mi.get("supports_function_calling") is True
+                and (mi.get("verified_max_prompt") or 0) >= AGENT_FLOOR
                 and not mi.get("answered_by"))
 
     by_speed = lambda r: (info(r).get("latency_ms_14k")
@@ -189,6 +218,22 @@ if q == "agent":
         print("     ข้ามก้อนไม่ได้ ลอง floor ต่ำลง หรือดูรายชื่อที่โควต้าหมดข้างล่าง")
     else:
         print("\n  ตัวที่อยู่ก้อนเดียวกันหมดโควต้าพร้อมกัน — เลือกตัวสำรองข้ามก้อนเสมอ")
+    # ตัวกรองข้างบนตัดออกได้เฉพาะตัวที่ "รู้แล้วว่าโควต้าเล็กเกิน" — ตัวที่ยังไม่มี
+    # ตัวเลขจะผ่านมาโดยไม่มีใครรู้ว่าพอหรือไม่พอ ต้องบอกออกมาตรง ๆ ว่าเหลือกี่ตัว
+    # ไม่งั้น "ผ่านเกณฑ์" จะถูกอ่านว่า "โควต้าพอ" ซึ่งยังไม่จริงสำหรับส่วนใหญ่
+    unknown = [r for r in hits if info(r).get("quota_tokens_per_window") is None]
+    if unknown:
+        other_unit = [r for r in unknown
+                      if any(info(r).get(k) for k in ("quota_requests_per_window",
+                                                      "quota_tpm", "quota_neurons_per_window"))]
+        n_blank = len(unknown) - len(other_unit)
+        print(f"\n  ⚠️ {len(unknown)} ใน {len(hits)} ตัวยังตอบไม่ได้ว่าโควต้าพอไหม")
+        if n_blank:
+            print(f"     {n_blank} ตัวไม่มีตัวเลขโควต้าเลย — ตัวกรองจึงปล่อยผ่าน (issue #5)")
+        if other_unit:
+            names = ", ".join(r.get("model_name", "?") for r in other_unit[:4])
+            print(f"     {len(other_unit)} ตัวนับคนละหน่วย (req/tpm/neuron) เทียบกับ token ไม่ได้: {names}")
+        print("     ก่อนวางเป็น main หรือ fallback ให้อ่าน provider_quota ด้วยตาก่อน")
     shaky = [r for r in hits if info(r).get("stability") not in (None, "stable")]
     if shaky:
         # or/ox-alpha ถูกเลือกเป็น fallback อันดับ 1 เพราะ benchmark สวย
@@ -198,6 +243,17 @@ if q == "agent":
         for r in shaky:
             nm = r.get("model_name", "?")
             print(f"     {nm:<26} {info(r).get("stability")}")
+    tiny = sorted((r for r in rows if _too_small(r)), key=by_speed)
+    if tiny:
+        print(f"\n{len(tiny)} ตัวถูกตัดออกเพราะโควต้าทั้งรอบเล็กกว่า 1 turn ที่ floor นี้")
+        print("รอโควต้ารีเซ็ตก็ไม่ช่วย เพราะยิงได้ไม่ถึงครั้งเดียวต่อรอบ:\n")
+        for r in tiny:
+            mi = info(r)
+            nm = r.get("model_name", "?")
+            q = mi.get("quota_tokens_per_window")
+            qw = mi.get("quota_window") or "?"
+            print(f"  {nm:<26} {q:,}/{qw}  (ต้องการ {AGENT_FLOOR:,})")
+
     if down:
         print(f"\nอีก {len(down)} ตัวเข้าเกณฑ์ครบแต่โควต้าหมดตอนนี้ — ไม่ตัดทิ้ง")
         print("เพราะตัวสำรองที่ดีคือตัวที่ว่างตอนตัวหลักตาย ไม่ใช่ตัวที่ว่างตอนนี้:\n")
