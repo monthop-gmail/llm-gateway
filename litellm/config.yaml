@@ -2757,6 +2757,9 @@ model_list:
       quota_source: "observed"
       quota_checked_at: "2026-08-27"
       stability: "stable"
+      language_th_60k: "drift-zh"
+      language_checked_at: "2026-08-26"
+      language_verified_by: "hermes-line-bot (agent loop จริง ~59K · โจทย์หลายคำถาม+ตอบสั้น)"
 
   - model_name: oc/gpt-oss-20b
     litellm_params:
