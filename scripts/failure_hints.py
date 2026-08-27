@@ -29,6 +29,12 @@ DEAD_HINTS = (
     "end of life", "no longer available",
     # NIM 404 เมื่อ function ถูกลบออกจากบัญชี
     "specified function in account",
+    # OpenRouter ปิดโมเดล stealth เมื่อจบช่วงทดสอบ แล้วเฉลยว่าคือรุ่นอะไร
+    # เจอจริง 2026-08-27 กับ or/ox-alpha: "Thank you for participating in the
+    # Stealth Ox Alpha testing period. This model was ZAI's GLM-5.3 Flash."
+    # ก่อนหน้านี้ข้อความนี้ถูกจัดเป็น "อื่นๆ" -> status unknown จึงไม่มีอะไรเตือน
+    # ทั้งที่โมเดลหายถาวรแล้ว ซึ่งเงียบกว่าการรายงานว่าตายเสียอีก
+    "testing period", "this model was",
 )
 # ชนเพดาน context จริง — ยิงใหม่ก็เท่าเดิม
 LIMIT_HINTS = (

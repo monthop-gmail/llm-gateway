@@ -170,6 +170,30 @@ else
 	err "ค่าเหล่านี้เป็นของตัวสำรอง ไม่ใช่ของโมเดลที่ขอ — ต้องลบหรือวัดใหม่ (ดู issue #7)"
 fi
 
+# ------------------------------------------------------------------ stability
+note "ตรวจว่า stability ตรงกับชื่อโมเดลที่ provider ตั้ง"
+if out=$(python3 -c "
+import re, sys, yaml
+c = yaml.safe_load(open('litellm/config.yaml'))
+bad = []
+for m in c['model_list']:
+    mi = m.get('model_info') or {}
+    mid = m['litellm_params'].get('model', '')
+    looks = re.search(r'stealth|preview', mid, re.I)
+    stab = mi.get('stability')
+    if stab is None:
+        bad.append(m['model_name'] + ': ไม่มี stability')
+    elif looks and stab == 'stable':
+        bad.append(m['model_name'] + ': ชื่อว่า ' + looks.group(0) + ' แต่ stability=stable')
+print(chr(10).join(bad))
+sys.exit(1 if bad else 0)
+"); then
+	ok "stability ตรงกับชื่อโมเดลทุกตัว"
+else
+	printf '    %s\n' "${out//$'\n'/$'\n'    }"
+	err "โมเดล stealth/preview มีวันหมดอายุในตัว ต้องบอกให้คนเลือกเห็น (issue #10)"
+fi
+
 # ----------------------------------------------------------- ที่มาของโควตา
 note "ตรวจว่าตัวเลขโควตากับที่มาของมันไปด้วยกัน"
 if out=$(python3 -c "

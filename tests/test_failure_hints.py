@@ -35,6 +35,9 @@ REAL = [
     ("ตายถาวร", ("The requested model 'Qwen/Qwen2.5-7B-Instruct' is not supported by any provider "
                  "you have enabled. code: model_not_supported")),
     ("ตายถาวร", "OpenrouterException - No endpoints found for model"),
+    ("ตายถาวร", ("Thank you for participating in the Stealth Ox Alpha testing period. "
+                 "This model was ZAI's GLM-5.3 Flash. Use it now: "
+                 "https://openrouter.ai/z-ai/glm-5.3-flash")),
     ("ตายถาวร", "CerebrasException - this model has been archived"),
     ("ตายถาวร", "CloudflareException - model not available on the workers free plan"),
     # --- ชนเพดาน: ยิงใหม่ก็เท่าเดิม ---
@@ -68,6 +71,17 @@ def test_โควต้าชนะเพดานเมื่อเข้า�
 def test_ตายถาวรชนะเพดาน():
     """ข้อความที่มีทั้งคำว่า end of life และ context length — ตายสำคัญกว่า"""
     msg = "model reached its end of life; maximum context length is 8192"
+    assert classify(msg) == "ตายถาวร"
+
+
+def test_โมเดล_stealth_ที่หมดอายุต้องเป็นตายถาวร():
+    """OpenRouter ปิด or/ox-alpha เมื่อจบช่วง stealth แล้วเฉลยว่าคือ GLM-5.3 Flash
+
+    ข้อความนี้ไม่มีคำใบ้เดิมสักคำ เดิมจึงตกเป็น "อื่นๆ" -> status unknown
+    ซึ่งแปลว่าโมเดลหายถาวรโดยไม่มีอะไรเตือนเลย เงียบกว่ารายงานว่าตายอีก
+    """
+    msg = ("Thank you for participating in the Stealth Ox Alpha testing period. "
+           "This model was ZAI's GLM-5.3 Flash.")
     assert classify(msg) == "ตายถาวร"
 
 

@@ -35,6 +35,7 @@ model_list:
       status_checked_at: "2026-08-26T11:20:24Z"
       status_detail: "litellm.APIError: HuggingfaceException - {'error':'You have depleted your monthly included credits. Purchase p"
       answered_by: "ministral-8b-latest"
+      stability: "stable"
 
   - model_name: hf/qwen2.5-7b
     litellm_params:
@@ -53,6 +54,7 @@ model_list:
       status_checked_at: "2026-08-26T11:20:24Z"
       status_detail: "litellm.BadRequestError: HuggingfaceException - {'error':{'message':'The requested model 'Qwen/Qwen2.5-7B-Inst"
       answered_by: "ministral-8b-latest"
+      stability: "stable"
 
   - model_name: hf/gemma-3-12b
     litellm_params:
@@ -71,6 +73,7 @@ model_list:
       status_checked_at: "2026-08-26T11:20:24Z"
       status_detail: "litellm.APIError: HuggingfaceException - {'error':'You have depleted your monthly included credits. Purchase p"
       answered_by: "cerebras/gemma-4-31b"
+      stability: "stable"
 
   # gpt-oss — auto-route (groq ถูกปฏิเสธด้วย token ปัจจุบัน)
   - model_name: hf/gpt-oss-20b
@@ -90,6 +93,7 @@ model_list:
       status_checked_at: "2026-08-26T11:20:24Z"
       status_detail: "litellm.APIError: HuggingfaceException - {'error':'You have depleted your monthly included credits. Purchase p"
       answered_by: "openai/gpt-oss-120b"
+      stability: "stable"
 
   # ---------- กลาง/ใหญ่ ----------
   - model_name: hf/llama-3.3-70b
@@ -109,6 +113,7 @@ model_list:
       status_checked_at: "2026-08-26T11:20:24Z"
       status_detail: "litellm.APIError: HuggingfaceException - {'error':'You have depleted your monthly included credits. Purchase p"
       answered_by: "openai/gpt-oss-120b"
+      stability: "stable"
 
   - model_name: hf/gpt-oss-120b
     litellm_params:
@@ -127,6 +132,7 @@ model_list:
       status_checked_at: "2026-08-26T11:20:24Z"
       status_detail: "litellm.APIError: HuggingfaceException - {'error':'You have depleted your monthly included credits. Purchase p"
       answered_by: "cerebras/gpt-oss-120b"
+      stability: "stable"
 
   - model_name: hf/qwen3.5-397b
     litellm_params:
@@ -145,6 +151,7 @@ model_list:
       status_checked_at: "2026-08-26T11:20:24Z"
       status_detail: "litellm.APIError: HuggingfaceException - {'error':'You have depleted your monthly included credits. Purchase p"
       answered_by: "nemotron-3-ultra-free"
+      stability: "stable"
 
   - model_name: hf/glm-4.7
     litellm_params:
@@ -163,6 +170,7 @@ model_list:
       status_checked_at: "2026-08-26T11:20:24Z"
       status_detail: "litellm.APIError: HuggingfaceException - {'error':'You have depleted your monthly included credits. Purchase p"
       answered_by: "magistral-medium-latest"
+      stability: "stable"
 
   - model_name: hf/kimi-k2.6
     litellm_params:
@@ -181,6 +189,7 @@ model_list:
       status_checked_at: "2026-08-26T11:20:24Z"
       status_detail: "litellm.APIError: HuggingfaceException - {'error':'You have depleted your monthly included credits. Purchase p"
       answered_by: "mistral-large-latest"
+      stability: "stable"
 
   # ---------- reasoning ----------
   - model_name: hf/deepseek-r1
@@ -200,6 +209,7 @@ model_list:
       status_checked_at: "2026-08-26T11:20:24Z"
       status_detail: "litellm.APIError: HuggingfaceException - {'error':'You have depleted your monthly included credits. Purchase p"
       answered_by: "magistral-medium-latest"
+      stability: "stable"
 
   - model_name: hf/deepseek-v3.2
     litellm_params:
@@ -218,6 +228,7 @@ model_list:
       status_checked_at: "2026-08-26T11:20:24Z"
       status_detail: "litellm.APIError: HuggingfaceException - {'error':'You have depleted your monthly included credits. Purchase p"
       answered_by: "mistral-large-latest"
+      stability: "stable"
 
   # Qwen3.6-27B — รุ่นใหม่ล่าสุดที่ยังฟรีบน HF
   # (Qwen3.8-27B ออกแล้วเมื่อ 2026-08-05 แต่ยังไม่มี provider ฟรี — ดูหมายเหตุท้ายไฟล์)
@@ -238,6 +249,7 @@ model_list:
       status_checked_at: "2026-08-26T11:20:24Z"
       status_detail: "litellm.APIError: HuggingfaceException - {'error':'You have depleted your monthly included credits. Purchase p"
       answered_by: "qwen/qwen3.6-27b"
+      stability: "stable"
 
   # SEA-LION — โมเดล AI Singapore เน้นภาษาอาเซียนรวมไทย
   - model_name: hf/sea-lion-32b
@@ -256,6 +268,7 @@ model_list:
       status: "rate_limited"
       status_checked_at: "2026-08-26T11:20:24Z"
       status_detail: "litellm.APIError: HuggingfaceException - {'error':'You have depleted your monthly included credits. Purchase p"
+      stability: "stable"
 
   # ---------- รุ่นใหม่ (เพิ่ม 2026-08-23) ----------
   - model_name: hf/glm-5.2
@@ -275,6 +288,7 @@ model_list:
       status_checked_at: "2026-08-26T11:20:24Z"
       status_detail: "litellm.APIError: HuggingfaceException - {'error':'You have depleted your monthly included credits. Purchase p"
       answered_by: "magistral-medium-latest"
+      stability: "stable"
 
   - model_name: hf/kimi-k3
     litellm_params:
@@ -293,6 +307,7 @@ model_list:
       status_checked_at: "2026-08-26T11:20:24Z"
       status_detail: "litellm.APIError: HuggingfaceException - {'error':'You have depleted your monthly included credits. Purchase p"
       answered_by: "mistral-large-latest"
+      stability: "stable"
 
   - model_name: hf/deepseek-v4-pro
     litellm_params:
@@ -311,6 +326,7 @@ model_list:
       status_checked_at: "2026-08-26T11:20:24Z"
       status_detail: "litellm.APIError: HuggingfaceException - {'error':'You have depleted your monthly included credits. Purchase p"
       answered_by: "mistral-large-latest"
+      stability: "stable"
 
   - model_name: hf/llama-4-scout
     litellm_params:
@@ -330,6 +346,7 @@ model_list:
       status: "rate_limited"
       status_checked_at: "2026-08-26T11:20:24Z"
       status_detail: "litellm.APIError: HuggingfaceException - {'error':'You have depleted your monthly included credits. Purchase p"
+      stability: "stable"
 
   - model_name: hf/qwen3.6-35b
     litellm_params:
@@ -348,6 +365,7 @@ model_list:
       status_checked_at: "2026-08-26T11:20:24Z"
       status_detail: "litellm.APIError: HuggingfaceException - {'error':'You have depleted your monthly included credits. Purchase p"
       answered_by: "qwen/qwen3.6-27b"
+      stability: "stable"
 
   - model_name: hf/gemma-4-26b
     litellm_params:
@@ -366,6 +384,7 @@ model_list:
       status_checked_at: "2026-08-26T11:20:24Z"
       status_detail: "litellm.APIError: HuggingfaceException - {'error':'You have depleted your monthly included credits. Purchase p"
       answered_by: "cerebras/gemma-4-31b"
+      stability: "stable"
 
   # SEA-LION รุ่น Gemma (คนละตัวกับ hf/sea-lion-32b ที่เป็นฐาน Qwen)
   - model_name: hf/sea-lion-gemma-27b
@@ -384,6 +403,7 @@ model_list:
       status: "rate_limited"
       status_checked_at: "2026-08-26T11:20:24Z"
       status_detail: "litellm.APIError: HuggingfaceException - {'error':'You have depleted your monthly included credits. Purchase p"
+      stability: "stable"
 
   # ---------- เขียนโค้ด ----------
   - model_name: hf/qwen3-coder-next
@@ -403,6 +423,7 @@ model_list:
       status_checked_at: "2026-08-26T11:20:24Z"
       status_detail: "litellm.APIError: HuggingfaceException - {'error':'You have depleted your monthly included credits. Purchase p"
       answered_by: "mistral-code-latest"
+      stability: "stable"
 
   ####################################################################
   # เจ้าอื่นที่มี free tier — ปลดคอมเมนต์แล้วใส่ key ใน .env
@@ -438,6 +459,7 @@ model_list:
       verified_by: "gateway 2026-08-26 (verify-capabilities)"
       status: "ok"
       status_checked_at: "2026-08-26T11:20:24Z"
+      stability: "stable"
 
   - model_name: gq/compound-mini
     litellm_params:
@@ -455,6 +477,7 @@ model_list:
       verified_by: "gateway 2026-08-26 (verify-capabilities)"
       status: "ok"
       status_checked_at: "2026-08-26T11:20:24Z"
+      stability: "stable"
 
   - model_name: gq/gpt-oss-120b
     litellm_params:
@@ -475,6 +498,7 @@ model_list:
       max_prompt_detail: "โควต้า ที่ ~14,000 — litellm.RateLimitError: RateLimitError: GroqException - {'error':{'message':'Req"
       status: "ok"
       status_checked_at: "2026-08-26T11:20:24Z"
+      stability: "stable"
 
   - model_name: gq/qwen3.6-27b
     litellm_params:
@@ -496,6 +520,7 @@ model_list:
       verified_by: "gateway 2026-08-26 (verify-capabilities)"
       status: "ok"
       status_checked_at: "2026-08-26T11:20:24Z"
+      stability: "stable"
 
   # ---------- Cerebras — โควต้าใหญ่สุด 1M token/วัน ----------
   # ฟรี: 1M token ต่อวัน แต่ RPM ต่ำและ context จำกัด
@@ -526,6 +551,7 @@ model_list:
       latency_ms_14k: 767
       status: "ok"
       status_checked_at: "2026-08-26T11:20:24Z"
+      stability: "stable"
 
   - model_name: cb/gemma-4-31b
     litellm_params:
@@ -549,6 +575,7 @@ model_list:
       latency_ms_14k: 947
       status: "ok"
       status_checked_at: "2026-08-26T11:20:24Z"
+      stability: "stable"
 
   # zai-glm-4.7 ถูก Cerebras archive แล้ว (2026-08-23): "Model zai-glm-4.7 is
   # archived and unavailable for the organization" — ตอนนี้เหลือ 2 โมเดล
@@ -580,6 +607,7 @@ model_list:
       max_prompt_detail: "โควต้า ที่ ~128,000 — litellm.RateLimitError: RateLimitError: MistralException - {'object':'error','me"
       status: "ok"
       status_checked_at: "2026-08-26T11:20:24Z"
+      stability: "stable"
 
   - model_name: mi/medium
     litellm_params:
@@ -598,6 +626,7 @@ model_list:
       max_prompt_detail: "โควต้า ที่ ~64,000 — litellm.RateLimitError: RateLimitError: MistralException - {'object':'error','me"
       status: "ok"
       status_checked_at: "2026-08-26T11:20:24Z"
+      stability: "stable"
 
   - model_name: mi/large
     litellm_params:
@@ -617,6 +646,7 @@ model_list:
       verified_by: "hermes-line-bot 2026-08-26 (tool loop + prompt 14K + ภาษาไทย)"
       status: "ok"
       status_checked_at: "2026-08-26T11:20:24Z"
+      stability: "stable"
 
   - model_name: mi/codestral
     litellm_params:
@@ -638,6 +668,7 @@ model_list:
       latency_ms_14k: 470
       status: "ok"
       status_checked_at: "2026-08-26T11:20:24Z"
+      stability: "stable"
 
   # devstral — ออกแบบมาสำหรับ coding agent โดยเฉพาะ
   - model_name: mi/devstral
@@ -660,6 +691,7 @@ model_list:
       latency_ms_14k: 2213
       status: "ok"
       status_checked_at: "2026-08-26T11:20:24Z"
+      stability: "stable"
 
   - model_name: mi/ministral-8b
     litellm_params:
@@ -679,6 +711,7 @@ model_list:
       latency_ms_14k: 769
       status: "ok"
       status_checked_at: "2026-08-26T11:20:24Z"
+      stability: "stable"
 
   # magistral — สาย reasoning ของ Mistral (เพิ่ม 2026-08-23)
   - model_name: mi/magistral-medium
@@ -702,6 +735,7 @@ model_list:
       verified_by: "hermes-line-bot 2026-08-26 (ผ่านครบ แต่ 146-227s/turn ช้าเกินใช้กับแชท)"
       status: "ok"
       status_checked_at: "2026-08-26T11:20:24Z"
+      stability: "stable"
 
   - model_name: mi/magistral-small
     litellm_params:
@@ -723,6 +757,7 @@ model_list:
       max_prompt_detail: "โควต้า ที่ ~128,000 — litellm.RateLimitError: RateLimitError: MistralException - {'object':'error','me"
       status: "ok"
       status_checked_at: "2026-08-26T11:20:24Z"
+      stability: "stable"
 
   - model_name: mi/mistral-code
     litellm_params:
@@ -745,6 +780,7 @@ model_list:
       latency_ms_14k: 648
       status: "ok"
       status_checked_at: "2026-08-26T11:20:24Z"
+      stability: "stable"
 
   - model_name: mi/ministral-14b
     litellm_params:
@@ -766,6 +802,7 @@ model_list:
       latency_ms_14k: 977
       status: "ok"
       status_checked_at: "2026-08-26T11:20:24Z"
+      stability: "stable"
 
   - model_name: mi/devstral-medium
     litellm_params:
@@ -789,6 +826,7 @@ model_list:
       latency_ms_14k: 835
       status: "ok"
       status_checked_at: "2026-08-26T11:20:24Z"
+      stability: "stable"
 
   # เพิ่ม 2026-08-26 — สาย coding ของ Mistral
   - model_name: mi/mistral-code-agent
@@ -812,6 +850,7 @@ model_list:
       latency_ms_14k: 615
       status: "ok"
       status_checked_at: "2026-08-26T11:20:24Z"
+      stability: "stable"
 
   # FIM = fill-in-the-middle เหมาะกับ autocomplete ในบรรณาธิการ
   - model_name: mi/mistral-code-fim
@@ -832,6 +871,7 @@ model_list:
       latency_ms_14k: 632
       status: "ok"
       status_checked_at: "2026-08-26T11:20:24Z"
+      stability: "stable"
 
   - model_name: mi/ministral-3b
     litellm_params:
@@ -854,6 +894,7 @@ model_list:
       latency_ms_14k: 729
       status: "ok"
       status_checked_at: "2026-08-26T11:20:24Z"
+      stability: "stable"
 
   # ---------- Cloudflare Workers AI — ฟรี 10,000 neurons/วัน ----------
   # ต้องมี CLOUDFLARE_ACCOUNT_ID ใน .env ด้วย
@@ -880,6 +921,7 @@ model_list:
       quota_neurons_per_window: 10000
       quota_source: "provider-docs"
       quota_checked_at: "2026-08-27"
+      stability: "stable"
 
   - model_name: cf/llama-3.3-70b
     litellm_params:
@@ -900,6 +942,7 @@ model_list:
       quota_neurons_per_window: 10000
       quota_source: "provider-docs"
       quota_checked_at: "2026-08-27"
+      stability: "stable"
 
   - model_name: cf/qwen2.5-coder-32b
     litellm_params:
@@ -922,6 +965,7 @@ model_list:
       quota_neurons_per_window: 10000
       quota_source: "provider-docs"
       quota_checked_at: "2026-08-27"
+      stability: "stable"
 
   # ---------- รุ่นใหม่บน Cloudflare (เพิ่ม 2026-08-23) ----------
   # Qwen3.8-27B — ตัวที่เมื่อ 2026-08-16 ยังไม่มี provider ฟรี ตอนนี้มาอยู่ที่นี่แล้ว
@@ -947,6 +991,7 @@ model_list:
       quota_neurons_per_window: 10000
       quota_source: "provider-docs"
       quota_checked_at: "2026-08-27"
+      stability: "stable"
 
   - model_name: cf/llama-4-scout
     litellm_params:
@@ -971,6 +1016,7 @@ model_list:
       quota_neurons_per_window: 10000
       quota_source: "provider-docs"
       quota_checked_at: "2026-08-27"
+      stability: "stable"
 
   - model_name: cf/nemotron-3-120b
     litellm_params:
@@ -994,6 +1040,7 @@ model_list:
       quota_neurons_per_window: 10000
       quota_source: "provider-docs"
       quota_checked_at: "2026-08-27"
+      stability: "stable"
 
   - model_name: cf/gemma-4-26b
     litellm_params:
@@ -1015,6 +1062,7 @@ model_list:
       quota_neurons_per_window: 10000
       quota_source: "provider-docs"
       quota_checked_at: "2026-08-27"
+      stability: "stable"
 
   - model_name: cf/qwen3-30b-a3b
     litellm_params:
@@ -1039,6 +1087,7 @@ model_list:
       quota_neurons_per_window: 10000
       quota_source: "provider-docs"
       quota_checked_at: "2026-08-27"
+      stability: "stable"
 
   # เพิ่ม 2026-08-26 — ทดสอบยิงผ่านแล้ว
   - model_name: cf/mistral-small-24b
@@ -1063,6 +1112,7 @@ model_list:
       quota_neurons_per_window: 10000
       quota_source: "provider-docs"
       quota_checked_at: "2026-08-27"
+      stability: "stable"
 
   - model_name: cf/qwq-32b
     litellm_params:
@@ -1084,6 +1134,7 @@ model_list:
       quota_neurons_per_window: 10000
       quota_source: "provider-docs"
       quota_checked_at: "2026-08-27"
+      stability: "stable"
 
   - model_name: cf/deepseek-r1-32b
     litellm_params:
@@ -1106,6 +1157,7 @@ model_list:
       quota_neurons_per_window: 10000
       quota_source: "provider-docs"
       quota_checked_at: "2026-08-27"
+      stability: "stable"
 
   - model_name: cf/granite-4-micro
     litellm_params:
@@ -1127,6 +1179,7 @@ model_list:
       quota_neurons_per_window: 10000
       quota_source: "provider-docs"
       quota_checked_at: "2026-08-27"
+      stability: "stable"
 
   # โมเดล vision ตัวเดียวของ gateway (เปิดใช้ 2026-08-26)
   #
@@ -1155,6 +1208,7 @@ model_list:
       quota_neurons_per_window: 10000
       quota_source: "provider-docs"
       quota_checked_at: "2026-08-27"
+      stability: "stable"
 
   # glm-5.2 กับ deepseek-v4-pro-0813 มีบน Cloudflare แต่ยังไม่อยู่ใน Workers Free plan
   # (error code 5035) ต้องอัปเกรดแผนก่อน
@@ -1180,9 +1234,9 @@ model_list:
       quota_pool: "openrouter"
       quota_window: "daily"
       tags: ["coding-best", "long-context"]
-      status: "rate_limited"
-      status_checked_at: "2026-08-26T11:20:24Z"
-      status_detail: "litellm.RateLimitError: RateLimitError: OpenrouterException - {'error':{'message':'Rate limit exceeded: free-m"
+      stability: "stable"
+      status: "ok"
+      status_checked_at: "2026-08-27T05:51:09Z"
 
   - model_name: or/nemotron-lightning
     litellm_params:
@@ -1198,9 +1252,9 @@ model_list:
       quota_pool: "openrouter"
       quota_window: "daily"
       tags: ["long-context"]
-      status: "rate_limited"
-      status_checked_at: "2026-08-26T11:20:24Z"
-      status_detail: "litellm.RateLimitError: RateLimitError: OpenrouterException - {'error':{'message':'Rate limit exceeded: free-m"
+      stability: "stable"
+      status: "ok"
+      status_checked_at: "2026-08-27T05:51:09Z"
 
   - model_name: or/nemotron-super-120b
     litellm_params:
@@ -1215,9 +1269,9 @@ model_list:
       quota_pool: "openrouter"
       quota_window: "daily"
       tags: ["general"]
-      status: "rate_limited"
-      status_checked_at: "2026-08-26T11:20:24Z"
-      status_detail: "litellm.RateLimitError: RateLimitError: OpenrouterException - {'error':{'message':'Rate limit exceeded: free-m"
+      stability: "stable"
+      status: "ok"
+      status_checked_at: "2026-08-27T05:51:09Z"
 
 
   - model_name: or/north-mini-code
@@ -1235,9 +1289,9 @@ model_list:
       quota_pool: "openrouter"
       quota_window: "daily"
       tags: ["coding-best"]
-      status: "rate_limited"
-      status_checked_at: "2026-08-26T11:20:24Z"
-      status_detail: "litellm.RateLimitError: RateLimitError: OpenrouterException - {'error':{'message':'Rate limit exceeded: free-m"
+      stability: "stable"
+      status: "ok"
+      status_checked_at: "2026-08-27T05:51:09Z"
 
   # เพิ่ม 2026-08-23 — ทดสอบยิงผ่านแล้ว
   - model_name: or/dots-3-note
@@ -1256,9 +1310,9 @@ model_list:
       quota_pool: "openrouter"
       quota_window: "daily"
       tags: ["coding-ok", "long-context"]
-      status: "rate_limited"
-      status_checked_at: "2026-08-26T11:20:24Z"
-      status_detail: "litellm.RateLimitError: RateLimitError: OpenrouterException - {'error':{'message':'Rate limit exceeded: free-m"
+      stability: "preview"
+      status: "ok"
+      status_checked_at: "2026-08-27T05:51:09Z"
 
   - model_name: or/laguna-s-2.1
     litellm_params:
@@ -1275,9 +1329,9 @@ model_list:
       quota_pool: "openrouter"
       quota_window: "daily"
       tags: ["coding-weak"]
-      status: "rate_limited"
-      status_checked_at: "2026-08-26T11:20:24Z"
-      status_detail: "litellm.RateLimitError: RateLimitError: OpenrouterException - {'error':{'message':'Rate limit exceeded: free-m"
+      stability: "stable"
+      status: "ok"
+      status_checked_at: "2026-08-27T05:51:09Z"
 
 
   # เพิ่ม 2026-08-23 (รอบสอง) — ตัวที่ตกสำรวจรอบแรกเพราะกรองด้วย suffix :free
@@ -1303,9 +1357,10 @@ model_list:
       verified_max_prompt: 31833
       max_prompt_detail: "โควต้า ที่ ~64,000 — litellm.RateLimitError: RateLimitError: OpenrouterException - {'error':{'message"
       verified_by: "hermes-line-bot 2026-08-26 (tool loop + prompt 14K + ภาษาไทย · ช้า ~19s/turn)"
-      status: "rate_limited"
-      status_checked_at: "2026-08-26T11:20:24Z"
-      status_detail: "litellm.RateLimitError: RateLimitError: OpenrouterException - {'error':{'message':'Provider returned error','c"
+      stability: "stealth"
+      status: "dead"
+      status_checked_at: "2026-08-27T05:51:09Z"
+      status_detail: "litellm.NotFoundError: NotFoundError: OpenrouterException - {'error':{'message':'Thank you for participating i"
 
   # router ของ OpenRouter เอง — เลือกโมเดลฟรีที่ว่างให้อัตโนมัติ
   # ทดสอบแล้ววิ่งไป nemotron-3-ultra-550b ให้เอง เหมาะเป็น fallback ปลายทาง
@@ -1324,9 +1379,9 @@ model_list:
       quota_pool: "openrouter"
       quota_window: "daily"
       tags: ["coding-ok"]
-      status: "rate_limited"
-      status_checked_at: "2026-08-26T11:20:24Z"
-      status_detail: "litellm.RateLimitError: RateLimitError: OpenrouterException - {'error':{'message':'Rate limit exceeded: free-m"
+      stability: "stable"
+      status: "ok"
+      status_checked_at: "2026-08-27T05:51:09Z"
 
 
 
@@ -1347,9 +1402,10 @@ model_list:
       quota_pool: "openrouter"
       quota_window: "daily"
       tags: ["coding-ok"]
-      status: "rate_limited"
-      status_checked_at: "2026-08-26T11:20:24Z"
-      status_detail: "litellm.RateLimitError: RateLimitError: OpenrouterException - {'error':{'message':'Rate limit exceeded: free-m"
+      stability: "stable"
+      status: "unknown"
+      status_checked_at: "2026-08-27T05:51:09Z"
+      status_detail: "timed out"
 
   - model_name: or/nemotron-omni-30b
     litellm_params:
@@ -1365,9 +1421,9 @@ model_list:
       quota_pool: "openrouter"
       quota_window: "daily"
       tags: ["general"]
-      status: "rate_limited"
-      status_checked_at: "2026-08-26T11:20:24Z"
-      status_detail: "litellm.RateLimitError: RateLimitError: OpenrouterException - {'error':{'message':'Rate limit exceeded: free-m"
+      stability: "stable"
+      status: "ok"
+      status_checked_at: "2026-08-27T05:51:09Z"
 
   # ⚠️ 2026-08-26 ถอด or/gemma-4-31b — ขึ้น "Provider returned error" ต่อเนื่อง
   # ตัวที่ยังใช้ไม่ได้ (ลองซ้ำแล้ว): z-ai/glm-5.2:free, poolside/laguna-xs-2.1:free,
@@ -1416,6 +1472,7 @@ model_list:
       status: "rate_limited"
       status_checked_at: "2026-08-26T11:35:21Z"
       status_detail: "litellm.RateLimitError: RateLimitError: Nvidia_nimException - Error code: 429 - {'status': 429, 'title': 'Too "
+      stability: "stable"
 
   - model_name: nim/step-3.7-flash
     litellm_params:
@@ -1433,6 +1490,7 @@ model_list:
       status: "unknown"
       status_checked_at: "2026-08-26T11:35:21Z"
       status_detail: "timed out"
+      stability: "stable"
 
   - model_name: nim/nemotron-nano-30b
     litellm_params:
@@ -1452,6 +1510,7 @@ model_list:
       latency_ms_14k: 1145
       status: "ok"
       status_checked_at: "2026-08-26T11:35:21Z"
+      stability: "stable"
 
   - model_name: nim/gemma-4-31b
     litellm_params:
@@ -1469,6 +1528,7 @@ model_list:
       status: "unknown"
       status_checked_at: "2026-08-26T11:35:21Z"
       status_detail: "timed out"
+      stability: "stable"
 
   - model_name: nim/mistral-nemotron
     litellm_params:
@@ -1486,6 +1546,7 @@ model_list:
       status: "unknown"
       status_checked_at: "2026-08-26T11:35:21Z"
       status_detail: "timed out"
+      stability: "stable"
 
   - model_name: nim/nemotron-super-49b
     litellm_params:
@@ -1504,6 +1565,7 @@ model_list:
       status_checked_at: "2026-08-26T11:35:21Z"
       status_detail: "litellm.APIError: APIError: Nvidia_nimException - Error code: 410 - {'type': 'about:blank', 'title': 'Gone', '"
       answered_by: "nemotron-3.5-lightning-free"
+      stability: "stable"
 
   - model_name: nim/llama-3.3-70b
     litellm_params:
@@ -1523,6 +1585,7 @@ model_list:
       status_checked_at: "2026-08-26T11:35:21Z"
       status_detail: "litellm.APIError: APIError: Nvidia_nimException - Error code: 410 - {'type': 'about:blank', 'title': 'Gone', '"
       answered_by: "openai/gpt-oss-120b"
+      stability: "stable"
 
   - model_name: nim/deepseek-v4-flash
     litellm_params:
@@ -1541,6 +1604,7 @@ model_list:
       status_checked_at: "2026-08-26T11:35:21Z"
       status_detail: "litellm.NotFoundError: NotFoundError: Nvidia_nimException - Error code: 404 - {'status': 404, 'title': 'Not Fo"
       answered_by: "ministral-14b-latest"
+      stability: "stable"
 
   # ---------- Embeddings (เติมช่องว่างที่ gateway ยังไม่มี) ----------
   # ⚠️ 2026-08-26: NVIDIA ปลด embedding หลายตัวพร้อมกัน ("has reached its end of life")
@@ -1561,6 +1625,7 @@ model_list:
       tags: ["embedding"]
       status: "ok"
       status_checked_at: "2026-08-26T11:20:24Z"
+      stability: "stable"
 
   # ---------- Cloudflare Workers AI ----------
   # ฟรี 10,000 neurons/วัน ต้องมี CLOUDFLARE_ACCOUNT_ID ด้วย
@@ -1608,6 +1673,7 @@ model_list:
       status: "rate_limited"
       status_checked_at: "2026-08-26T11:20:24Z"
       status_detail: "litellm.AuthenticationError: AuthenticationError: OpenAIException - Error code: 401 - {'error': 'This model re"
+      stability: "stable"
 
   # Claude Sonnet 4.6
   - model_name: okmd/claude-sonnet-4.6
@@ -1627,6 +1693,7 @@ model_list:
       status: "rate_limited"
       status_checked_at: "2026-08-26T11:20:24Z"
       status_detail: "litellm.AuthenticationError: AuthenticationError: OpenAIException - Error code: 401 - {'error': 'This model re"
+      stability: "stable"
 
   # GPT-5.4
   - model_name: okmd/gpt-5.4
@@ -1648,6 +1715,7 @@ model_list:
       status: "rate_limited"
       status_checked_at: "2026-08-26T11:20:24Z"
       status_detail: "litellm.AuthenticationError: AuthenticationError: OpenAIException - Error code: 401 - {'error': 'This model re"
+      stability: "stable"
 
   - model_name: okmd/gpt-5.4-mini
     litellm_params:
@@ -1668,6 +1736,7 @@ model_list:
       status: "rate_limited"
       status_checked_at: "2026-08-26T11:20:24Z"
       status_detail: "litellm.AuthenticationError: AuthenticationError: OpenAIException - Error code: 401 - {'error': 'This model re"
+      stability: "stable"
 
   - model_name: okmd/gpt-5.4-nano
     litellm_params:
@@ -1686,6 +1755,7 @@ model_list:
       status: "rate_limited"
       status_checked_at: "2026-08-26T11:20:24Z"
       status_detail: "litellm.AuthenticationError: AuthenticationError: OpenAIException - Error code: 401 - {'error': 'This model re"
+      stability: "stable"
 
   # Gemini รุ่นใหม่สุดที่นี่
   - model_name: okmd/gemini-3.7-flash
@@ -1708,6 +1778,7 @@ model_list:
       status: "rate_limited"
       status_checked_at: "2026-08-26T11:20:24Z"
       status_detail: "litellm.AuthenticationError: AuthenticationError: OpenAIException - Error code: 401 - {'error': 'This model re"
+      stability: "stable"
 
   - model_name: okmd/gemini-3.5-flash
     litellm_params:
@@ -1729,6 +1800,7 @@ model_list:
       status: "rate_limited"
       status_checked_at: "2026-08-26T11:20:24Z"
       status_detail: "litellm.AuthenticationError: AuthenticationError: OpenAIException - Error code: 401 - {'error': 'This model re"
+      stability: "stable"
 
   - model_name: okmd/gemini-3.1-pro
     litellm_params:
@@ -1747,6 +1819,7 @@ model_list:
       status: "rate_limited"
       status_checked_at: "2026-08-26T11:20:24Z"
       status_detail: "litellm.AuthenticationError: AuthenticationError: OpenAIException - Error code: 401 - {'error': 'This model re"
+      stability: "preview"
 
   - model_name: okmd/gemini-3.1-flash-lite
     litellm_params:
@@ -1765,6 +1838,7 @@ model_list:
       status: "rate_limited"
       status_checked_at: "2026-08-26T11:20:24Z"
       status_detail: "litellm.AuthenticationError: AuthenticationError: OpenAIException - Error code: 401 - {'error': 'This model re"
+      stability: "stable"
 
   - model_name: okmd/gemini-2.5-flash-lite
     litellm_params:
@@ -1783,6 +1857,7 @@ model_list:
       status: "rate_limited"
       status_checked_at: "2026-08-26T11:20:24Z"
       status_detail: "litellm.AuthenticationError: AuthenticationError: OpenAIException - Error code: 401 - {'error': 'This model re"
+      stability: "stable"
 
   # Grok — ไม่มีที่อื่นใน gateway
   - model_name: okmd/grok-4.3
@@ -1804,6 +1879,7 @@ model_list:
       status: "rate_limited"
       status_checked_at: "2026-08-26T11:20:24Z"
       status_detail: "litellm.AuthenticationError: AuthenticationError: OpenAIException - Error code: 401 - {'error': 'This model re"
+      stability: "stable"
 
   - model_name: okmd/deepseek-v4-pro
     litellm_params:
@@ -1827,6 +1903,7 @@ model_list:
       quota_tokens_per_window: 40000
       quota_checked_at: "2026-08-27"
       quota_source: "provider-docs"
+      stability: "stable"
 
   - model_name: okmd/deepseek-v4-flash
     litellm_params:
@@ -1850,6 +1927,7 @@ model_list:
       quota_tokens_per_window: 40000
       quota_checked_at: "2026-08-27"
       quota_source: "provider-docs"
+      stability: "stable"
 
   # Qwen รุ่นใหม่กว่าที่อื่นใน gateway
   - model_name: okmd/qwen3.7-max
@@ -1871,6 +1949,7 @@ model_list:
       status: "rate_limited"
       status_checked_at: "2026-08-26T11:20:24Z"
       status_detail: "litellm.AuthenticationError: AuthenticationError: OpenAIException - Error code: 401 - {'error': 'This model re"
+      stability: "stable"
 
   - model_name: okmd/qwen3.7-plus
     litellm_params:
@@ -1891,6 +1970,7 @@ model_list:
       status: "rate_limited"
       status_checked_at: "2026-08-26T11:20:24Z"
       status_detail: "litellm.AuthenticationError: AuthenticationError: OpenAIException - Error code: 401 - {'error': 'This model re"
+      stability: "stable"
 
   - model_name: okmd/qwen3.6-flash
     litellm_params:
@@ -1910,6 +1990,7 @@ model_list:
       status: "rate_limited"
       status_checked_at: "2026-08-26T11:20:24Z"
       status_detail: "litellm.AuthenticationError: AuthenticationError: OpenAIException - Error code: 401 - {'error': 'This model re"
+      stability: "stable"
 
   # okmd/qwen3.5-9b อยู่ใน /v1/models แต่ยิงจริงคืน "No models provided" (400)
   # ฝั่ง OKMD ยังไม่ได้ต่อ backend ให้ — ไม่ใส่ไว้
@@ -1933,6 +2014,7 @@ model_list:
       status: "rate_limited"
       status_checked_at: "2026-08-26T11:20:24Z"
       status_detail: "litellm.AuthenticationError: AuthenticationError: OpenAIException - Error code: 401 - {'error': 'This model re"
+      stability: "stable"
 
   - model_name: okmd/llama-4-scout
     litellm_params:
@@ -1953,6 +2035,7 @@ model_list:
       status: "rate_limited"
       status_checked_at: "2026-08-26T11:20:24Z"
       status_detail: "litellm.AuthenticationError: AuthenticationError: OpenAIException - Error code: 401 - {'error': 'This model re"
+      stability: "stable"
 
   - model_name: okmd/mistral-medium-3.1
     litellm_params:
@@ -1973,6 +2056,7 @@ model_list:
       status: "rate_limited"
       status_checked_at: "2026-08-26T11:20:24Z"
       status_detail: "litellm.AuthenticationError: AuthenticationError: OpenAIException - Error code: 401 - {'error': 'This model re"
+      stability: "stable"
 
   # Amazon Nova
   - model_name: okmd/nova-pro
@@ -1994,6 +2078,7 @@ model_list:
       status: "rate_limited"
       status_checked_at: "2026-08-26T11:20:24Z"
       status_detail: "litellm.AuthenticationError: AuthenticationError: OpenAIException - Error code: 401 - {'error': 'This model re"
+      stability: "stable"
 
   - model_name: okmd/nova-2-lite
     litellm_params:
@@ -2012,6 +2097,7 @@ model_list:
       status: "rate_limited"
       status_checked_at: "2026-08-26T11:20:24Z"
       status_detail: "litellm.AuthenticationError: AuthenticationError: OpenAIException - Error code: 401 - {'error': 'This model re"
+      stability: "stable"
 
   # Perplexity Sonar — น่าจะค้นเว็บได้ ยังไม่ทดสอบ
   - model_name: okmd/sonar-pro
@@ -2034,6 +2120,7 @@ model_list:
       status: "rate_limited"
       status_checked_at: "2026-08-26T11:20:24Z"
       status_detail: "litellm.AuthenticationError: AuthenticationError: OpenAIException - Error code: 401 - {'error': 'This model re"
+      stability: "stable"
 
 
 
@@ -2071,6 +2158,7 @@ model_list:
       status: "rate_limited"
       status_checked_at: "2026-08-26T11:20:24Z"
       status_detail: "litellm.RateLimitError: RateLimitError: OpenAIException - Error from provider (Console): Rate limit exceeded. "
+      stability: "stable"
 
   # ตัวเดียวกับ or/nemotron-ultra-550b แต่ไม่ติดโควต้ารายวันของ OpenRouter
   - model_name: zen/nemotron-3-ultra
@@ -2092,6 +2180,7 @@ model_list:
       status: "unknown"
       status_checked_at: "2026-08-26T11:20:24Z"
       status_detail: "litellm.BadRequestError: OpenAIException - Error from provider (Console): Upstream request failed: [502] Upstr"
+      stability: "stable"
 
   # พ่น thinking ปนใน content
   - model_name: zen/nemotron-lightning
@@ -2113,6 +2202,7 @@ model_list:
       latency_ms_14k: 58789
       status: "ok"
       status_checked_at: "2026-08-26T11:20:24Z"
+      stability: "stable"
 
   - model_name: zen/mimo-v2.5
     litellm_params:
@@ -2131,6 +2221,7 @@ model_list:
       status: "rate_limited"
       status_checked_at: "2026-08-26T11:20:24Z"
       status_detail: "litellm.RateLimitError: RateLimitError: OpenAIException - Error from provider (Console): Rate limit exceeded. "
+      stability: "stable"
 
   # สาย coding
   - model_name: zen/laguna-s-2.1
@@ -2152,6 +2243,7 @@ model_list:
       latency_ms_14k: 1473
       status: "ok"
       status_checked_at: "2026-08-26T11:20:24Z"
+      stability: "stable"
 
   - model_name: zen/x-preview-f
     litellm_params:
@@ -2172,6 +2264,7 @@ model_list:
       latency_ms_14k: 5238
       status: "ok"
       status_checked_at: "2026-08-26T11:20:24Z"
+      stability: "preview"
 
   # thinking model
   - model_name: zen/hy3
@@ -2193,6 +2286,7 @@ model_list:
       latency_ms_14k: 4768
       status: "ok"
       status_checked_at: "2026-08-26T11:20:24Z"
+      stability: "stable"
 
   # ที่ลองแล้วยังใช้ไม่ได้ (2026-08-26):
   #   deepseek-v4-flash-free -> "Upstream request failed"
@@ -2225,6 +2319,7 @@ model_list:
       latency_ms_14k: 361
       status: "ok"
       status_checked_at: "2026-08-26T11:20:24Z"
+      stability: "stable"
 
   - model_name: l7/codestral
     litellm_params:
@@ -2246,6 +2341,7 @@ model_list:
       latency_ms_14k: 554
       status: "ok"
       status_checked_at: "2026-08-26T11:20:24Z"
+      stability: "stable"
 
   # ปลดคอมเมนต์เมื่อมี LLM7_API_KEY แล้ว (เปลี่ยน api_key เป็น os.environ/LLM7_API_KEY
   # ทั้งสองตัวข้างบนด้วย) — ตัวอย่างของที่จะได้เพิ่ม:
@@ -2423,6 +2519,7 @@ model_list:
       latency_ms_14k: 832
       status: "ok"
       status_checked_at: "2026-08-26T11:20:24Z"
+      stability: "stable"
 
   # Pathumma (NECTEC) — thinking model
   - model_name: th/pathumma
@@ -2445,6 +2542,7 @@ model_list:
       latency_ms_14k: 1388
       status: "ok"
       status_checked_at: "2026-08-26T11:20:24Z"
+      stability: "stable"
 
   # Typhoon-S (SCB10X) — ตอบตรงไม่มี think
   - model_name: th/typhoon
@@ -2467,6 +2565,7 @@ model_list:
       latency_ms_14k: 197
       status: "ok"
       status_checked_at: "2026-08-26T11:20:24Z"
+      stability: "stable"
 
   # THaLLE (KBTG) — thinking model
   - model_name: th/thalle
@@ -2489,6 +2588,7 @@ model_list:
       latency_ms_14k: 919
       status: "ok"
       status_checked_at: "2026-08-26T11:20:24Z"
+      stability: "stable"
 
   # ---------- Ollama Cloud — โมเดลใหญ่โดยไม่ต้องมี GPU ----------
   # ต่างจาก Ollama ที่รันเอง: อันนี้ Ollama โฮสต์ให้ ไม่กิน RAM/GPU ของเรา
@@ -2523,6 +2623,7 @@ model_list:
       quota_observed_by: "hermes-line-bot (agent · ~59K token/turn)"
       quota_source: "observed"
       quota_checked_at: "2026-08-27"
+      stability: "stable"
 
   - model_name: oc/nemotron-3-super
     litellm_params:
@@ -2548,6 +2649,7 @@ model_list:
       quota_observed_by: "hermes-line-bot (agent · ~59K token/turn)"
       quota_source: "observed"
       quota_checked_at: "2026-08-27"
+      stability: "stable"
 
   - model_name: oc/nemotron-3-nano-30b
     litellm_params:
@@ -2573,6 +2675,7 @@ model_list:
       quota_observed_by: "hermes-line-bot (agent · ~59K token/turn)"
       quota_source: "observed"
       quota_checked_at: "2026-08-27"
+      stability: "stable"
 
   - model_name: oc/minimax-m3
     litellm_params:
@@ -2599,6 +2702,7 @@ model_list:
       quota_observed_by: "hermes-line-bot (agent · ~59K token/turn)"
       quota_source: "observed"
       quota_checked_at: "2026-08-27"
+      stability: "stable"
 
   - model_name: oc/gemma4-31b
     litellm_params:
@@ -2624,6 +2728,7 @@ model_list:
       quota_observed_by: "hermes-line-bot (agent · ~59K token/turn)"
       quota_source: "observed"
       quota_checked_at: "2026-08-27"
+      stability: "stable"
 
   - model_name: oc/gpt-oss-120b
     litellm_params:
@@ -2652,6 +2757,7 @@ model_list:
       quota_observed_by: "hermes-line-bot (agent · ~59K token/turn)"
       quota_source: "observed"
       quota_checked_at: "2026-08-27"
+      stability: "stable"
 
   - model_name: oc/gpt-oss-20b
     litellm_params:
@@ -2677,6 +2783,7 @@ model_list:
       quota_observed_by: "hermes-line-bot (agent · ~59K token/turn)"
       quota_source: "observed"
       quota_checked_at: "2026-08-27"
+      stability: "stable"
 
   # ต้องมี Pro ($20/เดือน) ขึ้นไปถึงจะใช้ได้ — ทดสอบ 2026-08-17 บนชั้นฟรีคืน
   # "this model requires a subscription": glm-5.1, glm-5.2, qwen3.5:397b,
@@ -2753,6 +2860,11 @@ litellm_settings:
     - nim/nemotron-super-49b: [zen/nemotron-lightning, cb/gpt-oss-120b, mi/magistral-medium]
     - nim/llama-3.3-70b: [gq/gpt-oss-120b, mi/large, zen/hy3]
     - nim/deepseek-v4-flash: [mi/ministral-14b, cb/gemma-4-31b, zen/laguna-s-2.1]
+
+    # or/ox-alpha จบช่วง stealth เมื่อ 2026-08-27 OpenRouter เฉลยว่าคือ GLM-5.3 Flash
+    # แต่ตัวสืบทอด z-ai/glm-5.3-flash "เสียเงิน" ($0.075/$0.25 ต่อล้าน token)
+    # จึงไม่เอามาใส่ chain — ชี้ไปตัวฟรีที่ใช้ tool ได้แทน ข้ามคนละ quota_pool
+    - or/ox-alpha: [mi/codestral, cb/gpt-oss-120b, zen/laguna-s-2.1]
 
 general_settings:
   master_key: os.environ/LITELLM_MASTER_KEY

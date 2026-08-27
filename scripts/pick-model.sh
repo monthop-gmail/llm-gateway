@@ -107,6 +107,9 @@ def fmt(r, show_all=False):
         # ≥ ไม่ใช่ ≤ — เลขนี้คือขนาดที่ยิงผ่านแล้ว เพดานจริงอยู่สูงกว่านี้
         # และบางตัวหยุดเพราะโควต้าหมดกลางคัน ไม่ใช่เพราะชนเพดาน
         bits.append(f"prompt ≥{cap//1000}K")
+    stab = mi.get("stability")
+    if stab and stab != "stable":
+        bits.append("⚠️ " + stab + " — มีวันหมดอายุ")
     ans = mi.get("answered_by")
     if ans:
         bits.append("จริง ๆ ตอบโดย " + ans)
@@ -186,6 +189,14 @@ if q == "agent":
         print("     ข้ามก้อนไม่ได้ ลอง floor ต่ำลง หรือดูรายชื่อที่โควต้าหมดข้างล่าง")
     else:
         print("\n  ตัวที่อยู่ก้อนเดียวกันหมดโควต้าพร้อมกัน — เลือกตัวสำรองข้ามก้อนเสมอ")
+    shaky = [r for r in hits if info(r).get("stability") not in (None, "stable")]
+    if shaky:
+        # or/ox-alpha ถูกเลือกเป็น fallback อันดับ 1 เพราะ benchmark สวย
+        # โดยไม่มีใครเห็นคำว่า stealth ที่ซ่อนอยู่ใน litellm_params แล้วมันหายไปเฉย ๆ
+        print(f"\n⚠️ {len(shaky)} ตัวในรายการเป็น preview/stealth — มีวันหมดอายุในตัว")
+        print("   อย่าเอาไปวางเป็นตัวสำรองถาวร:")
+        for r in shaky:
+            print(f"     {r.get('model_name'):<26} {info(r).get('stability')}")
     if down:
         print(f"\nอีก {len(down)} ตัวเข้าเกณฑ์ครบแต่โควต้าหมดตอนนี้ — ไม่ตัดทิ้ง")
         print("เพราะตัวสำรองที่ดีคือตัวที่ว่างตอนตัวหลักตาย ไม่ใช่ตัวที่ว่างตอนนี้:\n")
