@@ -152,13 +152,29 @@ if out=$(python3 -c "
 import sys, yaml
 c = yaml.safe_load(open('litellm/config.yaml'))
 # answered_by = ชื่อนี้ไม่ได้ตอบเอง ค่าที่วัดผ่านชื่อนี้จึงเป็นของตัวสำรอง
-measured = ('verified_max_prompt', 'max_prompt_detail', 'latency_ms_14k', 'benchmark_coding')
+#
+# ระบุฝั่ง 'คนเขียน' แทนฝั่ง 'เครื่องวัด' โดยตั้งใจ — ของเดิมระบุชื่อฟิลด์ที่วัดไว้
+# ตายตัว พอ PR เพิ่มฟิลด์วัดใหม่ (language_th_*) มันก็หลุดจากตัวตรวจเงียบ ๆ
+# กลับด้านแล้วฟิลด์ใหม่ทุกตัวจะถูกจับโดยอัตโนมัติ ไม่ต้องจำว่าต้องมาเติมลิสต์
+authored = {
+    'mode', 'description', 'provider_label', 'provider_quota', 'tags',
+    'supports_function_calling', 'max_input_tokens', 'context_window',
+    'quota_pool', 'quota_window', 'stability',
+    'quota_tokens_per_window', 'quota_requests_per_window', 'quota_tpm',
+    'quota_neurons_per_window', 'quota_source', 'quota_checked_at',
+    'quota_observed_tokens', 'quota_observed_window',
+    'quota_observed_window_start', 'quota_observed_by',
+    # ฟิลด์ที่บอกสถานะของ alias เอง ไม่ใช่ผลวัดของโมเดล
+    'status', 'status_checked_at', 'status_detail', 'answered_by',
+    # ใครวัดให้ — เป็นที่มา ไม่ใช่ค่าที่วัดได้
+    'verified_by', 'language_verified_by', 'language_checked_at',
+}
 bad = []
 for m in c['model_list']:
     mi = m.get('model_info') or {}
     if not mi.get('answered_by'):
         continue
-    hit = [k for k in measured if mi.get(k) is not None]
+    hit = sorted(k for k, v in mi.items() if k not in authored and v is not None)
     if hit:
         bad.append(f\"{m['model_name']}: {', '.join(hit)}\")
 print('\n'.join(bad))
