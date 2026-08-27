@@ -608,6 +608,9 @@ model_list:
       status: "ok"
       status_checked_at: "2026-08-26T11:20:24Z"
       stability: "stable"
+      quota_tokens_per_window: 1000000000
+      quota_source: "provider-docs"
+      quota_checked_at: "2026-08-27"
 
   - model_name: mi/medium
     litellm_params:
@@ -627,6 +630,9 @@ model_list:
       status: "ok"
       status_checked_at: "2026-08-26T11:20:24Z"
       stability: "stable"
+      quota_tokens_per_window: 1000000000
+      quota_source: "provider-docs"
+      quota_checked_at: "2026-08-27"
 
   - model_name: mi/large
     litellm_params:
@@ -647,6 +653,9 @@ model_list:
       status: "ok"
       status_checked_at: "2026-08-26T11:20:24Z"
       stability: "stable"
+      quota_tokens_per_window: 1000000000
+      quota_source: "provider-docs"
+      quota_checked_at: "2026-08-27"
 
   - model_name: mi/codestral
     litellm_params:
@@ -669,6 +678,9 @@ model_list:
       status: "ok"
       status_checked_at: "2026-08-26T11:20:24Z"
       stability: "stable"
+      quota_tokens_per_window: 1000000000
+      quota_source: "provider-docs"
+      quota_checked_at: "2026-08-27"
 
   # devstral — ออกแบบมาสำหรับ coding agent โดยเฉพาะ
   - model_name: mi/devstral
@@ -692,6 +704,9 @@ model_list:
       status: "ok"
       status_checked_at: "2026-08-26T11:20:24Z"
       stability: "stable"
+      quota_tokens_per_window: 1000000000
+      quota_source: "provider-docs"
+      quota_checked_at: "2026-08-27"
 
   - model_name: mi/ministral-8b
     litellm_params:
@@ -712,6 +727,9 @@ model_list:
       status: "ok"
       status_checked_at: "2026-08-26T11:20:24Z"
       stability: "stable"
+      quota_tokens_per_window: 1000000000
+      quota_source: "provider-docs"
+      quota_checked_at: "2026-08-27"
 
   # magistral — สาย reasoning ของ Mistral (เพิ่ม 2026-08-23)
   - model_name: mi/magistral-medium
@@ -736,6 +754,9 @@ model_list:
       status: "ok"
       status_checked_at: "2026-08-26T11:20:24Z"
       stability: "stable"
+      quota_tokens_per_window: 1000000000
+      quota_source: "provider-docs"
+      quota_checked_at: "2026-08-27"
 
   - model_name: mi/magistral-small
     litellm_params:
@@ -758,6 +779,9 @@ model_list:
       status: "ok"
       status_checked_at: "2026-08-26T11:20:24Z"
       stability: "stable"
+      quota_tokens_per_window: 1000000000
+      quota_source: "provider-docs"
+      quota_checked_at: "2026-08-27"
 
   - model_name: mi/mistral-code
     litellm_params:
@@ -781,6 +805,9 @@ model_list:
       status: "ok"
       status_checked_at: "2026-08-26T11:20:24Z"
       stability: "stable"
+      quota_tokens_per_window: 1000000000
+      quota_source: "provider-docs"
+      quota_checked_at: "2026-08-27"
 
   - model_name: mi/ministral-14b
     litellm_params:
@@ -803,6 +830,9 @@ model_list:
       status: "ok"
       status_checked_at: "2026-08-26T11:20:24Z"
       stability: "stable"
+      quota_tokens_per_window: 1000000000
+      quota_source: "provider-docs"
+      quota_checked_at: "2026-08-27"
 
   - model_name: mi/devstral-medium
     litellm_params:
@@ -827,6 +857,9 @@ model_list:
       status: "ok"
       status_checked_at: "2026-08-26T11:20:24Z"
       stability: "stable"
+      quota_tokens_per_window: 1000000000
+      quota_source: "provider-docs"
+      quota_checked_at: "2026-08-27"
 
   # เพิ่ม 2026-08-26 — สาย coding ของ Mistral
   - model_name: mi/mistral-code-agent
@@ -851,6 +884,9 @@ model_list:
       status: "ok"
       status_checked_at: "2026-08-26T11:20:24Z"
       stability: "stable"
+      quota_tokens_per_window: 1000000000
+      quota_source: "provider-docs"
+      quota_checked_at: "2026-08-27"
 
   # FIM = fill-in-the-middle เหมาะกับ autocomplete ในบรรณาธิการ
   - model_name: mi/mistral-code-fim
@@ -872,6 +908,9 @@ model_list:
       status: "ok"
       status_checked_at: "2026-08-26T11:20:24Z"
       stability: "stable"
+      quota_tokens_per_window: 1000000000
+      quota_source: "provider-docs"
+      quota_checked_at: "2026-08-27"
 
   - model_name: mi/ministral-3b
     litellm_params:
@@ -895,6 +934,9 @@ model_list:
       status: "ok"
       status_checked_at: "2026-08-26T11:20:24Z"
       stability: "stable"
+      quota_tokens_per_window: 1000000000
+      quota_source: "provider-docs"
+      quota_checked_at: "2026-08-27"
 
   # ---------- Cloudflare Workers AI — ฟรี 10,000 neurons/วัน ----------
   # ต้องมี CLOUDFLARE_ACCOUNT_ID ใน .env ด้วย
@@ -1472,6 +1514,9 @@ model_list:
       status_checked_at: "2026-08-26T11:35:21Z"
       status_detail: "litellm.RateLimitError: RateLimitError: Nvidia_nimException - Error code: 429 - {'status': 429, 'title': 'Too "
       stability: "stable"
+      quota_requests_per_window: 40
+      quota_source: "provider-docs"
+      quota_checked_at: "2026-08-27"
 
   - model_name: nim/step-3.7-flash
     litellm_params:
@@ -1490,6 +1535,9 @@ model_list:
       status_checked_at: "2026-08-26T11:35:21Z"
       status_detail: "timed out"
       stability: "stable"
+      quota_requests_per_window: 40
+      quota_source: "provider-docs"
+      quota_checked_at: "2026-08-27"
 
   - model_name: nim/nemotron-nano-30b
     litellm_params:
@@ -1510,6 +1558,9 @@ model_list:
       status: "ok"
       status_checked_at: "2026-08-26T11:35:21Z"
       stability: "stable"
+      quota_requests_per_window: 40
+      quota_source: "provider-docs"
+      quota_checked_at: "2026-08-27"
 
   - model_name: nim/gemma-4-31b
     litellm_params:
@@ -1528,6 +1579,9 @@ model_list:
       status_checked_at: "2026-08-26T11:35:21Z"
       status_detail: "timed out"
       stability: "stable"
+      quota_requests_per_window: 40
+      quota_source: "provider-docs"
+      quota_checked_at: "2026-08-27"
 
   - model_name: nim/mistral-nemotron
     litellm_params:
@@ -1546,6 +1600,9 @@ model_list:
       status_checked_at: "2026-08-26T11:35:21Z"
       status_detail: "timed out"
       stability: "stable"
+      quota_requests_per_window: 40
+      quota_source: "provider-docs"
+      quota_checked_at: "2026-08-27"
 
   - model_name: nim/nemotron-super-49b
     litellm_params:
@@ -1565,6 +1622,9 @@ model_list:
       status_detail: "litellm.APIError: APIError: Nvidia_nimException - Error code: 410 - {'type': 'about:blank', 'title': 'Gone', '"
       answered_by: "nemotron-3.5-lightning-free"
       stability: "stable"
+      quota_requests_per_window: 40
+      quota_source: "provider-docs"
+      quota_checked_at: "2026-08-27"
 
   - model_name: nim/llama-3.3-70b
     litellm_params:
@@ -1585,6 +1645,9 @@ model_list:
       status_detail: "litellm.APIError: APIError: Nvidia_nimException - Error code: 410 - {'type': 'about:blank', 'title': 'Gone', '"
       answered_by: "openai/gpt-oss-120b"
       stability: "stable"
+      quota_requests_per_window: 40
+      quota_source: "provider-docs"
+      quota_checked_at: "2026-08-27"
 
   - model_name: nim/deepseek-v4-flash
     litellm_params:
@@ -1604,6 +1667,9 @@ model_list:
       status_detail: "litellm.NotFoundError: NotFoundError: Nvidia_nimException - Error code: 404 - {'status': 404, 'title': 'Not Fo"
       answered_by: "ministral-14b-latest"
       stability: "stable"
+      quota_requests_per_window: 40
+      quota_source: "provider-docs"
+      quota_checked_at: "2026-08-27"
 
   # ---------- Embeddings (เติมช่องว่างที่ gateway ยังไม่มี) ----------
   # ⚠️ 2026-08-26: NVIDIA ปลด embedding หลายตัวพร้อมกัน ("has reached its end of life")
@@ -1625,6 +1691,9 @@ model_list:
       status: "ok"
       status_checked_at: "2026-08-26T11:20:24Z"
       stability: "stable"
+      quota_requests_per_window: 40
+      quota_source: "provider-docs"
+      quota_checked_at: "2026-08-27"
 
   # ---------- Cloudflare Workers AI ----------
   # ฟรี 10,000 neurons/วัน ต้องมี CLOUDFLARE_ACCOUNT_ID ด้วย
