@@ -170,6 +170,36 @@ else
 	err "ค่าเหล่านี้เป็นของตัวสำรอง ไม่ใช่ของโมเดลที่ขอ — ต้องลบหรือวัดใหม่ (ดู issue #7)"
 fi
 
+# ----------------------------------------------------------- ที่มาของโควตา
+note "ตรวจว่าตัวเลขโควตากับที่มาของมันไปด้วยกัน"
+if out=$(python3 -c "
+import sys, yaml
+c = yaml.safe_load(open('litellm/config.yaml'))
+# ค่า observed ต้องบอกได้ว่าใครเห็น เห็นเท่าไหร่ ในรอบไหน — ไม่งั้นตีความไม่ได้
+# (2,498,060 token ก่อนโดน weekly limit ไม่มีความหมายถ้าไม่รู้ว่านับจากเมื่อไหร่)
+need = ('quota_observed_tokens', 'quota_observed_window', 'quota_observed_window_start')
+bad = []
+for m in c['model_list']:
+    mi = m.get('model_info') or {}
+    src = mi.get('quota_source')
+    has = [k for k in need if mi.get(k) is not None]
+    name = m['model_name']
+    if src == 'observed' and len(has) != len(need):
+        miss = [k for k in need if mi.get(k) is None]
+        bad.append(name + ': quota_source=observed แต่ขาด ' + ', '.join(miss))
+    if has and src != 'observed':
+        bad.append(name + ': มี quota_observed_* แต่ quota_source=' + str(src))
+    if src and not mi.get('quota_checked_at'):
+        bad.append(name + ': มี quota_source แต่ไม่มี quota_checked_at')
+print(chr(10).join(bad))
+sys.exit(1 if bad else 0)
+"); then
+	ok "ตัวเลขโควตาทุกตัวบอกที่มาครบ"
+else
+	printf '    %s\n' "${out//$'\n'/$'\n'    }"
+	err "ดูกติกาที่หัวข้อ 'ขนาดโควตา' ใน INTEGRATION.md (issue #5)"
+fi
+
 # --------------------------------------------------------------- ชื่อฟิลด์
 note "ตรวจว่าฟิลด์ที่เราตั้งเองไม่ชนกับของ LiteLLM"
 # docker compose ps คืน 0 พร้อม output ว่างเมื่อไม่เจอ container จึงต้องดูที่ output
