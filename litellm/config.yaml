@@ -877,6 +877,9 @@ model_list:
       status: "rate_limited"
       status_checked_at: "2026-08-26T11:20:24Z"
       status_detail: "litellm.APIConnectionError: CloudflareException - {'errors':[{'message':'AiError: AiError: you have used up yo"
+      quota_neurons_per_window: 10000
+      quota_source: "provider-docs"
+      quota_checked_at: "2026-08-27"
 
   - model_name: cf/llama-3.3-70b
     litellm_params:
@@ -894,6 +897,9 @@ model_list:
       status: "rate_limited"
       status_checked_at: "2026-08-26T11:20:24Z"
       status_detail: "litellm.APIConnectionError: CloudflareException - {'errors':[{'message':'AiError: AiError: you have used up yo"
+      quota_neurons_per_window: 10000
+      quota_source: "provider-docs"
+      quota_checked_at: "2026-08-27"
 
   - model_name: cf/qwen2.5-coder-32b
     litellm_params:
@@ -913,6 +919,9 @@ model_list:
       status: "rate_limited"
       status_checked_at: "2026-08-26T11:20:24Z"
       status_detail: "litellm.APIConnectionError: CloudflareException - {'errors':[{'message':'AiError: AiError: you have used up yo"
+      quota_neurons_per_window: 10000
+      quota_source: "provider-docs"
+      quota_checked_at: "2026-08-27"
 
   # ---------- รุ่นใหม่บน Cloudflare (เพิ่ม 2026-08-23) ----------
   # Qwen3.8-27B — ตัวที่เมื่อ 2026-08-16 ยังไม่มี provider ฟรี ตอนนี้มาอยู่ที่นี่แล้ว
@@ -935,6 +944,9 @@ model_list:
       status: "rate_limited"
       status_checked_at: "2026-08-26T11:20:24Z"
       status_detail: "litellm.APIConnectionError: CloudflareException - {'errors':[{'message':'AiError: AiError: you have used up yo"
+      quota_neurons_per_window: 10000
+      quota_source: "provider-docs"
+      quota_checked_at: "2026-08-27"
 
   - model_name: cf/llama-4-scout
     litellm_params:
@@ -956,6 +968,9 @@ model_list:
       status: "rate_limited"
       status_checked_at: "2026-08-26T11:20:24Z"
       status_detail: "litellm.APIConnectionError: CloudflareException - {'errors':[{'message':'AiError: AiError: you have used up yo"
+      quota_neurons_per_window: 10000
+      quota_source: "provider-docs"
+      quota_checked_at: "2026-08-27"
 
   - model_name: cf/nemotron-3-120b
     litellm_params:
@@ -976,6 +991,9 @@ model_list:
       status: "rate_limited"
       status_checked_at: "2026-08-26T11:20:24Z"
       status_detail: "litellm.APIConnectionError: CloudflareException - {'errors':[{'message':'AiError: AiError: you have used up yo"
+      quota_neurons_per_window: 10000
+      quota_source: "provider-docs"
+      quota_checked_at: "2026-08-27"
 
   - model_name: cf/gemma-4-26b
     litellm_params:
@@ -994,6 +1012,9 @@ model_list:
       status: "rate_limited"
       status_checked_at: "2026-08-26T11:20:24Z"
       status_detail: "litellm.APIConnectionError: CloudflareException - {'errors':[{'message':'AiError: AiError: you have used up yo"
+      quota_neurons_per_window: 10000
+      quota_source: "provider-docs"
+      quota_checked_at: "2026-08-27"
 
   - model_name: cf/qwen3-30b-a3b
     litellm_params:
@@ -1015,6 +1036,9 @@ model_list:
       status: "rate_limited"
       status_checked_at: "2026-08-26T11:20:24Z"
       status_detail: "litellm.APIConnectionError: CloudflareException - {'errors':[{'message':'AiError: AiError: you have used up yo"
+      quota_neurons_per_window: 10000
+      quota_source: "provider-docs"
+      quota_checked_at: "2026-08-27"
 
   # เพิ่ม 2026-08-26 — ทดสอบยิงผ่านแล้ว
   - model_name: cf/mistral-small-24b
@@ -1036,6 +1060,9 @@ model_list:
       status: "rate_limited"
       status_checked_at: "2026-08-26T11:20:24Z"
       status_detail: "litellm.APIConnectionError: CloudflareException - {'errors':[{'message':'AiError: AiError: you have used up yo"
+      quota_neurons_per_window: 10000
+      quota_source: "provider-docs"
+      quota_checked_at: "2026-08-27"
 
   - model_name: cf/qwq-32b
     litellm_params:
@@ -1054,6 +1081,9 @@ model_list:
       status: "rate_limited"
       status_checked_at: "2026-08-26T11:20:24Z"
       status_detail: "litellm.APIConnectionError: CloudflareException - {'errors':[{'message':'AiError: AiError: you have used up yo"
+      quota_neurons_per_window: 10000
+      quota_source: "provider-docs"
+      quota_checked_at: "2026-08-27"
 
   - model_name: cf/deepseek-r1-32b
     litellm_params:
@@ -1073,6 +1103,9 @@ model_list:
       status: "rate_limited"
       status_checked_at: "2026-08-26T11:20:24Z"
       status_detail: "litellm.APIConnectionError: CloudflareException - {'errors':[{'message':'AiError: AiError: you have used up yo"
+      quota_neurons_per_window: 10000
+      quota_source: "provider-docs"
+      quota_checked_at: "2026-08-27"
 
   - model_name: cf/granite-4-micro
     litellm_params:
@@ -1091,6 +1124,9 @@ model_list:
       status: "rate_limited"
       status_checked_at: "2026-08-26T11:20:24Z"
       status_detail: "litellm.APIConnectionError: CloudflareException - {'errors':[{'message':'AiError: AiError: you have used up yo"
+      quota_neurons_per_window: 10000
+      quota_source: "provider-docs"
+      quota_checked_at: "2026-08-27"
 
   # โมเดล vision ตัวเดียวของ gateway (เปิดใช้ 2026-08-26)
   #
@@ -1116,6 +1152,9 @@ model_list:
       status: "rate_limited"
       status_checked_at: "2026-08-26T11:20:24Z"
       status_detail: "litellm.APIConnectionError: CloudflareException - {'errors':[{'message':'AiError: AiError: you have used up yo"
+      quota_neurons_per_window: 10000
+      quota_source: "provider-docs"
+      quota_checked_at: "2026-08-27"
 
   # glm-5.2 กับ deepseek-v4-pro-0813 มีบน Cloudflare แต่ยังไม่อยู่ใน Workers Free plan
   # (error code 5035) ต้องอัปเกรดแผนก่อน
@@ -1785,6 +1824,9 @@ model_list:
       status: "rate_limited"
       status_checked_at: "2026-08-26T11:20:24Z"
       status_detail: "litellm.AuthenticationError: AuthenticationError: OpenAIException - Error code: 401 - {'error': 'This model re"
+      quota_tokens_per_window: 40000
+      quota_checked_at: "2026-08-27"
+      quota_source: "provider-docs"
 
   - model_name: okmd/deepseek-v4-flash
     litellm_params:
@@ -1805,6 +1847,9 @@ model_list:
       status: "rate_limited"
       status_checked_at: "2026-08-26T11:20:24Z"
       status_detail: "litellm.AuthenticationError: AuthenticationError: OpenAIException - Error code: 401 - {'error': 'This model re"
+      quota_tokens_per_window: 40000
+      quota_checked_at: "2026-08-27"
+      quota_source: "provider-docs"
 
   # Qwen รุ่นใหม่กว่าที่อื่นใน gateway
   - model_name: okmd/qwen3.7-max
@@ -2472,6 +2517,12 @@ model_list:
       status: "rate_limited"
       status_checked_at: "2026-08-26T11:20:24Z"
       status_detail: "litellm.RateLimitError: RateLimitError: OpenAIException - you (monthop) have reached your weekly usage limit, "
+      quota_observed_tokens: 2498060
+      quota_observed_window: "weekly"
+      quota_observed_window_start: "2026-08-25"
+      quota_observed_by: "hermes-line-bot (agent · ~59K token/turn)"
+      quota_source: "observed"
+      quota_checked_at: "2026-08-27"
 
   - model_name: oc/nemotron-3-super
     litellm_params:
@@ -2491,6 +2542,12 @@ model_list:
       status: "rate_limited"
       status_checked_at: "2026-08-26T11:20:24Z"
       status_detail: "litellm.RateLimitError: RateLimitError: OpenAIException - you (monthop) have reached your weekly usage limit, "
+      quota_observed_tokens: 2498060
+      quota_observed_window: "weekly"
+      quota_observed_window_start: "2026-08-25"
+      quota_observed_by: "hermes-line-bot (agent · ~59K token/turn)"
+      quota_source: "observed"
+      quota_checked_at: "2026-08-27"
 
   - model_name: oc/nemotron-3-nano-30b
     litellm_params:
@@ -2510,6 +2567,12 @@ model_list:
       status: "rate_limited"
       status_checked_at: "2026-08-26T11:20:24Z"
       status_detail: "litellm.RateLimitError: RateLimitError: OpenAIException - you (monthop) have reached your weekly usage limit, "
+      quota_observed_tokens: 2498060
+      quota_observed_window: "weekly"
+      quota_observed_window_start: "2026-08-25"
+      quota_observed_by: "hermes-line-bot (agent · ~59K token/turn)"
+      quota_source: "observed"
+      quota_checked_at: "2026-08-27"
 
   - model_name: oc/minimax-m3
     litellm_params:
@@ -2530,6 +2593,12 @@ model_list:
       status: "rate_limited"
       status_checked_at: "2026-08-26T11:20:24Z"
       status_detail: "litellm.RateLimitError: RateLimitError: OpenAIException - you (monthop) have reached your weekly usage limit, "
+      quota_observed_tokens: 2498060
+      quota_observed_window: "weekly"
+      quota_observed_window_start: "2026-08-25"
+      quota_observed_by: "hermes-line-bot (agent · ~59K token/turn)"
+      quota_source: "observed"
+      quota_checked_at: "2026-08-27"
 
   - model_name: oc/gemma4-31b
     litellm_params:
@@ -2549,6 +2618,12 @@ model_list:
       status: "rate_limited"
       status_checked_at: "2026-08-26T11:20:24Z"
       status_detail: "litellm.RateLimitError: RateLimitError: OpenAIException - you (monthop) have reached your weekly usage limit, "
+      quota_observed_tokens: 2498060
+      quota_observed_window: "weekly"
+      quota_observed_window_start: "2026-08-25"
+      quota_observed_by: "hermes-line-bot (agent · ~59K token/turn)"
+      quota_source: "observed"
+      quota_checked_at: "2026-08-27"
 
   - model_name: oc/gpt-oss-120b
     litellm_params:
@@ -2571,6 +2646,12 @@ model_list:
       status: "rate_limited"
       status_checked_at: "2026-08-26T11:20:24Z"
       status_detail: "litellm.RateLimitError: RateLimitError: OpenAIException - you (monthop) have reached your weekly usage limit, "
+      quota_observed_tokens: 2498060
+      quota_observed_window: "weekly"
+      quota_observed_window_start: "2026-08-25"
+      quota_observed_by: "hermes-line-bot (agent · ~59K token/turn)"
+      quota_source: "observed"
+      quota_checked_at: "2026-08-27"
 
   - model_name: oc/gpt-oss-20b
     litellm_params:
@@ -2590,6 +2671,12 @@ model_list:
       status: "rate_limited"
       status_checked_at: "2026-08-26T11:20:24Z"
       status_detail: "litellm.RateLimitError: RateLimitError: OpenAIException - you (monthop) have reached your weekly usage limit, "
+      quota_observed_tokens: 2498060
+      quota_observed_window: "weekly"
+      quota_observed_window_start: "2026-08-25"
+      quota_observed_by: "hermes-line-bot (agent · ~59K token/turn)"
+      quota_source: "observed"
+      quota_checked_at: "2026-08-27"
 
   # ต้องมี Pro ($20/เดือน) ขึ้นไปถึงจะใช้ได้ — ทดสอบ 2026-08-17 บนชั้นฟรีคืน
   # "this model requires a subscription": glm-5.1, glm-5.2, qwen3.5:397b,
