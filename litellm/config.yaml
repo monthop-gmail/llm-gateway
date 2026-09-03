@@ -2628,6 +2628,88 @@ model_list:
       status: "ok"
       status_checked_at: "2026-09-03T03:49:28Z"
 
+  # ---------- Typhoon (SCB10X) — ไทย 🇹🇭 + OCR ----------
+  # ต่างจาก th/typhoon ที่เรามีอยู่ ซึ่งเป็นรุ่น 8B ที่ทำให้ ThaiLLM โดยเฉพาะ
+  # อันนี้ยิง API ของ SCB10X ตรง ได้รุ่นเต็มและมี OCR ด้วย
+  #
+  # โควตาแยกต่อโมเดล ไม่ใช่ต่อ pool — chat ได้ 200 req/นาที ส่วน OCR ได้ 20
+  # จึงใส่ quota_rpm ต่างกัน (ดู https://docs.opentyphoon.ai/en/rate-limits/)
+  #
+  # ⚠️ เอกสารเขาเขียนว่าถ้าใช้ production ให้ไปทาง Together AI ซึ่งเสียเงิน
+  # endpoint นี้ฟรีสำหรับพัฒนา/ทดสอบ ถ้าจะใช้หนักควรคุยกับเขาก่อน
+  - model_name: th/typhoon2.5
+    litellm_params:
+      model: openai/typhoon-v2.5-30b-a3b-instruct
+      api_base: https://api.opentyphoon.ai/v1
+      api_key: os.environ/TYPHOON_API_KEY
+    model_info:
+      mode: "chat"
+      supports_function_calling: true
+      description: "โมเดลไทย 30B (MoE ใช้จริง 3B) จาก SCB10X — เร็วมาก 307ms และเรียก tool ได้ ต่างจาก th/typhoon ที่เป็นรุ่น 8B ของ ThaiLLM"
+      provider_label: "Typhoon (SCB10X)"
+      provider_quota: "200 req/นาที · 5 req/วินาที — ไม่มีเพดานรายวัน"
+      quota_pool: "typhoon"
+      quota_window: "rpm-only"
+      quota_rpm: 200
+      quota_source: "provider-docs"
+      quota_checked_at: "2026-09-04"
+      verified_max_prompt: 63389
+      max_prompt_detail: "ผ่านที่ ~64,000 ทั้งที่เอกสารบอกแค่ 32,768 (ไม่ได้ลองมากกว่านี้)"
+      latency_ms: 307
+      tags: ["thai"]
+      stability: "stable"
+      verified_by: "gateway 2026-09-04 (ยิงตรง — ไทยผ่าน · tool calling ผ่าน · prompt 63K ผ่าน)"
+      status: "ok"
+      status_checked_at: "2026-09-03T08:50:29Z"
+
+  # OCR รับภาพผ่าน chat completions ปกติ (image_url) จึงใช้ mode chat ได้เลย
+  # ทดสอบกับงบแสดงฐานะการเงินภาษาไทย อ่านตัวเลขถูก 20/20 คืนเป็นตาราง HTML
+  - model_name: ocr/typhoon
+    litellm_params:
+      model: openai/typhoon-ocr
+      api_base: https://api.opentyphoon.ai/v1
+      api_key: os.environ/TYPHOON_API_KEY
+    model_info:
+      mode: "chat"
+      supports_function_calling: false
+      supports_vision: true
+      provider_label: "Typhoon (SCB10X)"
+      provider_quota: "20 req/นาที · 2 req/วินาที — จำกัดกว่า chat 10 เท่า"
+      quota_pool: "typhoon-ocr"
+      quota_window: "rpm-only"
+      quota_rpm: 20
+      quota_source: "provider-docs"
+      quota_checked_at: "2026-09-04"
+      tags: ["ocr", "thai"]
+      stability: "stable"
+      verified_by: "gateway 2026-09-04 (งบการเงินไทย 1000x620px — ตัวเลข 20/20 · 5.4s)"
+      description: "OCR เอกสารไทย — งบแสดงฐานะการเงิน อ่านตัวเลขถูก 20/20 คืนเป็นตาราง HTML พร้อมใช้ต่อ ส่งภาพผ่าน image_url แบบ OpenAI ปกติ ⚠️ ไวต่อ prompt มาก — prompt สั้น/กำกวมจะได้ template คำสั่งของตัวเองกลับมาแทนผล OCR ทดสอบแล้วทำซ้ำได้: 'อ่านเอกสารนี้' -> 0/20 · 'อ่านเอกสารนี้ให้ครบ รักษาตัวเลขทุกตัวตามที่พิมพ์' -> 20/20"
+      status: "ok"
+      status_checked_at: "2026-09-03T08:50:29Z"
+
+  - model_name: ocr/typhoon-v1.5
+    litellm_params:
+      model: openai/typhoon-ocr-v1.5
+      api_base: https://api.opentyphoon.ai/v1
+      api_key: os.environ/TYPHOON_API_KEY
+    model_info:
+      mode: "chat"
+      supports_function_calling: false
+      supports_vision: true
+      provider_label: "Typhoon (SCB10X)"
+      provider_quota: "20 req/นาที · 2 req/วินาที — จำกัดกว่า chat 10 เท่า"
+      quota_pool: "typhoon-ocr"
+      quota_window: "rpm-only"
+      quota_rpm: 20
+      quota_source: "provider-docs"
+      quota_checked_at: "2026-09-04"
+      tags: ["ocr", "thai"]
+      stability: "stable"
+      verified_by: "gateway 2026-09-04 (งบการเงินไทย — ตัวเลข 20/20 · 6.3s)"
+      description: "OCR เอกสารไทยรุ่นใหม่กว่า — ชุดทดสอบเดียวกันได้ 20/20 เท่ากัน ช้ากว่าเล็กน้อย (6.3s เทียบ 5.4s) ⚠️ ไวต่อ prompt มาก — prompt สั้น/กำกวมจะได้ template คำสั่งของตัวเองกลับมาแทนผล OCR ทดสอบแล้วทำซ้ำได้: 'อ่านเอกสารนี้' -> 0/20 · 'อ่านเอกสารนี้ให้ครบ รักษาตัวเลขทุกตัวตามที่พิมพ์' -> 20/20"
+      status: "ok"
+      status_checked_at: "2026-09-03T08:50:29Z"
+
   # ---------- iApp Technology (OpenThai 2.0) — ไทย 🇹🇭 ----------
   # แต่ละโมเดลมี base path ของตัวเอง จึงต้องตั้ง api_base แยกรายตัว
   # เอกสารบอกให้ใช้ header `apikey:` แต่ยิงจริงแล้ว Authorization: Bearer ก็ผ่าน

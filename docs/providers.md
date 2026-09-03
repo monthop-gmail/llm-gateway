@@ -431,3 +431,59 @@ curl -s https://router.huggingface.co/v1/models -H "Authorization: Bearer $HF_TO
 - เอกสารให้ใช้ header `apikey:` แต่ **`Authorization: Bearer` ก็ผ่าน** จึงตั้ง config
   แบบ OpenAI-compatible ปกติได้ ไม่ต้อง `extra_headers`
 - แต่ละโมเดลมี **base path ของตัวเอง** ต้องตั้ง `api_base` แยกรายตัว
+
+### Typhoon (`TYPHOON_API_KEY`) — ไทย 🇹🇭 + OCR
+
+API ของ SCB10X ตรง ต่างจาก `th/typhoon` ที่เป็นรุ่น 8B ซึ่งทำให้ ThaiLLM โดยเฉพาะ
+สมัครที่ https://opentyphoon.ai — ไม่มีการคิดเงินในเอกสาร
+
+| โมเดล | ใช้ทำอะไร | โควตา |
+|---|---|---|
+| `th/typhoon2.5` | แชทไทย 30B (MoE ใช้จริง 3B) · **เรียก tool ได้** · 307ms | 200 req/นาที |
+| `ocr/typhoon` | OCR เอกสารไทย · 5.4s | **20 req/นาที** |
+| `ocr/typhoon-v1.5` | OCR รุ่นใหม่กว่า · 6.3s | **20 req/นาที** |
+
+**โควตาแยกต่อโมเดล ไม่ใช่ต่อ pool** — OCR จำกัดกว่าแชท 10 เท่า จึงแยก `quota_pool`
+เป็น `typhoon` กับ `typhoon-ocr`
+
+#### ⚠️ OCR ไวต่อ prompt มากจนน่าตกใจ
+
+ทดสอบกับงบแสดงฐานะการเงินภาษาไทย (ตัวเลข 20 จำนวน) รันซ้ำ 2 รอบทุกแบบ:
+
+| prompt | ผล |
+|---|---|
+| `อ่านเอกสารนี้ให้ครบ รักษาตัวเลขทุกตัวตามที่พิมพ์` | **20/20** ทั้ง 2 รอบ |
+| `Extract all text and tables from this document.` | **20/20** ทั้ง 2 รอบ |
+| `อ่านเอกสารนี้ให้ครบ รักษาตัวเลขทุกตัว` | **0/20** ทั้ง 2 รอบ |
+| `อ่านเอกสารนี้` | **0/20** ทั้ง 2 รอบ |
+
+**เวลาพัง มันไม่ error** — คืน template คำสั่งของตัวเองมาแทน:
+
+```
+Extract all text from the image.
+Instructions:
+- Only return the clean Markdown.
+...
+```
+
+ปลายทางที่ไม่ตรวจผลจะได้ข้อความหน้าตาสมเหตุสมผลแต่ไม่มีข้อมูลจากเอกสารเลย
+**ให้เช็คว่าผลมีตัวเลข/เนื้อหาที่คาดว่าจะเจอจริงก่อนใช้ต่อเสมอ**
+
+#### ผลอ่านคืนเป็นตาราง HTML
+
+```html
+<table><tr><td>เงินสดและรายการเทียบเท่าเงินสด</td><td>1,245,830</td><td>987,412</td></tr>
+```
+
+เอาไปแปลงเป็น DataFrame ต่อได้เลย ไม่ต้อง parse ข้อความดิบ
+
+#### context ของตัวแชทมากกว่าที่เอกสารบอก
+
+เอกสารระบุ 32,768 แต่ยิงจริงผ่านที่ **63,389 token** จึงตั้ง `verified_max_prompt`
+ตามที่วัดได้ ไม่ใช่ตามสเปก
+
+#### ⚠️ ถ้าใช้ production เขาขอให้ไปทาง Together AI
+
+เอกสารเขียนว่า *"If you plan to use our API for the real production use, please
+support us by using the API through Together AI, our infrastructure partner"*
+— endpoint นี้ฟรีสำหรับพัฒนา/ทดสอบ ถ้าจะใช้หนักควรคุยกับเขาก่อน

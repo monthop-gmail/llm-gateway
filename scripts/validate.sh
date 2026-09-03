@@ -396,7 +396,8 @@ from litellm.proxy._types import ModelInfo
 keys.update(ModelInfo.model_json_schema().get('properties', {}))
 ours = set(sys.stdin.read().split())
 # ฟิลด์ที่เราตั้งใจใช้ของ LiteLLM เอง ไม่นับว่าชน
-expected = {'mode', 'supports_function_calling', 'max_input_tokens', 'max_tokens', 'id',
+expected = {'mode', 'supports_function_calling', 'supports_vision',
+            'max_input_tokens', 'max_tokens', 'id',
             'base_model', 'input_cost_per_token', 'output_cost_per_token'}
 clash = sorted((ours & keys) - expected)
 print(' '.join(clash))
