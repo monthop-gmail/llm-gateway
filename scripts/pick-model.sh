@@ -43,6 +43,7 @@ query="${1:-}"
 
 echo "$raw" | QUERY="$query" FLOOR="${2:-}" python3 -c '
 import json, os, sys
+from datetime import date, datetime
 
 rows = json.load(sys.stdin).get("data", [])
 q = os.environ.get("QUERY", "").strip().lower()
@@ -122,6 +123,18 @@ def fmt(r, show_all=False):
         # ≥ ไม่ใช่ ≤ — เลขนี้คือขนาดที่ยิงผ่านแล้ว เพดานจริงอยู่สูงกว่านี้
         # และบางตัวหยุดเพราะโควต้าหมดกลางคัน ไม่ใช่เพราะชนเพดาน
         bits.append(f"prompt ≥{cap//1000}K")
+    fu = mi.get("free_until")
+    if fu:
+        # คิดจากฟิลด์ตรง ๆ ไม่พึ่งข้อความใน provider_quota — ไม่งั้นคนที่เพิ่มโมเดล
+        # แล้วไม่เขียนซ้ำในคำอธิบาย จะไม่มีใครเห็นว่ามันมีวันหมดอายุ
+        # ใช้เกณฑ์ 14 วันเท่ากับ validate.sh จะได้ไม่มีสองมาตรฐาน
+        left = (date.fromisoformat(str(fu)) - datetime.now().date()).days
+        if left < 0:
+            bits.append("❌ หมดช่วงฟรีแล้ว " + str(fu))
+        elif left <= 14:
+            bits.append("⚠️ ฟรีอีก " + str(left) + " วัน (ถึง " + str(fu) + ")")
+        else:
+            bits.append("⏳ ฟรีอีก " + str(left) + " วัน")
     stab = mi.get("stability")
     if stab and stab != "stable":
         bits.append("⚠️ " + stab + " — มีวันหมดอายุ")
