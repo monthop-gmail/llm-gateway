@@ -207,6 +207,49 @@ else
 	err "ใช้อัญประกาศคู่แทน — อัญประกาศเดี่ยวจะปิด string ของ shell"
 fi
 
+# ------------------------------------------------------------- ข้อมูลเก่าแค่ไหน
+note "ตรวจว่าผลวัด status ยังใหม่พออยู่ไหม"
+# เตือนอย่างเดียว ไม่ fail — ข้อมูลเก่าไม่ใช่ความผิดของคนที่ส่ง PR เรื่องอื่น
+# การ fail จะบล็อกงานที่เขาแก้ไม่ได้ แต่ถ้าไม่เตือนเลยก็จะเงียบจนลืม
+#
+# เกิดจากเคสจริง 2026-09-03: ปล่อยข้อมูลค้างไว้ 7 วัน โควตารีเซ็ตไปนานแล้ว
+# แต่ config ยังบอกว่า rate_limited 66 ตัว ปลายทางที่กรอง status == ok
+# จึงเห็นตัวเลือกน้อยกว่าความจริงเกินครึ่งโดยไม่มีอะไรเตือน
+STALE_DAYS=3
+if out=$(STALE_DAYS="$STALE_DAYS" python3 -c "
+import os, sys, yaml
+from datetime import date, datetime, timezone
+limit = int(os.environ['STALE_DAYS'])
+c = yaml.safe_load(open('litellm/config.yaml'))
+today = datetime.now(timezone.utc).date()
+ages, missing = [], []
+for m in c['model_list']:
+    mi = m.get('model_info') or {}
+    raw = mi.get('status_checked_at')
+    if not raw:
+        missing.append(m['model_name'])
+        continue
+    d = datetime.fromisoformat(str(raw).replace('Z', '+00:00')).date()
+    ages.append((today - d).days)
+old = [a for a in ages if a > limit]
+lines = []
+if old:
+    lines.append(str(len(old)) + ' ตัวตรวจไว้เกิน ' + str(limit) + ' วัน (เก่าสุด ' + str(max(old)) + ' วัน)')
+if missing:
+    lines.append(str(len(missing)) + ' ตัวยังไม่เคยตรวจเลย: ' + ', '.join(missing[:4]))
+print(chr(10).join(lines))
+sys.exit(0)
+"); then
+	if [ -n "$out" ]; then
+		printf '    %s\n' "${out//$'\n'/$'\n'    }"
+		warn "รีเฟรชด้วย: python3 scripts/health-check.py --write && docker compose restart litellm"
+	else
+		ok "ผลวัดยังใหม่กว่า $STALE_DAYS วัน"
+	fi
+else
+	err "อ่าน status_checked_at ไม่ได้"
+fi
+
 # ------------------------------------------------------------------ free_until
 note "ตรวจโมเดลที่ฟรีแบบมีวันหมดอายุ"
 # repo นี้มีกติกาว่าทุกโมเดลต้องฟรี แต่บางเจ้าให้ฟรีเป็นช่วงโปรโมชัน

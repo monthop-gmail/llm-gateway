@@ -101,6 +101,7 @@ pytest "$(pytest tests/test_config_edit.py --collect-only -q | grep 'เขี�
   แล้วเตือนทุกอย่างที่เหลือ ฟิลด์วัดใหม่จึงถูกจับอัตโนมัติ ไม่ต้องมาเติมลิสต์
 - `quota_source: observed` ต้องมี `quota_observed_*` ครบ
 - `free_until` ที่เลยกำหนดแล้ว = fail (ทุกโมเดลต้องฟรี บางเจ้าฟรีแค่ช่วงโปรโมชัน)
+- `status_checked_at` เก่าเกิน 3 วัน = เตือน (ไม่ fail — คนส่ง PR เรื่องอื่นแก้ไม่ได้)
 - โมเดลที่ชื่อมีคำว่า `stealth`/`preview` ต้องไม่ถูกทำเครื่องหมายว่า `stability: stable`
 - ชื่อฟิลด์ที่เราตั้งต้องไม่ชนกับ LiteLLM (ตรวจกับ container ที่รันอยู่ ข้ามถ้าไม่มี)
 - **บล็อก Python ใน `pick-model.sh` ห้ามมีอัญประกาศเดี่ยว**
