@@ -53,11 +53,52 @@ ROOT = Path(__file__).resolve().parent.parent
 BASE = os.environ.get("LITELLM_URL", "http://localhost:4000")
 KEY = os.environ.get("LITELLM_MASTER_KEY")
 
+# model_name -> mode จาก config — เติมตอน main() เพราะต้องอ่านไฟล์ก่อน
+MODES: dict[str, str] = {}
+
 def _post(path: str, body: dict, timeout: int = 120) -> dict:
     req = urllib.request.Request(
         BASE + path,
         data=json.dumps(body).encode(),
         headers={"Authorization": f"Bearer {KEY}", "Content-Type": "application/json"},
+    )
+    with urllib.request.urlopen(req, timeout=timeout) as resp:
+        return json.load(resp)
+
+
+# WAV 16-bit mono 16kHz สั้น ๆ สำหรับหยั่งว่า ASR ยังรับงานไหม
+# ไม่ใช่เสียงพูด จึงคาดว่าได้ text ว่าง — เราสนใจแค่ว่า endpoint ตอบ 200 ไหม
+def _tiny_wav() -> bytes:
+    import struct
+    sr, ms = 16000, 200
+    n = sr * ms // 1000
+    data = b"".join(struct.pack("<h", 0) for _ in range(n))
+    hdr = (b"RIFF" + struct.pack("<I", 36 + len(data)) + b"WAVEfmt "
+           + struct.pack("<IHHIIHH", 16, 1, 1, sr, sr * 2, 2, 16)
+           + b"data" + struct.pack("<I", len(data)))
+    return hdr + data
+
+
+def _post_audio(model: str, timeout: int = 120) -> dict:
+    """ยิง /v1/audio/transcriptions แบบ multipart
+
+    ต้องระบุ content-type ของไฟล์ให้ชัด ไม่งั้น provider ปฏิเสธด้วย
+    "File type application/octet-stream not supported"
+    """
+    boundary = "----gwprobe"
+    wav = _tiny_wav()
+    parts = [
+        f'--{boundary}\r\nContent-Disposition: form-data; name="model"\r\n\r\n{model}\r\n'.encode(),
+        f'--{boundary}\r\nContent-Disposition: form-data; name="file"; filename="probe.wav"\r\n'
+        f"Content-Type: audio/wav\r\n\r\n".encode(),
+        wav,
+        f"\r\n--{boundary}--\r\n".encode(),
+    ]
+    body = b"".join(parts)
+    req = urllib.request.Request(
+        BASE + "/v1/audio/transcriptions", data=body,
+        headers={"Authorization": f"Bearer {KEY}",
+                 "Content-Type": f"multipart/form-data; boundary={boundary}"},
     )
     with urllib.request.urlopen(req, timeout=timeout) as resp:
         return json.load(resp)
@@ -81,10 +122,14 @@ def _error_text(exc: Exception) -> str:
 
 def check(model: str, allow_fallback: bool = False) -> tuple[str, str, str, str]:
     """คืน (model, ผลตรวจ, ข้อความ error, ชื่อโมเดลที่ตอบจริง)"""
-    is_embedding = model.startswith("emb/")
+    mode = MODES.get(model, "chat")
     try:
-        if is_embedding:
+        if mode == "embedding":
             data = _post("/v1/embeddings", {"model": model, "input": ["hi"]})
+        elif mode == "audio_transcription":
+            # คนละ endpoint คนละรูปแบบ — ยิง chat ใส่จะได้ 500 แล้วรายงานว่าตาย
+            # ทั้งที่ใช้งานได้ปกติ (เจอจริงตอนเพิ่ม asr/typhoon)
+            data = _post_audio(model)
         else:
             body = {
                 "model": model,
@@ -108,6 +153,8 @@ def main() -> int:
 
     cfg = yaml.safe_load((ROOT / "litellm/config.yaml").read_text())
     models = [m["model_name"] for m in cfg["model_list"]]
+    MODES.update({m["model_name"]: (m.get("model_info") or {}).get("mode") or "chat"
+                  for m in cfg["model_list"]})
     args = [a for a in sys.argv[1:] if not a.startswith("--")]
     if args:
         wanted = tuple(args)

@@ -2710,6 +2710,53 @@ model_list:
       status: "ok"
       status_checked_at: "2026-09-03T08:50:29Z"
 
+  # ---------- Typhoon ASR — ถอดเสียงเป็นข้อความ ----------
+  # ไม่ใช่ chat completions — ยิงที่ /v1/audio/transcriptions แบบ multipart
+  # LiteLLM มี route นี้ให้อยู่แล้ว ใช้ mode: audio_transcription
+  #
+  # ⚠️ ต้องระบุ content-type ของไฟล์ให้ชัด ไม่งั้นโดนปฏิเสธ
+  #   curl -F 'file=@a.wav;type=audio/wav'      ผ่าน
+  #   curl -F 'file=@a.wav'                     -> 400 application/octet-stream not supported
+  # รองรับ wav / flac / mp3 / ogg / opus
+  - model_name: asr/typhoon
+    litellm_params:
+      model: openai/typhoon-asr-realtime
+      api_base: https://api.opentyphoon.ai/v1
+      api_key: os.environ/TYPHOON_API_KEY
+    model_info:
+      mode: "audio_transcription"
+      description: "ถอดเสียงภาษาไทยเป็นข้อความ (SCB10X) — ยิงที่ /v1/audio/transcriptions ไม่ใช่ chat completions ต้องส่งไฟล์พร้อมระบุ type=audio/wav"
+      provider_label: "Typhoon (SCB10X)"
+      provider_quota: "100 req/นาที"
+      quota_pool: "typhoon-asr"
+      quota_window: "rpm-only"
+      quota_rpm: 100
+      quota_source: "provider-docs"
+      quota_checked_at: "2026-09-04"
+      tags: ["asr", "thai"]
+      stability: "stable"
+      verified_by: "gateway 2026-09-04 (ยิงตรง — รับไฟล์ WAV คืน {text, usage} ถูกรูปแบบ · ยังไม่ได้วัดความแม่นเพราะไม่มีไฟล์เสียงพูดจริง)"
+
+  # รุ่นเฉพาะภาษาอีสาน — ไม่มีเจ้าอื่นในแค็ตตาล็อกทำได้
+  - model_name: asr/typhoon-isan
+    litellm_params:
+      model: openai/typhoon-isan-asr-realtime
+      api_base: https://api.opentyphoon.ai/v1
+      api_key: os.environ/TYPHOON_API_KEY
+    model_info:
+      mode: "audio_transcription"
+      description: "ถอดเสียงภาษาอีสานเป็นข้อความ — รุ่นเฉพาะถิ่น ไม่มีตัวไหนในแค็ตตาล็อกแทนได้ เงื่อนไขการส่งไฟล์เหมือน asr/typhoon"
+      provider_label: "Typhoon (SCB10X)"
+      provider_quota: "100 req/นาที"
+      quota_pool: "typhoon-asr"
+      quota_window: "rpm-only"
+      quota_rpm: 100
+      quota_source: "provider-docs"
+      quota_checked_at: "2026-09-04"
+      tags: ["asr", "thai"]
+      stability: "stable"
+      verified_by: "gateway 2026-09-04 (ยิงตรง — รับไฟล์ WAV คืนรูปแบบถูก · ยังไม่ได้วัดความแม่น)"
+
   # ---------- iApp Technology (OpenThai 2.0) — ไทย 🇹🇭 ----------
   # แต่ละโมเดลมี base path ของตัวเอง จึงต้องตั้ง api_base แยกรายตัว
   # เอกสารบอกให้ใช้ header `apikey:` แต่ยิงจริงแล้ว Authorization: Bearer ก็ผ่าน

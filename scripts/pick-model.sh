@@ -10,6 +10,8 @@
 #   ./scripts/pick-model.sh quality         # คุณภาพสูงสุด
 #   ./scripts/pick-model.sh long            # context ยาว
 #   ./scripts/pick-model.sh embedding       # embeddings สำหรับ RAG
+#   ./scripts/pick-model.sh ocr             # อ่านข้อความจากภาพเอกสาร
+#   ./scripts/pick-model.sh asr             # ถอดเสียงเป็นข้อความ
 #   ./scripts/pick-model.sh agent           # เอาไปทำ agent ได้ (tool + 14K + โควต้าไหว)
 #   ./scripts/pick-model.sh agent 60000     # ตั้งเพดาน prompt ที่ agent ใช้จริงเอง
 #   ./scripts/pick-model.sh big-prompt      # รับ prompt 30K+ ได้จริง
@@ -59,6 +61,9 @@ GROUPS = {
     "quality":   (["quality-top"], "คุณภาพสูงสุด (frontier)"),
     "long":      (["long-context"], "context ยาว 512K ขึ้นไป"),
     "embedding": (["embedding"], "embeddings สำหรับ RAG"),
+    "ocr":       (["ocr"], "อ่านข้อความจากภาพเอกสาร"),
+    "asr":       (["asr"], "ถอดเสียงเป็นข้อความ"),
+    "tts":       (["tts"], "สังเคราะห์เสียงจากข้อความ"),
 }
 
 # หมวดที่ไม่ได้ดูจาก tag แต่ดูจากผลวัดจริง
@@ -299,6 +304,14 @@ if q in GROUPS:
     # เรียงตามเวลาที่วัดได้ เร็วก่อน
     hits.sort(key=lambda r: info(r).get("benchmark_seconds") or info(r).get("latency_ms", 0) / 1000 or 999)
     print(f"{desc} — {len(hits)} ตัวที่ใช้ได้ตอนนี้\n")
+    # หมวดเหล่านี้ไม่ได้ยิงที่ /v1/chat/completions — บอกไว้ไม่งั้นลองแล้วงง
+    ENDPOINT = {
+        "asr": "POST /v1/audio/transcriptions (multipart · ต้องใส่ type=audio/wav)",
+        "tts": "POST /v1/audio/speech",
+        "embedding": "POST /v1/embeddings",
+    }
+    if q in ENDPOINT:
+        print("  ยิงที่: " + ENDPOINT[q] + "\n")
     for r in hits:
         print(fmt(r, show_all=True))
         print()

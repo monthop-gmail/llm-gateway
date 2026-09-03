@@ -43,6 +43,7 @@ shellcheck scripts/*.sh              # ไม่มีในเครื่อ�
 
 ./scripts/pick-model.sh              # ดูหมวดทั้งหมด
 ./scripts/pick-model.sh agent 60000  # เลือกโมเดลทำ agent ที่ prompt 60K
+./scripts/pick-model.sh ocr          # หมวดที่ไม่ใช่แชท จะบอกด้วยว่ายิงที่ endpoint ไหน
 ```
 
 สคริปต์วัดผลทุกตัวใช้ `--write` เหมือนกัน และรับ prefix เป็น argument:
@@ -110,6 +111,18 @@ pytest "$(pytest tests/test_config_edit.py --collect-only -q | grep 'เขี�
 ข้อสุดท้ายสำคัญกว่าที่ดู — บล็อกนั้นอยู่ใน `python3 -c '...'` ของ shell อัญประกาศเดี่ยว
 ตัวเดียวจะปิด string แล้วโค้ดที่เหลือกลายเป็นคำสั่ง shell พลาดมาแล้ว 2 ครั้ง
 ครั้งหลัง `bash -n` ไม่จับ `pytest` ไม่แตะ เพราะบรรทัดที่พังอยู่ใน branch ที่ยังไม่เคยถูกเรียก
+
+### ไม่ใช่ทุกโมเดลที่ยิงที่ `/v1/chat/completions`
+
+`mode` ใน `model_info` บอกว่าโมเดลนั้นคุยที่ endpoint ไหน — `chat` (ปริยาย) ·
+`embedding` · `audio_transcription` · `ocr`
+
+**สคริปต์วัดผลต้องอ่าน `mode` ก่อนยิงเสมอ** `health-check.py` เคยยิง chat completions
+ใส่ `asr/*` แล้วรายงานว่าตายทั้งที่โมเดลปกติดี ตอนนี้มันแยกทางตาม `mode` แล้ว
+(`_post_audio()` สร้าง WAV เงียบ 200ms ส่งแบบ multipart)
+
+ตอนส่งไฟล์เสียงต้องประกาศชนิดให้ตรง — `audio/wav` ไม่ใช่ `application/octet-stream`
+ไม่งั้นได้ 400 ที่อ่านแล้วเหมือนไฟล์เสีย
 
 ### `status` ไม่ใช่ของที่ใช้ตัดสินตอน runtime
 

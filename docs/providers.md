@@ -442,9 +442,35 @@ API ของ SCB10X ตรง ต่างจาก `th/typhoon` ที่เ�
 | `th/typhoon2.5` | แชทไทย 30B (MoE ใช้จริง 3B) · **เรียก tool ได้** · 307ms | 200 req/นาที |
 | `ocr/typhoon` | OCR เอกสารไทย · 5.4s | **20 req/นาที** |
 | `ocr/typhoon-v1.5` | OCR รุ่นใหม่กว่า · 6.3s | **20 req/นาที** |
+| `asr/typhoon` | ถอดเสียงไทยเป็นข้อความ | 100 req/นาที |
+| `asr/typhoon-isan` | ถอดเสียงไทยถิ่นอีสาน | 100 req/นาที |
 
 **โควตาแยกต่อโมเดล ไม่ใช่ต่อ pool** — OCR จำกัดกว่าแชท 10 เท่า จึงแยก `quota_pool`
 เป็น `typhoon` กับ `typhoon-ocr`
+
+#### ASR ยิงคนละ endpoint กับแชท
+
+`asr/*` เป็น `mode: audio_transcription` ต้องยิงที่ `/v1/audio/transcriptions`
+แบบ multipart ไม่ใช่ `/v1/chat/completions`
+
+```bash
+curl -s http://localhost:4000/v1/audio/transcriptions \
+  -H "Authorization: Bearer $LITELLM_MASTER_KEY" \
+  -F 'model=asr/typhoon' -F 'file=@เสียง.wav;type=audio/wav'
+```
+
+⚠️ **ต้องใส่ `;type=audio/wav` เอง** — curl เดาเป็น `application/octet-stream`
+แล้วปลายทางตอบ `400 File type application/octet-stream not supported.
+Supported formats: wav, flac, mp3, ogg, opus` ซึ่งอ่านแล้วเหมือนไฟล์เสีย
+ทั้งที่ไฟล์ถูกต้อง แค่ประกาศชนิดไม่ครบ
+
+**ยังไม่ได้วัดความแม่น** — ยิงผ่านด้วยไฟล์เงียบ 200ms ได้ `{"text":"", "usage":{...}}`
+ถูกรูปแบบ ยืนยันได้แค่ว่าเส้นทางใช้ได้ ไม่ได้ยืนยันคุณภาพการถอดเสียง
+
+#### ไม่มี TTS
+
+`/v1/audio/speech` คืน 404 จากต้นทาง — Typhoon ไม่มีบริการสังเคราะห์เสียง
+`./scripts/pick-model.sh tts` จึงขึ้น 0 ตัว (หมวดมีไว้รอ ไม่ใช่ลืมใส่)
 
 #### ⚠️ OCR ไวต่อ prompt มากจนน่าตกใจ
 
