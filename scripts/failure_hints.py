@@ -36,6 +36,20 @@ DEAD_HINTS = (
     # ทั้งที่โมเดลหายถาวรแล้ว ซึ่งเงียบกว่าการรายงานว่าตายเสียอีก
     "testing period", "this model was",
 )
+# คำที่บอกว่า "ความสามารถ" ไม่รองรับ ไม่ใช่ "โมเดล" ไม่มีอยู่
+#
+# ต้องแยกให้ออก เพราะสองอย่างนี้ใช้ถ้อยคำเดียวกันแต่คนละความหมายสิ้นเชิง:
+#   "Model hy3-free is not supported"                -> โมเดลหายไปแล้ว = ตายถาวร
+#   "tool calling is not supported with this model"  -> แค่ทำ tool ไม่ได้ ยังใช้งานได้
+#
+# อันหลังคือ gq/compound กับ gq/compound-mini ที่ยังใช้ค้นเว็บได้ปกติ
+# ถ้าเอา "not supported" ไปเป็นคำใบ้ตายทื่อ ๆ สองตัวนี้จะถูกมาร์คว่าตายทันที
+CAPABILITY_WORDS = (
+    "tool calling", "tool_calling", "function calling", "tool_choice", "tools",
+    "image", "vision", "audio", "streaming", "json mode", "response_format",
+    "system message", "parallel",
+)
+
 # ชนเพดาน context จริง — ยิงใหม่ก็เท่าเดิม
 LIMIT_HINTS = (
     "context length", "maximum context", "context window exceeded", "too long",
@@ -73,6 +87,12 @@ def classify(msg: str) -> str:
     if any(h in low for h in QUOTA_HINTS):
         return "โควต้าหมด"
     if any(h in low for h in DEAD_HINTS):
+        return "ตายถาวร"
+    # "ไม่รองรับ" แปลว่าตาย เฉพาะตอนที่พูดถึงตัวโมเดล ไม่ใช่ความสามารถของมัน
+    # เจอจริง 2026-09-03: zen/hy3 ตอบ 401 พร้อม "Model hy3-free is not supported"
+    # ซึ่งเดิมตกเป็น "อื่นๆ" -> status unknown กฎ exit 1 ของ orphan จึงไม่ทำงาน
+    if ("not supported" in low or "unsupported" in low) \
+            and not any(w in low for w in CAPABILITY_WORDS):
         return "ตายถาวร"
     if any(h in low for h in LIMIT_HINTS):
         return "ชนเพดาน"

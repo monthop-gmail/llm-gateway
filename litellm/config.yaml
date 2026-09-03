@@ -2196,8 +2196,9 @@ model_list:
       quota_window: "rpm-only"
       tags: ["no-api-key"]
       stability: "stable"
-      status: "ok"
-      status_checked_at: "2026-09-03T03:49:28Z"
+      status: "rate_limited"
+      status_checked_at: "2026-09-03T08:18:29Z"
+      status_detail: "litellm.RateLimitError: RateLimitError: OpenAIException - Error from provider (Console): Rate limit exceeded. "
 
   # ตัวเดียวกับ or/nemotron-ultra-550b แต่ไม่ติดโควต้ารายวันของ OpenRouter
   - model_name: zen/nemotron-3-ultra
@@ -2218,7 +2219,7 @@ model_list:
       max_prompt_detail: "ผ่านทุกขั้นถึง 127,957 (ไม่ได้ลองมากกว่านี้)"
       stability: "stable"
       status: "ok"
-      status_checked_at: "2026-09-03T03:49:28Z"
+      status_checked_at: "2026-09-03T08:18:29Z"
 
   # พ่น thinking ปนใน content
   - model_name: zen/nemotron-lightning
@@ -2240,7 +2241,7 @@ model_list:
       latency_ms_14k: 58789
       stability: "stable"
       status: "ok"
-      status_checked_at: "2026-09-03T03:49:28Z"
+      status_checked_at: "2026-09-03T08:18:29Z"
 
   - model_name: zen/mimo-v2.5
     litellm_params:
@@ -2257,8 +2258,9 @@ model_list:
       quota_window: "rpm-only"
       tags: ["no-api-key"]
       stability: "stable"
-      status: "ok"
-      status_checked_at: "2026-09-03T03:49:28Z"
+      status: "rate_limited"
+      status_checked_at: "2026-09-03T08:18:29Z"
+      status_detail: "litellm.RateLimitError: RateLimitError: OpenAIException - Error from provider (Console): Rate limit exceeded. "
 
   # สาย coding
   - model_name: zen/laguna-s-2.1
@@ -2280,7 +2282,7 @@ model_list:
       latency_ms_14k: 1473
       stability: "stable"
       status: "ok"
-      status_checked_at: "2026-09-03T03:49:28Z"
+      status_checked_at: "2026-09-03T08:18:29Z"
 
   - model_name: zen/x-preview-f
     litellm_params:
@@ -2290,19 +2292,17 @@ model_list:
     model_info:
       mode: "chat"
       supports_function_calling: true
-      description: "โมเดลจาก OpenCode Zen"
       provider_label: "OpenCode Zen"
       provider_quota: "ไม่ต้องมี API key แต่ rate limit เข้ม (~15 req ติดกันก็ตัน)"
       quota_pool: "opencode-zen"
       quota_window: "rpm-only"
-      tags: ["no-api-key"]
-      verified_max_prompt: 31833
-      max_prompt_detail: "error 503 ที่ ~64,000 — litellm.ServiceUnavailableError: ServiceUnavailableError: OpenAIException - Erro"
-      latency_ms_14k: 5238
       stability: "preview"
-      status: "unknown"
-      status_checked_at: "2026-09-03T03:49:28Z"
+      description: "⚠️ หมดช่วง preview แล้ว (401 'Model x-preview-f-free is not supported') เก็บชื่อไว้เป็น alias — เป็นตัวอย่างว่าทำไม stability: preview ไม่ควรเอาไปวางเป็นตัวสำรองถาวร"
+      tags: ["deprecated"]
+      status: "dead"
+      status_checked_at: "2026-09-03T08:18:29Z"
       status_detail: "litellm.AuthenticationError: AuthenticationError: OpenAIException - Model x-preview-f-free is not supported"
+      answered_by: "mistral-small-latest"
 
   # thinking model
   - model_name: zen/hy3
@@ -2313,19 +2313,17 @@ model_list:
     model_info:
       mode: "chat"
       supports_function_calling: true
-      description: "โมเดลจาก OpenCode Zen"
       provider_label: "OpenCode Zen"
       provider_quota: "ไม่ต้องมี API key แต่ rate limit เข้ม (~15 req ติดกันก็ตัน)"
       quota_pool: "opencode-zen"
       quota_window: "rpm-only"
-      tags: ["no-api-key"]
-      verified_max_prompt: 127968
-      max_prompt_detail: "ผ่านทุกขั้นถึง 127,968 (ไม่ได้ลองมากกว่านี้)"
-      latency_ms_14k: 4768
       stability: "stable"
-      status: "unknown"
-      status_checked_at: "2026-09-03T03:49:28Z"
+      description: "⚠️ OpenCode Zen ถอดออกแล้ว (401 'Model hy3-free is not supported') เก็บชื่อไว้เป็น alias ยิงมาแล้วได้ mi/small ตอบแทน — โปรเจกต์ใหม่อย่าใช้ชื่อนี้"
+      tags: ["deprecated"]
+      status: "dead"
+      status_checked_at: "2026-09-03T08:18:29Z"
       status_detail: "litellm.AuthenticationError: AuthenticationError: OpenAIException - Model hy3-free is not supported"
+      answered_by: "mistral-small-latest"
 
   # ที่ลองแล้วยังใช้ไม่ได้ (2026-08-26):
   #   deepseek-v4-flash-free -> "Upstream request failed"
@@ -2963,6 +2961,11 @@ litellm_settings:
     - nim/step-3.7-flash: [mi/ministral-8b, zen/nemotron-lightning, cb/gemma-4-31b]
     - nim/nemotron-nano-30b: [zen/nemotron-3-ultra, mi/devstral, gq/gpt-oss-120b]
     - oc/minimax-m3: [nim/minimax-m3, mi/codestral, zen/laguna-s-2.1]
+
+    # zen/hy3 ถูกถอดออกจาก OpenCode Zen เมื่อ 2026-09-03 (401 not supported)
+    # ตัวสำรองต้องข้าม pool จึงชี้ไป zen/* ตัวอื่นไม่ได้
+    - zen/hy3: [mi/small, cb/gpt-oss-120b, gq/gpt-oss-120b]
+    - zen/x-preview-f: [mi/small, cb/gemma-4-31b, gq/gpt-oss-120b]
 
 general_settings:
   master_key: os.environ/LITELLM_MASTER_KEY

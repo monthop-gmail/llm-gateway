@@ -38,6 +38,7 @@ REAL = [
     ("ตายถาวร", ("Thank you for participating in the Stealth Ox Alpha testing period. "
                  "This model was ZAI's GLM-5.3 Flash. Use it now: "
                  "https://openrouter.ai/z-ai/glm-5.3-flash")),
+    ("ตายถาวร", "AuthenticationError: OpenAIException - Model hy3-free is not supported"),
     ("ตายถาวร", "CerebrasException - this model has been archived"),
     ("ตายถาวร", "CloudflareException - model not available on the workers free plan"),
     # --- ชนเพดาน: ยิงใหม่ก็เท่าเดิม ---
@@ -83,6 +84,29 @@ def test_โมเดล_stealth_ที่หมดอายุต้องเ�
     msg = ("Thank you for participating in the Stealth Ox Alpha testing period. "
            "This model was ZAI's GLM-5.3 Flash.")
     assert classify(msg) == "ตายถาวร"
+
+
+def test_ไม่รองรับความสามารถ_ไม่ใช่ตายถาวร():
+    """"not supported" ใช้กับสองความหมาย ต้องแยกให้ออก
+
+    gq/compound กับ gq/compound-mini ตอบว่า tool calling ไม่รองรับ แต่ยังใช้
+    ค้นเว็บได้ปกติ ถ้าจำแนกเป็นตายถาวรจะโดนถอดออกจากแค็ตตาล็อกทั้งที่ยังมีชีวิต
+    """
+    for msg in (
+        "GroqException - `tool calling` is not supported with this model",
+        "This model is not supported for image input",
+        "streaming is not supported for this deployment",
+    ):
+        assert classify(msg) != "ตายถาวร", msg
+
+
+def test_โมเดลหายไปแม้_http_code_จะเป็น_401():
+    """zen/hy3 ตอบ 401 ซึ่งปกติแปลว่า auth เสีย แต่ข้อความบอกว่าโมเดลไม่มีแล้ว
+
+    เดิมตกเป็น "อื่นๆ" -> status unknown ทำให้กฎ exit 1 ของ orphan ไม่ทำงาน
+    ชื่อที่ยิงไม่ได้จึงนอนอยู่ในแค็ตตาล็อกเงียบ ๆ
+    """
+    assert classify("OpenAIException - Model hy3-free is not supported") == "ตายถาวร"
 
 
 def test_cooldown_ของ_litellm_สรุปไม่ได้():
