@@ -27,7 +27,7 @@ model_list:
       supports_function_calling: true
       description: "โมเดลจาก HuggingFace"
       provider_label: "HuggingFace"
-      provider_quota: "⚠️ เครดิตรายเดือนหมดแล้ว — วิ่งผ่าน fallback ไป provider อื่น"
+      provider_quota: "⚠️ เครดิตรายเดือนหมดแล้ว (2026-08-23) — gateway ยกเลิก fallback แล้ว ถ้าต้องการตัวสำรองให้ client ส่ง fallbacks มาใน request เอง"
       quota_pool: "huggingface"
       quota_window: "monthly"
       tags: ["general"]
@@ -44,7 +44,7 @@ model_list:
       supports_function_calling: true
       description: "โมเดลจาก HuggingFace"
       provider_label: "HuggingFace"
-      provider_quota: "⚠️ เครดิตรายเดือนหมดแล้ว — วิ่งผ่าน fallback ไป provider อื่น"
+      provider_quota: "⚠️ เครดิตรายเดือนหมดแล้ว (2026-08-23) — gateway ยกเลิก fallback แล้ว ถ้าต้องการตัวสำรองให้ client ส่ง fallbacks มาใน request เอง"
       quota_pool: "huggingface"
       quota_window: "monthly"
       tags: ["general"]
@@ -63,7 +63,7 @@ model_list:
       supports_function_calling: true
       description: "โมเดลจาก HuggingFace"
       provider_label: "HuggingFace"
-      provider_quota: "⚠️ เครดิตรายเดือนหมดแล้ว — วิ่งผ่าน fallback ไป provider อื่น"
+      provider_quota: "⚠️ เครดิตรายเดือนหมดแล้ว (2026-08-23) — gateway ยกเลิก fallback แล้ว ถ้าต้องการตัวสำรองให้ client ส่ง fallbacks มาใน request เอง"
       quota_pool: "huggingface"
       quota_window: "monthly"
       tags: ["general"]
@@ -81,7 +81,7 @@ model_list:
       supports_function_calling: true
       description: "โมเดลจาก HuggingFace"
       provider_label: "HuggingFace"
-      provider_quota: "⚠️ เครดิตรายเดือนหมดแล้ว — วิ่งผ่าน fallback ไป provider อื่น"
+      provider_quota: "⚠️ เครดิตรายเดือนหมดแล้ว (2026-08-23) — gateway ยกเลิก fallback แล้ว ถ้าต้องการตัวสำรองให้ client ส่ง fallbacks มาใน request เอง"
       quota_pool: "huggingface"
       quota_window: "monthly"
       tags: ["general"]
@@ -99,7 +99,7 @@ model_list:
       supports_function_calling: true
       description: "โมเดลจาก HuggingFace"
       provider_label: "HuggingFace"
-      provider_quota: "⚠️ เครดิตรายเดือนหมดแล้ว — วิ่งผ่าน fallback ไป provider อื่น"
+      provider_quota: "⚠️ เครดิตรายเดือนหมดแล้ว (2026-08-23) — gateway ยกเลิก fallback แล้ว ถ้าต้องการตัวสำรองให้ client ส่ง fallbacks มาใน request เอง"
       quota_pool: "huggingface"
       quota_window: "monthly"
       tags: ["general"]
@@ -116,7 +116,7 @@ model_list:
       supports_function_calling: true
       description: "โมเดลจาก HuggingFace"
       provider_label: "HuggingFace"
-      provider_quota: "⚠️ เครดิตรายเดือนหมดแล้ว — วิ่งผ่าน fallback ไป provider อื่น"
+      provider_quota: "⚠️ เครดิตรายเดือนหมดแล้ว (2026-08-23) — gateway ยกเลิก fallback แล้ว ถ้าต้องการตัวสำรองให้ client ส่ง fallbacks มาใน request เอง"
       quota_pool: "huggingface"
       quota_window: "monthly"
       tags: ["general"]
@@ -133,7 +133,7 @@ model_list:
       supports_function_calling: true
       description: "โมเดลจาก HuggingFace"
       provider_label: "HuggingFace"
-      provider_quota: "⚠️ เครดิตรายเดือนหมดแล้ว — วิ่งผ่าน fallback ไป provider อื่น"
+      provider_quota: "⚠️ เครดิตรายเดือนหมดแล้ว (2026-08-23) — gateway ยกเลิก fallback แล้ว ถ้าต้องการตัวสำรองให้ client ส่ง fallbacks มาใน request เอง"
       quota_pool: "huggingface"
       quota_window: "monthly"
       tags: ["general"]
@@ -150,7 +150,7 @@ model_list:
       supports_function_calling: true
       description: "โมเดลจาก HuggingFace"
       provider_label: "HuggingFace"
-      provider_quota: "⚠️ เครดิตรายเดือนหมดแล้ว — วิ่งผ่าน fallback ไป provider อื่น"
+      provider_quota: "⚠️ เครดิตรายเดือนหมดแล้ว (2026-08-23) — gateway ยกเลิก fallback แล้ว ถ้าต้องการตัวสำรองให้ client ส่ง fallbacks มาใน request เอง"
       quota_pool: "huggingface"
       quota_window: "monthly"
       tags: ["general"]
@@ -167,7 +167,7 @@ model_list:
       supports_function_calling: true
       description: "โมเดลจาก HuggingFace"
       provider_label: "HuggingFace"
-      provider_quota: "⚠️ เครดิตรายเดือนหมดแล้ว — วิ่งผ่าน fallback ไป provider อื่น"
+      provider_quota: "⚠️ เครดิตรายเดือนหมดแล้ว (2026-08-23) — gateway ยกเลิก fallback แล้ว ถ้าต้องการตัวสำรองให้ client ส่ง fallbacks มาใน request เอง"
       quota_pool: "huggingface"
       quota_window: "monthly"
       tags: ["general"]
@@ -185,7 +185,7 @@ model_list:
       supports_function_calling: true
       description: "โมเดลจาก HuggingFace"
       provider_label: "HuggingFace"
-      provider_quota: "⚠️ เครดิตรายเดือนหมดแล้ว — วิ่งผ่าน fallback ไป provider อื่น"
+      provider_quota: "⚠️ เครดิตรายเดือนหมดแล้ว (2026-08-23) — gateway ยกเลิก fallback แล้ว ถ้าต้องการตัวสำรองให้ client ส่ง fallbacks มาใน request เอง"
       quota_pool: "huggingface"
       quota_window: "monthly"
       tags: ["general"]
@@ -203,7 +203,7 @@ model_list:
       supports_function_calling: true
       description: "โมเดลจาก HuggingFace"
       provider_label: "HuggingFace"
-      provider_quota: "⚠️ เครดิตรายเดือนหมดแล้ว — วิ่งผ่าน fallback ไป provider อื่น"
+      provider_quota: "⚠️ เครดิตรายเดือนหมดแล้ว (2026-08-23) — gateway ยกเลิก fallback แล้ว ถ้าต้องการตัวสำรองให้ client ส่ง fallbacks มาใน request เอง"
       quota_pool: "huggingface"
       quota_window: "monthly"
       tags: ["general"]
@@ -223,7 +223,7 @@ model_list:
       supports_function_calling: true
       description: "โมเดลจาก HuggingFace"
       provider_label: "HuggingFace"
-      provider_quota: "⚠️ เครดิตรายเดือนหมดแล้ว — วิ่งผ่าน fallback ไป provider อื่น"
+      provider_quota: "⚠️ เครดิตรายเดือนหมดแล้ว (2026-08-23) — gateway ยกเลิก fallback แล้ว ถ้าต้องการตัวสำรองให้ client ส่ง fallbacks มาใน request เอง"
       quota_pool: "huggingface"
       quota_window: "monthly"
       tags: ["general"]
@@ -242,7 +242,7 @@ model_list:
       supports_function_calling: true
       description: "เน้นภาษาอาเซียนรวมไทย ฐาน Qwen"
       provider_label: "HuggingFace"
-      provider_quota: "⚠️ เครดิตรายเดือนหมดแล้ว — วิ่งผ่าน fallback ไป provider อื่น"
+      provider_quota: "⚠️ เครดิตรายเดือนหมดแล้ว (2026-08-23) — gateway ยกเลิก fallback แล้ว ถ้าต้องการตัวสำรองให้ client ส่ง fallbacks มาใน request เอง"
       quota_pool: "huggingface"
       quota_window: "monthly"
       tags: ["thai"]
@@ -261,7 +261,7 @@ model_list:
       supports_function_calling: true
       description: "โมเดลจาก HuggingFace"
       provider_label: "HuggingFace"
-      provider_quota: "⚠️ เครดิตรายเดือนหมดแล้ว — วิ่งผ่าน fallback ไป provider อื่น"
+      provider_quota: "⚠️ เครดิตรายเดือนหมดแล้ว (2026-08-23) — gateway ยกเลิก fallback แล้ว ถ้าต้องการตัวสำรองให้ client ส่ง fallbacks มาใน request เอง"
       quota_pool: "huggingface"
       quota_window: "monthly"
       tags: ["quality-top", "general"]
@@ -279,7 +279,7 @@ model_list:
       supports_function_calling: true
       description: "โมเดลจาก HuggingFace"
       provider_label: "HuggingFace"
-      provider_quota: "⚠️ เครดิตรายเดือนหมดแล้ว — วิ่งผ่าน fallback ไป provider อื่น"
+      provider_quota: "⚠️ เครดิตรายเดือนหมดแล้ว (2026-08-23) — gateway ยกเลิก fallback แล้ว ถ้าต้องการตัวสำรองให้ client ส่ง fallbacks มาใน request เอง"
       quota_pool: "huggingface"
       quota_window: "monthly"
       tags: ["quality-top", "general"]
@@ -297,7 +297,7 @@ model_list:
       supports_function_calling: true
       description: "โมเดลจาก HuggingFace"
       provider_label: "HuggingFace"
-      provider_quota: "⚠️ เครดิตรายเดือนหมดแล้ว — วิ่งผ่าน fallback ไป provider อื่น"
+      provider_quota: "⚠️ เครดิตรายเดือนหมดแล้ว (2026-08-23) — gateway ยกเลิก fallback แล้ว ถ้าต้องการตัวสำรองให้ client ส่ง fallbacks มาใน request เอง"
       quota_pool: "huggingface"
       quota_window: "monthly"
       tags: ["quality-top", "general"]
@@ -315,7 +315,7 @@ model_list:
       supports_function_calling: true
       description: "โมเดลจาก HuggingFace"
       provider_label: "HuggingFace"
-      provider_quota: "⚠️ เครดิตรายเดือนหมดแล้ว — วิ่งผ่าน fallback ไป provider อื่น"
+      provider_quota: "⚠️ เครดิตรายเดือนหมดแล้ว (2026-08-23) — gateway ยกเลิก fallback แล้ว ถ้าต้องการตัวสำรองให้ client ส่ง fallbacks มาใน request เอง"
       quota_pool: "huggingface"
       quota_window: "monthly"
       tags: ["general"]
@@ -332,7 +332,7 @@ model_list:
       supports_function_calling: true
       description: "โมเดลจาก HuggingFace"
       provider_label: "HuggingFace"
-      provider_quota: "⚠️ เครดิตรายเดือนหมดแล้ว — วิ่งผ่าน fallback ไป provider อื่น"
+      provider_quota: "⚠️ เครดิตรายเดือนหมดแล้ว (2026-08-23) — gateway ยกเลิก fallback แล้ว ถ้าต้องการตัวสำรองให้ client ส่ง fallbacks มาใน request เอง"
       quota_pool: "huggingface"
       quota_window: "monthly"
       tags: ["general"]
@@ -349,7 +349,7 @@ model_list:
       supports_function_calling: true
       description: "โมเดลจาก HuggingFace"
       provider_label: "HuggingFace"
-      provider_quota: "⚠️ เครดิตรายเดือนหมดแล้ว — วิ่งผ่าน fallback ไป provider อื่น"
+      provider_quota: "⚠️ เครดิตรายเดือนหมดแล้ว (2026-08-23) — gateway ยกเลิก fallback แล้ว ถ้าต้องการตัวสำรองให้ client ส่ง fallbacks มาใน request เอง"
       quota_pool: "huggingface"
       quota_window: "monthly"
       tags: ["general"]
@@ -368,7 +368,7 @@ model_list:
       supports_function_calling: true
       description: "เน้นภาษาอาเซียนรวมไทย ฐาน Gemma"
       provider_label: "HuggingFace"
-      provider_quota: "⚠️ เครดิตรายเดือนหมดแล้ว — วิ่งผ่าน fallback ไป provider อื่น"
+      provider_quota: "⚠️ เครดิตรายเดือนหมดแล้ว (2026-08-23) — gateway ยกเลิก fallback แล้ว ถ้าต้องการตัวสำรองให้ client ส่ง fallbacks มาใน request เอง"
       quota_pool: "huggingface"
       quota_window: "monthly"
       tags: ["thai"]
@@ -388,7 +388,7 @@ model_list:
       supports_function_calling: true
       description: "โมเดลจาก HuggingFace"
       provider_label: "HuggingFace"
-      provider_quota: "⚠️ เครดิตรายเดือนหมดแล้ว — วิ่งผ่าน fallback ไป provider อื่น"
+      provider_quota: "⚠️ เครดิตรายเดือนหมดแล้ว (2026-08-23) — gateway ยกเลิก fallback แล้ว ถ้าต้องการตัวสำรองให้ client ส่ง fallbacks มาใน request เอง"
       quota_pool: "huggingface"
       quota_window: "monthly"
       tags: ["coding-ok"]
@@ -3046,55 +3046,21 @@ litellm_settings:
   set_verbose: false
 
   # ---------------------------------------------------------------
-  # fallback — 2026-08-23 เครดิต HF รายเดือนหมด ("You have depleted your
-  # monthly included credits") ทำให้ hf/* ใช้ไม่ได้ 20 จาก 21 ตัว
-  # ตั้ง fallback ไป provider อื่นไว้ ระบบจะยังทำงานต่อโดย client ไม่ต้องแก้อะไร
+  # 2026-09-04 ยกเลิก fallback ฝั่ง gateway ทั้งหมด — เดิมมี 31 chain
+  #
+  # เดิมตั้งไว้ 2026-08-23 ตอนเครดิต HF รายเดือนหมด ("You have depleted your
+  # monthly included credits") เพื่อให้ปลายทางใช้ต่อได้โดยไม่ต้องแก้โค้ด
+  # แล้วทยอยเพิ่มทุกครั้งที่มีโมเดลตาย (NVIDIA ปลด · or/ox-alpha หมด stealth ·
+  # oc/minimax-m3 ขึ้นเงิน · zen/hy3 ถูกถอด)
+  #
+  # ผลข้างเคียงคือ ณ วันที่ยกเลิก มี 10 ชื่อที่ตายจริงแต่ยังตอบได้เพราะตัวสำรอง
+  # ตอบแทน (ดู answered_by) ปลายทางขอ A แล้วได้คำตอบจาก B โดยไม่มีอะไรฟ้อง
+  #
+  # ต่อไปให้ client ประกาศ chain เองผ่าน "fallbacks" ใน request body
+  # (ดู 3 โหมดใน CLAUDE.md) — ขอ A แล้วต้องได้ A หรือ error ไม่ใช่ B เงียบ ๆ
+  #
+  # num_retries: 2 ข้างบนยังอยู่ — นั่นคือ retry ตัวเดิม ไม่ใช่สลับ provider
   # ---------------------------------------------------------------
-  fallbacks:
-    - hf/llama-3.1-8b: [mi/ministral-8b, cf/llama-4-scout, or/auto-free]
-    - hf/llama-3.3-70b: [cf/llama-3.3-70b, gq/gpt-oss-120b, or/auto-free]
-    - hf/gpt-oss-120b: [cb/gpt-oss-120b, gq/gpt-oss-120b, oc/gpt-oss-120b, or/auto-free]
-    - hf/gpt-oss-20b: [oc/gpt-oss-20b, gq/gpt-oss-120b, or/auto-free]
-    - hf/qwen3-coder-next: [cf/qwen2.5-coder-32b, mi/mistral-code, or/auto-free]
-    - hf/glm-5.2: [oc/nemotron-3-super, mi/magistral-medium, or/auto-free]
-    - hf/kimi-k3: [oc/nemotron-3-ultra, mi/large, or/auto-free]
-    - hf/deepseek-v4-pro: [mi/large, or/nemotron-ultra-550b, zen/nemotron-3-ultra]
-    - hf/sea-lion-32b: [cf/sea-lion-27b, or/auto-free]
-    - hf/sea-lion-gemma-27b: [cf/sea-lion-27b, or/auto-free]
-    - hf/gemma-4-26b: [cf/gemma-4-26b, cb/gemma-4-31b, or/auto-free]
-    - hf/llama-4-scout: [cf/llama-4-scout, or/auto-free]
-    - hf/qwen2.5-7b: [mi/ministral-8b, cb/gemma-4-31b, or/auto-free]
-    - cb/gemma-4-31b: [cf/qwen2.5-coder-32b, mi/magistral-medium, or/auto-free]
-    - hf/qwen3.5-397b: [or/nemotron-ultra-550b, oc/nemotron-3-ultra, zen/nemotron-3-ultra]
-    - hf/glm-4.7: [oc/nemotron-3-super, mi/magistral-medium, or/auto-free]
-    - hf/kimi-k2.6: [oc/nemotron-3-ultra, mi/large, or/auto-free]
-    - hf/deepseek-r1: [mi/magistral-medium, or/nemotron-super-120b, cb/gpt-oss-120b]
-    - hf/deepseek-v3.2: [mi/large, cf/nemotron-3-120b, or/auto-free]
-    - hf/qwen3.6-27b: [gq/qwen3.6-27b, cf/qwen3-30b-a3b, or/auto-free]
-    - hf/qwen3.6-35b: [cf/qwen3-30b-a3b, gq/qwen3.6-27b, or/auto-free]
-    - hf/gemma-3-12b: [cf/gemma-4-26b, cb/gemma-4-31b, or/auto-free]
-
-    # NVIDIA ปลด 3 ตัวนี้เมื่อ 2026-08-26 (410 Gone / 404) เก็บชื่อไว้เป็น alias
-    # เพื่อไม่ให้ปลายทางที่ hardcode ไว้พัง — ทุก hop คนละ quota_pool
-    - nim/nemotron-super-49b: [zen/nemotron-lightning, cb/gpt-oss-120b, mi/magistral-medium]
-    - nim/llama-3.3-70b: [gq/gpt-oss-120b, mi/large, zen/hy3]
-    - nim/deepseek-v4-flash: [mi/ministral-14b, cb/gemma-4-31b, zen/laguna-s-2.1]
-
-    # or/ox-alpha จบช่วง stealth เมื่อ 2026-08-27 OpenRouter เฉลยว่าคือ GLM-5.3 Flash
-    # แต่ตัวสืบทอด z-ai/glm-5.3-flash "เสียเงิน" ($0.075/$0.25 ต่อล้าน token)
-    # จึงไม่เอามาใส่ chain — ชี้ไปตัวฟรีที่ใช้ tool ได้แทน ข้ามคนละ quota_pool
-    - or/ox-alpha: [mi/codestral, cb/gpt-oss-120b, zen/laguna-s-2.1]
-
-    # NVIDIA ปลดเพิ่มอีก 2 ตัวเมื่อ 2026-09-03 (410 Gone) และ Ollama Cloud
-    # ย้าย minimax-m3 ไปแพ็กเกจเสียเงิน — เก็บชื่อไว้เป็น alias ทุก hop คนละ quota_pool
-    - nim/step-3.7-flash: [mi/ministral-8b, zen/nemotron-lightning, cb/gemma-4-31b]
-    - nim/nemotron-nano-30b: [zen/nemotron-3-ultra, mi/devstral, gq/gpt-oss-120b]
-    - oc/minimax-m3: [nim/minimax-m3, mi/codestral, zen/laguna-s-2.1]
-
-    # zen/hy3 ถูกถอดออกจาก OpenCode Zen เมื่อ 2026-09-03 (401 not supported)
-    # ตัวสำรองต้องข้าม pool จึงชี้ไป zen/* ตัวอื่นไม่ได้
-    - zen/hy3: [mi/small, cb/gpt-oss-120b, gq/gpt-oss-120b]
-    - zen/x-preview-f: [mi/small, cb/gemma-4-31b, gq/gpt-oss-120b]
 
 general_settings:
   master_key: os.environ/LITELLM_MASTER_KEY
