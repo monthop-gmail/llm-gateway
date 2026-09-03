@@ -12,6 +12,8 @@ probe-context.py แปะป้าย Cloudflare ว่า "error 500" ทั�
 """
 from __future__ import annotations
 
+import re
+
 # โควต้าหมด — รอ reset แล้วกลับมาเอง ไม่ต้องแก้อะไร
 QUOTA_HINTS = (
     "depleted your monthly", "used up your daily", "rate limit", "ratelimiterror",
@@ -75,6 +77,20 @@ INCONCLUSIVE_HINTS = (
 def is_inconclusive(msg: str) -> bool:
     """True = อย่าเอาผลรอบนี้ไปเขียนทับของเดิม เพราะยังไม่ได้คุยกับ provider จริง"""
     return any(h in msg.lower() for h in INCONCLUSIVE_HINTS)
+
+
+# prefix ที่ LiteLLM ใส่หน้าข้อความจริงของ provider — ซ้ำทุกบรรทัดโดยไม่บอกอะไร
+# วัดแล้วกินที่เฉลี่ย 48 ตัวอักษร (สูงสุด 68) = 40% ของโควตา 120 ที่เก็บลง config ได้
+# ตัดทิ้งก่อนเก็บ จะได้เนื้อความที่ใช้ตัดสินได้มากขึ้นในพื้นที่เท่าเดิม
+_PREFIX = re.compile(
+    r"^litellm\.\w+:\s*(?:\w+Error:\s*)?\w*Exception\s*-\s*"
+    r"|^litellm\.\w+:\s*"
+)
+
+
+def strip_prefix(msg: str) -> str:
+    """เอา boilerplate ของ LiteLLM ออก เหลือแต่ข้อความที่ provider ส่งมาจริง"""
+    return _PREFIX.sub("", msg, count=1).strip()
 
 
 def classify(msg: str) -> str:

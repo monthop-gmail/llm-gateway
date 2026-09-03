@@ -47,7 +47,7 @@ import yaml
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from config_edit import set_fields
-from failure_hints import classify, is_inconclusive
+from failure_hints import classify, is_inconclusive, strip_prefix
 
 ROOT = Path(__file__).resolve().parent.parent
 BASE = os.environ.get("LITELLM_URL", "http://localhost:4000")
@@ -216,7 +216,9 @@ def _write_back(results: list[tuple[str, str, str, str]]) -> None:
         text, ok = set_fields(text, model, {
             "status": _STATUS.get(verdict, "unknown"),
             "status_checked_at": stamp,
-            "status_detail": detail[:120] if detail else None,
+            # ตัด boilerplate ของ LiteLLM ออกก่อน จะได้เนื้อความที่ใช้ตัดสินได้
+            # มากขึ้นในพื้นที่เท่าเดิม (prefix กินไป 40% ของโควตา 120)
+            "status_detail": strip_prefix(detail)[:120] if detail else None,
             "answered_by": answered or None,
         })
         written += ok

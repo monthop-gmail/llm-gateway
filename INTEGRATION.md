@@ -743,6 +743,50 @@ nim/deepseek-v4-flash    404 — function ถูกลบออกจากบ�
 ให้ดู `status_checked_at` ประกอบเสมอ และอย่าใช้ `status` ตัดสินตอน runtime
 — ใช้ดูภาพรวมว่าตัวไหนน่าลองก่อน แล้วดัก error เอาตอนยิงจริง
 
+### `unknown` ที่ค้างอยู่ = ช่องโหว่ของตัวจำแนก ไม่ใช่แค่ "ยังไม่รู้"
+
+บั๊กเดียวกันเกิดซ้ำ **3 ครั้ง** — โมเดลตายแต่ได้ `status: unknown` จึงไม่เข้ากฎ
+*"dead + ไม่มี answered_by = exit 1"* ชื่อที่ยิงไม่ได้จึงนอนอยู่ในแค็ตตาล็อกเงียบ ๆ
+
+| ครั้ง | ข้อความที่อ่านไม่ออก | ใครเจอ |
+|---|---|---|
+| #10 | `Thank you for participating in the Stealth Ox Alpha testing period...` | ปลายทางทัก |
+| #17 | `No deployments available` (cooldown ของ LiteLLM) | เจอเองตอน restart |
+| #18 | `Model hy3-free is not supported` | ปลายทางทัก |
+
+`health-check` พิมพ์กลุ่ม `อื่นๆ` อยู่แล้ว แต่ไม่มีใครอ่านถ้าไม่ได้รันเอง
+`validate.sh` จึงเตือนแทน เพราะ CI รันทุก push:
+
+```
+==> ตรวจว่ามี error ที่ตัวจำแนกอ่านไม่ออกไหม
+    okmd/sonar-pro: Provider returned error
+    l7/llama-3.1-8b: Model 'meta-Llama-3.1-8B-Instruct-Turbo' is currently unavailable.
+    -- ถ้าเป็นข้อความที่บอกได้ว่าตาย/โควตาหมด ให้เพิ่มคำใบ้ใน scripts/failure_hints.py
+```
+
+**เตือนอย่างเดียว ไม่ fail** — บาง error คลุมเครือจริงและจะเป็นแบบนั้นตลอดไป
+`okmd/sonar-pro` ตอบแค่ *"Provider returned error"* ไม่มีทางรู้ว่าตายหรือโควตาหมด
+ส่วน `l7/llama-3.1-8b` บอก *"currently unavailable"* ซึ่งคำว่า *currently* ก็ยัง
+ตีความได้ทั้งชั่วคราวและถาวร — จงใจไม่เดาแทน
+
+timeout กับ cooldown ไม่ถูกเตือน เพราะเป็นของชั่วคราวจริง ไม่ใช่ช่องโหว่
+
+### `status_detail` เก็บได้ 120 ตัวอักษร — อย่าให้ boilerplate กินไป 40%
+
+LiteLLM ใส่ prefix ซ้ำหน้าทุกข้อความโดยไม่บอกอะไรเพิ่ม:
+
+```
+litellm.AuthenticationError: AuthenticationError: OpenAIException - Model hy3-free is not supported
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ 68 ตัวอักษร
+```
+
+วัดจาก 22 ข้อความในคอนฟิก — กินที่เฉลี่ย **48 ตัวอักษร สูงสุด 68** คิดเป็น 40%
+ของโควตาที่เก็บได้ `failure_hints.strip_prefix()` ตัดทิ้งก่อนเก็บ ได้เนื้อความ
+เพิ่มในพื้นที่เท่าเดิม โดยการจำแนกไม่เปลี่ยน (มี test คุม)
+
+เห็นผลทันทีหลังเปิดใช้ — `l7/llama-3.1-8b` เดิมเก็บได้แค่ `Model 'meta-Llama-3.1-8B-In`
+ตอนนี้ได้ทั้งประโยครวมคำว่า `is currently unavailable` ที่เป็นตัวตัดสิน
+
 ### `not supported` มีสองความหมาย — แยกให้ออกก่อนสรุปว่าโมเดลตาย
 
 ```

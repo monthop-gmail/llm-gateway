@@ -16,7 +16,7 @@ from pathlib import Path
 import pytest
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "scripts"))
-from failure_hints import classify, is_inconclusive
+from failure_hints import classify, is_inconclusive, strip_prefix
 
 # ข้อความจริงที่เก็บมาจากการยิง ไม่ใช่ที่แต่งขึ้น
 REAL = [
@@ -123,6 +123,23 @@ def test_cooldown_ของ_litellm_สรุปไม่ได้():
 def test_ข้อความจาก_provider_จริงต้องไม่ถูกมองว่าสรุปไม่ได้():
     for _, msg in REAL:
         assert not is_inconclusive(msg), msg
+
+
+def test_ตัด_prefix_ของ_litellm_แล้วการจำแนกต้องไม่เปลี่ยน():
+    """prefix กินที่ 40% ของโควตา 120 ตัวอักษรที่เก็บลง config ได้
+
+    ตัดทิ้งได้เนื้อความเพิ่ม แต่ห้ามทำให้การจำแนกเพี้ยน
+    """
+    for msg in [m for _, m in REAL] + [
+        "litellm.BadRequestError: HuggingfaceException - depleted your monthly credits",
+        "litellm.AuthenticationError: AuthenticationError: OpenAIException - Model x is not supported",
+    ]:
+        assert classify(strip_prefix(msg)) == classify(msg), msg
+
+
+def test_ตัด_prefix_ไม่แตะข้อความที่ไม่มี_prefix():
+    for msg in ("timed out", "No deployments available for selected model", ""):
+        assert strip_prefix(msg) == msg
 
 
 def test_ข้อความว่างไม่พัง():

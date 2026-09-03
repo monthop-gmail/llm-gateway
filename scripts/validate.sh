@@ -207,6 +207,46 @@ else
 	err "ใช้อัญประกาศคู่แทน — อัญประกาศเดี่ยวจะปิด string ของ shell"
 fi
 
+# --------------------------------------------------------- unknown ที่ควรรู้จัก
+note "ตรวจว่ามี error ที่ตัวจำแนกอ่านไม่ออกไหม"
+# เตือนอย่างเดียว — บาง error คลุมเครือจริงและจะเป็นแบบนั้นตลอดไป
+# (เช่น okmd/sonar-pro ตอบแค่ "Provider returned error")
+#
+# ที่ต้องมีข้อนี้: บั๊กเดียวกันเกิดซ้ำ 3 ครั้ง (issue #10 #17 #18) อาการเหมือนกันหมด
+# คือโมเดลตายแต่ได้ status unknown จึงไม่เข้ากฎ exit 1 ของ orphan และ 2 ใน 3 ครั้ง
+# จับได้เพราะปลายทางมาทัก ไม่ใช่เพราะเราตรวจเจอเอง
+#
+# health-check พิมพ์กลุ่ม "อื่นๆ" อยู่แล้วแต่ไม่มีใครอ่านถ้าไม่ได้รันเอง —
+# ตัวนี้อยู่ใน validate ซึ่ง CI รันทุก push จึงมีคนเห็นจริง
+if out=$(python3 -c "
+import sys, yaml
+sys.path.insert(0, 'scripts')
+from failure_hints import is_inconclusive
+c = yaml.safe_load(open('litellm/config.yaml'))
+bad = []
+for m in c['model_list']:
+    mi = m.get('model_info') or {}
+    if mi.get('status') != 'unknown':
+        continue
+    d = str(mi.get('status_detail') or '')
+    low = d.lower()
+    # timeout กับ cooldown เป็นของชั่วคราวจริง ไม่ใช่ช่องโหว่ของตัวจำแนก
+    if not d or 'timed out' in low or 'timeout' in low or is_inconclusive(d):
+        continue
+    bad.append(m['model_name'] + ': ' + d[:70])
+print(chr(10).join(bad))
+sys.exit(0)
+"); then
+	if [ -n "$out" ]; then
+		printf '    %s\n' "${out//$'\n'/$'\n'    }"
+		warn "ถ้าเป็นข้อความที่บอกได้ว่าตาย/โควตาหมด ให้เพิ่มคำใบ้ใน scripts/failure_hints.py"
+	else
+		ok "ไม่มี error ที่จำแนกไม่ออก"
+	fi
+else
+	err "ตรวจ status unknown ไม่สำเร็จ"
+fi
+
 # ------------------------------------------------------------- ข้อมูลเก่าแค่ไหน
 note "ตรวจว่าผลวัด status ยังใหม่พออยู่ไหม"
 # เตือนอย่างเดียว ไม่ fail — ข้อมูลเก่าไม่ใช่ความผิดของคนที่ส่ง PR เรื่องอื่น

@@ -49,9 +49,9 @@ model_list:
       quota_window: "monthly"
       tags: ["general"]
       stability: "stable"
-      status: "unknown"
-      status_checked_at: "2026-09-03T03:49:28Z"
-      status_detail: "litellm.BadRequestError: HuggingfaceException - { 'id': 'oykQqcz-2kFHot-a351c2409ea505a2', 'error': { 'message"
+      status: "dead"
+      status_checked_at: "2026-09-03T08:29:26Z"
+      status_detail: "{'error':{'message':'The requested model 'Qwen/Qwen2.5-7B-Inst"
       answered_by: "ministral-8b-latest"
 
   - model_name: hf/gemma-3-12b
@@ -2159,8 +2159,8 @@ model_list:
       verified_by: "gateway 2026-08-26 (verify-capabilities)"
       stability: "stable"
       status: "unknown"
-      status_checked_at: "2026-09-03T03:49:28Z"
-      status_detail: "litellm.BadRequestError: OpenAIException - Provider returned error"
+      status_checked_at: "2026-09-03T08:29:26Z"
+      status_detail: "Provider returned error"
 
 
 
@@ -2356,8 +2356,8 @@ model_list:
       latency_ms_14k: 361
       stability: "stable"
       status: "unknown"
-      status_checked_at: "2026-09-03T03:49:28Z"
-      status_detail: "litellm.BadRequestError: OpenAIException - Model 'meta-Llama-3.1-8B-Instruct-Turbo' is currently unavailable."
+      status_checked_at: "2026-09-03T08:29:26Z"
+      status_detail: "Model 'meta-Llama-3.1-8B-Instruct-Turbo' is currently unavailable."
 
   - model_name: l7/codestral
     litellm_params:
@@ -2379,7 +2379,7 @@ model_list:
       latency_ms_14k: 554
       stability: "stable"
       status: "ok"
-      status_checked_at: "2026-09-03T03:49:28Z"
+      status_checked_at: "2026-09-03T08:29:26Z"
 
   # ปลดคอมเมนต์เมื่อมี LLM7_API_KEY แล้ว (เปลี่ยน api_key เป็น os.environ/LLM7_API_KEY
   # ทั้งสองตัวข้างบนด้วย) — ตัวอย่างของที่จะได้เพิ่ม:
