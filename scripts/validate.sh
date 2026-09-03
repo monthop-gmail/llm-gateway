@@ -207,6 +207,41 @@ else
 	err "ใช้อัญประกาศคู่แทน — อัญประกาศเดี่ยวจะปิด string ของ shell"
 fi
 
+# ------------------------------------------------------------------ free_until
+note "ตรวจโมเดลที่ฟรีแบบมีวันหมดอายุ"
+# repo นี้มีกติกาว่าทุกโมเดลต้องฟรี แต่บางเจ้าให้ฟรีเป็นช่วงโปรโมชัน
+# ถ้าเลยกำหนดแล้วยังอยู่ในแค็ตตาล็อก = เสิร์ฟโมเดลเสียเงินโดยไม่มีใครรู้
+# ซึ่งเป็นอันตรายแบบเดียวกับที่ปฏิเสธ z-ai/glm-5.3-flash ไปใน issue #10
+if out=$(python3 -c "
+import sys, yaml
+from datetime import date, timedelta
+c = yaml.safe_load(open('litellm/config.yaml'))
+today = date.today()
+soon, over = [], []
+for m in c['model_list']:
+    mi = m.get('model_info') or {}
+    raw = mi.get('free_until')
+    if not raw:
+        continue
+    d = date.fromisoformat(str(raw))
+    if d < today:
+        over.append(m['model_name'] + ': ฟรีถึง ' + str(raw) + ' — เลยมาแล้ว')
+    elif d - today <= timedelta(days=14):
+        soon.append(m['model_name'] + ': ฟรีถึง ' + str(raw) + ' — เหลือ ' + str((d - today).days) + ' วัน')
+print(chr(10).join(over + soon))
+sys.exit(1 if over else 0)
+"); then
+	if [ -n "$out" ]; then
+		printf '    %s\n' "${out//$'\n'/$'\n'    }"
+		warn "ใกล้หมดช่วงฟรี — เช็คราคาก่อนถึงกำหนด"
+	else
+		ok "ไม่มีโมเดลที่ใกล้หมดช่วงฟรี"
+	fi
+else
+	printf '    %s\n' "${out//$'\n'/$'\n'    }"
+	err "เลยกำหนดฟรีแล้ว — เอาออกหรือยืนยันราคาใหม่ (ทุกโมเดลใน gateway ต้องฟรี)"
+fi
+
 # ------------------------------------------------------------------ stability
 note "ตรวจว่า stability ตรงกับชื่อโมเดลที่ provider ตั้ง"
 if out=$(python3 -c "

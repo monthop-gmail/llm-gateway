@@ -404,3 +404,30 @@ curl -s https://router.huggingface.co/v1/models -H "Authorization: Bearer $HF_TO
 
 > บาง provider (เช่น groq) อาจตอบ `Not allowed to POST ... for provider X`
 > แปลว่าบัญชี HF ยังไม่มีสิทธิ์/billing กับ provider นั้น ให้ใช้ auto-route แทน
+
+### iApp Technology (`IAPP_API_KEY`) — ไทย 🇹🇭
+
+สมัครฟรีที่ https://iapp.co.th — **ฟรีถึง 2026-09-30 เท่านั้น** หลังจากนั้นคิด
+`0.01 / 0.02 IC ต่อ 1K token` (input/output) ดูฟิลด์ `free_until` ใน `model_info`
+
+| โมเดล | ฐาน | จุดเด่น |
+|---|---|---|
+| `th/openthai2` | Qwen3.8-27B | context 256K · เข้าใจบริบทไทย |
+| `th/openthai2-legal` | Nemotron-3-Nano-30B | **มี RAG ประมวลกฎหมายไทย 39 ฉบับ 6,300 มาตราในตัว** ตอบพร้อมเลขมาตรา |
+
+โควตา **30 req/นาที** (ตัวหลักนับต่อ API key · ตัว legal นับต่อ IP) ไม่มีเพดานรายวัน
+
+**ข้อควรระวังที่เจอจากการยิงจริง:**
+
+- **`th/openthai2` เป็น thinking model** — คิดใน field `reasoning` ก่อนตอบ
+  ใช้ ~85–100 token กับคำตอบคำเดียว ถ้า `max_tokens` ต่ำกว่า ~200 จะได้
+  `content: null` พร้อม `finish_reason: length` โดยไม่มี error
+- **`th/openthai2-legal` กิน prompt ~2,900 token ต่อคำถาม** แม้คำถามสั้นมาก
+  เพราะ RAG ดึงตัวบทกฎหมายใส่มาให้ คิดเผื่อตอนคำนวณโควตา
+- **tool calling ใช้ไม่ได้ทั้งสองตัว** ทั้งที่เอกสารบอกว่ารองรับ (BFCL 0.820) —
+  ฝั่งเขาไม่ได้เปิด flag `--tool-call-parser` ตอน start vLLM ยิงจริงได้ error:
+  `"auto" tool choice requires --enable-auto-tool-choice and --tool-call-parser to be set`
+  ลองครบทั้ง `auto` / `required` / ระบุชื่อฟังก์ชัน พังทั้งสามแบบ
+- เอกสารให้ใช้ header `apikey:` แต่ **`Authorization: Bearer` ก็ผ่าน** จึงตั้ง config
+  แบบ OpenAI-compatible ปกติได้ ไม่ต้อง `extra_headers`
+- แต่ละโมเดลมี **base path ของตัวเอง** ต้องตั้ง `api_base` แยกรายตัว

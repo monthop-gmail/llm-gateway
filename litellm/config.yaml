@@ -2625,9 +2625,9 @@ model_list:
       max_prompt_detail: "ชนเพดาน ที่ ~32,000 — litellm.ContextWindowExceededError: litellm.BadRequestError: ContextWindowExceed"
       verified_by: "gateway 2026-08-26 (verify-capabilities)"
       latency_ms_14k: 832
-      status: "ok"
-      status_checked_at: "2026-08-26T11:20:24Z"
       stability: "stable"
+      status: "ok"
+      status_checked_at: "2026-09-03T03:36:06Z"
 
   # Pathumma (NECTEC) — thinking model
   - model_name: th/pathumma
@@ -2697,6 +2697,61 @@ model_list:
       status: "ok"
       status_checked_at: "2026-08-26T11:20:24Z"
       stability: "stable"
+
+  # ---------- iApp Technology (OpenThai 2.0) — ไทย 🇹🇭 ----------
+  # แต่ละโมเดลมี base path ของตัวเอง จึงต้องตั้ง api_base แยกรายตัว
+  # เอกสารบอกให้ใช้ header `apikey:` แต่ยิงจริงแล้ว Authorization: Bearer ก็ผ่าน
+  # จึงใช้ api_key ปกติ ไม่ต้อง extra_headers
+  #
+  # ⚠️ ฟรีถึง 2026-09-30 เท่านั้น หลังจากนั้นคิด 0.01/0.02 IC ต่อ 1K token
+  # ดู free_until — validate.sh เตือนให้เมื่อใกล้ถึงกำหนด
+  - model_name: th/openthai2
+    litellm_params:
+      model: openai/openthai2.0
+      api_base: https://api.iapp.co.th/v3/llm/openthai2p0
+      api_key: os.environ/IAPP_API_KEY
+    model_info:
+      mode: "chat"
+      supports_function_calling: false
+      description: "โมเดลไทย 27B (ฐาน Qwen3.8) context 256K — thinking model ที่คิดใน field reasoning ต้องให้ max_tokens อย่างน้อย 200 ไม่งั้นได้ content ว่าง เอกสารบอกว่ารองรับ tool calling แต่ endpoint ที่โฮสต์ไว้ปิดไว้"
+      provider_label: "iApp Technology"
+      provider_quota: "30 req/นาที ต่อ API key — ฟรีถึง 2026-09-30 หลังจากนั้นเสียเงิน"
+      quota_pool: "iapp"
+      quota_window: "rpm-only"
+      quota_rpm: 30
+      quota_source: "provider-docs"
+      quota_checked_at: "2026-09-03"
+      free_until: "2026-09-30"
+      tags: ["thai"]
+      stability: "stable"
+      verified_by: "gateway 2026-09-03 (ยิงตรง — ตอบไทยผ่าน · tool calling พังทั้ง 3 แบบ)"
+      status: "ok"
+      status_checked_at: "2026-09-03T03:36:06Z"
+
+  # ตัวนี้มี RAG ฝังมาในตัว ค้นจากประมวลกฎหมายไทย 39 ฉบับ 6,300 มาตรา
+  # จึงกิน prompt_tokens ~2,900 ต่อคำถามแม้คำถามสั้น — คิดเผื่อตอนคำนวณโควตา
+  - model_name: th/openthai2-legal
+    litellm_params:
+      model: openai/openthai2.0-legal
+      api_base: https://api.iapp.co.th/v3/llm/openthai2p0-legal
+      api_key: os.environ/IAPP_API_KEY
+    model_info:
+      mode: "chat"
+      supports_function_calling: false
+      description: "โมเดลกฎหมายไทย (ฐาน Nemotron-3-Nano-30B) มี RAG ค้นประมวลกฎหมาย 39 ฉบับในตัว ตอบพร้อมเลขมาตรา — กิน prompt ~2,900 token ต่อคำถามจาก RAG ที่ฝังมา ไม่มีตัวไหนในแค็ตตาล็อกแทนได้"
+      provider_label: "iApp Technology"
+      provider_quota: "30 req/นาที ต่อ IP — ฟรีถึง 2026-09-30 หลังจากนั้นเสียเงิน"
+      quota_pool: "iapp"
+      quota_window: "rpm-only"
+      quota_rpm: 30
+      quota_source: "provider-docs"
+      quota_checked_at: "2026-09-03"
+      free_until: "2026-09-30"
+      tags: ["thai"]
+      stability: "stable"
+      verified_by: "gateway 2026-09-03 (ยิงตรง — ตอบ 'มาตรา 335 (๑)' ถูกต้อง)"
+      status: "ok"
+      status_checked_at: "2026-09-03T03:36:06Z"
 
   # ---------- Ollama Cloud — โมเดลใหญ่โดยไม่ต้องมี GPU ----------
   # ต่างจาก Ollama ที่รันเอง: อันนี้ Ollama โฮสต์ให้ ไม่กิน RAM/GPU ของเรา
